@@ -40,6 +40,13 @@ namespace WebMConverter
             this.buttonGo = new System.Windows.Forms.Button();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageProcessing = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonTrim = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
+            this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
             this.tabPageEncoding = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -95,17 +102,13 @@ namespace WebMConverter
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.tabPageProcessing = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
-            this.toolStripButtonTrim = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPageProcessing.SuspendLayout();
+            this.tableLayoutPanel18.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.tabPageEncoding.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -127,9 +130,6 @@ namespace WebMConverter
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
-            this.tabPageProcessing.SuspendLayout();
-            this.tableLayoutPanel18.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -233,6 +233,7 @@ namespace WebMConverter
             // buttonGo
             // 
             this.buttonGo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonGo.Enabled = false;
             this.buttonGo.Location = new System.Drawing.Point(981, 3);
             this.buttonGo.Name = "buttonGo";
             this.tableLayoutPanel2.SetRowSpan(this.buttonGo, 2);
@@ -265,6 +266,80 @@ namespace WebMConverter
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1061, 350);
             this.tabControl1.TabIndex = 6;
+            // 
+            // tabPageProcessing
+            // 
+            this.tabPageProcessing.Controls.Add(this.tableLayoutPanel18);
+            this.tabPageProcessing.Location = new System.Drawing.Point(4, 22);
+            this.tabPageProcessing.Name = "tabPageProcessing";
+            this.tabPageProcessing.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageProcessing.Size = new System.Drawing.Size(1053, 324);
+            this.tabPageProcessing.TabIndex = 3;
+            this.tabPageProcessing.Text = "Processing";
+            // 
+            // tableLayoutPanel18
+            // 
+            this.tableLayoutPanel18.ColumnCount = 1;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Controls.Add(this.toolStrip1, 0, 0);
+            this.tableLayoutPanel18.Controls.Add(this.textBoxProcessingScript, 0, 1);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 2;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(1047, 318);
+            this.tableLayoutPanel18.TabIndex = 0;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonTrim,
+            this.toolStripButtonCrop,
+            this.toolStripButtonResize});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1047, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // toolStripButtonTrim
+            // 
+            this.toolStripButtonTrim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonTrim.Name = "toolStripButtonTrim";
+            this.toolStripButtonTrim.Size = new System.Drawing.Size(36, 22);
+            this.toolStripButtonTrim.Text = "Trim";
+            this.toolStripButtonTrim.Click += new System.EventHandler(this.toolStripButtonTrim_Click);
+            // 
+            // toolStripButtonCrop
+            // 
+            this.toolStripButtonCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonCrop.Name = "toolStripButtonCrop";
+            this.toolStripButtonCrop.Size = new System.Drawing.Size(37, 22);
+            this.toolStripButtonCrop.Text = "Crop";
+            this.toolStripButtonCrop.Click += new System.EventHandler(this.toolStripButtonCrop_Click);
+            // 
+            // toolStripButtonResize
+            // 
+            this.toolStripButtonResize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonResize.Name = "toolStripButtonResize";
+            this.toolStripButtonResize.Size = new System.Drawing.Size(43, 22);
+            this.toolStripButtonResize.Text = "Resize";
+            this.toolStripButtonResize.Click += new System.EventHandler(this.toolStripButtonResize_Click);
+            // 
+            // textBoxProcessingScript
+            // 
+            this.textBoxProcessingScript.AcceptsReturn = true;
+            this.textBoxProcessingScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxProcessingScript.Location = new System.Drawing.Point(0, 25);
+            this.textBoxProcessingScript.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxProcessingScript.Multiline = true;
+            this.textBoxProcessingScript.Name = "textBoxProcessingScript";
+            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 293);
+            this.textBoxProcessingScript.TabIndex = 1;
+            this.textBoxProcessingScript.Text = "# This is an AviSynth script. You may write advanced commands below, or just pres" +
+    "s the buttons above for smooth sailing.";
             // 
             // tabPageEncoding
             // 
@@ -558,7 +633,7 @@ namespace WebMConverter
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(196, 35);
             this.tableLayoutPanel8.TabIndex = 7;
             // 
@@ -987,80 +1062,6 @@ namespace WebMConverter
             this.label21.Text = "Don\'t modify these unless you know what you\'re doing!";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tabPageProcessing
-            // 
-            this.tabPageProcessing.Controls.Add(this.tableLayoutPanel18);
-            this.tabPageProcessing.Location = new System.Drawing.Point(4, 22);
-            this.tabPageProcessing.Name = "tabPageProcessing";
-            this.tabPageProcessing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessing.Size = new System.Drawing.Size(1053, 324);
-            this.tabPageProcessing.TabIndex = 3;
-            this.tabPageProcessing.Text = "Processing";
-            // 
-            // tableLayoutPanel18
-            // 
-            this.tableLayoutPanel18.ColumnCount = 1;
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Controls.Add(this.toolStrip1, 0, 0);
-            this.tableLayoutPanel18.Controls.Add(this.textBoxProcessingScript, 0, 1);
-            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
-            this.tableLayoutPanel18.RowCount = 2;
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Size = new System.Drawing.Size(1047, 318);
-            this.tableLayoutPanel18.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonTrim,
-            this.toolStripButtonCrop,
-            this.toolStripButtonResize});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1047, 25);
-            this.toolStrip1.TabIndex = 0;
-            // 
-            // textBoxProcessingScript
-            // 
-            this.textBoxProcessingScript.AcceptsReturn = true;
-            this.textBoxProcessingScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxProcessingScript.Location = new System.Drawing.Point(0, 25);
-            this.textBoxProcessingScript.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxProcessingScript.Multiline = true;
-            this.textBoxProcessingScript.Name = "textBoxProcessingScript";
-            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 293);
-            this.textBoxProcessingScript.TabIndex = 1;
-            this.textBoxProcessingScript.Text = "# This is an AviSynth script. You may write advanced commands below, or just pres" +
-    "s the buttons above for smooth sailing.";
-            // 
-            // toolStripButtonTrim
-            // 
-            this.toolStripButtonTrim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonTrim.Name = "toolStripButtonTrim";
-            this.toolStripButtonTrim.Size = new System.Drawing.Size(36, 22);
-            this.toolStripButtonTrim.Text = "Trim";
-            this.toolStripButtonTrim.Click += new System.EventHandler(this.toolStripButtonTrim_Click);
-            // 
-            // toolStripButtonCrop
-            // 
-            this.toolStripButtonCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonCrop.Name = "toolStripButtonCrop";
-            this.toolStripButtonCrop.Size = new System.Drawing.Size(37, 22);
-            this.toolStripButtonCrop.Text = "Crop";
-            this.toolStripButtonCrop.Click += new System.EventHandler(this.toolStripButtonCrop_Click);
-            // 
-            // toolStripButtonResize
-            // 
-            this.toolStripButtonResize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonResize.Name = "toolStripButtonResize";
-            this.toolStripButtonResize.Size = new System.Drawing.Size(43, 22);
-            this.toolStripButtonResize.Text = "Resize";
-            this.toolStripButtonResize.Click += new System.EventHandler(this.toolStripButtonResize_Click);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1081,6 +1082,11 @@ namespace WebMConverter
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPageProcessing.ResumeLayout(false);
+            this.tableLayoutPanel18.ResumeLayout(false);
+            this.tableLayoutPanel18.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.tabPageEncoding.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -1112,11 +1118,6 @@ namespace WebMConverter
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
-            this.tabPageProcessing.ResumeLayout(false);
-            this.tableLayoutPanel18.ResumeLayout(false);
-            this.tableLayoutPanel18.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

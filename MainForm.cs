@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -12,6 +13,7 @@ namespace WebMConverter
     {
         private string _template;
         private string _templateArguments;
+        private string _ffindex;
 
         private string _autoOutput;
         private string _autoTitle;
@@ -95,6 +97,9 @@ namespace WebMConverter
 
         private void SetFile(string path)
         {
+            buttonGo.Enabled = false;
+            buttonGo.Text = "Indexing...";
+
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
             string name = Path.GetFileNameWithoutExtension(path);
@@ -102,8 +107,18 @@ namespace WebMConverter
                 boxMetadataTitle.Text = _autoTitle = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
+
             // Generate ffindex file for ffms2
-            new ffmsindex(path);
+            BackgroundWorker bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(delegate {
+                ffmsindex indexer = new ffmsindex(path);
+                _ffindex = indexer.outputfile;
+            });
+            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
+                buttonGo.Enabled = true;
+                buttonGo.Text = "Convert";
+            });
+            bw.RunWorkerAsync();
         }
 
         private void HandleDragEnter(object sender, DragEventArgs e)
@@ -181,7 +196,7 @@ namespace WebMConverter
                 avscript.WriteLine("PluginPath = \"" + Environment.CurrentDirectory + "/Binaries/\"");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"vsfilter.dll\")");
-                avscript.WriteLine("FFVideoSource(\"" + input + "\")");
+                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _ffindex));
                 avscript.Write(textBoxProcessingScript.Text);
             }
 

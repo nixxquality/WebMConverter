@@ -12,11 +12,11 @@ namespace WebMConverter
     {
         private string ffmsindexPath = Path.Combine(Environment.CurrentDirectory, "Binaries/ffmsindex.exe");
         private Process Process;
+        public string outputfile;
 
         public ffmsindex(string filename)
         {
             Process = new Process();
-            string outputfile = "";
             string arguments = "";
 
             // Prepare the preparation
