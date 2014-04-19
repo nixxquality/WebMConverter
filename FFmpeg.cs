@@ -10,7 +10,7 @@ namespace WebMConverter
 {
     class FFmpeg //Wrapper class to run the FFmpeg process
     {
-        public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
+        public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries/ffmpeg.exe");
         public Process Process;
 
         public FFmpeg(string argument)

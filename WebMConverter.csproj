@@ -54,13 +54,14 @@
     <Compile Include="ConverterForm.Designer.cs">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CropForm.cs">
+    <None Include="CropForm.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CropForm.Designer.cs">
+    </None>
+    <None Include="CropForm.Designer.cs">
       <DependentUpon>CropForm.cs</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="FFmpeg.cs" />
+    <Compile Include="ffmsindex.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,10 +103,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FFmpeg\ffmpeg.exe">
+    <Content Include="Binaries\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="FFmpeg\gpl-3.0.txt">
+    <Content Include="Binaries\ffms2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Binaries\ffmsindex.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Binaries\gpl-3.0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Binaries\vsfilter.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
