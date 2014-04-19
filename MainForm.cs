@@ -59,16 +59,15 @@ namespace WebMConverter
             //{2} is amount of threads to use
             //{3} is '-fs XM' if X MB limit enabled otherwise blank
             //{4} is '-metadata title="TITLE"' when specifying a title, otherwise blank
-            //{5} is '-quality best -lag-in-frames 16' when using HQ mode, otherwise blank
+            //{5} is '-quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
 
             //TODO: add an option for subtitles. It's either '-vf "ass=subtitle.ass"' or '-vf subtitles=subtitle.srt'
 
-            _template = "-f avisynth -i \"{0}\" {2} {3} {4} -f webm -y \"{1}\"";
+            _template = "-f avisynth -i \"{0}\" {2} {3} -f webm -y \"{1}\"";
             //{0} is input file
             //{1} is output file
             //{2} is extra arguments
-            //{3} is '-pass X' if 2-pass enabled, otherwise blank
-            //{4} is '-auto-alt-ref 1' is 2-pass enabled AND HQ mode enabled, otherwise blank
+            //{3} is '-pass X' if HQ mode enabled, otherwise blank
 
         }
 
@@ -201,19 +200,15 @@ namespace WebMConverter
             }
 
             string[] arguments;
-            if (!checkBox2Pass.Checked)
+            if (!boxHQ.Checked)
                 arguments = new[] { string.Format(_template, avsFileName, output, options, "", "") };
             else
             {
                 int passes = 2; //Can you even use more than 2 passes?
 
-                string HQ = "";
-                if (boxHQ.Checked)
-                    HQ = "-auto-alt-ref 1"; //This should improve quality, only in 2-pass mode
-
                 arguments = new string[passes];
                 for (int i = 0; i < passes; i++)
-                    arguments[i] = string.Format(_template, input, output, options, "-pass " + (i + 1), HQ);
+                    arguments[i] = string.Format(_template, avsFileName, output, options, "-pass " + (i + 1));
             }
 
             var form = new ConverterForm(this, arguments);
@@ -261,7 +256,7 @@ namespace WebMConverter
 
             string HQ = "";
             if (boxHQ.Checked)
-                HQ = "-quality best -lag-in-frames 16";
+                HQ = "-quality best -lag-in-frames 16 -auto-alt-ref 1";
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
             return string.Format(_templateArguments, audioEnabled, bitrate, threads, limitTo, metadataTitle, HQ);
