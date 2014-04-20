@@ -99,6 +99,9 @@ namespace WebMConverter
             this.buttonSubBrowse = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.previewFrame1 = new WebMConverter.previewFrame();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -124,6 +127,8 @@ namespace WebMConverter
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel16.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMainForm
@@ -253,6 +258,7 @@ namespace WebMConverter
             this.tabControlOptions.Controls.Add(this.tabPageProcessing);
             this.tabControlOptions.Controls.Add(this.tabPageEncoding);
             this.tabControlOptions.Controls.Add(this.tabPageSubtitles);
+            this.tabControlOptions.Controls.Add(this.tabPage1);
             this.tabControlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlOptions.Location = new System.Drawing.Point(3, 87);
             this.tabControlOptions.Name = "tabControlOptions";
@@ -1015,6 +1021,42 @@ namespace WebMConverter
             this.label28.Text = "Don\'t add any subtitles to the video.";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.trackBar1);
+            this.tabPage1.Controls.Add(this.previewFrame1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1053, 324);
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.trackBar1.Enabled = false;
+            this.trackBar1.LargeChange = 30;
+            this.trackBar1.Location = new System.Drawing.Point(3, 276);
+            this.trackBar1.Maximum = 3000;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(1047, 45);
+            this.trackBar1.TabIndex = 1;
+            this.trackBar1.TickFrequency = 30;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            // 
+            // previewFrame1
+            // 
+            this.previewFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewFrame1.Frame = 0;
+            this.previewFrame1.InputFile = null;
+            this.previewFrame1.Location = new System.Drawing.Point(3, 3);
+            this.previewFrame1.Margin = new System.Windows.Forms.Padding(0);
+            this.previewFrame1.Name = "previewFrame1";
+            this.previewFrame1.Size = new System.Drawing.Size(1047, 318);
+            this.previewFrame1.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1068,6 +1110,9 @@ namespace WebMConverter
             this.tableLayoutPanel16.PerformLayout();
             this.tableLayoutPanel17.ResumeLayout(false);
             this.tableLayoutPanel17.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1144,6 +1189,9 @@ namespace WebMConverter
         private System.Windows.Forms.ListView listViewProcessingScript;
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
+        private System.Windows.Forms.TabPage tabPage1;
+        private previewFrame previewFrame1;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 

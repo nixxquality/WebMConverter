@@ -108,6 +108,9 @@ namespace WebMConverter
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
 
+            previewFrame1.InputFile = path;
+            trackBar1.Enabled = true;
+
             // Generate ffindex file for ffms2
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate {
@@ -362,6 +365,11 @@ namespace WebMConverter
                     listViewProcessingScript.Items.Remove(item);
                 }
             }
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            previewFrame1.Frame = trackBar1.Value;
         }
     }
 }

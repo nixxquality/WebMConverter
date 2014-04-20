@@ -54,12 +54,6 @@
     <Compile Include="ConverterForm.Designer.cs">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </Compile>
-    <None Include="CropForm.cs">
-      <SubType>Form</SubType>
-    </None>
-    <None Include="CropForm.Designer.cs">
-      <DependentUpon>CropForm.cs</DependentUpon>
-    </None>
     <Compile Include="FFmpeg.cs" />
     <Compile Include="ffmsindex.cs" />
     <Compile Include="MainForm.cs">
@@ -68,16 +62,22 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="previewFrame.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="previewFrame.Designer.cs">
+      <DependentUpon>previewFrame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConverterForm.resx">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CropForm.resx">
-      <DependentUpon>CropForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="previewFrame.resx">
+      <DependentUpon>previewFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
