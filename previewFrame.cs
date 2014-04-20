@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace WebMConverter
 {
-    public partial class previewFrame : UserControl
+    public partial class PreviewFrame : UserControl
     {
         // Internal things for drawing and the likes
         private FFmpeg ffmpegProcess;
@@ -44,7 +44,7 @@ namespace WebMConverter
             get { return message; }
         }
 
-        public previewFrame()
+        public PreviewFrame()
         {
             InitializeComponent();
         }

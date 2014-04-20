@@ -101,7 +101,7 @@ namespace WebMConverter
             this.label28 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.previewFrame1 = new WebMConverter.previewFrame();
+            this.previewFrame1 = new WebMConverter.PreviewFrame();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -1190,7 +1190,7 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
         private System.Windows.Forms.TabPage tabPage1;
-        private previewFrame previewFrame1;
+        private PreviewFrame previewFrame1;
         private System.Windows.Forms.TrackBar trackBar1;
     }
 }

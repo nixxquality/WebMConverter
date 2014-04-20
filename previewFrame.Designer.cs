@@ -1,6 +1,6 @@
 ﻿namespace WebMConverter
 {
-    partial class previewFrame
+    partial class PreviewFrame
     {
         /// <summary> 
         /// Required designer variable.
