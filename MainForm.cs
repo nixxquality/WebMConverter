@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
@@ -247,6 +248,9 @@ namespace WebMConverter
             }
 
             int bitrate = 900; // STUB
+            if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
+                if (!int.TryParse(boxBitrate.Text, out bitrate))
+                    throw new ArgumentException("Invalid bitrate!");
 
             int threads = trackThreads.Value;
 
@@ -280,19 +284,84 @@ namespace WebMConverter
             UpdateArguments(sender, e);
         }
 
-        private void toolStripButtonTrim_Click(object sender, EventArgs e)
+        private void toolStripButtonTrim_Click(object sender, EventArgs e) // STUB
         {
-            textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)"); // STUB
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                listViewProcessingScript.Items.Add("Trim");
+                toolStripButtonTrim.Enabled = false;
+            }
+            textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
         }
 
-        private void toolStripButtonCrop_Click(object sender, EventArgs e)
+        private void toolStripButtonCrop_Click(object sender, EventArgs e) // STUB
         {
-            textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)"); // STUB
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                listViewProcessingScript.Items.Add("Crop");
+                toolStripButtonCrop.Enabled = false;
+            }
+            textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)");
         }
 
-        private void toolStripButtonResize_Click(object sender, EventArgs e)
+        private void toolStripButtonResize_Click(object sender, EventArgs e) // STUB
         {
-            textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)"); // STUB
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                listViewProcessingScript.Items.Add("LanczosResize");
+                toolStripButtonResize.Enabled = false;
+            }
+            textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)");
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
+            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // STUB: get better icons
+            //if (toolStripButton1.Checked)
+            //{
+                listViewProcessingScript.Hide();
+                textBoxProcessingScript.Show();
+                toolStripButtonTrim.Enabled = true;
+                toolStripButtonCrop.Enabled = true;
+                toolStripButtonResize.Enabled = true;
+            //}
+            //else
+            //{
+            //    textBoxProcessingScript.Hide();
+            //    listViewProcessingScript.Show();
+            //}
+            // This could be used to toggle between advanced and list view, but that's hard to code. Maybe later?
+            // For now, just stay in advanced mode forever.
+            toolStripButtonAdvancedScripting.Enabled = false;
+        }
+
+        private void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e) // STUB
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach (ListViewItem item in listViewProcessingScript.SelectedItems)
+                {
+                    switch (item.Text)
+                    {
+                        case "Trim":
+                            toolStripButtonTrim.Enabled = true;
+                            break;
+                        case "Crop":
+                            toolStripButtonCrop.Enabled = true;
+                            break;
+                        case "LanczosResize":
+                            toolStripButtonResize.Enabled = true;
+                            break;
+                    }
+
+                    List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
+                    processingScriptCommands.Remove(processingScriptCommands.Find( x => x.StartsWith(item.Text) ));
+                    textBoxProcessingScript.Lines = processingScriptCommands.ToArray();
+
+                    listViewProcessingScript.Items.Remove(item);
+                }
+            }
         }
     }
 }
