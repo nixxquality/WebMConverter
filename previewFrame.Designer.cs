@@ -43,13 +43,14 @@
             this.pictureBoxFrame.Size = new System.Drawing.Size(150, 150);
             this.pictureBoxFrame.TabIndex = 1;
             this.pictureBoxFrame.TabStop = false;
+            this.pictureBoxFrame.SizeChanged += new System.EventHandler(this.pictureBoxFrame_SizeChanged);
             // 
-            // previewFrame
+            // PreviewFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pictureBoxFrame);
-            this.Name = "previewFrame";
+            this.Name = "PreviewFrame";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFrame)).EndInit();
             this.ResumeLayout(false);
 

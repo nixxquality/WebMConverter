@@ -51,5 +51,10 @@ namespace WebMConverter
 
             pictureBoxFrame.BackgroundImage = frame.GetBitmap();
         }
+
+        private void pictureBoxFrame_SizeChanged(object sender, EventArgs e)
+        {
+            GeneratePreview();
+        }
     }
 }
