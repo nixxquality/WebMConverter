@@ -308,6 +308,7 @@ namespace WebMConverter
             // toolStripButtonTrim
             // 
             this.toolStripButtonTrim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonTrim.Enabled = false;
             this.toolStripButtonTrim.Name = "toolStripButtonTrim";
             this.toolStripButtonTrim.Size = new System.Drawing.Size(36, 22);
             this.toolStripButtonTrim.Text = "Trim";
@@ -316,6 +317,7 @@ namespace WebMConverter
             // toolStripButtonCrop
             // 
             this.toolStripButtonCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonCrop.Enabled = false;
             this.toolStripButtonCrop.Name = "toolStripButtonCrop";
             this.toolStripButtonCrop.Size = new System.Drawing.Size(37, 22);
             this.toolStripButtonCrop.Text = "Crop";
@@ -324,6 +326,7 @@ namespace WebMConverter
             // toolStripButtonResize
             // 
             this.toolStripButtonResize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonResize.Enabled = false;
             this.toolStripButtonResize.Name = "toolStripButtonResize";
             this.toolStripButtonResize.Size = new System.Drawing.Size(43, 22);
             this.toolStripButtonResize.Text = "Resize";
@@ -361,6 +364,7 @@ namespace WebMConverter
             this.listViewProcessingScript.Size = new System.Drawing.Size(1047, 293);
             this.listViewProcessingScript.TabIndex = 3;
             this.listViewProcessingScript.UseCompatibleStateImageBehavior = false;
+            this.listViewProcessingScript.ItemActivate += new System.EventHandler(this.listViewProcessingScript_ItemActivate);
             this.listViewProcessingScript.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listViewProcessingScript_KeyUp);
             // 
             // textBoxProcessingScript

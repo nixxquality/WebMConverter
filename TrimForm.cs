@@ -25,6 +25,22 @@ namespace WebMConverter
 
             trackVideoTimeline.Maximum = FFMS2.VideoSource.NumFrames;
             trackVideoTimeline.TickFrequency = trackVideoTimeline.Maximum / 60;
+            textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
+        }
+
+        public TrimForm(int TrimStart, int TrimEnd) : this()
+        {
+            trimStart = TrimStart;
+            trimEnd = TrimEnd;
+
+            textBoxTrimStart.Text = "" + TrimStart;
+            textBoxTrimEnd.Text = "" + TrimEnd;
+
+            trackVideoTimeline.Value = TrimStart;
+            previewFrame.Frame = TrimStart;
+            textBoxSelectedFrame.Text = "" + TrimStart;
+
+            checktrims();
         }
 
         private void trackBarVideoTimeline_Scroll(object sender, EventArgs e)

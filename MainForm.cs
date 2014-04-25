@@ -121,6 +121,10 @@ namespace WebMConverter
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
                 buttonGo.Text = "Convert";
+                toolStripButtonTrim.Enabled = true;
+                toolStripButtonCrop.Enabled = true;
+                toolStripButtonResize.Enabled = true;
+
                 previewFrame1.GeneratePreview();
                 trackBar1.Maximum = FFMS2.VideoSource.NumFrames - 1;
                 trackBar1.TickFrequency = trackBar1.Maximum / 60;
@@ -385,6 +389,34 @@ namespace WebMConverter
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             previewFrame1.Frame = trackBar1.Value;
+        }
+
+        private void listViewProcessingScript_ItemActivate(object sender, EventArgs e)
+        {
+            List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
+            string filter = listViewProcessingScript.FocusedItem.Text;
+            string item = processingScriptCommands.Find(x => x.StartsWith(filter));
+
+            switch (filter)
+            {
+                case "Trim":
+                    Match match = Regex.Match(item, @".*?(\d+).*?(\d+)");
+                    if (!match.Success)
+                        throw new Exception("The trim is fucked");
+
+                    using (var form = new TrimForm(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)))
+                    {
+                        var result = form.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            processingScriptCommands.Remove(item);
+                            processingScriptCommands.Add("Trim(" + form.TrimStart + ", " + form.TrimEnd + ")");
+                        }
+                    }
+                    break;
+            }
+
+            textBoxProcessingScript.Lines = processingScriptCommands.ToArray();
         }
     }
 }
