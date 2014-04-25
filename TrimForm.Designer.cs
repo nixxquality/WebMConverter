@@ -28,56 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.flowTrimButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonTrimStart = new System.Windows.Forms.Button();
             this.buttonTrimEnd = new System.Windows.Forms.Button();
-            this.previewFrame1 = new WebMConverter.PreviewFrame();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.previewFrame = new WebMConverter.PreviewFrame();
+            this.trackVideoTimeline = new System.Windows.Forms.TrackBar();
+            this.flowDialogButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            this.flowLayoutPanel2.SuspendLayout();
+            this.textBoxSelectedFrame = new System.Windows.Forms.TextBox();
+            this.textBoxTrimStart = new System.Windows.Forms.TextBox();
+            this.textBoxTrimEnd = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel.SuspendLayout();
+            this.flowTrimButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).BeginInit();
+            this.flowDialogButtons.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.previewFrame1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.trackBar1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(469, 405);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel.ColumnCount = 3;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel.Controls.Add(this.flowTrimButtons, 0, 2);
+            this.tableLayoutPanel.Controls.Add(this.previewFrame, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.trackVideoTimeline, 0, 1);
+            this.tableLayoutPanel.Controls.Add(this.flowDialogButtons, 1, 2);
+            this.tableLayoutPanel.Controls.Add(this.textBoxSelectedFrame, 2, 1);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 3;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel.Size = new System.Drawing.Size(469, 405);
+            this.tableLayoutPanel.TabIndex = 0;
             // 
-            // flowLayoutPanel1
+            // flowTrimButtons
             // 
-            this.flowLayoutPanel1.Controls.Add(this.buttonTrimStart);
-            this.flowLayoutPanel1.Controls.Add(this.buttonTrimEnd);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 375);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(269, 30);
-            this.flowLayoutPanel1.TabIndex = 4;
+            this.flowTrimButtons.Controls.Add(this.buttonTrimStart);
+            this.flowTrimButtons.Controls.Add(this.textBoxTrimStart);
+            this.flowTrimButtons.Controls.Add(this.buttonTrimEnd);
+            this.flowTrimButtons.Controls.Add(this.textBoxTrimEnd);
+            this.flowTrimButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowTrimButtons.Location = new System.Drawing.Point(0, 375);
+            this.flowTrimButtons.Margin = new System.Windows.Forms.Padding(0);
+            this.flowTrimButtons.Name = "flowTrimButtons";
+            this.flowTrimButtons.Size = new System.Drawing.Size(289, 30);
+            this.flowTrimButtons.TabIndex = 4;
             // 
             // buttonTrimStart
             // 
             this.buttonTrimStart.Location = new System.Drawing.Point(3, 3);
             this.buttonTrimStart.Name = "buttonTrimStart";
-            this.buttonTrimStart.Size = new System.Drawing.Size(80, 23);
+            this.buttonTrimStart.Size = new System.Drawing.Size(54, 23);
             this.buttonTrimStart.TabIndex = 0;
             this.buttonTrimStart.Text = "Start";
             this.buttonTrimStart.UseVisualStyleBackColor = true;
@@ -85,53 +92,54 @@
             // 
             // buttonTrimEnd
             // 
-            this.buttonTrimEnd.Location = new System.Drawing.Point(89, 3);
+            this.buttonTrimEnd.Location = new System.Drawing.Point(128, 3);
             this.buttonTrimEnd.Name = "buttonTrimEnd";
-            this.buttonTrimEnd.Size = new System.Drawing.Size(75, 23);
+            this.buttonTrimEnd.Size = new System.Drawing.Size(54, 23);
             this.buttonTrimEnd.TabIndex = 1;
             this.buttonTrimEnd.Text = "End";
             this.buttonTrimEnd.UseVisualStyleBackColor = true;
             this.buttonTrimEnd.Click += new System.EventHandler(this.buttonTrimEnd_Click);
             // 
-            // previewFrame1
+            // previewFrame
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.previewFrame1, 2);
-            this.previewFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewFrame1.Frame = 0;
-            this.previewFrame1.Location = new System.Drawing.Point(0, 0);
-            this.previewFrame1.Margin = new System.Windows.Forms.Padding(0);
-            this.previewFrame1.Name = "previewFrame1";
-            this.previewFrame1.Size = new System.Drawing.Size(469, 343);
-            this.previewFrame1.TabIndex = 0;
+            this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
+            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewFrame.Frame = 0;
+            this.previewFrame.Location = new System.Drawing.Point(0, 0);
+            this.previewFrame.Margin = new System.Windows.Forms.Padding(0);
+            this.previewFrame.Name = "previewFrame";
+            this.previewFrame.Size = new System.Drawing.Size(469, 343);
+            this.previewFrame.TabIndex = 0;
             // 
-            // trackBar1
+            // trackVideoTimeline
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.trackBar1, 2);
-            this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar1.Location = new System.Drawing.Point(3, 346);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(463, 26);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.tableLayoutPanel.SetColumnSpan(this.trackVideoTimeline, 2);
+            this.trackVideoTimeline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackVideoTimeline.Location = new System.Drawing.Point(3, 346);
+            this.trackVideoTimeline.Name = "trackVideoTimeline";
+            this.trackVideoTimeline.Size = new System.Drawing.Size(393, 26);
+            this.trackVideoTimeline.TabIndex = 1;
+            this.trackVideoTimeline.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.trackVideoTimeline.Scroll += new System.EventHandler(this.trackBarVideoTimeline_Scroll);
             // 
-            // flowLayoutPanel2
+            // flowDialogButtons
             // 
-            this.flowLayoutPanel2.Controls.Add(this.buttonConfirm);
-            this.flowLayoutPanel2.Controls.Add(this.buttonCancel);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(269, 375);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(200, 30);
-            this.flowLayoutPanel2.TabIndex = 5;
+            this.tableLayoutPanel.SetColumnSpan(this.flowDialogButtons, 2);
+            this.flowDialogButtons.Controls.Add(this.buttonConfirm);
+            this.flowDialogButtons.Controls.Add(this.buttonCancel);
+            this.flowDialogButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowDialogButtons.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowDialogButtons.Location = new System.Drawing.Point(289, 375);
+            this.flowDialogButtons.Margin = new System.Windows.Forms.Padding(0);
+            this.flowDialogButtons.Name = "flowDialogButtons";
+            this.flowDialogButtons.Size = new System.Drawing.Size(180, 30);
+            this.flowDialogButtons.TabIndex = 5;
             // 
             // buttonConfirm
             // 
             this.buttonConfirm.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonConfirm.Enabled = false;
-            this.buttonConfirm.Location = new System.Drawing.Point(122, 3);
+            this.buttonConfirm.Location = new System.Drawing.Point(102, 3);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(75, 23);
             this.buttonConfirm.TabIndex = 0;
@@ -141,12 +149,41 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(41, 3);
+            this.buttonCancel.Location = new System.Drawing.Point(21, 3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // textBoxSelectedFrame
+            // 
+            this.textBoxSelectedFrame.AcceptsReturn = true;
+            this.textBoxSelectedFrame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSelectedFrame.Location = new System.Drawing.Point(402, 349);
+            this.textBoxSelectedFrame.Multiline = true;
+            this.textBoxSelectedFrame.Name = "textBoxSelectedFrame";
+            this.textBoxSelectedFrame.Size = new System.Drawing.Size(64, 20);
+            this.textBoxSelectedFrame.TabIndex = 6;
+            this.textBoxSelectedFrame.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxSelectedFrame_KeyUp);
+            // 
+            // textBoxTrimStart
+            // 
+            this.textBoxTrimStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxTrimStart.Enabled = false;
+            this.textBoxTrimStart.Location = new System.Drawing.Point(63, 4);
+            this.textBoxTrimStart.Name = "textBoxTrimStart";
+            this.textBoxTrimStart.Size = new System.Drawing.Size(59, 20);
+            this.textBoxTrimStart.TabIndex = 2;
+            // 
+            // textBoxTrimEnd
+            // 
+            this.textBoxTrimEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxTrimEnd.Enabled = false;
+            this.textBoxTrimEnd.Location = new System.Drawing.Point(188, 4);
+            this.textBoxTrimEnd.Name = "textBoxTrimEnd";
+            this.textBoxTrimEnd.Size = new System.Drawing.Size(59, 20);
+            this.textBoxTrimEnd.TabIndex = 3;
             // 
             // TrimForm
             // 
@@ -155,7 +192,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(469, 405);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tableLayoutPanel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TrimForm";
@@ -163,25 +200,29 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Trim";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            this.flowLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel.PerformLayout();
+            this.flowTrimButtons.ResumeLayout(false);
+            this.flowTrimButtons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).EndInit();
+            this.flowDialogButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private PreviewFrame previewFrame1;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private PreviewFrame previewFrame;
+        private System.Windows.Forms.TrackBar trackVideoTimeline;
+        private System.Windows.Forms.FlowLayoutPanel flowTrimButtons;
         private System.Windows.Forms.Button buttonTrimStart;
         private System.Windows.Forms.Button buttonTrimEnd;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.FlowLayoutPanel flowDialogButtons;
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.TextBox textBoxSelectedFrame;
+        private System.Windows.Forms.TextBox textBoxTrimStart;
+        private System.Windows.Forms.TextBox textBoxTrimEnd;
     }
 }

@@ -23,24 +23,27 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            trackBar1.Maximum = FFMS2.VideoSource.NumFrames;
-            trackBar1.TickFrequency = trackBar1.Maximum / 60;
+            trackVideoTimeline.Maximum = FFMS2.VideoSource.NumFrames;
+            trackVideoTimeline.TickFrequency = trackVideoTimeline.Maximum / 60;
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void trackBarVideoTimeline_Scroll(object sender, EventArgs e)
         {
-            previewFrame1.Frame = trackBar1.Value;
+            previewFrame.Frame = trackVideoTimeline.Value;
+            textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
         }
 
         private void buttonTrimStart_Click(object sender, EventArgs e)
         {
-            trimStart = trackBar1.Value;
+            trimStart = trackVideoTimeline.Value;
+            textBoxTrimStart.Text = "" + trackVideoTimeline.Value;
             checktrims();
         }
 
         private void buttonTrimEnd_Click(object sender, EventArgs e)
         {
-            trimEnd = trackBar1.Value;
+            trimEnd = trackVideoTimeline.Value;
+            textBoxTrimEnd.Text = "" + trackVideoTimeline.Value;
             checktrims();
         }
 
@@ -61,6 +64,23 @@ namespace WebMConverter
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBoxSelectedFrame_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    int i = int.Parse(textBoxSelectedFrame.Text);
+                    previewFrame.Frame = i;
+                    trackVideoTimeline.Value = i;
+                    textBoxSelectedFrame.Text = "" + i;
+                }
+                catch
+                { }
+            }
+            e.Handled = true; // Don't close the TrimForm!
         }
     }
 }
