@@ -295,7 +295,7 @@ namespace WebMConverter
             UpdateArguments(sender, e);
         }
 
-        private void toolStripButtonTrim_Click(object sender, EventArgs e) // STUB
+        private void toolStripButtonTrim_Click(object sender, EventArgs e)
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
@@ -316,14 +316,25 @@ namespace WebMConverter
             }
         }
 
-        private void toolStripButtonCrop_Click(object sender, EventArgs e) // STUB
+        private void toolStripButtonCrop_Click(object sender, EventArgs e)
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
-                listViewProcessingScript.Items.Add("Crop");
-                toolStripButtonCrop.Enabled = false;
+                using (var form = new CropForm())
+                {
+                    var result = form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.CropPixels.GetAvisynthCommand());
+                        listViewProcessingScript.Items.Add("Crop");
+                        toolStripButtonCrop.Enabled = false;
+                    }
+                }
             }
-            textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)");
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)");
+            }
         }
 
         private void toolStripButtonResize_Click(object sender, EventArgs e) // STUB
@@ -397,10 +408,11 @@ namespace WebMConverter
             string filter = listViewProcessingScript.FocusedItem.Text;
             string item = processingScriptCommands.Find(x => x.StartsWith(filter));
 
+            Match match;
             switch (filter)
             {
                 case "Trim":
-                    Match match = Regex.Match(item, @".*?(\d+).*?(\d+)");
+                    match = Regex.Match(item, @".*?(\d+).*?(\d+)");
                     if (!match.Success)
                         throw new Exception("The trim is fucked");
 
@@ -411,6 +423,21 @@ namespace WebMConverter
                         {
                             processingScriptCommands.Remove(item);
                             processingScriptCommands.Add("Trim(" + form.TrimStart + ", " + form.TrimEnd + ")");
+                        }
+                    }
+                    break;
+                case "Crop":
+                    match = Regex.Match(item, @".*?(\d+).*?(\d+).*?([-+]\d+).*?([-+]\d+)");
+                    if (!match.Success)
+                        throw new Exception("The crop is fucked");
+
+                    using (var form = new CropForm(new CropRectangle(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))))
+                    {
+                        var result = form.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            processingScriptCommands.Remove(item);
+                            processingScriptCommands.Add(form.CropPixels.GetAvisynthCommand());
                         }
                     }
                     break;

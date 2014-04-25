@@ -21,6 +21,8 @@ namespace WebMConverter
             get { return (int)frame; }
             set { frame = (uint)value; GeneratePreview(); }
         }
+        public PictureBox Picture
+        { get { return pictureBoxFrame; } }
 
         public PreviewFrame()
         {
@@ -41,7 +43,7 @@ namespace WebMConverter
             float s;
             FFMSsharp.Frame frame;
             frame = FFMS2.VideoSource.GetFrame((int)this.frame);
-            s = Math.Min((float)this.Width / (float)frame.EncodedResolution.Width, (float)this.Height / (float)frame.EncodedResolution.Height);
+            s = Math.Min((float)this.Size.Width / (float)frame.EncodedResolution.Width, (float)this.Size.Height / (float)frame.EncodedResolution.Height);
             w = (int)(frame.EncodedResolution.Width * s);
             h = (int)(frame.EncodedResolution.Height * s);
 
@@ -50,6 +52,17 @@ namespace WebMConverter
             frame = FFMS2.VideoSource.GetFrame((int)this.frame);
 
             pictureBoxFrame.BackgroundImage = frame.GetBitmap();
+            pictureBoxFrame.ClientSize = new Size(w, h);
+
+            // Center the pictureBox in our control
+            if (w == Width || w - 1 == Width || w + 1 == Width) // this looks weird but keep in mind we're dealing with an ex float here
+            {
+                Padding = new Padding(0, (Height - h) / 2, 0, 0);
+            }
+            else
+            {
+                Padding = new Padding((Width - w) / 2, 0, 0, 0);
+            }
         }
 
         private void pictureBoxFrame_SizeChanged(object sender, EventArgs e)

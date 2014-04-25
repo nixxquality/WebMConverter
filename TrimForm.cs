@@ -96,7 +96,6 @@ namespace WebMConverter
                 catch
                 { }
             }
-            e.Handled = true; // Don't close the TrimForm!
         }
     }
 }
