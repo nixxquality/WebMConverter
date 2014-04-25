@@ -10,35 +10,6 @@ using System.Windows.Forms;
 
 namespace WebMConverter
 {
-    public class CropRectangle
-    {
-        int left;
-        public int Left
-        { get { return left; } }
-        int top;
-        public int Top
-        { get { return top; } }
-        int right;
-        public int Right
-        { get { return right; } }
-        int bottom;
-        public int Bottom
-        { get { return bottom; } }
-
-        public CropRectangle(int Left, int Top, int Right, int Bottom)
-        {
-            left = (Left / 2) * 2; // Make it even
-            top = (Top / 2) * 2;
-            right = (Right / 2) * 2;
-            bottom = (Bottom / 2) * 2;
-        }
-
-        public string GetAvisynthCommand()
-        {
-            return string.Format("Crop({0}, {1}, {2}, {3})", left, top, right, bottom);
-        }
-    }
-
     public partial class CropForm : Form
     {
         private Corner heldCorner = Corner.None;
@@ -311,6 +282,35 @@ namespace WebMConverter
             DialogResult = DialogResult.OK;
 
             Close();
+        }
+    }
+
+    public class CropRectangle
+    {
+        int left;
+        public int Left
+        { get { return left; } }
+        int top;
+        public int Top
+        { get { return top; } }
+        int right;
+        public int Right
+        { get { return right; } }
+        int bottom;
+        public int Bottom
+        { get { return bottom; } }
+
+        public CropRectangle(int Left, int Top, int Right, int Bottom)
+        {
+            left = (Left / 2) * 2; // Make it even
+            top = (Top / 2) * 2;
+            right = (Right / 2) * 2;
+            bottom = (Bottom / 2) * 2;
+        }
+
+        public string GetAvisynthCommand()
+        {
+            return string.Format("Crop({0}, {1}, {2}, {3})", left, top, right, bottom);
         }
     }
 }
