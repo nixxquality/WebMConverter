@@ -31,15 +31,15 @@
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowTrimButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonTrimStart = new System.Windows.Forms.Button();
+            this.textBoxTrimStart = new System.Windows.Forms.TextBox();
             this.buttonTrimEnd = new System.Windows.Forms.Button();
+            this.textBoxTrimEnd = new System.Windows.Forms.TextBox();
             this.previewFrame = new WebMConverter.PreviewFrame();
             this.trackVideoTimeline = new System.Windows.Forms.TrackBar();
             this.flowDialogButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxSelectedFrame = new System.Windows.Forms.TextBox();
-            this.textBoxTrimStart = new System.Windows.Forms.TextBox();
-            this.textBoxTrimEnd = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel.SuspendLayout();
             this.flowTrimButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).BeginInit();
@@ -90,6 +90,15 @@
             this.buttonTrimStart.UseVisualStyleBackColor = true;
             this.buttonTrimStart.Click += new System.EventHandler(this.buttonTrimStart_Click);
             // 
+            // textBoxTrimStart
+            // 
+            this.textBoxTrimStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxTrimStart.Enabled = false;
+            this.textBoxTrimStart.Location = new System.Drawing.Point(63, 4);
+            this.textBoxTrimStart.Name = "textBoxTrimStart";
+            this.textBoxTrimStart.Size = new System.Drawing.Size(59, 20);
+            this.textBoxTrimStart.TabIndex = 2;
+            // 
             // buttonTrimEnd
             // 
             this.buttonTrimEnd.Location = new System.Drawing.Point(128, 3);
@@ -99,6 +108,15 @@
             this.buttonTrimEnd.Text = "End";
             this.buttonTrimEnd.UseVisualStyleBackColor = true;
             this.buttonTrimEnd.Click += new System.EventHandler(this.buttonTrimEnd_Click);
+            // 
+            // textBoxTrimEnd
+            // 
+            this.textBoxTrimEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxTrimEnd.Enabled = false;
+            this.textBoxTrimEnd.Location = new System.Drawing.Point(188, 4);
+            this.textBoxTrimEnd.Name = "textBoxTrimEnd";
+            this.textBoxTrimEnd.Size = new System.Drawing.Size(59, 20);
+            this.textBoxTrimEnd.TabIndex = 3;
             // 
             // previewFrame
             // 
@@ -167,24 +185,6 @@
             this.textBoxSelectedFrame.TabIndex = 6;
             this.textBoxSelectedFrame.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxSelectedFrame_KeyUp);
             // 
-            // textBoxTrimStart
-            // 
-            this.textBoxTrimStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTrimStart.Enabled = false;
-            this.textBoxTrimStart.Location = new System.Drawing.Point(63, 4);
-            this.textBoxTrimStart.Name = "textBoxTrimStart";
-            this.textBoxTrimStart.Size = new System.Drawing.Size(59, 20);
-            this.textBoxTrimStart.TabIndex = 2;
-            // 
-            // textBoxTrimEnd
-            // 
-            this.textBoxTrimEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTrimEnd.Enabled = false;
-            this.textBoxTrimEnd.Location = new System.Drawing.Point(188, 4);
-            this.textBoxTrimEnd.Name = "textBoxTrimEnd";
-            this.textBoxTrimEnd.Size = new System.Drawing.Size(59, 20);
-            this.textBoxTrimEnd.TabIndex = 3;
-            // 
             // TrimForm
             // 
             this.AcceptButton = this.buttonConfirm;
@@ -195,6 +195,7 @@
             this.Controls.Add(this.tableLayoutPanel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(446, 299);
             this.Name = "TrimForm";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
