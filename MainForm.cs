@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -14,13 +15,14 @@ namespace WebMConverter
     {
         private string _template;
         private string _templateArguments;
-        private string _ffindex;
+        private string _indexFile;
 
         private string _autoOutput;
         private string _autoTitle;
         private string _autoArguments;
         private bool _argumentError;
 
+        public FFMSsharp.VideoSource VideoSource;
         public Size AssumedInputSize; //This will get set as soon as the crop form generates an input file. It's assumed because the user could've changed the video after cropping.
         //Might want to get a definite, reliable way to get the size of the input video.
 
@@ -46,6 +48,8 @@ namespace WebMConverter
 
         public MainForm()
         {
+            FFMSsharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
+
             InitializeComponent();
 
             CroppingRectangle = new RectangleF(0, 0, 1, 1); //Crop nothing by default
@@ -108,18 +112,44 @@ namespace WebMConverter
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
 
-            previewFrame1.InputFile = path;
             trackBar1.Enabled = true;
 
             // Generate ffindex file for ffms2
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate {
-                ffmsindex indexer = new ffmsindex(path);
-                _ffindex = indexer.outputfile;
+                using (MD5 md5 = MD5.Create())
+                {
+                    using (FileStream stream = File.OpenRead(path))
+                    {
+                        _indexFile = Path.Combine(Path.GetTempPath(), BitConverter.ToString(md5.ComputeHash(stream)) + ".ffindex");
+                    }
+                }
+
+                FFMSsharp.Index index;
+
+                if (File.Exists(_indexFile))
+                {
+                    index = new FFMSsharp.Index(_indexFile);
+                    if (index.BelongsToFile(path))
+                    {
+                        VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                        return;
+                    }
+                }
+
+                FFMSsharp.Indexer indexer = new FFMSsharp.Indexer(path);
+                index = indexer.Index();
+
+                index.WriteIndex(_indexFile);
+
+                VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
                 buttonGo.Text = "Convert";
+                previewFrame1.GeneratePreview();
+                trackBar1.Maximum = VideoSource.NumFrames - 1;
+                trackBar1.TickFrequency = trackBar1.Maximum / 60;
             });
             bw.RunWorkerAsync();
         }
@@ -199,7 +229,7 @@ namespace WebMConverter
                 avscript.WriteLine("PluginPath = \"" + Environment.CurrentDirectory + "/Binaries/\"");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"vsfilter.dll\")");
-                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _ffindex));
+                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
 

@@ -101,7 +101,7 @@ namespace WebMConverter
             this.label28 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.previewFrame1 = new WebMConverter.PreviewFrame();
+            this.previewFrame1 = new WebMConverter.PreviewFrame(this);
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -1050,7 +1050,6 @@ namespace WebMConverter
             // 
             this.previewFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewFrame1.Frame = 0;
-            this.previewFrame1.InputFile = null;
             this.previewFrame1.Location = new System.Drawing.Point(3, 3);
             this.previewFrame1.Margin = new System.Windows.Forms.Padding(0);
             this.previewFrame1.Name = "previewFrame1";
