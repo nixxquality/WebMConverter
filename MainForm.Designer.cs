@@ -101,7 +101,7 @@ namespace WebMConverter
             this.label28 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.previewFrame1 = new WebMConverter.PreviewFrame(this);
+            this.previewFrame1 = new WebMConverter.PreviewFrame();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();

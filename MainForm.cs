@@ -22,37 +22,11 @@ namespace WebMConverter
         private string _autoArguments;
         private bool _argumentError;
 
-        public FFMSsharp.VideoSource VideoSource;
-        public Size AssumedInputSize; //This will get set as soon as the crop form generates an input file. It's assumed because the user could've changed the video after cropping.
-        //Might want to get a definite, reliable way to get the size of the input video.
-
-        public RectangleF CroppingRectangle  //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
-        {
-            get { return _croppingRectangle; }
-            set
-            {
-                _croppingRectangle = value;/*
-                if (_croppingRectangle == CropForm.FullCrop)
-                    labelCrop.Text = "Don't crop";
-                else
-                    labelCrop.Text = string.Format(CultureInfo.InvariantCulture, "X:{0:0%} Y:{1:0%} W:{2:0%} H:{3:0%}",
-                                                   _croppingRectangle.X,
-                                                   _croppingRectangle.Y,
-                                                   _croppingRectangle.Width,
-                                                   _croppingRectangle.Height);*/
-            }
-        }
-        private RectangleF _croppingRectangle; //Using a backing field so we can update the label as soon as something changed it!
-
-        //public RectangleF CroppingRectangle; //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
-
         public MainForm()
         {
             FFMSsharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
 
             InitializeComponent();
-
-            CroppingRectangle = new RectangleF(0, 0, 1, 1); //Crop nothing by default
 
             AllowDrop = true;
             DragEnter += HandleDragEnter;
@@ -114,7 +88,7 @@ namespace WebMConverter
 
             trackBar1.Enabled = true;
 
-            // Generate ffindex file for ffms2
+            // Index the file and generate our VideoSource object
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate {
                 using (MD5 md5 = MD5.Create())
@@ -132,7 +106,7 @@ namespace WebMConverter
                     index = new FFMSsharp.Index(_indexFile);
                     if (index.BelongsToFile(path))
                     {
-                        VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                        FFMS2.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
                         return;
                     }
                 }
@@ -142,13 +116,13 @@ namespace WebMConverter
 
                 index.WriteIndex(_indexFile);
 
-                VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                FFMS2.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
                 buttonGo.Text = "Convert";
                 previewFrame1.GeneratePreview();
-                trackBar1.Maximum = VideoSource.NumFrames - 1;
+                trackBar1.Maximum = FFMS2.VideoSource.NumFrames - 1;
                 trackBar1.TickFrequency = trackBar1.Maximum / 60;
             });
             bw.RunWorkerAsync();
@@ -321,10 +295,21 @@ namespace WebMConverter
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
-                listViewProcessingScript.Items.Add("Trim");
-                toolStripButtonTrim.Enabled = false;
+                using (var form = new TrimForm())
+                {
+                    var result = form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(" + form.TrimStart + ", " + form.TrimEnd + ")");
+                        listViewProcessingScript.Items.Add("Trim");
+                        toolStripButtonTrim.Enabled = false;
+                    }
+                }
             }
-            textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
+            }
         }
 
         private void toolStripButtonCrop_Click(object sender, EventArgs e) // STUB

@@ -6,6 +6,11 @@ using System.Windows.Forms;
 
 namespace WebMConverter
 {
+    static class FFMS2
+    {
+        public static FFMSsharp.VideoSource VideoSource;
+    }
+
     static class Program
     {
         /// <summary>
