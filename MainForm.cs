@@ -300,6 +300,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Trim.GetAvisynthCommand());
             if (Filters.Crop != null)
                 script.AppendLine(Filters.Crop.GetAvisynthCommand());
+            if (Filters.Resize != null)
+                script.AppendLine(Filters.Resize.GetAvisynthCommand());
 
             textBoxProcessingScript.Text = script.ToString();
         }
@@ -368,10 +370,21 @@ namespace WebMConverter
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
-                listViewProcessingScript.Items.Add("LanczosResize");
-                toolStripButtonResize.Enabled = false;
+                using (var form = new ResizeForm())
+                {
+                    var result = form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        Filters.Resize = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Resize");
+                        toolStripButtonResize.Enabled = false;
+                    }
+                }
             }
-            textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)");
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)");
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -413,8 +426,8 @@ namespace WebMConverter
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
                             break;
-                        case "LanczosResize":
-                            //Filters.Resize = null;
+                        case "Resize":
+                            Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
                             break;
                     }
@@ -448,6 +461,16 @@ namespace WebMConverter
                         if (result == DialogResult.OK)
                         {
                             Filters.Crop = form.GeneratedFilter;
+                        }
+                    }
+                    break;
+                case "Resize":
+                    using (var form = new ResizeForm(Filters.Resize))
+                    {
+                        var result = form.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            Filters.Resize = form.GeneratedFilter;
                         }
                     }
                     break;
