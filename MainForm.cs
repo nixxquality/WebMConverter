@@ -97,8 +97,6 @@ namespace WebMConverter
             listViewProcessingScript.Show();
             GenerateAvisynthScript();
 
-            trackBar1.Enabled = true;
-
             // Index the file and generate our VideoSource object
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler(delegate {
@@ -135,10 +133,6 @@ namespace WebMConverter
                 toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
-
-                previewFrame1.GeneratePreview();
-                trackBar1.Maximum = FFMS2.VideoSource.NumFrames - 1;
-                trackBar1.TickFrequency = trackBar1.Maximum / 60;
             });
             bw.RunWorkerAsync();
         }
@@ -478,11 +472,6 @@ namespace WebMConverter
                     }
                 }
             }
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            previewFrame1.Frame = trackBar1.Value;
         }
 
         private void listViewProcessingScript_ItemActivate(object sender, EventArgs e)
