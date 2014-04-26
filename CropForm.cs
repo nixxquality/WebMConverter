@@ -52,7 +52,6 @@ namespace WebMConverter
 
         public CropForm(CropFilter CropPixels) : this()
         {
-<<<<<<< HEAD
             FFMSsharp.Frame frame = FFMS2.VideoSource.GetFrame(previewFrame.Frame);
 
             cropPercent = new RectangleF(
@@ -61,59 +60,6 @@ namespace WebMConverter
                 (float)(frame.EncodedResolution.Width - CropPixels.Left + CropPixels.Right) / (float)frame.EncodedResolution.Width,
                 (float)(frame.EncodedResolution.Height - CropPixels.Top + CropPixels.Bottom) / (float)frame.EncodedResolution.Height
             );
-=======
-            string argument = ConstructArguments();
-
-            if (string.IsNullOrWhiteSpace(argument))
-                return;
-
-            _generating = true;
-            _ffmpegProcess = new FFmpeg(argument);
-
-            _ffmpegProcess.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
-            _ffmpegProcess.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
-
-            _ffmpegProcess.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
-                                                                                {
-                                                                                    _generating = false;
-
-                                                                                    int exitCode = _ffmpegProcess.ExitCode;
-
-                                                                                    if (exitCode != 0)
-                                                                                    {
-                                                                                        _message = string.Format("ffmpeg.exe exited with exit code {0}. That's usually bad.", exitCode);
-                                                                                        return;
-                                                                                    }
-
-                                                                                    if (!File.Exists(_previewFile))
-                                                                                    {
-                                                                                        _message = "The preview file wasn't generated, that means ffmpeg.exe failed. Confirm the following:\n- Is the input time actually smaller than the length than the input video?";
-                                                                                        return;
-                                                                                    }
-
-                                                                                    try
-                                                                                    {
-                                                                                        //_image = Image.FromFile(_previewFile); //Thank you for not releasing the lock on the file afterwards, Microsoft
-
-                                                                                        using (FileStream stream = new FileStream(_previewFile, FileMode.Open, FileAccess.Read))
-                                                                                            _image = Image.FromStream(stream);
-
-                                                                                        pictureBoxVideo.BackgroundImage = _image;
-                                                                                        File.Delete(_previewFile);
-
-                                                                                        _owner.AssumedInputSize = _image.Size; //We assume the size of the preview will also be the size of the input used for the conversion
-
-                                                                                        float aspectRatio = _image.Width / (float)_image.Height;
-                                                                                        ClientSize = new Size((int)(ClientSize.Height * aspectRatio), ClientSize.Height);
-                                                                                    }
-                                                                                    catch (Exception e)
-                                                                                    {
-                                                                                        _message = e.ToString();
-                                                                                    }
-                                                                                }));
-
-            _ffmpegProcess.Start();
->>>>>>> 13cd00bfeca28949c59cd3ef49b587a85815d917
         }
 
         private void textBoxFrame_KeyUp(object sender, KeyEventArgs e)
