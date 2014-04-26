@@ -20,7 +20,7 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            trackVideoTimeline.Maximum = FFMS2.VideoSource.NumFrames;
+            trackVideoTimeline.Maximum = FFMS2.VideoSource.NumFrames - 1;
             trackVideoTimeline.TickFrequency = trackVideoTimeline.Maximum / 60;
             textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
         }
@@ -88,6 +88,7 @@ namespace WebMConverter
                 try
                 {
                     int i = int.Parse(textBoxSelectedFrame.Text);
+                    i = Math.Min(trackVideoTimeline.Maximum - 1, i); // Make sure we don't go out of bounds.
                     previewFrame.Frame = i;
                     trackVideoTimeline.Value = i;
                     textBoxSelectedFrame.Text = "" + i;
