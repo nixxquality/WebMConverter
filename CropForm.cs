@@ -31,7 +31,7 @@ namespace WebMConverter
             None
         }
 
-        public CropRectangle CropPixels;
+        public CropFilter GeneratedFilter;
 
         public CropForm()
         {
@@ -47,7 +47,7 @@ namespace WebMConverter
             this.previewFrame.Picture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseUp);
         }
 
-        public CropForm(CropRectangle CropPixels) : this()
+        public CropForm(CropFilter CropPixels) : this()
         {
             FFMSsharp.Frame frame = FFMS2.VideoSource.GetFrame(previewFrame.Frame);
 
@@ -272,7 +272,7 @@ namespace WebMConverter
                 cropPercent.Height = 1 - cropPercent.Y;
             
             FFMSsharp.Frame frame = FFMS2.VideoSource.GetFrame(previewFrame.Frame);
-            CropPixels = new CropRectangle(
+            GeneratedFilter = new CropFilter(
                 (int)(frame.EncodedResolution.Width * cropPercent.Left),
                 (int)(frame.EncodedResolution.Height * cropPercent.Top),
                 -(int)(frame.EncodedResolution.Width - frame.EncodedResolution.Width * cropPercent.Right),
@@ -285,32 +285,24 @@ namespace WebMConverter
         }
     }
 
-    public class CropRectangle
+    public class CropFilter : IFilter
     {
-        int left;
-        public int Left
-        { get { return left; } }
-        int top;
-        public int Top
-        { get { return top; } }
-        int right;
-        public int Right
-        { get { return right; } }
-        int bottom;
-        public int Bottom
-        { get { return bottom; } }
+        public readonly int Left;
+        public readonly int Top;
+        public readonly int Right;
+        public readonly int Bottom;
 
-        public CropRectangle(int Left, int Top, int Right, int Bottom)
+        public CropFilter(int Left, int Top, int Right, int Bottom)
         {
-            left = (Left / 2) * 2; // Make it even
-            top = (Top / 2) * 2;
-            right = (Right / 2) * 2;
-            bottom = (Bottom / 2) * 2;
+            this.Left = (Left / 2) * 2; // Make it even
+            this.Top = (Top / 2) * 2;
+            this.Right = (Right / 2) * 2;
+            this.Bottom = (Bottom / 2) * 2;
         }
 
         public string GetAvisynthCommand()
         {
-            return string.Format("Crop({0}, {1}, {2}, {3})", left, top, right, bottom);
+            return string.Format("Crop({0}, {1}, {2}, {3})", Left, Top, Right, Bottom);
         }
     }
 }

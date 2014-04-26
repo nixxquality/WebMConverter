@@ -120,6 +120,7 @@
             // 
             // previewFrame
             // 
+            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
             this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewFrame.Frame = 0;
@@ -163,6 +164,7 @@
             this.buttonConfirm.TabIndex = 0;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
+            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
             // 
             // buttonCancel
             // 

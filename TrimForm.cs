@@ -14,10 +14,7 @@ namespace WebMConverter
         private int trimStart = -1;
         private int trimEnd = -1;
 
-        public int TrimStart
-        { get { return trimStart; } }
-        public int TrimEnd
-        { get { return trimEnd; } }
+        public TrimFilter GeneratedFilter;
 
         public TrimForm()
         {
@@ -28,17 +25,17 @@ namespace WebMConverter
             textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
         }
 
-        public TrimForm(int TrimStart, int TrimEnd) : this()
+        public TrimForm(TrimFilter FilterToEdit) : this()
         {
-            trimStart = TrimStart;
-            trimEnd = TrimEnd;
+            trimStart = FilterToEdit.TrimStart;
+            trimEnd = FilterToEdit.TrimEnd;
 
-            textBoxTrimStart.Text = "" + TrimStart;
-            textBoxTrimEnd.Text = "" + TrimEnd;
+            textBoxTrimStart.Text = "" + trimStart;
+            textBoxTrimEnd.Text = "" + trimEnd;
 
-            trackVideoTimeline.Value = TrimStart;
-            previewFrame.Frame = TrimStart;
-            textBoxSelectedFrame.Text = "" + TrimStart;
+            trackVideoTimeline.Value = trimStart;
+            previewFrame.Frame = trimStart;
+            textBoxSelectedFrame.Text = "" + trimStart;
 
             checktrims();
         }
@@ -79,7 +76,9 @@ namespace WebMConverter
 
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
-            this.Close();
+            GeneratedFilter = new TrimFilter(trimStart, trimEnd);
+
+            Close();
         }
 
         private void textBoxSelectedFrame_KeyUp(object sender, KeyEventArgs e)
@@ -96,6 +95,23 @@ namespace WebMConverter
                 catch
                 { }
             }
+        }
+    }
+
+    public class TrimFilter : IFilter
+    {
+        public readonly int TrimStart;
+        public readonly int TrimEnd;
+
+        public TrimFilter(int TrimStart, int TrimEnd)
+        {
+            this.TrimStart = TrimStart;
+            this.TrimEnd = TrimEnd;
+        }
+
+        public string GetAvisynthCommand()
+        {
+            return string.Format("Trim({0}, {1})", TrimStart, TrimEnd);
         }
     }
 }

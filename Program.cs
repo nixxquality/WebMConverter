@@ -11,6 +11,12 @@ namespace WebMConverter
         public static FFMSsharp.VideoSource VideoSource;
     }
 
+    static class Filters
+    {
+        public static TrimFilter Trim = null;
+        public static CropFilter Crop = null;
+    }
+
     static class Program
     {
         /// <summary>

@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -200,6 +201,10 @@ namespace WebMConverter
                 return e.Message;
             }
 
+            // Generate the script if we're in simple mode
+            if (!toolStripButtonAdvancedScripting.Checked)
+                GenerateAvisynthScript();
+
             // Make our temporary file for the AviSynth script
             string avsFileName = Path.GetTempFileName();
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
@@ -277,6 +282,18 @@ namespace WebMConverter
             return string.Format(_templateArguments, audioEnabled, bitrate, threads, limitTo, metadataTitle, HQ);
         }
 
+        private void GenerateAvisynthScript()
+        {
+            StringBuilder script = new StringBuilder();
+            script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
+            if (Filters.Trim != null)
+                script.AppendLine(Filters.Trim.GetAvisynthCommand());
+            if (Filters.Crop != null)
+                script.AppendLine(Filters.Crop.GetAvisynthCommand());
+
+            textBoxProcessingScript.Text = script.ToString();
+        }
+
         private static string MakeParseFriendly(string text)
         {
             //This method adds "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
@@ -304,7 +321,7 @@ namespace WebMConverter
                     var result = form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(" + form.TrimStart + ", " + form.TrimEnd + ")");
+                        Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim");
                         toolStripButtonTrim.Enabled = false;
                     }
@@ -325,7 +342,7 @@ namespace WebMConverter
                     var result = form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.CropPixels.GetAvisynthCommand());
+                        Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop");
                         toolStripButtonCrop.Enabled = false;
                     }
@@ -354,6 +371,7 @@ namespace WebMConverter
             //if (toolStripButton1.Checked)
             //{
                 listViewProcessingScript.Hide();
+                GenerateAvisynthScript();
                 textBoxProcessingScript.Show();
                 toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
@@ -378,21 +396,18 @@ namespace WebMConverter
                     switch (item.Text)
                     {
                         case "Trim":
+                            Filters.Trim = null;
                             toolStripButtonTrim.Enabled = true;
                             break;
                         case "Crop":
+                            Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
                             break;
                         case "LanczosResize":
+                            //Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
                             break;
                     }
-
-                    List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
-                    processingScriptCommands.Remove(processingScriptCommands.Find( x => x.StartsWith(item.Text) ));
-                    textBoxProcessingScript.Lines = processingScriptCommands.ToArray();
-
-                    listViewProcessingScript.Items.Remove(item);
                 }
             }
         }
@@ -404,46 +419,34 @@ namespace WebMConverter
 
         private void listViewProcessingScript_ItemActivate(object sender, EventArgs e)
         {
-            List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
-            string filter = listViewProcessingScript.FocusedItem.Text;
-            string item = processingScriptCommands.Find(x => x.StartsWith(filter));
-
-            Match match;
-            switch (filter)
+            switch (listViewProcessingScript.FocusedItem.Text)
             {
                 case "Trim":
-                    match = Regex.Match(item, @".*?(\d+).*?(\d+)");
-                    if (!match.Success)
-                        throw new Exception("The trim is fucked");
-
-                    using (var form = new TrimForm(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value)))
+                    using (var form = new TrimForm(Filters.Trim))
                     {
                         var result = form.ShowDialog();
                         if (result == DialogResult.OK)
                         {
-                            processingScriptCommands.Remove(item);
-                            processingScriptCommands.Add("Trim(" + form.TrimStart + ", " + form.TrimEnd + ")");
+                            Filters.Trim = form.GeneratedFilter;
                         }
                     }
                     break;
                 case "Crop":
-                    match = Regex.Match(item, @".*?(\d+).*?(\d+).*?([-+]\d+).*?([-+]\d+)");
-                    if (!match.Success)
-                        throw new Exception("The crop is fucked");
-
-                    using (var form = new CropForm(new CropRectangle(int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value), int.Parse(match.Groups[3].Value), int.Parse(match.Groups[4].Value))))
+                    using (var form = new CropForm(Filters.Crop))
                     {
                         var result = form.ShowDialog();
                         if (result == DialogResult.OK)
                         {
-                            processingScriptCommands.Remove(item);
-                            processingScriptCommands.Add(form.CropPixels.GetAvisynthCommand());
+                            Filters.Crop = form.GeneratedFilter;
                         }
                     }
                     break;
             }
-
-            textBoxProcessingScript.Lines = processingScriptCommands.ToArray();
         }
+    }
+
+    interface IFilter
+    {
+        string GetAvisynthCommand();
     }
 }
