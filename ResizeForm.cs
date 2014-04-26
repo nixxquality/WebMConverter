@@ -124,7 +124,7 @@ namespace WebMConverter
 
         public string GetAvisynthCommand()
         {
-            return string.Format("LanczosResize({0}, {1})", TargetWidth, TargetHeight);
+            return string.Format("LanczosResize({0}, {1})", (TargetWidth / 2) * 2, (TargetHeight / 2) * 2);
         }
     }
 }
