@@ -87,6 +87,16 @@ namespace WebMConverter
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
 
+            // Reset filters
+            Filters.ResetFilters();
+            listViewProcessingScript.Clear();
+            toolStripButtonAdvancedScripting.Checked = false; // STUB: this part is weak
+            toolStripButtonAdvancedScripting.Enabled = true;
+            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross;
+            textBoxProcessingScript.Hide();
+            listViewProcessingScript.Show();
+            GenerateAvisynthScript();
+
             trackBar1.Enabled = true;
 
             // Index the file and generate our VideoSource object
@@ -443,10 +453,5 @@ namespace WebMConverter
                     break;
             }
         }
-    }
-
-    interface IFilter
-    {
-        string GetAvisynthCommand();
     }
 }

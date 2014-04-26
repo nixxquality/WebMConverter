@@ -1052,6 +1052,7 @@ namespace WebMConverter
             // 
             // previewFrame1
             // 
+            this.previewFrame1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.previewFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewFrame1.Frame = 0;
             this.previewFrame1.Location = new System.Drawing.Point(3, 3);

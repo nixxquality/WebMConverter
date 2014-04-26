@@ -11,10 +11,20 @@ namespace WebMConverter
         public static FFMSsharp.VideoSource VideoSource;
     }
 
+    interface IFilter
+    {
+        string GetAvisynthCommand();
+    }
     static class Filters
     {
-        public static TrimFilter Trim = null;
-        public static CropFilter Crop = null;
+        internal static TrimFilter Trim = null;
+        internal static CropFilter Crop = null;
+
+        internal static void ResetFilters()
+        {
+            Trim = null;
+            Crop = null;
+        }
     }
 
     static class Program
