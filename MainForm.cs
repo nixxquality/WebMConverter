@@ -273,10 +273,65 @@ namespace WebMConverter
                 limitTo = string.Format("-fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
             }
 
-            int bitrate = 900; // STUB
+            int bitrate = 900;
             if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
+            {
                 if (!int.TryParse(boxBitrate.Text, out bitrate))
                     throw new ArgumentException("Invalid bitrate!");
+            }
+            else if (limit != 0)
+            {
+                double duration;
+
+                if (!toolStripButtonAdvancedScripting.Checked)
+                {
+                    if (Filters.Trim == null)
+                    {
+                        duration = FFMS2.VideoSource.LastTime - FFMS2.VideoSource.FirstTime;
+                    }
+                    else
+                    {
+                        double firsttime, lasttime;
+                        var track = FFMS2.VideoSource.GetTrack();
+
+                        long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
+                        long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
+                        double timebase = track.TimeBase.Numerator / track.TimeBase.Denominator;
+
+                        firsttime = firstpts * timebase / 1000;
+                        lasttime = lastpts * timebase / 1000;
+
+                        duration = lasttime - firsttime;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
+                        string trimcmd = processingScriptCommands.Find(x => x.StartsWith("Trim("));
+
+                        Match match = Regex.Match(trimcmd, @".*?(\d+).*?(\d+)");
+                        double firsttime, lasttime;
+                        var track = FFMS2.VideoSource.GetTrack();
+
+                        long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
+                        long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
+                        double timebase = track.TimeBase.Numerator / track.TimeBase.Denominator;
+
+                        firsttime = firstpts * timebase / 1000;
+                        lasttime = lastpts * timebase / 1000;
+
+                        duration = lasttime - firsttime;
+                    }
+                    catch (ArgumentNullException) // Probably means there's no trimming in the script
+                    {
+                        duration = FFMS2.VideoSource.LastTime - FFMS2.VideoSource.FirstTime;
+                    }
+                }
+
+                bitrate = (int)(8192 * limit / duration);
+            }
 
             int threads = trackThreads.Value;
 
@@ -306,18 +361,6 @@ namespace WebMConverter
             textBoxProcessingScript.Text = script.ToString();
         }
 
-        private static string MakeParseFriendly(string text)
-        {
-            //This method adds "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
-            //This pattern should work.
-
-            string pattern = @"^[0-5][0-9]:[0-5][0-9](\.[0-9]+)?$";
-            Regex regex = new Regex(pattern, RegexOptions.Singleline);
-            if (regex.IsMatch(text))
-                return "00:" + text;
-            return text;
-        }
-
         private void trackThreads_Scroll(object sender, EventArgs e)
         {
             labelThreads.Text = trackThreads.Value.ToString();
@@ -335,6 +378,7 @@ namespace WebMConverter
                     {
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim");
+                        GenerateArguments();
                         toolStripButtonTrim.Enabled = false;
                     }
                 }
@@ -421,6 +465,7 @@ namespace WebMConverter
                         case "Trim":
                             Filters.Trim = null;
                             toolStripButtonTrim.Enabled = true;
+                            GenerateArguments();
                             break;
                         case "Crop":
                             Filters.Crop = null;
@@ -451,6 +496,7 @@ namespace WebMConverter
                         if (result == DialogResult.OK)
                         {
                             Filters.Trim = form.GeneratedFilter;
+                            GenerateArguments();
                         }
                     }
                     break;
