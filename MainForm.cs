@@ -290,10 +290,9 @@ namespace WebMConverter
 
                         long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
                         long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
-                        double timebase = track.TimeBase.Numerator / track.TimeBase.Denominator;
 
-                        firsttime = firstpts * timebase / 1000;
-                        lasttime = lastpts * timebase / 1000;
+                        firsttime = firstpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
+                        lasttime = lastpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
 
                         duration = lasttime - firsttime;
                     }
@@ -311,10 +310,9 @@ namespace WebMConverter
 
                         long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
                         long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
-                        double timebase = track.TimeBase.Numerator / track.TimeBase.Denominator;
 
-                        firsttime = firstpts * timebase / 1000;
-                        lasttime = lastpts * timebase / 1000;
+                        firsttime = firstpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
+                        lasttime = lastpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
 
                         duration = lasttime - firsttime;
                     }
