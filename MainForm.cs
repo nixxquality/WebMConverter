@@ -14,9 +14,14 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
+<<<<<<< HEAD
         private string _template;
         private string _templateArguments;
         private string _indexFile;
+=======
+        private readonly string _template;
+        private readonly string _templateArguments;
+>>>>>>> 13cd00bfeca28949c59cd3ef49b587a85815d917
 
         private string _autoOutput;
         private string _autoTitle;
@@ -264,6 +269,69 @@ namespace WebMConverter
 
         private string GenerateArguments()
         {
+<<<<<<< HEAD
+=======
+            //string args = "";
+            int width = 0;
+            int height = 0;
+
+            if (!string.IsNullOrWhiteSpace(boxResW.Text) || !string.IsNullOrWhiteSpace(boxResH.Text))
+            {
+                if (!int.TryParse(boxResW.Text, out width))
+                    throw new ArgumentException("Invalid width!");
+                if (!int.TryParse(boxResH.Text, out height))
+                    throw new ArgumentException("Invalid height!");
+            }
+
+            if ((!string.IsNullOrWhiteSpace(boxResW.Text) && string.IsNullOrWhiteSpace(boxResH.Text)) ||
+                (string.IsNullOrWhiteSpace(boxResW.Text) && !string.IsNullOrWhiteSpace(boxResH.Text)))
+                throw new ArgumentException("One of the width/height fields isn't filled in! Either fill none of them, or both of them!");
+
+            string sizeCrop = "";
+            if (_croppingRectangle != CropForm.FullCrop)
+            {
+                //Okay so here's the plan
+                //1. Get the width of the video. If this is -1, you need to get the aspect ratio of the video somehow and then calculate the width from the height
+                //2. Get the height of the video. If this is -1, you need to get the aspect ratio of the video somehowand then calculate the height from the width
+                //If you can't get them, disallow the use of -1 if you're cropping the video at all!
+                //3. If they are both filled in, you're in luck. Now you can calculate the pixel values for all 4 parameters for the crop.
+
+                int assumedWidth = width;
+                int assumedHeight = height;
+                if (width == -1 || height == -1)  //TODO: allow this
+                    throw new ArgumentException("Sorry, but you can't crop while using -1 in one of the resolution fields.");
+                if (width == 0 || height == 0) 
+                {
+                    //The AssumedInputSize is the size of the last preview image generated while using the cropping tool.
+                    //It's a good assumption, unless the user changes the input video after cropping.
+                    assumedWidth = AssumedInputSize.Width;
+                    assumedHeight = AssumedInputSize.Height;
+
+                    if (assumedWidth == 0 || assumedHeight == 0)
+                        throw new ArgumentException("For some reason you've cropped without generating a preview image.");
+                }
+
+                int cropX = (int)(assumedWidth * _croppingRectangle.X);
+                int cropY = (int)(assumedHeight * _croppingRectangle.Y);
+                int cropW = (int)(assumedWidth * _croppingRectangle.Width);
+                int cropH = (int)(assumedHeight * _croppingRectangle.Height);
+
+                sizeCrop = string.Format("-filter:v crop=\"{0}:{1}:{2}:{3}\"", cropW, cropH, cropX, cropY);
+            }
+
+            float startSeconds = ParseTime(boxCropFrom.Text);
+
+            float duration = 0;
+
+            float endSeconds = ParseTime(boxCropTo.Text);
+            if (endSeconds != 0.0)
+            {
+                duration = endSeconds - startSeconds;
+                if (duration <= 0)
+                    throw new ArgumentException("Video is 0 or less seconds long!");
+            }
+
+>>>>>>> 13cd00bfeca28949c59cd3ef49b587a85815d917
             float limit = 0;
             string limitTo = "";
             if (!string.IsNullOrWhiteSpace(boxLimit.Text))
