@@ -39,6 +39,9 @@ namespace WebMConverter
 
             InitializeComponent();
 
+            if (Filters.Trim != null)
+                previewFrame.Frame = Filters.Trim.TrimStart;
+
             this.previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
             this.previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
             this.previewFrame.Picture.MouseEnter += new System.EventHandler(this.previewPicture_MouseEnter);
