@@ -20,12 +20,22 @@ namespace WebMConverter
         internal static TrimFilter Trim = null;
         internal static CropFilter Crop = null;
         internal static ResizeFilter Resize = null;
+        internal static ReverseFilter Reverse = null;
 
         internal static void ResetFilters()
         {
             Trim = null;
             Crop = null;
             Resize = null;
+            Reverse = null;
+        }
+    }
+
+    public class ReverseFilter : IFilter
+    {
+        public string GetAvisynthCommand()
+        {
+            return "Reverse()";
         }
     }
 

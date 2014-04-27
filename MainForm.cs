@@ -133,6 +133,7 @@ namespace WebMConverter
                 toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
+                toolStripButtonReverse.Enabled = true;
             });
             bw.RunWorkerAsync();
         }
@@ -349,6 +350,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Crop.GetAvisynthCommand());
             if (Filters.Resize != null)
                 script.AppendLine(Filters.Resize.GetAvisynthCommand());
+            if (Filters.Reverse != null)
+                script.AppendLine(Filters.Reverse.GetAvisynthCommand());
 
             textBoxProcessingScript.Text = script.ToString();
         }
@@ -402,7 +405,7 @@ namespace WebMConverter
             }
         }
 
-        private void toolStripButtonResize_Click(object sender, EventArgs e) // STUB
+        private void toolStripButtonResize_Click(object sender, EventArgs e)
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
@@ -420,6 +423,20 @@ namespace WebMConverter
             else
             {
                 textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)");
+            }
+        }
+
+        private void toolStripButtonReverse_Click(object sender, EventArgs e)
+        {
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                Filters.Reverse = new ReverseFilter();
+                listViewProcessingScript.Items.Add("Reverse");
+                toolStripButtonReverse.Enabled = false;
+            }
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "Reverse()");
             }
         }
 
@@ -466,6 +483,10 @@ namespace WebMConverter
                         case "Resize":
                             Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
+                            break;
+                        case "Reverse":
+                            Filters.Reverse = null;
+                            toolStripButtonReverse.Enabled = true;
                             break;
                     }
                 }

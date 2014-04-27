@@ -99,6 +99,7 @@ namespace WebMConverter
             this.buttonSubBrowse = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -292,6 +293,7 @@ namespace WebMConverter
             this.toolStripButtonTrim,
             this.toolStripButtonCrop,
             this.toolStripButtonResize,
+            this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
@@ -1019,6 +1021,15 @@ namespace WebMConverter
             this.label28.Text = "Don\'t add any subtitles to the video.";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // toolStripButtonReverse
+            // 
+            this.toolStripButtonReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonReverse.Enabled = false;
+            this.toolStripButtonReverse.Name = "toolStripButtonReverse";
+            this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonReverse.Text = "Reverse";
+            this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1148,6 +1159,7 @@ namespace WebMConverter
         private System.Windows.Forms.ListView listViewProcessingScript;
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
     }
 }
 
