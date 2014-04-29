@@ -523,23 +523,28 @@ namespace WebMConverter
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Resize":
                             Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Reverse":
                             Filters.Reverse = null;
                             toolStripButtonReverse.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Subtitle":
                             Filters.Subtitle = null;
                             toolStripButtonSubtitle.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Trim":
                             Filters.Trim = null;
                             toolStripButtonTrim.Enabled = true;
                             GenerateArguments();
+                            listViewProcessingScript.Items.Remove(item);
                             break;
                     }
                 }
