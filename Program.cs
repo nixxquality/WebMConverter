@@ -6,12 +6,6 @@ using System.Windows.Forms;
 
 namespace WebMConverter
 {
-    static class FFMS2
-    {
-        public static FFMSsharp.VideoSource VideoSource;
-        public static string InputFile;
-    }
-
     interface IFilter
     {
         string GetAvisynthCommand();
@@ -44,6 +38,12 @@ namespace WebMConverter
 
     static class Program
     {
+        public static FFMSsharp.VideoSource VideoSource;
+        public static string InputFile;
+        public static string FileMd5;
+        public static string AttachmentDirectory;
+        public static List<int> SubtitleTracks;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -54,5 +54,6 @@ namespace WebMConverter
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
     }
 }

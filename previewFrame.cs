@@ -31,7 +31,7 @@ namespace WebMConverter
 
         public void GeneratePreview()
         {
-            if (FFMS2.VideoSource == null)
+            if (Program.VideoSource == null)
                 return;
 
             // Prepare our "list" of accepted pixel formats
@@ -42,14 +42,14 @@ namespace WebMConverter
             int w, h;
             float s;
             FFMSsharp.Frame frame;
-            frame = FFMS2.VideoSource.GetFrame((int)this.frame);
+            frame = Program.VideoSource.GetFrame((int)this.frame);
             s = Math.Min((float)this.Size.Width / (float)frame.EncodedResolution.Width, (float)this.Size.Height / (float)frame.EncodedResolution.Height);
             w = (int)(frame.EncodedResolution.Width * s);
             h = (int)(frame.EncodedResolution.Height * s);
 
             // Do all the work
-            FFMS2.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSsharp.Resizers.Bilinear);
-            frame = FFMS2.VideoSource.GetFrame((int)this.frame);
+            Program.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSsharp.Resizers.Bilinear);
+            frame = Program.VideoSource.GetFrame((int)this.frame);
 
             pictureBoxFrame.BackgroundImage = frame.GetBitmap();
             pictureBoxFrame.ClientSize = new Size(w, h);

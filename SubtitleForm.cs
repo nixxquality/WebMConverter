@@ -17,11 +17,24 @@ namespace WebMConverter
         public SubtitleForm()
         {
             InitializeComponent();
+
+            Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
+            foreach (int Track in Program.SubtitleTracks)
+            {
+                subtitleTracks.Add(Track, string.Format("Track #{0}", Track)); // Todo: Add more meaningful information
+            }
+            comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
+            comboBoxVideoTracks.ValueMember = "Key";
+            comboBoxVideoTracks.DisplayMember = "Value";
         }
 
         public SubtitleForm(SubtitleFilter SubtitleFilter) : this()
         {
-            if (SubtitleFilter.FileName != FFMS2.InputFile)
+            if (SubtitleFilter.FileName == Program.InputFile)
+            {
+                comboBoxVideoTracks.SelectedValue = SubtitleFilter.Track;
+            }
+            else
             {
                 checkBoxInternalSubs.Checked = false;
                 textBoxSubtitleFile.Text = SubtitleFilter.FileName;
@@ -32,25 +45,26 @@ namespace WebMConverter
         {
             if (checkBoxInternalSubs.Checked)
             {
-                GeneratedFilter = new SubtitleFilter(FFMS2.InputFile);
+                GeneratedFilter = new SubtitleFilter(Program.InputFile, (int)comboBoxVideoTracks.SelectedValue);
             }
             else
             {
-                GeneratedFilter = new SubtitleFilter(textBoxSubtitleFile.Text);
+                GeneratedFilter = new SubtitleFilter(textBoxSubtitleFile.Text, 0);
             }
         }
 
         private void checkBoxInternalSubs_CheckedChanged(object sender, EventArgs e)
         {
-            textBoxSubtitleFile.Enabled = !checkBoxInternalSubs.Checked;
-            buttonSelectSubtitleFile.Enabled = !checkBoxInternalSubs.Checked;
+            tableLayoutPanelSubtitleFileSelector.Visible = !checkBoxInternalSubs.Checked;
+            comboBoxVideoTracks.Visible = checkBoxInternalSubs.Checked;
+            label2.Text = checkBoxInternalSubs.Checked ? "Subtitle track:" : "Subtitle file:";
         }
 
         private void buttonSelectSubtitleFile_Click(object sender, EventArgs e)
         {
             using (var dialog = new OpenFileDialog())
             {
-                dialog.InitialDirectory = Path.GetDirectoryName(FFMS2.InputFile);
+                dialog.InitialDirectory = Path.GetDirectoryName(Program.InputFile);
                 dialog.Filter = "Subtitle files (*.ass, *.srt, *.ssa)|*.ass;*.srt;*.ssa|All files|*.*";
                 dialog.RestoreDirectory = true;
 
@@ -64,17 +78,32 @@ namespace WebMConverter
 
     public class SubtitleFilter : IFilter
     {
+        private string actualFileName;
         public readonly string FileName;
+        public readonly int Track;
 
-        public SubtitleFilter(string FileName)
+        public SubtitleFilter(string FileName, int Track)
         {
             this.FileName = FileName;
+            this.Track = Track;
+        }
+
+        public void BeforeEncode()
+        {
+            if (FileName == Program.InputFile)
+            {
+                actualFileName = Path.Combine(Program.AttachmentDirectory, "sub.ass"); // stub
+                var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, Track, actualFileName));
+                ffmpeg.Start();
+                ffmpeg.WaitForExit();
+            }
+            else
+                actualFileName = FileName;
         }
 
         public string GetAvisynthCommand()
         {
-            return string.Format("assrender(\"{0}\")", FileName);
-            // Todo: Something about fonts
+            return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", actualFileName, Program.AttachmentDirectory);
         }
     }
 }

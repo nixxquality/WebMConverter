@@ -52,7 +52,7 @@ namespace WebMConverter
 
         public CropForm(CropFilter CropPixels) : this()
         {
-            FFMSsharp.Frame frame = FFMS2.VideoSource.GetFrame(previewFrame.Frame);
+            FFMSsharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
 
             cropPercent = new RectangleF(
                 (float)CropPixels.Left / (float)frame.EncodedResolution.Width,
@@ -273,8 +273,8 @@ namespace WebMConverter
                 cropPercent.Width = 1 - cropPercent.X;
             if (cropPercent.Bottom > 1)
                 cropPercent.Height = 1 - cropPercent.Y;
-            
-            FFMSsharp.Frame frame = FFMS2.VideoSource.GetFrame(previewFrame.Frame);
+
+            FFMSsharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
             GeneratedFilter = new CropFilter(
                 (int)(frame.EncodedResolution.Width * cropPercent.Left),
                 (int)(frame.EncodedResolution.Height * cropPercent.Top),

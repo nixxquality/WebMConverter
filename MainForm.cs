@@ -86,7 +86,8 @@ namespace WebMConverter
                 boxMetadataTitle.Text = _autoTitle = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
-            FFMS2.InputFile = path;
+            Program.InputFile = path;
+            Program.FileMd5 = null;
 
             // Reset filters
             Filters.ResetFilters();
@@ -100,12 +101,14 @@ namespace WebMConverter
 
             // Index the file and generate our VideoSource object
             BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(delegate {
+            bw.DoWork += new DoWorkEventHandler(delegate
+            {
                 using (MD5 md5 = MD5.Create())
                 {
                     using (FileStream stream = File.OpenRead(path))
                     {
-                        _indexFile = Path.Combine(Path.GetTempPath(), BitConverter.ToString(md5.ComputeHash(stream)) + ".ffindex");
+                        Program.FileMd5 = BitConverter.ToString(md5.ComputeHash(stream));
+                        _indexFile = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".ffindex");
                     }
                 }
 
@@ -116,7 +119,14 @@ namespace WebMConverter
                     index = new FFMSsharp.Index(_indexFile);
                     if (index.BelongsToFile(path))
                     {
-                        FFMS2.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                        Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                        Program.SubtitleTracks = new List<int>();
+                        for (int i = 0; i <= index.GetNumTracks(); i++)
+                        {
+                            if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
+                                Program.SubtitleTracks.Add(i);
+                        }
+                        
                         return;
                     }
                 }
@@ -126,7 +136,13 @@ namespace WebMConverter
 
                 index.WriteIndex(_indexFile);
 
-                FFMS2.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+                Program.SubtitleTracks = new List<int>();
+                for (int i = 0; i <= index.GetNumTracks(); i++)
+                {
+                    if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
+                        Program.SubtitleTracks.Add(i);
+                }
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
@@ -136,6 +152,14 @@ namespace WebMConverter
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
                 toolStripButtonTrim.Enabled = true;
+
+                // Extract attachments
+                Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
+                Directory.CreateDirectory(Program.AttachmentDirectory);
+
+                var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile));
+                ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
+                ffmpeg.Start();
             });
             bw.RunWorkerAsync();
         }
@@ -209,6 +233,8 @@ namespace WebMConverter
             }
 
             // Generate the script if we're in simple mode
+            if (Filters.Subtitle != null)
+                Filters.Subtitle.BeforeEncode();
             if (!toolStripButtonAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
@@ -282,12 +308,12 @@ namespace WebMConverter
                 {
                     if (Filters.Trim == null)
                     {
-                        duration = FFMS2.VideoSource.LastTime - FFMS2.VideoSource.FirstTime;
+                        duration = Program.VideoSource.LastTime - Program.VideoSource.FirstTime;
                     }
                     else
                     {
                         double firsttime, lasttime;
-                        var track = FFMS2.VideoSource.GetTrack();
+                        var track = Program.VideoSource.GetTrack();
 
                         long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
                         long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
@@ -307,7 +333,7 @@ namespace WebMConverter
 
                         Match match = Regex.Match(trimcmd, @".*?(\d+).*?(\d+)");
                         double firsttime, lasttime;
-                        var track = FFMS2.VideoSource.GetTrack();
+                        var track = Program.VideoSource.GetTrack();
 
                         long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
                         long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
@@ -319,7 +345,7 @@ namespace WebMConverter
                     }
                     catch (ArgumentNullException) // Probably means there's no trimming in the script
                     {
-                        duration = FFMS2.VideoSource.LastTime - FFMS2.VideoSource.FirstTime;
+                        duration = Program.VideoSource.LastTime - Program.VideoSource.FirstTime;
                     }
                 }
 
@@ -466,6 +492,8 @@ namespace WebMConverter
             //if (toolStripButton1.Checked)
             //{
                 listViewProcessingScript.Hide();
+                if (Filters.Subtitle != null)
+                    Filters.Subtitle.BeforeEncode();
                 GenerateAvisynthScript();
                 textBoxProcessingScript.Show();
                 toolStripButtonCrop.Enabled = true;
