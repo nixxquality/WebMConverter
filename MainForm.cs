@@ -214,7 +214,7 @@ namespace WebMConverter
             string avsFileName = Path.GetTempFileName();
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
             {
-                avscript.WriteLine("PluginPath = \"" + Environment.CurrentDirectory + "/Binaries/\"");
+                avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"vsfilter.dll\")");
                 avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
@@ -226,11 +226,9 @@ namespace WebMConverter
                 arguments = new[] { string.Format(_template, avsFileName, output, options, "", "") };
             else
             {
-                int passes = 2; //Can you even use more than 2 passes?
-
-                arguments = new string[passes];
-                for (int i = 0; i < passes; i++)
-                    arguments[i] = string.Format(_template, avsFileName, output, options, "-pass " + (i + 1));
+                arguments = new string[2];
+                arguments[0] = string.Format(_template, avsFileName, output, options, "-pass 1");
+                arguments[1] = string.Format(_template, avsFileName, output, options, "-pass 2");
             }
 
             var form = new ConverterForm(this, arguments);
