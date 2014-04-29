@@ -216,7 +216,7 @@ namespace WebMConverter
             {
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
-                avscript.WriteLine("LoadPlugin(PluginPath+\"vsfilter.dll\")");
+                avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
                 avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
