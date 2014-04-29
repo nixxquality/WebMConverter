@@ -58,55 +58,61 @@ namespace WebMConverter
 
         private void textWidthOut_KeyPress(object sender, KeyEventArgs e)
         {
-            try
+            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
             {
-                int i = int.Parse(textWidthOut.Text);
-
-                targetwidth = i;
-
-                if (checkBoxProportions.Checked)
-                {
-                    targetheight = (int)((float)inheight / (float)inwidth * (float)i);
-                    textHeightOut.Text = "" + targetheight;
-                }
-
                 try
                 {
-                    int.Parse(textHeightOut.Text); // if the other one's a proper number too
-                    buttonConfirm.Enabled = true;
+                    int i = int.Parse(textWidthOut.Text);
+
+                    targetwidth = i;
+
+                    if (checkBoxProportions.Checked)
+                    {
+                        targetheight = (int)((float)inheight / (float)inwidth * (float)i);
+                        textHeightOut.Text = "" + targetheight;
+                    }
+
+                    try
+                    {
+                        int.Parse(textHeightOut.Text); // if the other one's a proper number too
+                        buttonConfirm.Enabled = true;
+                    }
+                    catch { }
                 }
-                catch { }
-            }
-            catch
-            {
-                buttonConfirm.Enabled = false;
+                catch
+                {
+                    buttonConfirm.Enabled = false;
+                }
             }
         }
 
         private void textHeightOut_KeyPress(object sender, KeyEventArgs e)
         {
-            try
+            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
             {
-                int i = int.Parse(textHeightOut.Text);
-
-                targetheight = i;
-
-                if (checkBoxProportions.Checked)
-                {
-                    targetwidth = (int)((float)inwidth / (float)inheight / (float)i);
-                    textWidthOut.Text = "" + targetwidth;
-                }
-
                 try
                 {
-                    int.Parse(textWidthOut.Text); // if the other one's a proper number too
-                    buttonConfirm.Enabled = true;
+                    int i = int.Parse(textHeightOut.Text);
+
+                    targetheight = i;
+
+                    if (checkBoxProportions.Checked)
+                    {
+                        targetwidth = (int)((float)inwidth / (float)inheight * (float)i);
+                        textWidthOut.Text = "" + targetwidth;
+                    }
+
+                    try
+                    {
+                        int.Parse(textWidthOut.Text); // if the other one's a proper number too
+                        buttonConfirm.Enabled = true;
+                    }
+                    catch { }
                 }
-                catch { }
-            }
-            catch
-            {
-                buttonConfirm.Enabled = false;
+                catch
+                {
+                    buttonConfirm.Enabled = false;
+                }
             }
         }
     }
