@@ -177,6 +177,7 @@
             this.buttonSelectSubtitleFile.TabIndex = 7;
             this.buttonSelectSubtitleFile.Text = "Browse...";
             this.buttonSelectSubtitleFile.UseVisualStyleBackColor = true;
+            this.buttonSelectSubtitleFile.Click += new System.EventHandler(this.buttonSelectSubtitleFile_Click);
             // 
             // textBoxSubtitleFile
             // 
