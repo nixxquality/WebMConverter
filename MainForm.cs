@@ -292,8 +292,8 @@ namespace WebMConverter
                         long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
                         long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
 
-                        firsttime = firstpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
-                        lasttime = lastpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
+                        firsttime = firstpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
+                        lasttime = lastpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
 
                         duration = lasttime - firsttime;
                     }
@@ -312,8 +312,8 @@ namespace WebMConverter
                         long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
                         long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
 
-                        firsttime = firstpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
-                        lasttime = lastpts * track.TimeBase.Numerator / track.TimeBase.Denominator / 1000;
+                        firsttime = firstpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
+                        lasttime = lastpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
 
                         duration = lasttime - firsttime;
                     }
@@ -452,6 +452,7 @@ namespace WebMConverter
                 toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
+                toolStripButtonReverse.Enabled = true;
             //}
             //else
             //{
