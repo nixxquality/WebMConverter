@@ -9,6 +9,7 @@ namespace WebMConverter
     static class FFMS2
     {
         public static FFMSsharp.VideoSource VideoSource;
+        public static string InputFile;
     }
 
     interface IFilter
@@ -17,17 +18,19 @@ namespace WebMConverter
     }
     static class Filters
     {
-        internal static TrimFilter Trim = null;
         internal static CropFilter Crop = null;
         internal static ResizeFilter Resize = null;
         internal static ReverseFilter Reverse = null;
+        internal static SubtitleFilter Subtitle = null;
+        internal static TrimFilter Trim = null;
 
         internal static void ResetFilters()
         {
-            Trim = null;
             Crop = null;
             Resize = null;
             Reverse = null;
+            Subtitle = null;
+            Trim = null;
         }
     }
 

@@ -85,6 +85,12 @@
     <Compile Include="ResizeForm.Designer.cs">
       <DependentUpon>ResizeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubtitleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubtitleForm.Designer.cs">
+      <DependentUpon>SubtitleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TrimForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     </Compile>
     <EmbeddedResource Include="ResizeForm.resx">
       <DependentUpon>ResizeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubtitleForm.resx">
+      <DependentUpon>SubtitleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrimForm.resx">
       <DependentUpon>TrimForm.cs</DependentUpon>

@@ -86,6 +86,7 @@ namespace WebMConverter
                 boxMetadataTitle.Text = _autoTitle = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
+            FFMS2.InputFile = path;
 
             // Reset filters
             Filters.ResetFilters();
@@ -130,10 +131,11 @@ namespace WebMConverter
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
                 buttonGo.Text = "Convert";
-                toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
+                toolStripButtonSubtitle.Enabled = true;
+                toolStripButtonTrim.Enabled = true;
             });
             bw.RunWorkerAsync();
         }
@@ -342,6 +344,8 @@ namespace WebMConverter
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
+            if (Filters.Subtitle != null)
+                script.AppendLine(Filters.Subtitle.GetAvisynthCommand());
             if (Filters.Trim != null)
                 script.AppendLine(Filters.Trim.GetAvisynthCommand());
             if (Filters.Crop != null)
@@ -360,36 +364,13 @@ namespace WebMConverter
             UpdateArguments(sender, e);
         }
 
-        private void toolStripButtonTrim_Click(object sender, EventArgs e)
-        {
-            if (!toolStripButtonAdvancedScripting.Checked)
-            {
-                using (var form = new TrimForm())
-                {
-                    var result = form.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        Filters.Trim = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Trim");
-                        GenerateArguments();
-                        toolStripButtonTrim.Enabled = false;
-                    }
-                }
-            }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
-            }
-        }
-
         private void toolStripButtonCrop_Click(object sender, EventArgs e)
         {
             if (!toolStripButtonAdvancedScripting.Checked)
             {
                 using (var form = new CropForm())
                 {
-                    var result = form.ShowDialog();
-                    if (result == DialogResult.OK)
+                    if (form.ShowDialog() == DialogResult.OK)
                     {
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop");
@@ -409,8 +390,7 @@ namespace WebMConverter
             {
                 using (var form = new ResizeForm())
                 {
-                    var result = form.ShowDialog();
-                    if (result == DialogResult.OK)
+                    if (form.ShowDialog() == DialogResult.OK)
                     {
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize");
@@ -438,6 +418,47 @@ namespace WebMConverter
             }
         }
 
+        private void toolStripButtonSubtitle_Click(object sender, EventArgs e)
+        {
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                using (var form = new SubtitleForm())
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        Filters.Subtitle = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Subtitle");
+                        toolStripButtonSubtitle.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "assrender(filename)");
+            }
+        }
+
+        private void toolStripButtonTrim_Click(object sender, EventArgs e)
+        {
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                using (var form = new TrimForm())
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        Filters.Trim = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Trim");
+                        GenerateArguments();
+                        toolStripButtonTrim.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
+            }
+        }
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
@@ -447,10 +468,11 @@ namespace WebMConverter
                 listViewProcessingScript.Hide();
                 GenerateAvisynthScript();
                 textBoxProcessingScript.Show();
-                toolStripButtonTrim.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
+                toolStripButtonSubtitle.Enabled = true;
+                toolStripButtonTrim.Enabled = true;
             //}
             //else
             //{
@@ -470,11 +492,6 @@ namespace WebMConverter
                 {
                     switch (item.Text)
                     {
-                        case "Trim":
-                            Filters.Trim = null;
-                            toolStripButtonTrim.Enabled = true;
-                            GenerateArguments();
-                            break;
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
@@ -487,6 +504,15 @@ namespace WebMConverter
                             Filters.Reverse = null;
                             toolStripButtonReverse.Enabled = true;
                             break;
+                        case "Subtitle":
+                            Filters.Subtitle = null;
+                            toolStripButtonSubtitle.Enabled = true;
+                            break;
+                        case "Trim":
+                            Filters.Trim = null;
+                            toolStripButtonTrim.Enabled = true;
+                            GenerateArguments();
+                            break;
                     }
                 }
             }
@@ -496,22 +522,10 @@ namespace WebMConverter
         {
             switch (listViewProcessingScript.FocusedItem.Text)
             {
-                case "Trim":
-                    using (var form = new TrimForm(Filters.Trim))
-                    {
-                        var result = form.ShowDialog();
-                        if (result == DialogResult.OK)
-                        {
-                            Filters.Trim = form.GeneratedFilter;
-                            GenerateArguments();
-                        }
-                    }
-                    break;
                 case "Crop":
                     using (var form = new CropForm(Filters.Crop))
                     {
-                        var result = form.ShowDialog();
-                        if (result == DialogResult.OK)
+                        if (form.ShowDialog() == DialogResult.OK)
                         {
                             Filters.Crop = form.GeneratedFilter;
                         }
@@ -520,10 +534,28 @@ namespace WebMConverter
                 case "Resize":
                     using (var form = new ResizeForm(Filters.Resize))
                     {
-                        var result = form.ShowDialog();
-                        if (result == DialogResult.OK)
+                        if (form.ShowDialog() == DialogResult.OK)
                         {
                             Filters.Resize = form.GeneratedFilter;
+                        }
+                    }
+                    break;
+                case "Subtitle":
+                    using (var form = new SubtitleForm(Filters.Subtitle))
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            Filters.Subtitle = form.GeneratedFilter;
+                        }
+                    }
+                    break;
+                case "Trim":
+                    using (var form = new TrimForm(Filters.Trim))
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            Filters.Trim = form.GeneratedFilter;
+                            GenerateArguments();
                         }
                     }
                     break;

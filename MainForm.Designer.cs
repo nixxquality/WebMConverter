@@ -46,7 +46,7 @@ namespace WebMConverter
             this.toolStripButtonTrim = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
             this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -83,23 +83,8 @@ namespace WebMConverter
             this.labelAdvancedThreadsHint = new System.Windows.Forms.Label();
             this.labelAdvancedArguments = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
-            this.tabPageSubtitles = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanelSubtitles = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.radioSubNone = new System.Windows.Forms.RadioButton();
-            this.radioSubInternal = new System.Windows.Forms.RadioButton();
-            this.radioSubExternal = new System.Windows.Forms.RadioButton();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonSubBrowse = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -120,11 +105,6 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingAdvanced.SuspendLayout();
             this.tableLayoutPanelAdvancedThreads.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
-            this.tabPageSubtitles.SuspendLayout();
-            this.tableLayoutPanelSubtitles.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
-            this.tableLayoutPanel17.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMainForm
@@ -253,7 +233,6 @@ namespace WebMConverter
             // 
             this.tabControlOptions.Controls.Add(this.tabPageProcessing);
             this.tabControlOptions.Controls.Add(this.tabPageEncoding);
-            this.tabControlOptions.Controls.Add(this.tabPageSubtitles);
             this.tabControlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlOptions.Location = new System.Drawing.Point(3, 87);
             this.tabControlOptions.Name = "tabControlOptions";
@@ -294,7 +273,8 @@ namespace WebMConverter
             this.toolStripButtonCrop,
             this.toolStripButtonResize,
             this.toolStripButtonReverse,
-            this.toolStripButtonAdvancedScripting});
+            this.toolStripButtonAdvancedScripting,
+            this.toolStripButtonSubtitle});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
             this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
@@ -328,17 +308,14 @@ namespace WebMConverter
             this.toolStripButtonResize.Text = "Resize";
             this.toolStripButtonResize.Click += new System.EventHandler(this.toolStripButtonResize_Click);
             // 
-            // toolStripButtonAdvancedScripting
+            // toolStripButtonReverse
             // 
-            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
-            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
-            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonAdvancedScripting.Text = "Advanced";
-            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButtonReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonReverse.Enabled = false;
+            this.toolStripButtonReverse.Name = "toolStripButtonReverse";
+            this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonReverse.Text = "Reverse";
+            this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
             // 
             // panelProcessingScriptInput
             // 
@@ -813,222 +790,26 @@ namespace WebMConverter
             this.textBoxArguments.Size = new System.Drawing.Size(944, 20);
             this.textBoxArguments.TabIndex = 1;
             // 
-            // tabPageSubtitles
+            // toolStripButtonAdvancedScripting
             // 
-            this.tabPageSubtitles.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageSubtitles.Controls.Add(this.tableLayoutPanelSubtitles);
-            this.tabPageSubtitles.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSubtitles.Name = "tabPageSubtitles";
-            this.tabPageSubtitles.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSubtitles.Size = new System.Drawing.Size(1053, 324);
-            this.tabPageSubtitles.TabIndex = 2;
-            this.tabPageSubtitles.Text = "Subtitles";
+            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
+            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
+            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonAdvancedScripting.Text = "Advanced";
+            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // tableLayoutPanelSubtitles
+            // toolStripButtonSubtitle
             // 
-            this.tableLayoutPanelSubtitles.ColumnCount = 1;
-            this.tableLayoutPanelSubtitles.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelSubtitles.Controls.Add(this.groupBox6, 0, 0);
-            this.tableLayoutPanelSubtitles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelSubtitles.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanelSubtitles.Name = "tableLayoutPanelSubtitles";
-            this.tableLayoutPanelSubtitles.RowCount = 2;
-            this.tableLayoutPanelSubtitles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.99371F));
-            this.tableLayoutPanelSubtitles.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 61.00629F));
-            this.tableLayoutPanelSubtitles.Size = new System.Drawing.Size(1047, 318);
-            this.tableLayoutPanelSubtitles.TabIndex = 0;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.tableLayoutPanel16);
-            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(3, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1041, 117);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Subtitles";
-            // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.ColumnCount = 3;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Controls.Add(this.label31, 2, 3);
-            this.tableLayoutPanel16.Controls.Add(this.label30, 2, 2);
-            this.tableLayoutPanel16.Controls.Add(this.label29, 2, 1);
-            this.tableLayoutPanel16.Controls.Add(this.radioSubNone, 1, 0);
-            this.tableLayoutPanel16.Controls.Add(this.radioSubInternal, 1, 1);
-            this.tableLayoutPanel16.Controls.Add(this.radioSubExternal, 1, 2);
-            this.tableLayoutPanel16.Controls.Add(this.label26, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.label27, 0, 3);
-            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel17, 1, 3);
-            this.tableLayoutPanel16.Controls.Add(this.label28, 2, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 4;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(1035, 98);
-            this.tableLayoutPanel16.TabIndex = 0;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label31.Location = new System.Drawing.Point(315, 69);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(717, 29);
-            this.label31.TabIndex = 9;
-            this.label31.Text = "Select the subtitle file to use for the video. Supports *.ass and *.srt format.";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Location = new System.Drawing.Point(315, 46);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(717, 23);
-            this.label30.TabIndex = 8;
-            this.label30.Text = "Add subtitles which are taken from an external file. Use the box below to select " +
-    "the file.";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Location = new System.Drawing.Point(315, 23);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(717, 23);
-            this.label29.TabIndex = 7;
-            this.label29.Text = "Add subtitles which are taken from the input video.";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // radioSubNone
-            // 
-            this.radioSubNone.AutoSize = true;
-            this.radioSubNone.Checked = true;
-            this.radioSubNone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioSubNone.Enabled = false;
-            this.radioSubNone.Location = new System.Drawing.Point(82, 0);
-            this.radioSubNone.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.radioSubNone.Name = "radioSubNone";
-            this.radioSubNone.Size = new System.Drawing.Size(227, 23);
-            this.radioSubNone.TabIndex = 0;
-            this.radioSubNone.TabStop = true;
-            this.radioSubNone.Text = "None";
-            this.radioSubNone.UseVisualStyleBackColor = true;
-            // 
-            // radioSubInternal
-            // 
-            this.radioSubInternal.AutoSize = true;
-            this.radioSubInternal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioSubInternal.Enabled = false;
-            this.radioSubInternal.Location = new System.Drawing.Point(82, 23);
-            this.radioSubInternal.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.radioSubInternal.Name = "radioSubInternal";
-            this.radioSubInternal.Size = new System.Drawing.Size(227, 23);
-            this.radioSubInternal.TabIndex = 1;
-            this.radioSubInternal.Text = "Use internal";
-            this.radioSubInternal.UseVisualStyleBackColor = true;
-            // 
-            // radioSubExternal
-            // 
-            this.radioSubExternal.AutoSize = true;
-            this.radioSubExternal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioSubExternal.Enabled = false;
-            this.radioSubExternal.Location = new System.Drawing.Point(82, 46);
-            this.radioSubExternal.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.radioSubExternal.Name = "radioSubExternal";
-            this.radioSubExternal.Size = new System.Drawing.Size(227, 23);
-            this.radioSubExternal.TabIndex = 2;
-            this.radioSubExternal.Text = "Use from file";
-            this.radioSubExternal.UseVisualStyleBackColor = true;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label26.Location = new System.Drawing.Point(3, 0);
-            this.label26.Name = "label26";
-            this.tableLayoutPanel16.SetRowSpan(this.label26, 3);
-            this.label26.Size = new System.Drawing.Size(73, 69);
-            this.label26.TabIndex = 3;
-            this.label26.Text = "Subtitles:";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label27.Location = new System.Drawing.Point(3, 69);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(73, 29);
-            this.label27.TabIndex = 4;
-            this.label27.Text = "Subtitle file:";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel17
-            // 
-            this.tableLayoutPanel17.ColumnCount = 2;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
-            this.tableLayoutPanel17.Controls.Add(this.buttonSubBrowse, 1, 0);
-            this.tableLayoutPanel17.Controls.Add(this.textBox1, 0, 0);
-            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(82, 69);
-            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
-            this.tableLayoutPanel17.RowCount = 1;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(227, 29);
-            this.tableLayoutPanel17.TabIndex = 5;
-            // 
-            // buttonSubBrowse
-            // 
-            this.buttonSubBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSubBrowse.Enabled = false;
-            this.buttonSubBrowse.Location = new System.Drawing.Point(171, 3);
-            this.buttonSubBrowse.Name = "buttonSubBrowse";
-            this.buttonSubBrowse.Size = new System.Drawing.Size(53, 23);
-            this.buttonSubBrowse.TabIndex = 0;
-            this.buttonSubBrowse.Text = "Browse";
-            this.buttonSubBrowse.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(3, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label28.Location = new System.Drawing.Point(315, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(717, 23);
-            this.label28.TabIndex = 6;
-            this.label28.Text = "Don\'t add any subtitles to the video.";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toolStripButtonReverse
-            // 
-            this.toolStripButtonReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonReverse.Enabled = false;
-            this.toolStripButtonReverse.Name = "toolStripButtonReverse";
-            this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButtonReverse.Text = "Reverse";
-            this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
+            this.toolStripButtonSubtitle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonSubtitle.Enabled = false;
+            this.toolStripButtonSubtitle.Name = "toolStripButtonSubtitle";
+            this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonSubtitle.Text = "Subtitles";
+            this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
             // 
             // MainForm
             // 
@@ -1076,13 +857,6 @@ namespace WebMConverter
             this.tableLayoutPanelAdvancedThreads.ResumeLayout(false);
             this.tableLayoutPanelAdvancedThreads.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
-            this.tabPageSubtitles.ResumeLayout(false);
-            this.tableLayoutPanelSubtitles.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.tableLayoutPanel16.ResumeLayout(false);
-            this.tableLayoutPanel16.PerformLayout();
-            this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel17.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1121,22 +895,6 @@ namespace WebMConverter
         public System.Windows.Forms.TextBox textBoxOut;
         private System.Windows.Forms.Label labelGeneralHQHint;
         private System.Windows.Forms.CheckBox boxHQ;
-        private System.Windows.Forms.TabPage tabPageSubtitles;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelSubtitles;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
-        private System.Windows.Forms.RadioButton radioSubNone;
-        private System.Windows.Forms.RadioButton radioSubInternal;
-        private System.Windows.Forms.RadioButton radioSubExternal;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
-        private System.Windows.Forms.Button buttonSubBrowse;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage tabPageProcessing;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProcessing;
         private System.Windows.Forms.ToolStrip toolStripProcessingScript;
@@ -1160,6 +918,7 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
         private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSubtitle;
     }
 }
 
