@@ -119,30 +119,18 @@ namespace WebMConverter
                     index = new FFMSsharp.Index(_indexFile);
                     if (index.BelongsToFile(path))
                     {
-                        Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
-                        Program.SubtitleTracks = new List<int>();
-                        for (int i = 0; i <= index.GetNumTracks(); i++)
-                        {
-                            if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
-                                Program.SubtitleTracks.Add(i);
-                        }
+                        IndexSubtitleTracks(path, index);
                         
                         return;
                     }
                 }
 
                 FFMSsharp.Indexer indexer = new FFMSsharp.Indexer(path);
-                index = indexer.Index();
+                index = indexer.Index(new List<int>()); // don't index any audio tracks
 
                 index.WriteIndex(_indexFile);
 
-                Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
-                Program.SubtitleTracks = new List<int>();
-                for (int i = 0; i <= index.GetNumTracks(); i++)
-                {
-                    if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
-                        Program.SubtitleTracks.Add(i);
-                }
+                IndexSubtitleTracks(path, index);
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
@@ -162,6 +150,17 @@ namespace WebMConverter
                 ffmpeg.Start();
             });
             bw.RunWorkerAsync();
+        }
+
+        void IndexSubtitleTracks(string path, FFMSsharp.Index index)
+        {
+            Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+            Program.SubtitleTracks = new List<int>();
+            for (int i = 0; i <= index.GetNumTracks(); i++)
+            {
+                if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
+                    Program.SubtitleTracks.Add(i);
+            }
         }
 
         private void HandleDragEnter(object sender, DragEventArgs e)
