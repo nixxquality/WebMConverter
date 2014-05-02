@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace WebMConverter
 {
     class FFmpeg : Process //Refactoring, faggots.
     {
-        public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries/ffmpeg.exe");
+        public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "ffmpeg.exe");
 
         public FFmpeg(string argument)
         {

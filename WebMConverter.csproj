@@ -67,6 +67,9 @@
     <Compile Include="FFmpeg.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FFplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GoToDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +163,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Binaries\ffms2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Binaries\ffplay.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Binaries\gpl-3.0.txt">

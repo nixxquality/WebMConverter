@@ -47,6 +47,8 @@ namespace WebMConverter
             this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -83,8 +85,7 @@ namespace WebMConverter
             this.labelAdvancedThreadsHint = new System.Windows.Forms.Label();
             this.labelAdvancedArguments = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
-            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -274,7 +275,8 @@ namespace WebMConverter
             this.toolStripButtonResize,
             this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting,
-            this.toolStripButtonSubtitle});
+            this.toolStripButtonSubtitle,
+            this.buttonPreview});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
             this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
@@ -316,6 +318,27 @@ namespace WebMConverter
             this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
             this.toolStripButtonReverse.Text = "Reverse";
             this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
+            // 
+            // toolStripButtonAdvancedScripting
+            // 
+            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
+            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
+            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonAdvancedScripting.Text = "Advanced";
+            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButtonSubtitle
+            // 
+            this.toolStripButtonSubtitle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonSubtitle.Enabled = false;
+            this.toolStripButtonSubtitle.Name = "toolStripButtonSubtitle";
+            this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonSubtitle.Text = "Subtitles";
+            this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
             // 
             // panelProcessingScriptInput
             // 
@@ -790,26 +813,15 @@ namespace WebMConverter
             this.textBoxArguments.Size = new System.Drawing.Size(944, 20);
             this.textBoxArguments.TabIndex = 1;
             // 
-            // toolStripButtonAdvancedScripting
+            // buttonPreview
             // 
-            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
-            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
-            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonAdvancedScripting.Text = "Advanced";
-            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripButtonSubtitle
-            // 
-            this.toolStripButtonSubtitle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonSubtitle.Enabled = false;
-            this.toolStripButtonSubtitle.Name = "toolStripButtonSubtitle";
-            this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButtonSubtitle.Text = "Subtitles";
-            this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
+            this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonPreview.Enabled = false;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(84, 22);
+            this.buttonPreview.Text = "Preview filters";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // MainForm
             // 
@@ -919,6 +931,7 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
         private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
         private System.Windows.Forms.ToolStripButton toolStripButtonSubtitle;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }
 

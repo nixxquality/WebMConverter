@@ -77,6 +77,7 @@ namespace WebMConverter
         private void SetFile(string path)
         {
             buttonGo.Enabled = false;
+            buttonPreview.Enabled = false;
             buttonGo.Text = "Indexing...";
 
             textBoxIn.Text = path;
@@ -134,6 +135,7 @@ namespace WebMConverter
             });
             bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
                 buttonGo.Enabled = true;
+                buttonPreview.Enabled = true;
                 buttonGo.Text = "Convert";
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
@@ -197,7 +199,60 @@ namespace WebMConverter
 
         }
 
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            string result = Preview();
+            if (!string.IsNullOrWhiteSpace(result))
+                MessageBox.Show(result, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         char[] invalidChars = Path.GetInvalidPathChars();
+
+        private string Preview()
+        {
+            string input = textBoxIn.Text;
+
+            if (string.IsNullOrWhiteSpace(input))
+                return "No input file!";
+
+            if (invalidChars.Any(input.Contains))
+                return "Input path contains invalid characters!\nInvalid characters: " + string.Join(" ", invalidChars);
+
+            if (!File.Exists(input))
+                return "Input file doesn't exist!";
+
+            string options = textBoxArguments.Text;
+            try
+            {
+                if (options.Trim() == "" || _argumentError)
+                    options = GenerateArguments();
+            }
+            catch (ArgumentException e)
+            {
+                return e.Message;
+            }
+
+            // Generate the script if we're in simple mode
+            if (Filters.Subtitle != null)
+                Filters.Subtitle.BeforeEncode();
+            if (!toolStripButtonAdvancedScripting.Checked)
+                GenerateAvisynthScript();
+
+            // Make our temporary file for the AviSynth script
+            string avsFileName = Path.GetTempFileName();
+            using (StreamWriter avscript = new StreamWriter(avsFileName, false))
+            {
+                avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
+                avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
+                avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
+                avscript.Write(textBoxProcessingScript.Text);
+            }
+
+            new FFplay(string.Format("-window_title Preview -f avisynth \"{0}\"", avsFileName)).Start();
+
+            return null;
+        }
 
         private string Convert()
         {
