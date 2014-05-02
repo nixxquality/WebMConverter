@@ -22,7 +22,9 @@ namespace WebMConverter
 
             trackVideoTimeline.Maximum = Program.VideoSource.NumberOfFrames - 1;
             trackVideoTimeline.TickFrequency = trackVideoTimeline.Maximum / 60;
-            textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
+            labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
+
+            trackVideoTimeline.Focus();
         }
 
         public TrimForm(TrimFilter FilterToEdit) : this()
@@ -35,7 +37,7 @@ namespace WebMConverter
 
             trackVideoTimeline.Value = trimStart;
             previewFrame.Frame = trimStart;
-            textBoxSelectedFrame.Text = "" + trimStart;
+            labelTimeStamp.Text = Program.FrameToTimeStamp(trimStart);
 
             checktrims();
         }
@@ -43,7 +45,7 @@ namespace WebMConverter
         private void trackBarVideoTimeline_Scroll(object sender, EventArgs e)
         {
             previewFrame.Frame = trackVideoTimeline.Value;
-            textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
+            labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
         }
 
         private void buttonTrimStart_Click(object sender, EventArgs e)
@@ -81,21 +83,50 @@ namespace WebMConverter
             Close();
         }
 
-        private void textBoxSelectedFrame_KeyUp(object sender, KeyEventArgs e)
+        private void toolStripMenuGoToFrame_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            using (var dialog = new GoToDialog("Frame", trackVideoTimeline.Value.ToString()))
             {
-                try
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    int i = int.Parse(textBoxSelectedFrame.Text);
-                    i = Math.Min(trackVideoTimeline.Maximum - 1, i); // Make sure we don't go out of bounds.
+                    int i = 0;
+                    int.TryParse(dialog.Result, out i);
+                    i = Math.Max(0, Math.Min(trackVideoTimeline.Maximum - 1, i)); // Make sure we don't go out of bounds.
                     previewFrame.Frame = i;
                     trackVideoTimeline.Value = i;
-                    textBoxSelectedFrame.Text = "" + i;
+                    labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
                 }
-                catch
-                { }
             }
+        }
+
+        private void ToolStripMenuGoToTime_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new GoToDialog("Time", Program.FrameToTimeStamp(trackVideoTimeline.Value)))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    double time;
+                    try
+                    {
+                        time = TimeSpan.Parse(dialog.Result).TotalSeconds;
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("That's not a valid timestamp.");
+                        return;
+                    }
+                    int i = Program.TimeToFrame(time);
+                    i = Math.Max(0, Math.Min(trackVideoTimeline.Maximum - 1, i)); // Make sure we don't go out of bounds.
+                    previewFrame.Frame = i;
+                    trackVideoTimeline.Value = i;
+                    labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
+                }
+            }
+        }
+
+        private void trackVideoTimeline_Leave(object sender, EventArgs e)
+        {
+            trackVideoTimeline.Focus(); // You're not going anywhere~
         }
     }
 

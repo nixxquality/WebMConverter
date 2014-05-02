@@ -314,11 +314,8 @@ namespace WebMConverter
                         double firsttime, lasttime;
                         var track = Program.VideoSource.Track;
 
-                        long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
-                        long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
-
-                        firsttime = firstpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
-                        lasttime = lastpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
+                        firsttime = Program.FrameToTime(Filters.Trim.TrimStart);
+                        lasttime = Program.FrameToTime(Filters.Trim.TrimEnd);
 
                         duration = lasttime - firsttime;
                     }
@@ -334,11 +331,8 @@ namespace WebMConverter
                         double firsttime, lasttime;
                         var track = Program.VideoSource.Track;
 
-                        long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
-                        long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
-
-                        firsttime = firstpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
-                        lasttime = lastpts * track.TimeBaseNumerator / track.TimeBaseDenominator / 1000;
+                        firsttime = Program.FrameToTime(Filters.Trim.TrimStart);
+                        lasttime = Program.FrameToTime(Filters.Trim.TrimEnd);
 
                         duration = lasttime - firsttime;
                     }

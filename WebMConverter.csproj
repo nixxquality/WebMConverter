@@ -37,8 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFMSSharp, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FFMSSharp, Version=1.4.0.1, Culture=neutral, processorArchitecture=x86">
       <HintPath>FFMSSharp\FFMSSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -67,6 +66,12 @@
     </Compile>
     <Compile Include="FFmpeg.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GoToDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GoToDialog.Designer.cs">
+      <DependentUpon>GoToDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -105,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CropForm.resx">
       <DependentUpon>CropForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoToDialog.resx">
+      <DependentUpon>GoToDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
