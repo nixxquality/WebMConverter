@@ -21,7 +21,7 @@ namespace WebMConverter
 
         public ResizeForm()
         {
-            FFMSsharp.Frame frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
+            FFMSSharp.Frame frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
 
             if (Filters.Crop != null)
             {

@@ -20,7 +20,7 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            trackVideoTimeline.Maximum = Program.VideoSource.NumFrames - 1;
+            trackVideoTimeline.Maximum = Program.VideoSource.NumberOfFrames - 1;
             trackVideoTimeline.TickFrequency = trackVideoTimeline.Maximum / 60;
             textBoxSelectedFrame.Text = "" + trackVideoTimeline.Value;
         }

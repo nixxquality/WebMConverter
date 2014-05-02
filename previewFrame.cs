@@ -36,22 +36,22 @@ namespace WebMConverter
 
             // Prepare our "list" of accepted pixel formats
             List<int> pixelformat = new List<int>();
-            pixelformat.Add(FFMSsharp.FFMS2.GetPixFmt("bgra"));
+            pixelformat.Add(FFMSSharp.FFMS2.GetPixelFormat("bgra"));
 
             // Calculate width and height
             int w, h;
             float s;
-            FFMSsharp.Frame frame;
+            FFMSSharp.Frame frame;
             frame = Program.VideoSource.GetFrame((int)this.frame);
             s = Math.Min((float)this.Size.Width / (float)frame.EncodedResolution.Width, (float)this.Size.Height / (float)frame.EncodedResolution.Height);
             w = (int)(frame.EncodedResolution.Width * s);
             h = (int)(frame.EncodedResolution.Height * s);
 
             // Do all the work
-            Program.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSsharp.Resizers.Bilinear);
+            Program.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSSharp.Resizer.Bilinear);
             frame = Program.VideoSource.GetFrame((int)this.frame);
 
-            pictureBoxFrame.BackgroundImage = frame.GetBitmap();
+            pictureBoxFrame.BackgroundImage = frame.Bitmap;
             pictureBoxFrame.ClientSize = new Size(w, h);
 
             // Center the pictureBox in our control

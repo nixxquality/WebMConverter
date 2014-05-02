@@ -38,7 +38,7 @@ namespace WebMConverter
 
     static class Program
     {
-        public static FFMSsharp.VideoSource VideoSource;
+        public static FFMSSharp.VideoSource VideoSource;
         public static string InputFile;
         public static string FileMd5;
         public static string AttachmentDirectory;

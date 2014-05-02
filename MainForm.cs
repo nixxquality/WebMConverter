@@ -25,7 +25,7 @@ namespace WebMConverter
 
         public MainForm()
         {
-            FFMSsharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
+            FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
 
             InitializeComponent();
 
@@ -112,11 +112,11 @@ namespace WebMConverter
                     }
                 }
 
-                FFMSsharp.Index index;
+                FFMSSharp.Index index;
 
                 if (File.Exists(_indexFile))
                 {
-                    index = new FFMSsharp.Index(_indexFile);
+                    index = new FFMSSharp.Index(_indexFile);
                     if (index.BelongsToFile(path))
                     {
                         IndexSubtitleTracks(path, index);
@@ -125,7 +125,7 @@ namespace WebMConverter
                     }
                 }
 
-                FFMSsharp.Indexer indexer = new FFMSsharp.Indexer(path);
+                FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path);
                 index = indexer.Index(new List<int>()); // don't index any audio tracks
 
                 index.WriteIndex(_indexFile);
@@ -152,13 +152,13 @@ namespace WebMConverter
             bw.RunWorkerAsync();
         }
 
-        void IndexSubtitleTracks(string path, FFMSsharp.Index index)
+        void IndexSubtitleTracks(string path, FFMSSharp.Index index)
         {
-            Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSsharp.TrackType.Video));
+            Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
             Program.SubtitleTracks = new List<int>();
-            for (int i = 0; i <= index.GetNumTracks(); i++)
+            for (int i = 0; i <= index.NumberOfTracks; i++)
             {
-                if (index.GetTrack(i).Type == FFMSsharp.TrackType.Subtitle)
+                if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
                     Program.SubtitleTracks.Add(i);
             }
         }
@@ -312,7 +312,7 @@ namespace WebMConverter
                     else
                     {
                         double firsttime, lasttime;
-                        var track = Program.VideoSource.GetTrack();
+                        var track = Program.VideoSource.Track;
 
                         long firstpts = track.GetFrameInfo(Filters.Trim.TrimStart).PTS;
                         long lastpts = track.GetFrameInfo(Filters.Trim.TrimEnd).PTS;
@@ -332,7 +332,7 @@ namespace WebMConverter
 
                         Match match = Regex.Match(trimcmd, @".*?(\d+).*?(\d+)");
                         double firsttime, lasttime;
-                        var track = Program.VideoSource.GetTrack();
+                        var track = Program.VideoSource.Track;
 
                         long firstpts = track.GetFrameInfo(int.Parse(match.Groups[1].Value)).PTS;
                         long lastpts = track.GetFrameInfo(int.Parse(match.Groups[2].Value)).PTS;
