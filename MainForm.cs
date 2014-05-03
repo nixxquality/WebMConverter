@@ -290,6 +290,7 @@ namespace WebMConverter
         private string Preview()
         {
             string input = textBoxIn.Text;
+            buttonPreview.Enabled = false;
 
             if (string.IsNullOrWhiteSpace(input))
                 return "No input file!";
@@ -318,7 +319,12 @@ namespace WebMConverter
                 avscript.Write(textBoxProcessingScript.Text);
             }
 
-            new FFplay(string.Format("-window_title Preview -f avisynth \"{0}\"", avsFileName)).Start();
+            var ffplay = new FFplay(string.Format("-window_title Preview -f avisynth \"{0}\"", avsFileName));
+            ffplay.Exited += delegate
+            {
+                toolStripProcessingScript.Invoke(new Action(() => buttonPreview.Enabled = true));
+            };
+            ffplay.Start();
 
             return null;
         }
