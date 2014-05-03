@@ -209,6 +209,7 @@ namespace WebMConverter
                 buttonBrowseIn.Enabled = true;
                 textBoxIn.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
+                toolStripButtonDeinterlace.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
@@ -301,17 +302,6 @@ namespace WebMConverter
             if (!File.Exists(input))
                 return "Input file doesn't exist!";
 
-            string options = textBoxArguments.Text;
-            try
-            {
-                if (options.Trim() == "" || _argumentError)
-                    options = GenerateArguments();
-            }
-            catch (ArgumentException e)
-            {
-                return e.Message;
-            }
-
             // Generate the script if we're in simple mode
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
@@ -325,6 +315,7 @@ namespace WebMConverter
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+                avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
                 avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
@@ -379,6 +370,7 @@ namespace WebMConverter
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+                avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
                 avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
@@ -498,6 +490,8 @@ namespace WebMConverter
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
+            if (Filters.Deinterlace != null)
+                script.AppendLine(Filters.Deinterlace.GetAvisynthCommand());
             if (Filters.Subtitle != null)
                 script.AppendLine(Filters.Subtitle.GetAvisynthCommand());
             if (Filters.Trim != null)
@@ -535,6 +529,20 @@ namespace WebMConverter
             else
             {
                 textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)");
+            }
+        }
+
+        private void toolStripButtonDeinterlace_Click(object sender, EventArgs e)
+        {
+            if (!toolStripButtonAdvancedScripting.Checked)
+            {
+                Filters.Deinterlace = new DeinterlaceFilter();
+                listViewProcessingScript.Items.Add("Deinterlace");
+                toolStripButtonDeinterlace.Enabled = false;
+            }
+            else
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + "tdeint()");
             }
         }
 
@@ -625,6 +633,7 @@ namespace WebMConverter
                 GenerateAvisynthScript();
                 textBoxProcessingScript.Show();
                 toolStripButtonCrop.Enabled = true;
+                toolStripButtonDeinterlace.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
@@ -651,6 +660,11 @@ namespace WebMConverter
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
+                            break;
+                        case "Deinterlace":
+                            Filters.Deinterlace = null;
+                            toolStripButtonDeinterlace.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Resize":
@@ -719,6 +733,9 @@ namespace WebMConverter
                             GenerateArguments();
                         }
                     }
+                    break;
+                default:
+                    MessageBox.Show("No options!");
                     break;
             }
         }

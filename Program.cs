@@ -13,6 +13,7 @@ namespace WebMConverter
     static class Filters
     {
         internal static CropFilter Crop = null;
+        internal static DeinterlaceFilter Deinterlace = null;
         internal static ResizeFilter Resize = null;
         internal static ReverseFilter Reverse = null;
         internal static SubtitleFilter Subtitle = null;
@@ -21,6 +22,7 @@ namespace WebMConverter
         internal static void ResetFilters()
         {
             Crop = null;
+            Deinterlace = null;
             Resize = null;
             Reverse = null;
             Subtitle = null;
@@ -28,6 +30,13 @@ namespace WebMConverter
         }
     }
 
+    public class DeinterlaceFilter : IFilter
+    {
+        public string GetAvisynthCommand()
+        {
+            return "tdeint()";
+        }
+    }
     public class ReverseFilter : IFilter
     {
         public string GetAvisynthCommand()

@@ -90,6 +90,7 @@ namespace WebMConverter
             this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
+            this.toolStripButtonDeinterlace = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -282,7 +283,8 @@ namespace WebMConverter
             this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting,
             this.toolStripButtonSubtitle,
-            this.buttonPreview});
+            this.buttonPreview,
+            this.toolStripButtonDeinterlace});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
             this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
@@ -871,6 +873,15 @@ namespace WebMConverter
             this.progressBarIndexing.TabIndex = 0;
             this.progressBarIndexing.Value = 30;
             // 
+            // toolStripButtonDeinterlace
+            // 
+            this.toolStripButtonDeinterlace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonDeinterlace.Enabled = false;
+            this.toolStripButtonDeinterlace.Name = "toolStripButtonDeinterlace";
+            this.toolStripButtonDeinterlace.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButtonDeinterlace.Text = "Deinterlace";
+            this.toolStripButtonDeinterlace.Click += new System.EventHandler(this.toolStripButtonDeinterlace_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -988,6 +999,7 @@ namespace WebMConverter
         private System.Windows.Forms.Panel panelContainTheProgressBar;
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDeinterlace;
     }
 }
 
