@@ -23,6 +23,8 @@ namespace WebMConverter
         private string _autoArguments;
         private bool _argumentError;
 
+        bool indexing = false;
+
         public MainForm()
         {
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
@@ -76,9 +78,14 @@ namespace WebMConverter
 
         private void SetFile(string path)
         {
+            indexing = true;
+
+            progressBarIndexing.Style = ProgressBarStyle.Marquee;
+            progressBarIndexing.Value = 30;
+            panelHideTheOptions.Show();
+
             buttonGo.Enabled = false;
             buttonPreview.Enabled = false;
-            buttonGo.Text = "Indexing...";
 
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
@@ -100,69 +107,102 @@ namespace WebMConverter
             listViewProcessingScript.Show();
             GenerateAvisynthScript();
 
-            // Index the file and generate our VideoSource object
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(delegate
+            // Hash some of the file to make sure we didn't index it already
+            labelIndexingProgress.Text = "Hashing...";
+            using (MD5 md5 = MD5.Create())
+            using (FileStream stream = File.OpenRead(path))
             {
-                using (MD5 md5 = MD5.Create())
-                {
-                    using (FileStream stream = File.OpenRead(path))
-                    {
-                        Program.FileMd5 = BitConverter.ToString(md5.ComputeHash(stream));
-                        _indexFile = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".ffindex");
-                    }
-                }
+                var filename = new UTF8Encoding().GetBytes(name);
+                var buffer = new byte[4096];
 
-                FFMSSharp.Index index;
+                filename.CopyTo(buffer, 0);
+                stream.Read(buffer, filename.Length, 4096 - filename.Length);
 
-                if (File.Exists(_indexFile))
-                {
-                    index = new FFMSSharp.Index(_indexFile);
-                    if (index.BelongsToFile(path))
-                    {
-                        IndexSubtitleTracks(path, index);
-                        
-                        return;
-                    }
-                }
+                Program.FileMd5 = BitConverter.ToString(md5.ComputeHash(buffer));
+                _indexFile = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".ffindex");
+            }
 
+            FFMSSharp.Index index = null;
+            BackgroundWorker indexbw = new BackgroundWorker();
+            BackgroundWorker extractbw = new BackgroundWorker();
+
+            indexbw.WorkerSupportsCancellation = true;
+            indexbw.WorkerReportsProgress = true;
+            indexbw.ProgressChanged += new ProgressChangedEventHandler(delegate (object sender, ProgressChangedEventArgs e)
+            {
+                this.progressBarIndexing.Value = e.ProgressPercentage;
+            });
+            indexbw.DoWork += new DoWorkEventHandler(delegate
+            {
                 FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path);
+
+                indexer.UpdateIndexProgress += delegate(object sender, FFMSSharp.IndexingProgressChangeEventArgs e)
+                {
+                    indexbw.ReportProgress((int)(((double)e.Current / (double)e.Total) * 100));
+                };
+
                 index = indexer.Index(new List<int>()); // don't index any audio tracks
 
                 index.WriteIndex(_indexFile);
-
-                IndexSubtitleTracks(path, index);
             });
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate{
-                buttonGo.Enabled = true;
-                buttonPreview.Enabled = true;
-                buttonGo.Text = "Convert";
-                toolStripButtonCrop.Enabled = true;
-                toolStripButtonResize.Enabled = true;
-                toolStripButtonReverse.Enabled = true;
-                toolStripButtonSubtitle.Enabled = true;
-                toolStripButtonTrim.Enabled = true;
+            extractbw.DoWork += new DoWorkEventHandler(delegate
+            {
+                Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
 
-                // Extract attachments
+                Program.SubtitleTracks = new List<int>();
+                for (int i = 0; i <= index.NumberOfTracks; i++)
+                {
+                    if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
+                        Program.SubtitleTracks.Add(i);
+                }
+
                 Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
                 Directory.CreateDirectory(Program.AttachmentDirectory);
 
                 var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile));
                 ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
                 ffmpeg.Start();
-            });
-            bw.RunWorkerAsync();
-        }
 
-        void IndexSubtitleTracks(string path, FFMSSharp.Index index)
-        {
-            Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
-            Program.SubtitleTracks = new List<int>();
-            for (int i = 0; i <= index.NumberOfTracks; i++)
+                ffmpeg.WaitForExit();
+            });
+            indexbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
             {
-                if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
-                    Program.SubtitleTracks.Add(i);
+                labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
+                progressBarIndexing.Value = 30;
+                progressBarIndexing.Style = ProgressBarStyle.Marquee;
+
+                extractbw.RunWorkerAsync();
+            });
+            extractbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
+            {
+                indexing = false;
+                buttonGo.Enabled = true;
+                buttonPreview.Enabled = true;
+                toolStripButtonCrop.Enabled = true;
+                toolStripButtonResize.Enabled = true;
+                toolStripButtonReverse.Enabled = true;
+                toolStripButtonSubtitle.Enabled = true;
+                toolStripButtonTrim.Enabled = true;
+                panelHideTheOptions.Hide();
+            });
+
+            if (File.Exists(_indexFile))
+            {
+                index = new FFMSSharp.Index(_indexFile);
+                if (index.BelongsToFile(path))
+                {
+                    labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
+                    progressBarIndexing.Value = 30;
+                    progressBarIndexing.Style = ProgressBarStyle.Marquee;
+
+                    extractbw.RunWorkerAsync();
+                    return;
+                }
             }
+
+            progressBarIndexing.Style = ProgressBarStyle.Continuous;
+            labelIndexingProgress.Text = "Indexing...";
+            indexbw.RunWorkerAsync();
         }
 
         private void HandleDragEnter(object sender, DragEventArgs e)
@@ -193,6 +233,12 @@ namespace WebMConverter
 
         private void buttonGo_Click(object sender, EventArgs e)
         {
+            if (indexing)
+            {
+                // cancel async
+                return;
+            }
+
             string result = Convert();
             if (!string.IsNullOrWhiteSpace(result))
                 MessageBox.Show(result, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -533,7 +579,7 @@ namespace WebMConverter
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripButtonAdvancedScripting_Click(object sender, EventArgs e)
         {
             toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
             toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // STUB: get better icons

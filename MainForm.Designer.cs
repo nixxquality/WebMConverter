@@ -49,6 +49,7 @@ namespace WebMConverter
             this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -85,7 +86,10 @@ namespace WebMConverter
             this.labelAdvancedThreadsHint = new System.Windows.Forms.Label();
             this.labelAdvancedArguments = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
+            this.labelIndexingProgress = new System.Windows.Forms.Label();
+            this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -106,6 +110,8 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingAdvanced.SuspendLayout();
             this.tableLayoutPanelAdvancedThreads.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
+            this.panelHideTheOptions.SuspendLayout();
+            this.panelContainTheProgressBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMainForm
@@ -329,7 +335,7 @@ namespace WebMConverter
             this.toolStripButtonAdvancedScripting.Text = "Advanced";
             this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
             // 
             // toolStripButtonSubtitle
             // 
@@ -339,6 +345,16 @@ namespace WebMConverter
             this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
             this.toolStripButtonSubtitle.Text = "Subtitles";
             this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonPreview.Enabled = false;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(84, 22);
+            this.buttonPreview.Text = "Preview filters";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // panelProcessingScriptInput
             // 
@@ -813,15 +829,47 @@ namespace WebMConverter
             this.textBoxArguments.Size = new System.Drawing.Size(944, 20);
             this.textBoxArguments.TabIndex = 1;
             // 
-            // buttonPreview
+            // panelHideTheOptions
             // 
-            this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonPreview.Enabled = false;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(84, 22);
-            this.buttonPreview.Text = "Preview filters";
-            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelHideTheOptions.Controls.Add(this.panelContainTheProgressBar);
+            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 87);
+            this.panelHideTheOptions.Name = "panelHideTheOptions";
+            this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
+            this.panelHideTheOptions.TabIndex = 3;
+            this.panelHideTheOptions.Visible = false;
+            // 
+            // panelContainTheProgressBar
+            // 
+            this.panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panelContainTheProgressBar.AutoSize = true;
+            this.panelContainTheProgressBar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelContainTheProgressBar.BackColor = System.Drawing.SystemColors.Control;
+            this.panelContainTheProgressBar.Controls.Add(this.labelIndexingProgress);
+            this.panelContainTheProgressBar.Controls.Add(this.progressBarIndexing);
+            this.panelContainTheProgressBar.Location = new System.Drawing.Point(299, 148);
+            this.panelContainTheProgressBar.Name = "panelContainTheProgressBar";
+            this.panelContainTheProgressBar.Size = new System.Drawing.Size(469, 61);
+            this.panelContainTheProgressBar.TabIndex = 0;
+            // 
+            // labelIndexingProgress
+            // 
+            this.labelIndexingProgress.BackColor = System.Drawing.Color.Transparent;
+            this.labelIndexingProgress.Location = new System.Drawing.Point(4, 5);
+            this.labelIndexingProgress.Name = "labelIndexingProgress";
+            this.labelIndexingProgress.Size = new System.Drawing.Size(460, 23);
+            this.labelIndexingProgress.TabIndex = 1;
+            this.labelIndexingProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // progressBarIndexing
+            // 
+            this.progressBarIndexing.Location = new System.Drawing.Point(6, 32);
+            this.progressBarIndexing.Margin = new System.Windows.Forms.Padding(6);
+            this.progressBarIndexing.Name = "progressBarIndexing";
+            this.progressBarIndexing.Size = new System.Drawing.Size(457, 23);
+            this.progressBarIndexing.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBarIndexing.TabIndex = 0;
+            this.progressBarIndexing.Value = 30;
             // 
             // MainForm
             // 
@@ -829,6 +877,7 @@ namespace WebMConverter
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 446);
+            this.Controls.Add(this.panelHideTheOptions);
             this.Controls.Add(this.tableLayoutPanelMainForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -869,6 +918,9 @@ namespace WebMConverter
             this.tableLayoutPanelAdvancedThreads.ResumeLayout(false);
             this.tableLayoutPanelAdvancedThreads.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
+            this.panelHideTheOptions.ResumeLayout(false);
+            this.panelHideTheOptions.PerformLayout();
+            this.panelContainTheProgressBar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -883,7 +935,22 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelInputFile;
         private System.Windows.Forms.Button buttonGo;
         private System.Windows.Forms.Button buttonBrowseIn;
+        public System.Windows.Forms.TextBox textBoxIn;
+        public System.Windows.Forms.TextBox textBoxOut;
         private System.Windows.Forms.TabControl tabControlOptions;
+        private System.Windows.Forms.TabPage tabPageProcessing;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProcessing;
+        private System.Windows.Forms.ToolStrip toolStripProcessingScript;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTrim;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCrop;
+        private System.Windows.Forms.ToolStripButton toolStripButtonResize;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSubtitle;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.Panel panelProcessingScriptInput;
+        private System.Windows.Forms.ListView listViewProcessingScript;
+        private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.TabPage tabPageEncoding;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncoding;
         private System.Windows.Forms.GroupBox groupBoxEncodingMetadata;
@@ -893,45 +960,34 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelMetadataTitleHint;
         private System.Windows.Forms.GroupBox groupBoxEncodingGeneral;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingGeneral;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGeneralSizeLimit;
-        private System.Windows.Forms.TextBox boxLimit;
-        private System.Windows.Forms.Label labelGeneralSizeLimitUnit;
-        private System.Windows.Forms.Label labelGeneralSizeLimit;
-        private System.Windows.Forms.Label labelGeneralSizeLimitHint;
-        private System.Windows.Forms.Label labelGeneralBitrateHint;
+        private System.Windows.Forms.Label labelGeneralBitrate;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGeneralBitrate;
         private System.Windows.Forms.TextBox boxBitrate;
         private System.Windows.Forms.Label labelGeneralBitrateUnit;
-        private System.Windows.Forms.Label labelGeneralBitrate;
-        public System.Windows.Forms.TextBox textBoxIn;
-        public System.Windows.Forms.TextBox textBoxOut;
-        private System.Windows.Forms.Label labelGeneralHQHint;
+        private System.Windows.Forms.Label labelGeneralBitrateHint;
+        private System.Windows.Forms.Label labelGeneralSizeLimit;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGeneralSizeLimit;
+        private System.Windows.Forms.TextBox boxLimit;
+        private System.Windows.Forms.Label labelGeneralSizeLimitUnit;
+        private System.Windows.Forms.Label labelGeneralSizeLimitHint;
         private System.Windows.Forms.CheckBox boxHQ;
-        private System.Windows.Forms.TabPage tabPageProcessing;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProcessing;
-        private System.Windows.Forms.ToolStrip toolStripProcessingScript;
-        private System.Windows.Forms.ToolStripButton toolStripButtonTrim;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCrop;
-        private System.Windows.Forms.ToolStripButton toolStripButtonResize;
+        private System.Windows.Forms.Label labelGeneralHQHint;
+        private System.Windows.Forms.CheckBox boxAudio;
+        private System.Windows.Forms.Label labelGeneralAudioHint;
         private System.Windows.Forms.GroupBox groupBoxEncodingAdvanced;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingAdvanced;
+        private System.Windows.Forms.Label labelAdvancedWarning;
         private System.Windows.Forms.Label labelAdvancedThreads;
-        private System.Windows.Forms.Label labelAdvancedThreadsHint;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAdvancedThreads;
         private System.Windows.Forms.TrackBar trackThreads;
         private System.Windows.Forms.Label labelThreads;
+        private System.Windows.Forms.Label labelAdvancedThreadsHint;
         private System.Windows.Forms.Label labelAdvancedArguments;
         private System.Windows.Forms.TextBox textBoxArguments;
-        private System.Windows.Forms.Label labelAdvancedWarning;
-        private System.Windows.Forms.Label labelGeneralAudioHint;
-        private System.Windows.Forms.CheckBox boxAudio;
-        private System.Windows.Forms.Panel panelProcessingScriptInput;
-        private System.Windows.Forms.ListView listViewProcessingScript;
-        private System.Windows.Forms.TextBox textBoxProcessingScript;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
-        private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSubtitle;
-        private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.Panel panelHideTheOptions;
+        private System.Windows.Forms.Panel panelContainTheProgressBar;
+        private System.Windows.Forms.ProgressBar progressBarIndexing;
+        private System.Windows.Forms.Label labelIndexingProgress;
     }
 }
 
