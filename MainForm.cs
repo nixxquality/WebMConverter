@@ -79,8 +79,6 @@ namespace WebMConverter
 
         private void SetFile(string path)
         {
-            indexing = true;
-
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
             panelHideTheOptions.Show();
