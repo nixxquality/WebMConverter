@@ -24,6 +24,7 @@ namespace WebMConverter
         private bool _argumentError;
 
         bool indexing = false;
+        BackgroundWorker indexbw;
 
         public MainForm()
         {
@@ -86,6 +87,8 @@ namespace WebMConverter
 
             buttonGo.Enabled = false;
             buttonPreview.Enabled = false;
+            buttonBrowseIn.Enabled = false;
+            textBoxIn.Enabled = false;
 
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
@@ -123,7 +126,7 @@ namespace WebMConverter
             }
 
             FFMSSharp.Index index = null;
-            BackgroundWorker indexbw = new BackgroundWorker();
+            indexbw = new BackgroundWorker();
             BackgroundWorker extractbw = new BackgroundWorker();
 
             indexbw.WorkerSupportsCancellation = true;
@@ -132,19 +135,28 @@ namespace WebMConverter
             {
                 this.progressBarIndexing.Value = e.ProgressPercentage;
             });
-            indexbw.DoWork += new DoWorkEventHandler(delegate
+            indexbw.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
                 FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path);
 
-                indexer.UpdateIndexProgress += delegate(object sender, FFMSSharp.IndexingProgressChangeEventArgs e)
+                indexer.UpdateIndexProgress += delegate(object sendertwo, FFMSSharp.IndexingProgressChangeEventArgs etwo)
                 {
-                    indexbw.ReportProgress((int)(((double)e.Current / (double)e.Total) * 100));
+                    indexbw.ReportProgress((int)(((double)etwo.Current / (double)etwo.Total) * 100));
+                    indexer.CancelIndexing = indexbw.CancellationPending;
                 };
 
-                index = indexer.Index(new List<int>()); // don't index any audio tracks
+                try
+                {
+                    index = indexer.Index(new List<int>()); // don't index any audio tracks
+                }
+                catch (OperationCanceledException)
+                {
+                    e.Cancel = true;
+                    return;
+                }
 
                 index.WriteIndex(_indexFile);
-            });
+            };
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
                 Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
@@ -165,19 +177,37 @@ namespace WebMConverter
 
                 ffmpeg.WaitForExit();
             });
-            indexbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
-            {
-                labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
-                progressBarIndexing.Value = 30;
-                progressBarIndexing.Style = ProgressBarStyle.Marquee;
-
-                extractbw.RunWorkerAsync();
-            });
-            extractbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
+            indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
                 indexing = false;
+                buttonGo.Enabled = false;
+                buttonGo.Text = "Convert";
+                
+                if (e.Cancelled)
+                {
+                    textBoxIn.Text = "";
+                    textBoxOut.Text = "";
+                    Program.InputFile = path;
+                    Program.FileMd5 = null;
+                    buttonBrowseIn.Enabled = true;
+                    textBoxIn.Enabled = true;
+                    panelHideTheOptions.Hide();
+                }
+                else
+                {
+                    labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
+                    progressBarIndexing.Value = 30;
+                    progressBarIndexing.Style = ProgressBarStyle.Marquee;
+
+                    extractbw.RunWorkerAsync();
+                }
+            };
+            extractbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
+            {
                 buttonGo.Enabled = true;
                 buttonPreview.Enabled = true;
+                buttonBrowseIn.Enabled = true;
+                textBoxIn.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
@@ -200,6 +230,9 @@ namespace WebMConverter
                 }
             }
 
+            indexing = true;
+            buttonGo.Enabled = true;
+            buttonGo.Text = "Cancel";
             progressBarIndexing.Style = ProgressBarStyle.Continuous;
             labelIndexingProgress.Text = "Indexing...";
             indexbw.RunWorkerAsync();
@@ -235,7 +268,8 @@ namespace WebMConverter
         {
             if (indexing)
             {
-                // cancel async
+                indexbw.CancelAsync();
+                buttonGo.Enabled = false;
                 return;
             }
 

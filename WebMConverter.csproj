@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FFMSSharp, Version=1.4.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>FFMSSharp\FFMSSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
