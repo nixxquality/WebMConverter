@@ -50,6 +50,7 @@ namespace WebMConverter
             this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDeinterlace = new System.Windows.Forms.ToolStripButton();
             this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -90,7 +91,6 @@ namespace WebMConverter
             this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
-            this.toolStripButtonDeinterlace = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -357,6 +357,15 @@ namespace WebMConverter
             this.buttonPreview.Size = new System.Drawing.Size(84, 22);
             this.buttonPreview.Text = "Preview filters";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
+            // toolStripButtonDeinterlace
+            // 
+            this.toolStripButtonDeinterlace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonDeinterlace.Enabled = false;
+            this.toolStripButtonDeinterlace.Name = "toolStripButtonDeinterlace";
+            this.toolStripButtonDeinterlace.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButtonDeinterlace.Text = "Deinterlace";
+            this.toolStripButtonDeinterlace.Click += new System.EventHandler(this.toolStripButtonDeinterlace_Click);
             // 
             // panelProcessingScriptInput
             // 
@@ -668,8 +677,8 @@ namespace WebMConverter
             this.labelGeneralHQHint.Name = "labelGeneralHQHint";
             this.labelGeneralHQHint.Size = new System.Drawing.Size(751, 28);
             this.labelGeneralHQHint.TabIndex = 16;
-            this.labelGeneralHQHint.Text = "Will greatly increase the quality/size ratio. Be warned, this will make the conve" +
-    "rsion take forever.";
+            this.labelGeneralHQHint.Text = "Enables two-pass encoding and adds some extra encoding arguments, increasing outp" +
+    "ut quality, but increases the time it takes to encode your file.";
             this.labelGeneralHQHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // boxAudio
@@ -835,7 +844,7 @@ namespace WebMConverter
             // 
             this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panelHideTheOptions.Controls.Add(this.panelContainTheProgressBar);
-            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 87);
+            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 88);
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
@@ -872,15 +881,6 @@ namespace WebMConverter
             this.progressBarIndexing.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBarIndexing.TabIndex = 0;
             this.progressBarIndexing.Value = 30;
-            // 
-            // toolStripButtonDeinterlace
-            // 
-            this.toolStripButtonDeinterlace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonDeinterlace.Enabled = false;
-            this.toolStripButtonDeinterlace.Name = "toolStripButtonDeinterlace";
-            this.toolStripButtonDeinterlace.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButtonDeinterlace.Text = "Deinterlace";
-            this.toolStripButtonDeinterlace.Click += new System.EventHandler(this.toolStripButtonDeinterlace_Click);
             // 
             // MainForm
             // 
