@@ -16,7 +16,7 @@ namespace WebMConverter
 
         public TrimFilter GeneratedFilter;
 
-        public TrimForm()
+        public TrimForm(TrimFilter FilterToEdit = null)
         {
             InitializeComponent();
 
@@ -25,15 +25,20 @@ namespace WebMConverter
             labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
 
             trackVideoTimeline.Focus();
-        }
 
-        public TrimForm(TrimFilter FilterToEdit) : this()
-        {
-            trimStart = FilterToEdit.TrimStart;
-            trimEnd = FilterToEdit.TrimEnd;
+            if (FilterToEdit != null)
+            {
+                trimStart = FilterToEdit.TrimStart;
+                trimEnd = FilterToEdit.TrimEnd;
+            }
+            else
+            {
+                trimStart = 0;
+                trimEnd = Program.VideoSource.NumberOfFrames - 1;
+            }
 
-            textBoxTrimStart.Text = "" + trimStart;
-            textBoxTrimEnd.Text = "" + trimEnd;
+            labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart.ToString());
+            labelTrimEnd.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimEnd), trimEnd.ToString());
 
             trackVideoTimeline.Value = trimStart;
             previewFrame.Frame = trimStart;
@@ -51,14 +56,14 @@ namespace WebMConverter
         private void buttonTrimStart_Click(object sender, EventArgs e)
         {
             trimStart = trackVideoTimeline.Value;
-            textBoxTrimStart.Text = "" + trackVideoTimeline.Value;
+            labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart.ToString());
             checktrims();
         }
 
         private void buttonTrimEnd_Click(object sender, EventArgs e)
         {
             trimEnd = trackVideoTimeline.Value;
-            textBoxTrimEnd.Text = "" + trackVideoTimeline.Value;
+            labelTrimEnd.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimEnd), trimEnd.ToString());
             checktrims();
         }
 

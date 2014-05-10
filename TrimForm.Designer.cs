@@ -31,19 +31,19 @@
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowTrimButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonTrimStart = new System.Windows.Forms.Button();
-            this.textBoxTrimStart = new System.Windows.Forms.TextBox();
+            this.labelTrimStart = new System.Windows.Forms.Label();
             this.buttonTrimEnd = new System.Windows.Forms.Button();
-            this.textBoxTrimEnd = new System.Windows.Forms.TextBox();
+            this.labelTrimEnd = new System.Windows.Forms.Label();
             this.previewFrame = new WebMConverter.PreviewFrame();
             this.trackVideoTimeline = new System.Windows.Forms.TrackBar();
             this.flowDialogButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelTimeStamp = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuGoTo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuGoToFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuGoToTime = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelTimeStamp = new System.Windows.Forms.Label();
             this.tableLayoutPanel.SuspendLayout();
             this.flowTrimButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).BeginInit();
@@ -75,9 +75,9 @@
             // flowTrimButtons
             // 
             this.flowTrimButtons.Controls.Add(this.buttonTrimStart);
-            this.flowTrimButtons.Controls.Add(this.textBoxTrimStart);
+            this.flowTrimButtons.Controls.Add(this.labelTrimStart);
             this.flowTrimButtons.Controls.Add(this.buttonTrimEnd);
-            this.flowTrimButtons.Controls.Add(this.textBoxTrimEnd);
+            this.flowTrimButtons.Controls.Add(this.labelTrimEnd);
             this.flowTrimButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowTrimButtons.Location = new System.Drawing.Point(0, 490);
             this.flowTrimButtons.Margin = new System.Windows.Forms.Padding(0);
@@ -89,39 +89,45 @@
             // 
             this.buttonTrimStart.Location = new System.Drawing.Point(3, 3);
             this.buttonTrimStart.Name = "buttonTrimStart";
-            this.buttonTrimStart.Size = new System.Drawing.Size(54, 23);
+            this.buttonTrimStart.Size = new System.Drawing.Size(75, 23);
             this.buttonTrimStart.TabIndex = 0;
-            this.buttonTrimStart.Text = "Start";
+            this.buttonTrimStart.Text = "Set Start:";
+            this.buttonTrimStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTrimStart.UseVisualStyleBackColor = true;
             this.buttonTrimStart.Click += new System.EventHandler(this.buttonTrimStart_Click);
             // 
-            // textBoxTrimStart
+            // labelTrimStart
             // 
-            this.textBoxTrimStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTrimStart.Enabled = false;
-            this.textBoxTrimStart.Location = new System.Drawing.Point(63, 4);
-            this.textBoxTrimStart.Name = "textBoxTrimStart";
-            this.textBoxTrimStart.Size = new System.Drawing.Size(59, 20);
-            this.textBoxTrimStart.TabIndex = 2;
+            this.labelTrimStart.AutoSize = true;
+            this.labelTrimStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelTrimStart.Location = new System.Drawing.Point(84, 0);
+            this.labelTrimStart.MinimumSize = new System.Drawing.Size(100, 0);
+            this.labelTrimStart.Name = "labelTrimStart";
+            this.labelTrimStart.Size = new System.Drawing.Size(100, 29);
+            this.labelTrimStart.TabIndex = 2;
+            this.labelTrimStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buttonTrimEnd
             // 
-            this.buttonTrimEnd.Location = new System.Drawing.Point(128, 3);
+            this.buttonTrimEnd.Location = new System.Drawing.Point(190, 3);
             this.buttonTrimEnd.Name = "buttonTrimEnd";
-            this.buttonTrimEnd.Size = new System.Drawing.Size(54, 23);
+            this.buttonTrimEnd.Size = new System.Drawing.Size(75, 23);
             this.buttonTrimEnd.TabIndex = 1;
-            this.buttonTrimEnd.Text = "End";
+            this.buttonTrimEnd.Text = "Set End:";
+            this.buttonTrimEnd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTrimEnd.UseVisualStyleBackColor = true;
             this.buttonTrimEnd.Click += new System.EventHandler(this.buttonTrimEnd_Click);
             // 
-            // textBoxTrimEnd
+            // labelTrimEnd
             // 
-            this.textBoxTrimEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTrimEnd.Enabled = false;
-            this.textBoxTrimEnd.Location = new System.Drawing.Point(188, 4);
-            this.textBoxTrimEnd.Name = "textBoxTrimEnd";
-            this.textBoxTrimEnd.Size = new System.Drawing.Size(59, 20);
-            this.textBoxTrimEnd.TabIndex = 3;
+            this.labelTrimEnd.AutoSize = true;
+            this.labelTrimEnd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelTrimEnd.Location = new System.Drawing.Point(271, 0);
+            this.labelTrimEnd.MinimumSize = new System.Drawing.Size(100, 0);
+            this.labelTrimEnd.Name = "labelTrimEnd";
+            this.labelTrimEnd.Size = new System.Drawing.Size(100, 29);
+            this.labelTrimEnd.TabIndex = 3;
+            this.labelTrimEnd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // previewFrame
             // 
@@ -182,6 +188,16 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
+            // labelTimeStamp
+            // 
+            this.labelTimeStamp.AutoSize = true;
+            this.labelTimeStamp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelTimeStamp.Location = new System.Drawing.Point(667, 458);
+            this.labelTimeStamp.Name = "labelTimeStamp";
+            this.labelTimeStamp.Size = new System.Drawing.Size(74, 32);
+            this.labelTimeStamp.TabIndex = 6;
+            this.labelTimeStamp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -214,16 +230,6 @@
             this.ToolStripMenuGoToTime.Size = new System.Drawing.Size(107, 22);
             this.ToolStripMenuGoToTime.Text = "Time";
             this.ToolStripMenuGoToTime.Click += new System.EventHandler(this.ToolStripMenuGoToTime_Click);
-            // 
-            // labelTimeStamp
-            // 
-            this.labelTimeStamp.AutoSize = true;
-            this.labelTimeStamp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTimeStamp.Location = new System.Drawing.Point(667, 458);
-            this.labelTimeStamp.Name = "labelTimeStamp";
-            this.labelTimeStamp.Size = new System.Drawing.Size(74, 32);
-            this.labelTimeStamp.TabIndex = 6;
-            this.labelTimeStamp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TrimForm
             // 
@@ -265,12 +271,12 @@
         private System.Windows.Forms.FlowLayoutPanel flowDialogButtons;
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TextBox textBoxTrimStart;
-        private System.Windows.Forms.TextBox textBoxTrimEnd;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuGoTo;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuGoToFrame;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuGoToTime;
         private System.Windows.Forms.Label labelTimeStamp;
+        private System.Windows.Forms.Label labelTrimStart;
+        private System.Windows.Forms.Label labelTrimEnd;
     }
 }
