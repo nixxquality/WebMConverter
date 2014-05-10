@@ -26,15 +26,15 @@ namespace WebMConverter
 
             trackVideoTimeline.Focus();
 
-            if (FilterToEdit != null)
-            {
-                trimStart = FilterToEdit.TrimStart;
-                trimEnd = FilterToEdit.TrimEnd;
-            }
-            else
+            if (FilterToEdit == null)
             {
                 trimStart = 0;
                 trimEnd = Program.VideoSource.NumberOfFrames - 1;
+            }
+            else
+            {
+                trimStart = FilterToEdit.TrimStart;
+                trimEnd = FilterToEdit.TrimEnd;
             }
 
             labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart.ToString());

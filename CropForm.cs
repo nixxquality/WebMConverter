@@ -33,14 +33,31 @@ namespace WebMConverter
 
         public CropFilter GeneratedFilter;
 
-        public CropForm()
+        public CropForm(CropFilter CropPixels = null)
         {
-            cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
-
             InitializeComponent();
 
+            if (CropPixels == null)
+            {
+                cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+
+                cropPercent = new RectangleF(
+                    (float)CropPixels.Left / (float)frame.EncodedResolution.Width,
+                    (float)CropPixels.Top / (float)frame.EncodedResolution.Height,
+                    (float)(frame.EncodedResolution.Width - CropPixels.Left + CropPixels.Right) / (float)frame.EncodedResolution.Width,
+                    (float)(frame.EncodedResolution.Height - CropPixels.Top + CropPixels.Bottom) / (float)frame.EncodedResolution.Height
+                );
+            }
+
             if (Filters.Trim != null)
+            {
                 previewFrame.Frame = Filters.Trim.TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
 
             this.previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
             this.previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
@@ -48,33 +65,6 @@ namespace WebMConverter
             this.previewFrame.Picture.MouseLeave += new System.EventHandler(this.previewPicture_MouseLeave);
             this.previewFrame.Picture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseMove);
             this.previewFrame.Picture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseUp);
-        }
-
-        public CropForm(CropFilter CropPixels) : this()
-        {
-            FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-
-            cropPercent = new RectangleF(
-                (float)CropPixels.Left / (float)frame.EncodedResolution.Width,
-                (float)CropPixels.Top / (float)frame.EncodedResolution.Height,
-                (float)(frame.EncodedResolution.Width - CropPixels.Left + CropPixels.Right) / (float)frame.EncodedResolution.Width,
-                (float)(frame.EncodedResolution.Height - CropPixels.Top + CropPixels.Bottom) / (float)frame.EncodedResolution.Height
-            );
-        }
-
-        private void textBoxFrame_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    int i = int.Parse(textBoxFrame.Text);
-                    previewFrame.Frame = i;
-                    textBoxFrame.Text = "" + i;
-                }
-                catch
-                { }
-            }
         }
 
         private void previewPicture_MouseDown(object sender, MouseEventArgs e)
@@ -285,6 +275,53 @@ namespace WebMConverter
             DialogResult = DialogResult.OK;
 
             Close();
+        }
+
+        private void frameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new GoToDialog("Frame", previewFrame.Frame.ToString()))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    int i = 0;
+                    int.TryParse(dialog.Result, out i);
+                    i = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, i)); // Make sure we don't go out of bounds.
+                    previewFrame.Frame = i;
+                }
+            }
+        }
+
+        private void timeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new GoToDialog("Time", Program.FrameToTimeStamp(previewFrame.Frame)))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    double time;
+                    try
+                    {
+                        time = TimeSpan.Parse(dialog.Result).TotalSeconds;
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("That's not a valid timestamp.");
+                        return;
+                    }
+                    int i = Program.TimeToFrame(time);
+                    i = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, i)); // Make sure we don't go out of bounds.
+                    previewFrame.Frame = i;
+                }
+            }
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            previewFrame.Frame = Filters.Trim.TrimStart;
+        }
+
+        private void endToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            previewFrame.Frame = Filters.Trim.TrimEnd;
         }
     }
 
