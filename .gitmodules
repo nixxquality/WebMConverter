@@ -1,0 +1,3 @@
+[submodule "FFMSSharp"]
+	path = FFMSSharp
+	url = https://github.com/nixxquality/FFMSSharp.git

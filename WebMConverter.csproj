@@ -37,10 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFMSSharp, Version=1.4.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>FFMSSharp\FFMSSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -203,6 +199,12 @@
     <None Include="Resources\tick.png" />
     <None Include="Resources\cross.png" />
     <None Include="Resources\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="FFMSSharp\FFMSsharp\FFMSsharp.csproj">
+      <Project>{303ca7dc-1b7e-45be-9a90-a37d72ce4791}</Project>
+      <Name>FFMSsharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
