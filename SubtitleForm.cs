@@ -76,7 +76,7 @@ namespace WebMConverter
         }
     }
 
-    public class SubtitleFilter : IFilter
+    public class SubtitleFilter
     {
         private string actualFileName;
         public readonly string FileName;
@@ -101,7 +101,7 @@ namespace WebMConverter
                 actualFileName = FileName;
         }
 
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", actualFileName, Program.AttachmentDirectory);
         }

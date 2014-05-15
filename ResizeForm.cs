@@ -118,7 +118,7 @@ namespace WebMConverter
         }
     }
 
-    public class ResizeFilter : IFilter
+    public class ResizeFilter
     {
         public readonly int TargetWidth;
         public readonly int TargetHeight;
@@ -129,7 +129,7 @@ namespace WebMConverter
             this.TargetHeight = TargetHeight;
         }
 
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return string.Format("LanczosResize({0}, {1})", (TargetWidth / 2) * 2, (TargetHeight / 2) * 2);
         }

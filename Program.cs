@@ -6,10 +6,6 @@ using System.Windows.Forms;
 
 namespace WebMConverter
 {
-    interface IFilter
-    {
-        string GetAvisynthCommand();
-    }
     static class Filters
     {
         internal static CropFilter Crop = null;
@@ -30,16 +26,16 @@ namespace WebMConverter
         }
     }
 
-    public class DeinterlaceFilter : IFilter
+    public class DeinterlaceFilter
     {
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return "tdeint()";
         }
     }
-    public class ReverseFilter : IFilter
+    public class ReverseFilter
     {
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return "Reverse()";
         }

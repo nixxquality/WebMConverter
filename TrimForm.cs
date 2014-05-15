@@ -135,7 +135,7 @@ namespace WebMConverter
         }
     }
 
-    public class TrimFilter : IFilter
+    public class TrimFilter
     {
         public readonly int TrimStart;
         public readonly int TrimEnd;
@@ -146,7 +146,7 @@ namespace WebMConverter
             this.TrimEnd = TrimEnd;
         }
 
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return string.Format("Trim({0}, {1})", TrimStart, TrimEnd);
         }

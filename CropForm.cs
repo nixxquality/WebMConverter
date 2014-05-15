@@ -325,7 +325,7 @@ namespace WebMConverter
         }
     }
 
-    public class CropFilter : IFilter
+    public class CropFilter
     {
         public readonly int Left;
         public readonly int Top;
@@ -340,7 +340,7 @@ namespace WebMConverter
             this.Bottom = (Bottom / 2) * 2;
         }
 
-        public string GetAvisynthCommand()
+        public override string ToString()
         {
             return string.Format("Crop({0}, {1}, {2}, {3})", Left, Top, Right, Bottom);
         }

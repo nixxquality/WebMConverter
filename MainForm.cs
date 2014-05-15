@@ -495,17 +495,17 @@ namespace WebMConverter
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
             if (Filters.Deinterlace != null)
-                script.AppendLine(Filters.Deinterlace.GetAvisynthCommand());
+                script.AppendLine(Filters.Deinterlace.ToString());
             if (Filters.Subtitle != null)
-                script.AppendLine(Filters.Subtitle.GetAvisynthCommand());
+                script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Trim != null)
-                script.AppendLine(Filters.Trim.GetAvisynthCommand());
+                script.AppendLine(Filters.Trim.ToString());
             if (Filters.Crop != null)
-                script.AppendLine(Filters.Crop.GetAvisynthCommand());
+                script.AppendLine(Filters.Crop.ToString());
             if (Filters.Resize != null)
-                script.AppendLine(Filters.Resize.GetAvisynthCommand());
+                script.AppendLine(Filters.Resize.ToString());
             if (Filters.Reverse != null)
-                script.AppendLine(Filters.Reverse.GetAvisynthCommand());
+                script.AppendLine(Filters.Reverse.ToString());
 
             textBoxProcessingScript.Text = script.ToString();
         }
@@ -524,7 +524,7 @@ namespace WebMConverter
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
                     else
                     {
@@ -540,7 +540,7 @@ namespace WebMConverter
         {
             if (toolStripButtonAdvancedScripting.Checked)
             {
-                textBoxProcessingScript.AppendText(Environment.NewLine + new DeinterlaceFilter().GetAvisynthCommand());
+                textBoxProcessingScript.AppendText(Environment.NewLine + new DeinterlaceFilter().ToString());
             }
             else
             {
@@ -558,7 +558,7 @@ namespace WebMConverter
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
                     else
                     {
@@ -574,7 +574,7 @@ namespace WebMConverter
         {
             if (toolStripButtonAdvancedScripting.Checked)
             {
-                textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().GetAvisynthCommand());
+                textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().ToString());
             }
             else
             {
@@ -593,7 +593,7 @@ namespace WebMConverter
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
                         form.GeneratedFilter.BeforeEncode();
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
                     else
                     {
@@ -613,7 +613,7 @@ namespace WebMConverter
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
                     else
                     {
