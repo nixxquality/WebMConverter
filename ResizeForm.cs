@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -36,10 +37,10 @@ namespace WebMConverter
 
             InitializeComponent();
 
-            labelWidthIn.Text = "" + inwidth;
-            textWidthOut.Text = "" + inwidth;
-            labelHeightIn.Text = "" + inheight;
-            textHeightOut.Text = "" + inheight;
+            labelWidthIn.Text = inwidth.ToString();
+            textWidthOut.Text = inwidth.ToString();
+            labelHeightIn.Text = inheight.ToString();
+            textHeightOut.Text = inheight.ToString();
         }
 
         public ResizeForm(ResizeFilter ResizeFilter) : this()
@@ -47,8 +48,8 @@ namespace WebMConverter
             targetwidth = ResizeFilter.TargetWidth;
             targetheight = ResizeFilter.TargetHeight;
 
-            textWidthOut.Text = "" + targetwidth;
-            textHeightOut.Text = "" + targetheight;
+            textWidthOut.Text = targetwidth.ToString();
+            textHeightOut.Text = targetheight.ToString();
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
@@ -62,19 +63,19 @@ namespace WebMConverter
             {
                 try
                 {
-                    int i = int.Parse(textWidthOut.Text);
+                    int i = int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture);
 
                     targetwidth = i;
 
                     if (checkBoxProportions.Checked)
                     {
                         targetheight = (int)((float)inheight / (float)inwidth * (float)i);
-                        textHeightOut.Text = "" + targetheight;
+                        textHeightOut.Text = targetheight.ToString();
                     }
 
                     try
                     {
-                        int.Parse(textHeightOut.Text); // if the other one's a proper number too
+                        int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
                         buttonConfirm.Enabled = true;
                     }
                     catch { }
@@ -92,19 +93,19 @@ namespace WebMConverter
             {
                 try
                 {
-                    int i = int.Parse(textHeightOut.Text);
+                    int i = int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture);
 
                     targetheight = i;
 
                     if (checkBoxProportions.Checked)
                     {
                         targetwidth = (int)((float)inwidth / (float)inheight * (float)i);
-                        textWidthOut.Text = "" + targetwidth;
+                        textWidthOut.Text = targetwidth.ToString();
                     }
 
                     try
                     {
-                        int.Parse(textWidthOut.Text); // if the other one's a proper number too
+                        int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
                         buttonConfirm.Enabled = true;
                     }
                     catch { }

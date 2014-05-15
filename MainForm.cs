@@ -518,11 +518,15 @@ namespace WebMConverter
 
         private void toolStripButtonCrop_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            using (var form = new CropForm())
             {
-                using (var form = new CropForm())
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                    }
+                    else
                     {
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop");
@@ -530,33 +534,33 @@ namespace WebMConverter
                     }
                 }
             }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "Crop(left, top, -right, -bottom)");
-            }
         }
 
         private void toolStripButtonDeinterlace_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            if (toolStripButtonAdvancedScripting.Checked)
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + new DeinterlaceFilter().GetAvisynthCommand());
+            }
+            else
             {
                 Filters.Deinterlace = new DeinterlaceFilter();
                 listViewProcessingScript.Items.Add("Deinterlace");
                 toolStripButtonDeinterlace.Enabled = false;
             }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "tdeint()");
-            }
         }
 
         private void toolStripButtonResize_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            using (var form = new ResizeForm())
             {
-                using (var form = new ResizeForm())
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                    }
+                    else
                     {
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize");
@@ -564,33 +568,34 @@ namespace WebMConverter
                     }
                 }
             }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "LanczosResize(width, height)");
-            }
         }
 
         private void toolStripButtonReverse_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            if (toolStripButtonAdvancedScripting.Checked)
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().GetAvisynthCommand());
+            }
+            else
             {
                 Filters.Reverse = new ReverseFilter();
                 listViewProcessingScript.Items.Add("Reverse");
                 toolStripButtonReverse.Enabled = false;
             }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "Reverse()");
-            }
         }
 
         private void toolStripButtonSubtitle_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            using (var form = new SubtitleForm())
             {
-                using (var form = new SubtitleForm())
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        form.GeneratedFilter.BeforeEncode();
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                    }
+                    else
                     {
                         Filters.Subtitle = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Subtitle");
@@ -598,19 +603,19 @@ namespace WebMConverter
                     }
                 }
             }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "assrender(filename)");
-            }
         }
 
         private void toolStripButtonTrim_Click(object sender, EventArgs e)
         {
-            if (!toolStripButtonAdvancedScripting.Checked)
+            using (var form = new TrimForm())
             {
-                using (var form = new TrimForm())
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.GetAvisynthCommand());
+                    }
+                    else
                     {
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim");
@@ -618,10 +623,6 @@ namespace WebMConverter
                         toolStripButtonTrim.Enabled = false;
                     }
                 }
-            }
-            else
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + "Trim(start_frame, end_frame)");
             }
         }
 
