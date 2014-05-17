@@ -145,7 +145,7 @@ namespace WebMConverter
 
                 try
                 {
-                    index = indexer.Index(new List<int>()); // don't index any audio tracks
+                    index = indexer.Index();
                 }
                 catch (OperationCanceledException)
                 {
@@ -315,7 +315,10 @@ namespace WebMConverter
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
-                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
+                if (boxAudio.Checked)
+                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\"), FFAudioSource(\"{0}\",cachefile=\"{1}\"))", input, _indexFile));
+                else
+                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
 
@@ -375,7 +378,10 @@ namespace WebMConverter
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
                 avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
-                avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
+                if (boxAudio.Checked)
+                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\"), FFAudioSource(\"{0}\",cachefile=\"{1}\"))", input, _indexFile));
+                else
+                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", input, _indexFile));
                 avscript.Write(textBoxProcessingScript.Text);
             }
 
