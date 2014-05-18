@@ -32,10 +32,6 @@ namespace WebMConverter
 
             InitializeComponent();
 
-            AllowDrop = true;
-            DragEnter += HandleDragEnter;
-            DragDrop += HandleDragDrop;
-
             _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} {3} {4} {5}";
             //{0} is '-an' if no audio, otherwise blank
             //{1} is bitrate in kb/s

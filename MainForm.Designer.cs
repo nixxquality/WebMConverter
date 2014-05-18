@@ -50,6 +50,7 @@ namespace WebMConverter
             this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDeinterlace = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonLevels = new System.Windows.Forms.ToolStripButton();
@@ -93,7 +94,6 @@ namespace WebMConverter
             this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
-            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -373,6 +373,20 @@ namespace WebMConverter
             this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
             this.toolStripButtonReverse.MouseEnter += new System.EventHandler(this.toolStripButtonReverse_MouseEnter);
             this.toolStripButtonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // toolStripButtonAdvancedScripting
+            // 
+            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
+            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
+            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonAdvancedScripting.Text = "Advanced";
+            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
+            this.toolStripButtonAdvancedScripting.MouseEnter += new System.EventHandler(this.toolStripButtonAdvancedScripting_MouseEnter);
+            this.toolStripButtonAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // buttonPreview
             // 
@@ -924,23 +938,10 @@ namespace WebMConverter
             this.progressBarIndexing.TabIndex = 0;
             this.progressBarIndexing.Value = 30;
             // 
-            // toolStripButtonAdvancedScripting
-            // 
-            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
-            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
-            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonAdvancedScripting.Text = "Advanced";
-            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
-            this.toolStripButtonAdvancedScripting.MouseEnter += new System.EventHandler(this.toolStripButtonAdvancedScripting_MouseEnter);
-            this.toolStripButtonAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 446);
@@ -954,6 +955,8 @@ namespace WebMConverter
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "WebM for Retards";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HandleDragEnter);
             this.tableLayoutPanelMainForm.ResumeLayout(false);
             this.groupBoxMain.ResumeLayout(false);
             this.tableLayoutPanelGroupMain.ResumeLayout(false);
