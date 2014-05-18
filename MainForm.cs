@@ -322,7 +322,7 @@ namespace WebMConverter
                 avscript.Write(textBoxProcessingScript.Text);
             }
 
-            var ffplay = new FFplay(string.Format("-window_title Preview -f avisynth \"{0}\"", avsFileName));
+            var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth \"{0}\"", avsFileName));
             ffplay.Exited += delegate
             {
                 toolStripProcessingScript.Invoke(new Action(() => buttonPreview.Enabled = true));
