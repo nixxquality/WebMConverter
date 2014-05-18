@@ -83,8 +83,8 @@ namespace WebMConverter
 
         private void HandleDragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files) SetFile(file);
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            SetFile(files[0]);
         }
 
         #endregion
