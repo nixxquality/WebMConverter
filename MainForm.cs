@@ -208,6 +208,7 @@ namespace WebMConverter
                 textBoxIn.Enabled = true;
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonDeinterlace.Enabled = true;
+                toolStripButtonLevels.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
@@ -502,6 +503,8 @@ namespace WebMConverter
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
             if (Filters.Deinterlace != null)
                 script.AppendLine(Filters.Deinterlace.ToString());
+            if (Filters.Levels != null)
+                script.AppendLine(Filters.Levels.ToString());
             if (Filters.Subtitle != null)
                 script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Trim != null)
@@ -553,6 +556,20 @@ namespace WebMConverter
                 Filters.Deinterlace = new DeinterlaceFilter();
                 listViewProcessingScript.Items.Add("Deinterlace");
                 toolStripButtonDeinterlace.Enabled = false;
+            }
+        }
+
+        private void toolStripButtonLevels_Click(object sender, EventArgs e)
+        {
+            if (toolStripButtonAdvancedScripting.Checked)
+            {
+                textBoxProcessingScript.AppendText(Environment.NewLine + new LevelsFilter().ToString());
+            }
+            else
+            {
+                Filters.Levels = new LevelsFilter();
+                listViewProcessingScript.Items.Add("Levels");
+                toolStripButtonLevels.Enabled = false;
             }
         }
 
@@ -645,6 +662,7 @@ namespace WebMConverter
                 textBoxProcessingScript.Show();
                 toolStripButtonCrop.Enabled = true;
                 toolStripButtonDeinterlace.Enabled = true;
+                toolStripButtonLevels.Enabled = true;
                 toolStripButtonResize.Enabled = true;
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
@@ -660,7 +678,7 @@ namespace WebMConverter
             toolStripButtonAdvancedScripting.Enabled = false;
         }
 
-        private void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e) // STUB
+        private void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
@@ -676,6 +694,11 @@ namespace WebMConverter
                         case "Deinterlace":
                             Filters.Deinterlace = null;
                             toolStripButtonDeinterlace.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
+                            break;
+                        case "Levels":
+                            Filters.Levels = null;
+                            toolStripButtonLevels.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Resize":
@@ -746,9 +769,68 @@ namespace WebMConverter
                     }
                     break;
                 default:
-                    MessageBox.Show("No options!");
+                    MessageBox.Show("This filter has no options.");
                     break;
             }
         }
+
+        #region Tooltips
+
+        private void clearToolTip(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "";
+        }
+
+        private void toolStripButtonTrim_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Select a clip from your video.";
+        }
+
+        private void toolStripButtonCrop_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Crop your video into a smaller frame.";
+        }
+
+        private void toolStripButtonResize_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Scale your video.";
+        }
+
+        private void toolStripButtonReverse_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Everything is backwards!";
+        }
+
+        private void toolStripButtonSubtitle_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Burn subtitles into the video.";
+        }
+
+        private void toolStripButtonDeinterlace_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Get rid of interlacing artifacts. Only useful if your input video is interlaced.";
+        }
+
+        private void toolStripButtonLevels_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Expand the color levels to PC ranges. Use this if your colors look washed out compared to the input video.";
+        }
+
+        private void buttonPreview_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Open a preview window that will loop your processing settings. Note that this doesn't reflect output encoding quality.";
+        }
+
+        private void toolStripButtonAdvancedScripting_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Are you a bad enough dude? Take care, there is no way back. You will have to start over if you fuck up.";
+        }
+
+        private void listViewProcessingScript_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = "Double click a filter to edit it. Select a filter and press Delete to remove it.";
+        }
+
+        #endregion
     }
 }

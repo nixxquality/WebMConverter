@@ -10,6 +10,7 @@ namespace WebMConverter
     {
         internal static CropFilter Crop = null;
         internal static DeinterlaceFilter Deinterlace = null;
+        internal static LevelsFilter Levels = null;
         internal static ResizeFilter Resize = null;
         internal static ReverseFilter Reverse = null;
         internal static SubtitleFilter Subtitle = null;
@@ -19,6 +20,7 @@ namespace WebMConverter
         {
             Crop = null;
             Deinterlace = null;
+            Levels = null;
             Resize = null;
             Reverse = null;
             Subtitle = null;
@@ -38,6 +40,13 @@ namespace WebMConverter
         public override string ToString()
         {
             return "Reverse()";
+        }
+    }
+    public class LevelsFilter
+    {
+        public override string ToString()
+        {
+            return "ColorYUV(levels=\"TV->PC\")";
         }
     }
 

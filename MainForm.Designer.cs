@@ -91,6 +91,9 @@ namespace WebMConverter
             this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButtonLevels = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -113,6 +116,7 @@ namespace WebMConverter
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
             this.panelHideTheOptions.SuspendLayout();
             this.panelContainTheProgressBar.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMainForm
@@ -262,14 +266,16 @@ namespace WebMConverter
             // 
             this.tableLayoutPanelProcessing.ColumnCount = 1;
             this.tableLayoutPanelProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelProcessing.Controls.Add(this.statusStrip, 0, 2);
             this.tableLayoutPanelProcessing.Controls.Add(this.toolStripProcessingScript, 0, 0);
             this.tableLayoutPanelProcessing.Controls.Add(this.panelProcessingScriptInput, 0, 1);
             this.tableLayoutPanelProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelProcessing.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelProcessing.Name = "tableLayoutPanelProcessing";
-            this.tableLayoutPanelProcessing.RowCount = 2;
+            this.tableLayoutPanelProcessing.RowCount = 3;
             this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanelProcessing.Size = new System.Drawing.Size(1047, 318);
             this.tableLayoutPanelProcessing.TabIndex = 0;
             // 
@@ -280,13 +286,16 @@ namespace WebMConverter
             this.toolStripButtonTrim,
             this.toolStripButtonCrop,
             this.toolStripButtonResize,
+            this.toolStripButtonSubtitle,
             this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting,
-            this.toolStripButtonSubtitle,
             this.buttonPreview,
-            this.toolStripButtonDeinterlace});
+            this.toolStripButtonDeinterlace,
+            this.toolStripButtonLevels});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
+            this.toolStripProcessingScript.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripProcessingScript.ShowItemToolTips = false;
             this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
             this.toolStripProcessingScript.TabIndex = 0;
             this.toolStripProcessingScript.TabStop = true;
@@ -299,6 +308,8 @@ namespace WebMConverter
             this.toolStripButtonTrim.Size = new System.Drawing.Size(36, 22);
             this.toolStripButtonTrim.Text = "Trim";
             this.toolStripButtonTrim.Click += new System.EventHandler(this.toolStripButtonTrim_Click);
+            this.toolStripButtonTrim.MouseEnter += new System.EventHandler(this.toolStripButtonTrim_MouseEnter);
+            this.toolStripButtonTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonCrop
             // 
@@ -308,6 +319,8 @@ namespace WebMConverter
             this.toolStripButtonCrop.Size = new System.Drawing.Size(37, 22);
             this.toolStripButtonCrop.Text = "Crop";
             this.toolStripButtonCrop.Click += new System.EventHandler(this.toolStripButtonCrop_Click);
+            this.toolStripButtonCrop.MouseEnter += new System.EventHandler(this.toolStripButtonCrop_MouseEnter);
+            this.toolStripButtonCrop.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonResize
             // 
@@ -317,6 +330,8 @@ namespace WebMConverter
             this.toolStripButtonResize.Size = new System.Drawing.Size(43, 22);
             this.toolStripButtonResize.Text = "Resize";
             this.toolStripButtonResize.Click += new System.EventHandler(this.toolStripButtonResize_Click);
+            this.toolStripButtonResize.MouseEnter += new System.EventHandler(this.toolStripButtonResize_MouseEnter);
+            this.toolStripButtonResize.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonReverse
             // 
@@ -326,6 +341,8 @@ namespace WebMConverter
             this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
             this.toolStripButtonReverse.Text = "Reverse";
             this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
+            this.toolStripButtonReverse.MouseEnter += new System.EventHandler(this.toolStripButtonReverse_MouseEnter);
+            this.toolStripButtonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonAdvancedScripting
             // 
@@ -338,6 +355,8 @@ namespace WebMConverter
             this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
+            this.toolStripButtonAdvancedScripting.MouseEnter += new System.EventHandler(this.toolStripButtonAdvancedScripting_MouseEnter);
+            this.toolStripButtonAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonSubtitle
             // 
@@ -347,6 +366,8 @@ namespace WebMConverter
             this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
             this.toolStripButtonSubtitle.Text = "Subtitles";
             this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
+            this.toolStripButtonSubtitle.MouseEnter += new System.EventHandler(this.toolStripButtonSubtitle_MouseEnter);
+            this.toolStripButtonSubtitle.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // buttonPreview
             // 
@@ -357,6 +378,8 @@ namespace WebMConverter
             this.buttonPreview.Size = new System.Drawing.Size(84, 22);
             this.buttonPreview.Text = "Preview filters";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            this.buttonPreview.MouseEnter += new System.EventHandler(this.buttonPreview_MouseEnter);
+            this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonDeinterlace
             // 
@@ -366,6 +389,8 @@ namespace WebMConverter
             this.toolStripButtonDeinterlace.Size = new System.Drawing.Size(70, 22);
             this.toolStripButtonDeinterlace.Text = "Deinterlace";
             this.toolStripButtonDeinterlace.Click += new System.EventHandler(this.toolStripButtonDeinterlace_Click);
+            this.toolStripButtonDeinterlace.MouseEnter += new System.EventHandler(this.toolStripButtonDeinterlace_MouseEnter);
+            this.toolStripButtonDeinterlace.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // panelProcessingScriptInput
             // 
@@ -375,7 +400,7 @@ namespace WebMConverter
             this.panelProcessingScriptInput.Location = new System.Drawing.Point(0, 25);
             this.panelProcessingScriptInput.Margin = new System.Windows.Forms.Padding(0);
             this.panelProcessingScriptInput.Name = "panelProcessingScriptInput";
-            this.panelProcessingScriptInput.Size = new System.Drawing.Size(1047, 293);
+            this.panelProcessingScriptInput.Size = new System.Drawing.Size(1047, 271);
             this.panelProcessingScriptInput.TabIndex = 1;
             // 
             // listViewProcessingScript
@@ -384,11 +409,13 @@ namespace WebMConverter
             this.listViewProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.listViewProcessingScript.Margin = new System.Windows.Forms.Padding(0);
             this.listViewProcessingScript.Name = "listViewProcessingScript";
-            this.listViewProcessingScript.Size = new System.Drawing.Size(1047, 293);
+            this.listViewProcessingScript.Size = new System.Drawing.Size(1047, 271);
             this.listViewProcessingScript.TabIndex = 3;
             this.listViewProcessingScript.UseCompatibleStateImageBehavior = false;
             this.listViewProcessingScript.ItemActivate += new System.EventHandler(this.listViewProcessingScript_ItemActivate);
             this.listViewProcessingScript.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listViewProcessingScript_KeyUp);
+            this.listViewProcessingScript.MouseEnter += new System.EventHandler(this.listViewProcessingScript_MouseEnter);
+            this.listViewProcessingScript.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // textBoxProcessingScript
             // 
@@ -398,7 +425,7 @@ namespace WebMConverter
             this.textBoxProcessingScript.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxProcessingScript.Multiline = true;
             this.textBoxProcessingScript.Name = "textBoxProcessingScript";
-            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 293);
+            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 271);
             this.textBoxProcessingScript.TabIndex = 2;
             this.textBoxProcessingScript.Text = "# This is an AviSynth script. You may write advanced commands below, or just pres" +
     "s the buttons above for smooth sailing.";
@@ -881,6 +908,36 @@ namespace WebMConverter
             this.progressBarIndexing.TabIndex = 0;
             this.progressBarIndexing.Value = 30;
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 296);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1047, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 5;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1032, 19);
+            this.toolStripStatusLabel.Spring = true;
+            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripButtonLevels
+            // 
+            this.toolStripButtonLevels.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonLevels.Enabled = false;
+            this.toolStripButtonLevels.Name = "toolStripButtonLevels";
+            this.toolStripButtonLevels.Size = new System.Drawing.Size(43, 22);
+            this.toolStripButtonLevels.Text = "Levels";
+            this.toolStripButtonLevels.Click += new System.EventHandler(this.toolStripButtonLevels_Click);
+            this.toolStripButtonLevels.MouseEnter += new System.EventHandler(this.toolStripButtonLevels_MouseEnter);
+            this.toolStripButtonLevels.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -931,6 +988,8 @@ namespace WebMConverter
             this.panelHideTheOptions.ResumeLayout(false);
             this.panelHideTheOptions.PerformLayout();
             this.panelContainTheProgressBar.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -999,6 +1058,9 @@ namespace WebMConverter
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeinterlace;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLevels;
     }
 }
 
