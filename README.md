@@ -1,4 +1,4 @@
-WebMConverter
+WebMConverter [![Build status](https://ci.appveyor.com/api/projects/status/2pekcy840jr7atft)](https://ci.appveyor.com/project/nixxquality/webmconverter)
 =============
 WebM for retards. Basically, a wrapper around ffmpeg and Avisynth made for converting videos to WebM without having to use the command line.
 
