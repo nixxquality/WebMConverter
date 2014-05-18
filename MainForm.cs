@@ -302,6 +302,9 @@ namespace WebMConverter
             if (!File.Exists(input))
                 return "Input file doesn't exist!";
 
+            if (input.Any(c => c > 255)) // http://stackoverflow.com/questions/4459571/
+                return "Sorry, no moonrunes in your filenames.";
+
             // Generate the script if we're in simple mode
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
@@ -364,6 +367,9 @@ namespace WebMConverter
             {
                 return e.Message;
             }
+
+            if (input.Any(c => c > 255)) // http://stackoverflow.com/questions/4459571/
+                return "Sorry, no moonrunes in your filenames.";
 
             // Generate the script if we're in simple mode
             if (Filters.Subtitle != null)
