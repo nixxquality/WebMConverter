@@ -792,7 +792,7 @@ namespace WebMConverter
             this.trackThreads.Size = new System.Drawing.Size(122, 22);
             this.trackThreads.TabIndex = 0;
             this.trackThreads.Value = 1;
-            this.trackThreads.Scroll += new System.EventHandler(this.UpdateArguments);
+            this.trackThreads.Scroll += new System.EventHandler(this.trackThreads_Scroll);
             // 
             // labelThreads
             // 
