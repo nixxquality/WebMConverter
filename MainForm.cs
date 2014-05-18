@@ -81,7 +81,7 @@ namespace WebMConverter
         {
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
-            panelHideTheOptions.Show();
+            panelHideTheOptions.BringToFront();
 
             buttonGo.Enabled = false;
             buttonPreview.Enabled = false;
@@ -189,7 +189,7 @@ namespace WebMConverter
                     Program.FileMd5 = null;
                     buttonBrowseIn.Enabled = true;
                     textBoxIn.Enabled = true;
-                    panelHideTheOptions.Hide();
+                    panelHideTheOptions.SendToBack();
                 }
                 else
                 {
@@ -212,7 +212,7 @@ namespace WebMConverter
                 toolStripButtonReverse.Enabled = true;
                 toolStripButtonSubtitle.Enabled = true;
                 toolStripButtonTrim.Enabled = true;
-                panelHideTheOptions.Hide();
+                panelHideTheOptions.SendToBack();
             });
 
             if (File.Exists(_indexFile))

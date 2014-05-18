@@ -848,7 +848,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
-            this.panelHideTheOptions.Visible = false;
             // 
             // panelContainTheProgressBar
             // 
@@ -888,8 +887,8 @@ namespace WebMConverter
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 446);
-            this.Controls.Add(this.panelHideTheOptions);
             this.Controls.Add(this.tableLayoutPanelMainForm);
+            this.Controls.Add(this.panelHideTheOptions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
