@@ -52,6 +52,18 @@ namespace WebMConverter
             //{2} is extra arguments
             //{3} is '-pass X' if HQ mode enabled, otherwise blank
 
+            ImageList imageList = new ImageList();
+            imageList.ImageSize = new Size(100, 100);
+
+            imageList.Images.Add("crop", Properties.Resources.crop);
+            imageList.Images.Add("deinterlace", Properties.Resources.deinterlace);
+            imageList.Images.Add("levels", Properties.Resources.levels);
+            imageList.Images.Add("resize", Properties.Resources.resize);
+            imageList.Images.Add("reverse", Properties.Resources.reverse);
+            imageList.Images.Add("subtitles", Properties.Resources.subtitles);
+            imageList.Images.Add("trim", Properties.Resources.trim);
+
+            listViewProcessingScript.LargeImageList = imageList;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -544,7 +556,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Crop = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Crop");
+                        listViewProcessingScript.Items.Add("Crop").ImageKey = "crop";
                         toolStripButtonCrop.Enabled = false;
                     }
                 }
@@ -560,7 +572,7 @@ namespace WebMConverter
             else
             {
                 Filters.Deinterlace = new DeinterlaceFilter();
-                listViewProcessingScript.Items.Add("Deinterlace");
+                listViewProcessingScript.Items.Add("Deinterlace").ImageKey = "deinterlace";
                 toolStripButtonDeinterlace.Enabled = false;
             }
         }
@@ -574,7 +586,7 @@ namespace WebMConverter
             else
             {
                 Filters.Levels = new LevelsFilter();
-                listViewProcessingScript.Items.Add("Levels");
+                listViewProcessingScript.Items.Add("Levels").ImageKey = "levels";
                 toolStripButtonLevels.Enabled = false;
             }
         }
@@ -592,7 +604,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Resize = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Resize");
+                        listViewProcessingScript.Items.Add("Resize").ImageKey = "resize";
                         toolStripButtonResize.Enabled = false;
                     }
                 }
@@ -608,7 +620,7 @@ namespace WebMConverter
             else
             {
                 Filters.Reverse = new ReverseFilter();
-                listViewProcessingScript.Items.Add("Reverse");
+                listViewProcessingScript.Items.Add("Reverse").ImageKey = "reverse";
                 toolStripButtonReverse.Enabled = false;
             }
         }
@@ -627,7 +639,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Subtitle = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Subtitle");
+                        listViewProcessingScript.Items.Add("Subtitle").ImageKey = "subtitles";
                         toolStripButtonSubtitle.Enabled = false;
                     }
                 }
@@ -647,7 +659,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Trim = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Trim");
+                        listViewProcessingScript.Items.Add("Trim").ImageKey = "trim";
                         GenerateArguments();
                         toolStripButtonTrim.Enabled = false;
                     }
