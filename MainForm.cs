@@ -297,6 +297,7 @@ namespace WebMConverter
             // This could be used to toggle between advanced and list view, but that's hard to code. Maybe later?
             // For now, just stay in advanced mode forever.
             toolStripButtonAdvancedScripting.Enabled = false;
+            clearToolTip(sender, e);
         }
 
         private void toolStripFilterButtonsEnabled(bool enabled)
