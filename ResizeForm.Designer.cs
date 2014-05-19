@@ -92,7 +92,8 @@
             this.textWidthOut.Name = "textWidthOut";
             this.textWidthOut.Size = new System.Drawing.Size(66, 20);
             this.textWidthOut.TabIndex = 1;
-            this.textWidthOut.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textWidthOut_KeyPress);
+            this.textWidthOut.TextChanged += new System.EventHandler(this.textWidthOut_TextChanged);
+            this.textWidthOut.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textWidthOut_KeyPress);
             // 
             // textHeightOut
             // 
@@ -101,7 +102,8 @@
             this.textHeightOut.Name = "textHeightOut";
             this.textHeightOut.Size = new System.Drawing.Size(66, 20);
             this.textHeightOut.TabIndex = 2;
-            this.textHeightOut.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textHeightOut_KeyPress);
+            this.textHeightOut.TextChanged += new System.EventHandler(this.textHeightOut_TextChanged);
+            this.textHeightOut.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textHeightOut_KeyPress);
             // 
             // labelHeightIn
             // 

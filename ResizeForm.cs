@@ -57,63 +57,81 @@ namespace WebMConverter
             GeneratedFilter = new ResizeFilter(targetwidth, targetheight);
         }
 
-        private void textWidthOut_KeyPress(object sender, KeyEventArgs e)
+        private void textWidthOut_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                try
-                {
-                    int i = int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture);
-
-                    targetwidth = i;
-
-                    if (checkBoxProportions.Checked)
-                    {
-                        targetheight = (int)((float)inheight / (float)inwidth * (float)i);
-                        textHeightOut.Text = targetheight.ToString();
-                    }
-
-                    try
-                    {
-                        int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
-                        buttonConfirm.Enabled = true;
-                    }
-                    catch { }
-                }
-                catch
-                {
-                    buttonConfirm.Enabled = false;
-                }
+                e.Handled = true;
             }
         }
 
-        private void textHeightOut_KeyPress(object sender, KeyEventArgs e)
+        private void textWidthOut_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
+            try
             {
+                int i = int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture);
+
+                targetwidth = i;
+
+                if (checkBoxProportions.Checked)
+                {
+                    textWidthOut.TextChanged -= textWidthOut_TextChanged;
+
+                    targetheight = (int)((float)inheight / (float)inwidth * (float)i);
+                    textHeightOut.Text = targetheight.ToString();
+
+                    textWidthOut.TextChanged += textWidthOut_TextChanged;
+                }
+
                 try
                 {
-                    int i = int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture);
-
-                    targetheight = i;
-
-                    if (checkBoxProportions.Checked)
-                    {
-                        targetwidth = (int)((float)inwidth / (float)inheight * (float)i);
-                        textWidthOut.Text = targetwidth.ToString();
-                    }
-
-                    try
-                    {
-                        int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
-                        buttonConfirm.Enabled = true;
-                    }
-                    catch { }
+                    int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
+                    buttonConfirm.Enabled = true;
                 }
-                catch
+                catch { }
+            }
+            catch
+            {
+                buttonConfirm.Enabled = false;
+            }
+        }
+
+        private void textHeightOut_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textHeightOut_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int i = int.Parse(textHeightOut.Text, CultureInfo.InvariantCulture);
+
+                targetheight = i;
+
+                if (checkBoxProportions.Checked)
                 {
-                    buttonConfirm.Enabled = false;
+                    textHeightOut.TextChanged -= textHeightOut_TextChanged;
+
+                    targetwidth = (int)((float)inwidth / (float)inheight * (float)i);
+                    textWidthOut.Text = targetwidth.ToString();
+
+                    textHeightOut.TextChanged -= textHeightOut_TextChanged;
                 }
+
+                try
+                {
+                    int.Parse(textWidthOut.Text, CultureInfo.InvariantCulture); // if the other one's a proper number too
+                    buttonConfirm.Enabled = true;
+                }
+                catch { }
+            }
+            catch
+            {
+                buttonConfirm.Enabled = false;
             }
         }
     }
