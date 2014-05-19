@@ -955,6 +955,7 @@ namespace WebMConverter
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "WebM for Retards";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HandleDragEnter);
             this.tableLayoutPanelMainForm.ResumeLayout(false);

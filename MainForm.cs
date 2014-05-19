@@ -14,8 +14,20 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
-        private readonly string _template;
-        private readonly string _templateArguments;
+        private const string _template = "-f avisynth -i \"{0}\" {2} {3} -f webm -y \"{1}\"";
+        //{0} is input file
+        //{1} is output file
+        //{2} is extra arguments
+        //{3} is '-pass X' if HQ mode enabled, otherwise blank
+
+        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} {3} {4} {5}";
+        //{0} is '-an' if no audio, otherwise blank
+        //{1} is bitrate in kb/s
+        //{2} is amount of threads to use
+        //{3} is '-fs XM' if X MB limit enabled otherwise blank
+        //{4} is '-metadata title="TITLE"' when specifying a title, otherwise blank
+        //{5} is '-quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+
         private string _indexFile;
 
         private string _autoOutput;
@@ -33,22 +45,6 @@ namespace WebMConverter
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries"));
 
             InitializeComponent();
-
-            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} {3} {4} {5}";
-            //{0} is '-an' if no audio, otherwise blank
-            //{1} is bitrate in kb/s
-            //{2} is amount of threads to use
-            //{3} is '-fs XM' if X MB limit enabled otherwise blank
-            //{4} is '-metadata title="TITLE"' when specifying a title, otherwise blank
-            //{5} is '-quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
-
-            //TODO: add an option for subtitles. It's either '-vf "ass=subtitle.ass"' or '-vf subtitles=subtitle.srt'
-
-            _template = "-f avisynth -i \"{0}\" {2} {3} -f webm -y \"{1}\"";
-            //{0} is input file
-            //{1} is output file
-            //{2} is extra arguments
-            //{3} is '-pass X' if HQ mode enabled, otherwise blank
 
             ImageList imageList = new ImageList();
             imageList.ImageSize = new Size(100, 100);
@@ -85,6 +81,13 @@ namespace WebMConverter
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             SetFile(files[0]);
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1) // We were "Open with..."ed with a file
+                SetFile(args[1]);
         }
 
         #endregion
