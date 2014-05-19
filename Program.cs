@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WebMConverter
 {
+    #region Filters
+
     static class Filters
     {
         internal static CropFilter Crop = null;
@@ -50,6 +53,14 @@ namespace WebMConverter
         }
     }
 
+    #endregion
+
+    static class NativeMethods
+    {
+        [DllImport("kernel32", SetLastError = true)]
+        public static extern IntPtr LoadLibrary(string lpFileName);
+    }
+
     static class Program
     {
         public static FFMSSharp.VideoSource VideoSource;
@@ -83,6 +94,14 @@ namespace WebMConverter
         [STAThread]
         static void Main()
         {
+            // Check for AviSynth
+            if (NativeMethods.LoadLibrary("avisynth") == IntPtr.Zero)
+            {
+                MessageBox.Show(string.Format("Failed to load AviSynth: {0}.{1}I'll open the download page, go ahead and install it.", new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error()).Message, Environment.NewLine) , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Process.Start("http://avisynth.nl/index.php/Main_Page#Official_builds");
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
