@@ -188,6 +188,12 @@ namespace WebMConverter
 
         private void toolStripButtonLevels_Click(object sender, EventArgs e)
         {
+            if (Program.VideoColorRange == FFMSSharp.ColorRange.JPEG)
+            {
+                if (MessageBox.Show(string.Format("From what I can see, there is no need to expand the color ranges.{0}Are you sure you want to mess with the color balance?{0}Only press OK if you're 100% sure you know what you're doing.", Environment.NewLine), "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
+                    return;
+            }
+
             if (toolStripButtonAdvancedScripting.Checked)
             {
                 textBoxProcessingScript.AppendText(Environment.NewLine + new LevelsFilter().ToString());
@@ -330,6 +336,11 @@ namespace WebMConverter
                             listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Levels":
+                            if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
+                            {
+                                if (MessageBox.Show(string.Format("From what I can see, you should be expanding the color ranges.{0}Are you sure you want to mess with the color balance?{0}Only press OK if you're 100% sure you know what you're doing.", Environment.NewLine), "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel)
+                                    break;
+                            }
                             Filters.Levels = null;
                             toolStripButtonLevels.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
@@ -581,6 +592,7 @@ namespace WebMConverter
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
                 Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
+                Program.VideoColorRange = Program.VideoSource.GetFrame(0).ColorRange; // We're assuming that the entire video has the same color range, which should be fine.
 
                 Program.SubtitleTracks = new List<int>();
                 for (int i = 0; i <= index.NumberOfTracks; i++)
@@ -630,6 +642,14 @@ namespace WebMConverter
                 buttonBrowseIn.Enabled = true;
                 textBoxIn.Enabled = true;
                 toolStripFilterButtonsEnabled(true);
+
+                if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
+                {
+                    Filters.Levels = new LevelsFilter();
+                    listViewProcessingScript.Items.Add("Levels").ImageKey = "levels";
+                    toolStripButtonLevels.Enabled = false;
+                }
+
                 panelHideTheOptions.SendToBack();
             });
 
