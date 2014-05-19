@@ -190,7 +190,13 @@ namespace WebMConverter
         {
             if (Program.VideoColorRange == FFMSSharp.ColorRange.JPEG)
             {
-                if (MessageBox.Show(string.Format("From what I can see, there is no need to expand the color ranges.{0}Are you sure you want to mess with the color balance?{0}Only press OK if you're 100% sure you know what you're doing.", Environment.NewLine), "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
+                const string message = "From what I can see, there is no need to expand the color ranges.\n" + 
+                                       "Are you sure you want to mess with the color balance?\n" + 
+                                       "Only press OK if you're 100% sure you know what you're doing.";
+                const string caption = "Are you sure?";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Cancel)
                     return;
             }
 
@@ -338,7 +344,13 @@ namespace WebMConverter
                         case "Levels":
                             if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
                             {
-                                if (MessageBox.Show(string.Format("From what I can see, you should be expanding the color ranges.{0}Are you sure you want to mess with the color balance?{0}Only press OK if you're 100% sure you know what you're doing.", Environment.NewLine), "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel)
+                                const string message = "From what I can see, you should be expanding the color ranges.\n" +
+                                                       "Are you sure you want to mess with the color balance?\n" +
+                                                       "Only press OK if you're 100% sure you know what you're doing.";
+                                const string caption = "Are you sure?";
+                                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                                if (result == DialogResult.Cancel)
                                     break;
                             }
                             Filters.Levels = null;
