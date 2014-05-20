@@ -150,5 +150,16 @@ namespace WebMConverter
         {
             return string.Format("Trim({0}, {1})", TrimStart, TrimEnd);
         }
+
+        internal double GetDuration()
+        {
+            double firsttime, lasttime;
+            var track = Program.VideoSource.Track;
+
+            firsttime = Program.FrameToTime(TrimStart);
+            lasttime = Program.FrameToTime(TrimEnd);
+
+            return lasttime - firsttime;
+        }
     }
 }

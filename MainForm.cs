@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace WebMConverter
 {
@@ -814,48 +815,10 @@ namespace WebMConverter
             }
             else if (limit != 0)
             {
-                double duration;
+                double duration = GetDuration();
 
-                if (!toolStripButtonAdvancedScripting.Checked)
-                {
-                    if (Filters.Trim == null)
-                    {
-                        duration = Program.VideoSource.LastTime - Program.VideoSource.FirstTime;
-                    }
-                    else
-                    {
-                        double firsttime, lasttime;
-                        var track = Program.VideoSource.Track;
-
-                        firsttime = Program.FrameToTime(Filters.Trim.TrimStart);
-                        lasttime = Program.FrameToTime(Filters.Trim.TrimEnd);
-
-                        duration = lasttime - firsttime;
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        List<string> processingScriptCommands = new List<string>(textBoxProcessingScript.Lines);
-                        string trimcmd = processingScriptCommands.Find(x => x.StartsWith("Trim("));
-
-                        Match match = Regex.Match(trimcmd, @".*?(\d+).*?(\d+)");
-                        double firsttime, lasttime;
-                        var track = Program.VideoSource.Track;
-
-                        firsttime = Program.FrameToTime(Filters.Trim.TrimStart);
-                        lasttime = Program.FrameToTime(Filters.Trim.TrimEnd);
-
-                        duration = lasttime - firsttime;
-                    }
-                    catch (ArgumentNullException) // Probably means there's no trimming in the script
-                    {
-                        duration = Program.VideoSource.LastTime - Program.VideoSource.FirstTime;
-                    }
-                }
-
-                bitrate = (int)(8192 * limit / duration);
+                if (duration > 0)
+                    bitrate = (int)(8192 * limit / duration);
             }
 
             int threads = trackThreads.Value;
@@ -870,6 +833,48 @@ namespace WebMConverter
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
             return string.Format(_templateArguments, audioEnabled, bitrate, threads, limitTo, metadataTitle, HQ);
+        }
+
+        /// <summary>
+        /// Attempt to calculate the duration of the Avisynth script.
+        /// </summary>
+        /// <returns>The duration or -1 if automatic detection was unsuccessful.</returns>
+        private double GetDuration()
+        {
+            if (toolStripButtonAdvancedScripting.Checked)
+            {
+                // The dirty way.
+                
+                // Make our temporary file for the AviSynth script
+                string avsFileName = Path.GetTempFileName();
+                GenerateAvisynthScript(avsFileName, textBoxIn.Text);
+
+                // ffprobe it
+                var ffprobe = new FFprobe(avsFileName);
+                using (XmlReader reader = ffprobe.Probe())
+                {
+                    reader.ReadToFollowing("stream");
+
+                    while (reader.MoveToNextAttribute())
+                    {
+                        if (reader.Name == "duration")
+                        {
+                            return double.Parse(reader.Value);
+                        }
+                    }
+                }
+
+                return -1;
+            }
+            else
+            {
+                // The easy way.
+
+                if (Filters.Trim != null)
+                    return Filters.Trim.GetDuration();
+
+                return -1;
+            }
         }
 
         private void GenerateAvisynthScript()
