@@ -384,6 +384,7 @@ namespace WebMConverter
             this.toolStripButtonAdvancedScripting.Text = "Advanced";
             this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButtonAdvancedScripting.CheckedChanged += new System.EventHandler(this.toolStripButtonAdvancedScripting_CheckedChanged);
             this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
             this.toolStripButtonAdvancedScripting.MouseEnter += new System.EventHandler(this.toolStripButtonAdvancedScripting_MouseEnter);
             this.toolStripButtonAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);

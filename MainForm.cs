@@ -295,7 +295,6 @@ namespace WebMConverter
         private void toolStripButtonAdvancedScripting_Click(object sender, EventArgs e)
         {
             toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
-            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // STUB: get better icons
             //if (toolStripButton1.Checked)
             //{
             listViewProcessingScript.Hide();
@@ -314,6 +313,11 @@ namespace WebMConverter
             // For now, just stay in advanced mode forever.
             toolStripButtonAdvancedScripting.Enabled = false;
             clearToolTip(sender, e);
+        }
+
+        private void toolStripButtonAdvancedScripting_CheckedChanged(object sender, EventArgs e)
+        {
+            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // STUB: get better icons
         }
 
         private void toolStripFilterButtonsEnabled(bool enabled)
@@ -561,7 +565,6 @@ namespace WebMConverter
             listViewProcessingScript.Clear();
             toolStripButtonAdvancedScripting.Checked = false; // STUB: this part is weak
             toolStripButtonAdvancedScripting.Enabled = true;
-            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross;
             textBoxProcessingScript.Hide();
             listViewProcessingScript.Show();
             GenerateAvisynthScript();
