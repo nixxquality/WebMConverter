@@ -93,26 +93,6 @@ namespace WebMConverter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap deinterlace {
-            get {
-                object obj = ResourceManager.GetObject("deinterlace", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap levels {
-            get {
-                object obj = ResourceManager.GetObject("levels", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap resize {
             get {
                 object obj = ResourceManager.GetObject("resize", resourceCulture);

@@ -50,8 +50,6 @@ namespace WebMConverter
             this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDeinterlace = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLevels = new System.Windows.Forms.ToolStripButton();
             this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -78,16 +76,13 @@ namespace WebMConverter
             this.labelGeneralHQHint = new System.Windows.Forms.Label();
             this.boxAudio = new System.Windows.Forms.CheckBox();
             this.labelGeneralAudioHint = new System.Windows.Forms.Label();
-            this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
-            this.labelIndexingProgress = new System.Windows.Forms.Label();
-            this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.tabPageAdvanced = new System.Windows.Forms.TabPage();
-            this.groupBoxAdvancedProcessing = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelAdvancedWarning = new System.Windows.Forms.Label();
             this.groupBoxAdvancedEncoding = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanelEncodingAdvanced = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelEncodingSlices = new System.Windows.Forms.TableLayoutPanel();
+            this.trackSlices = new System.Windows.Forms.TrackBar();
+            this.labelSlices = new System.Windows.Forms.Label();
             this.labelEncodingThreads = new System.Windows.Forms.Label();
             this.tableLayoutPanelEncodingThreads = new System.Windows.Forms.TableLayoutPanel();
             this.trackThreads = new System.Windows.Forms.TrackBar();
@@ -96,10 +91,18 @@ namespace WebMConverter
             this.labelEncodingArguments = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
             this.labelEncodingSlices = new System.Windows.Forms.Label();
-            this.tableLayoutPanelEncodingSlices = new System.Windows.Forms.TableLayoutPanel();
-            this.trackSlices = new System.Windows.Forms.TrackBar();
-            this.labelSlices = new System.Windows.Forms.Label();
             this.labelEncodingSlicesHint = new System.Windows.Forms.Label();
+            this.labelAdvancedWarning = new System.Windows.Forms.Label();
+            this.groupBoxAdvancedProcessing = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanelAdvancedProcessing = new System.Windows.Forms.TableLayoutPanel();
+            this.labelProcessingLevelsHint = new System.Windows.Forms.Label();
+            this.labelProcessingDeinterlaceHint = new System.Windows.Forms.Label();
+            this.boxDeinterlace = new System.Windows.Forms.CheckBox();
+            this.boxLevels = new System.Windows.Forms.CheckBox();
+            this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
+            this.labelIndexingProgress = new System.Windows.Forms.Label();
+            this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanelMainForm.SuspendLayout();
@@ -118,16 +121,18 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingGeneral.SuspendLayout();
             this.tableLayoutPanelGeneralBitrate.SuspendLayout();
             this.tableLayoutPanelGeneralSizeLimit.SuspendLayout();
-            this.panelHideTheOptions.SuspendLayout();
-            this.panelContainTheProgressBar.SuspendLayout();
             this.tabPageAdvanced.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBoxAdvancedEncoding.SuspendLayout();
             this.tableLayoutPanelEncodingAdvanced.SuspendLayout();
-            this.tableLayoutPanelEncodingThreads.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
             this.tableLayoutPanelEncodingSlices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
+            this.tableLayoutPanelEncodingThreads.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
+            this.groupBoxAdvancedProcessing.SuspendLayout();
+            this.tableLayoutPanelAdvancedProcessing.SuspendLayout();
+            this.panelHideTheOptions.SuspendLayout();
+            this.panelContainTheProgressBar.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -301,9 +306,7 @@ namespace WebMConverter
             this.toolStripButtonSubtitle,
             this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting,
-            this.buttonPreview,
-            this.toolStripButtonDeinterlace,
-            this.toolStripButtonLevels});
+            this.buttonPreview});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
             this.toolStripProcessingScript.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -394,28 +397,6 @@ namespace WebMConverter
             this.buttonPreview.MouseEnter += new System.EventHandler(this.buttonPreview_MouseEnter);
             this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonDeinterlace
-            // 
-            this.toolStripButtonDeinterlace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonDeinterlace.Enabled = false;
-            this.toolStripButtonDeinterlace.Name = "toolStripButtonDeinterlace";
-            this.toolStripButtonDeinterlace.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButtonDeinterlace.Text = "Deinterlace";
-            this.toolStripButtonDeinterlace.Click += new System.EventHandler(this.toolStripButtonDeinterlace_Click);
-            this.toolStripButtonDeinterlace.MouseEnter += new System.EventHandler(this.toolStripButtonDeinterlace_MouseEnter);
-            this.toolStripButtonDeinterlace.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
-            // toolStripButtonLevels
-            // 
-            this.toolStripButtonLevels.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonLevels.Enabled = false;
-            this.toolStripButtonLevels.Name = "toolStripButtonLevels";
-            this.toolStripButtonLevels.Size = new System.Drawing.Size(57, 22);
-            this.toolStripButtonLevels.Text = "Fix levels";
-            this.toolStripButtonLevels.Click += new System.EventHandler(this.toolStripButtonLevels_Click);
-            this.toolStripButtonLevels.MouseEnter += new System.EventHandler(this.toolStripButtonLevels_MouseEnter);
-            this.toolStripButtonLevels.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
             // panelProcessingScriptInput
             // 
             this.panelProcessingScriptInput.Controls.Add(this.listViewProcessingScript);
@@ -462,7 +443,7 @@ namespace WebMConverter
             this.tabPageEncoding.Location = new System.Drawing.Point(4, 22);
             this.tabPageEncoding.Name = "tabPageEncoding";
             this.tabPageEncoding.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEncoding.Size = new System.Drawing.Size(1053, 324);
+            this.tabPageEncoding.Size = new System.Drawing.Size(1053, 307);
             this.tabPageEncoding.TabIndex = 0;
             this.tabPageEncoding.Text = "Encoding";
             // 
@@ -480,7 +461,7 @@ namespace WebMConverter
             this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
             this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncoding.Size = new System.Drawing.Size(1047, 318);
+            this.tableLayoutPanelEncoding.Size = new System.Drawing.Size(1047, 301);
             this.tableLayoutPanelEncoding.TabIndex = 0;
             // 
             // groupBoxEncodingMetadata
@@ -760,47 +741,6 @@ namespace WebMConverter
             this.labelGeneralAudioHint.Text = "Keep this disabled until Moot allows audio.";
             this.labelGeneralAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panelHideTheOptions
-            // 
-            this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panelHideTheOptions.Controls.Add(this.panelContainTheProgressBar);
-            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 88);
-            this.panelHideTheOptions.Name = "panelHideTheOptions";
-            this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
-            this.panelHideTheOptions.TabIndex = 3;
-            // 
-            // panelContainTheProgressBar
-            // 
-            this.panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panelContainTheProgressBar.AutoSize = true;
-            this.panelContainTheProgressBar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelContainTheProgressBar.BackColor = System.Drawing.SystemColors.Control;
-            this.panelContainTheProgressBar.Controls.Add(this.labelIndexingProgress);
-            this.panelContainTheProgressBar.Controls.Add(this.progressBarIndexing);
-            this.panelContainTheProgressBar.Location = new System.Drawing.Point(299, 148);
-            this.panelContainTheProgressBar.Name = "panelContainTheProgressBar";
-            this.panelContainTheProgressBar.Size = new System.Drawing.Size(469, 61);
-            this.panelContainTheProgressBar.TabIndex = 0;
-            // 
-            // labelIndexingProgress
-            // 
-            this.labelIndexingProgress.BackColor = System.Drawing.Color.Transparent;
-            this.labelIndexingProgress.Location = new System.Drawing.Point(4, 5);
-            this.labelIndexingProgress.Name = "labelIndexingProgress";
-            this.labelIndexingProgress.Size = new System.Drawing.Size(460, 23);
-            this.labelIndexingProgress.TabIndex = 1;
-            this.labelIndexingProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // progressBarIndexing
-            // 
-            this.progressBarIndexing.Location = new System.Drawing.Point(6, 32);
-            this.progressBarIndexing.Margin = new System.Windows.Forms.Padding(6);
-            this.progressBarIndexing.Name = "progressBarIndexing";
-            this.progressBarIndexing.Size = new System.Drawing.Size(457, 23);
-            this.progressBarIndexing.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBarIndexing.TabIndex = 0;
-            this.progressBarIndexing.Value = 30;
-            // 
             // tabPageAdvanced
             // 
             this.tabPageAdvanced.BackColor = System.Drawing.SystemColors.Control;
@@ -808,19 +748,9 @@ namespace WebMConverter
             this.tabPageAdvanced.Location = new System.Drawing.Point(4, 22);
             this.tabPageAdvanced.Name = "tabPageAdvanced";
             this.tabPageAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAdvanced.Size = new System.Drawing.Size(1053, 324);
+            this.tabPageAdvanced.Size = new System.Drawing.Size(1053, 307);
             this.tabPageAdvanced.TabIndex = 4;
             this.tabPageAdvanced.Text = "Advanced";
-            // 
-            // groupBoxAdvancedProcessing
-            // 
-            this.groupBoxAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
-            this.groupBoxAdvancedProcessing.Name = "groupBoxAdvancedProcessing";
-            this.groupBoxAdvancedProcessing.Size = new System.Drawing.Size(1041, 94);
-            this.groupBoxAdvancedProcessing.TabIndex = 0;
-            this.groupBoxAdvancedProcessing.TabStop = false;
-            this.groupBoxAdvancedProcessing.Text = "Processing";
             // 
             // tableLayoutPanel1
             // 
@@ -834,31 +764,18 @@ namespace WebMConverter
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 318);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 301);
             this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // labelAdvancedWarning
-            // 
-            this.labelAdvancedWarning.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.labelAdvancedWarning, 3);
-            this.labelAdvancedWarning.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAdvancedWarning.Location = new System.Drawing.Point(3, 3);
-            this.labelAdvancedWarning.Margin = new System.Windows.Forms.Padding(3);
-            this.labelAdvancedWarning.Name = "labelAdvancedWarning";
-            this.labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
-            this.labelAdvancedWarning.TabIndex = 32;
-            this.labelAdvancedWarning.Text = "Don\'t modify these unless you know what you\'re doing!";
-            this.labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxAdvancedEncoding
             // 
             this.groupBoxAdvancedEncoding.AutoSize = true;
             this.groupBoxAdvancedEncoding.Controls.Add(this.tableLayoutPanelEncodingAdvanced);
             this.groupBoxAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAdvancedEncoding.Location = new System.Drawing.Point(3, 131);
+            this.groupBoxAdvancedEncoding.Location = new System.Drawing.Point(3, 113);
             this.groupBoxAdvancedEncoding.Name = "groupBoxAdvancedEncoding";
             this.groupBoxAdvancedEncoding.Size = new System.Drawing.Size(1041, 104);
             this.groupBoxAdvancedEncoding.TabIndex = 33;
@@ -888,6 +805,46 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelEncodingAdvanced.Size = new System.Drawing.Size(1035, 85);
             this.tableLayoutPanelEncodingAdvanced.TabIndex = 0;
+            // 
+            // tableLayoutPanelEncodingSlices
+            // 
+            this.tableLayoutPanelEncodingSlices.ColumnCount = 2;
+            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
+            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
+            this.tableLayoutPanelEncodingSlices.Controls.Add(this.trackSlices, 0, 0);
+            this.tableLayoutPanelEncodingSlices.Controls.Add(this.labelSlices, 1, 0);
+            this.tableLayoutPanelEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelEncodingSlices.Location = new System.Drawing.Point(82, 31);
+            this.tableLayoutPanelEncodingSlices.Name = "tableLayoutPanelEncodingSlices";
+            this.tableLayoutPanelEncodingSlices.RowCount = 1;
+            this.tableLayoutPanelEncodingSlices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelEncodingSlices.Size = new System.Drawing.Size(142, 22);
+            this.tableLayoutPanelEncodingSlices.TabIndex = 31;
+            // 
+            // trackSlices
+            // 
+            this.trackSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackSlices.Location = new System.Drawing.Point(0, 0);
+            this.trackSlices.Margin = new System.Windows.Forms.Padding(0);
+            this.trackSlices.Maximum = 4;
+            this.trackSlices.Minimum = 1;
+            this.trackSlices.Name = "trackSlices";
+            this.trackSlices.Size = new System.Drawing.Size(122, 22);
+            this.trackSlices.TabIndex = 0;
+            this.trackSlices.Value = 1;
+            this.trackSlices.Scroll += new System.EventHandler(this.trackSlices_Scroll);
+            // 
+            // labelSlices
+            // 
+            this.labelSlices.AutoSize = true;
+            this.labelSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSlices.Location = new System.Drawing.Point(122, 0);
+            this.labelSlices.Margin = new System.Windows.Forms.Padding(0);
+            this.labelSlices.Name = "labelSlices";
+            this.labelSlices.Size = new System.Drawing.Size(20, 22);
+            this.labelSlices.TabIndex = 1;
+            this.labelSlices.Text = "1";
+            this.labelSlices.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelEncodingThreads
             // 
@@ -985,46 +942,6 @@ namespace WebMConverter
             this.labelEncodingSlices.Text = "Slices:";
             this.labelEncodingSlices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tableLayoutPanelEncodingSlices
-            // 
-            this.tableLayoutPanelEncodingSlices.ColumnCount = 2;
-            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
-            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
-            this.tableLayoutPanelEncodingSlices.Controls.Add(this.trackSlices, 0, 0);
-            this.tableLayoutPanelEncodingSlices.Controls.Add(this.labelSlices, 1, 0);
-            this.tableLayoutPanelEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncodingSlices.Location = new System.Drawing.Point(82, 31);
-            this.tableLayoutPanelEncodingSlices.Name = "tableLayoutPanelEncodingSlices";
-            this.tableLayoutPanelEncodingSlices.RowCount = 1;
-            this.tableLayoutPanelEncodingSlices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelEncodingSlices.Size = new System.Drawing.Size(142, 22);
-            this.tableLayoutPanelEncodingSlices.TabIndex = 31;
-            // 
-            // trackSlices
-            // 
-            this.trackSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackSlices.Location = new System.Drawing.Point(0, 0);
-            this.trackSlices.Margin = new System.Windows.Forms.Padding(0);
-            this.trackSlices.Maximum = 4;
-            this.trackSlices.Minimum = 1;
-            this.trackSlices.Name = "trackSlices";
-            this.trackSlices.Size = new System.Drawing.Size(122, 22);
-            this.trackSlices.TabIndex = 0;
-            this.trackSlices.Value = 1;
-            this.trackSlices.Scroll += new System.EventHandler(this.trackSlices_Scroll);
-            // 
-            // labelSlices
-            // 
-            this.labelSlices.AutoSize = true;
-            this.labelSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelSlices.Location = new System.Drawing.Point(122, 0);
-            this.labelSlices.Margin = new System.Windows.Forms.Padding(0);
-            this.labelSlices.Name = "labelSlices";
-            this.labelSlices.Size = new System.Drawing.Size(20, 22);
-            this.labelSlices.TabIndex = 1;
-            this.labelSlices.Text = "1";
-            this.labelSlices.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // labelEncodingSlicesHint
             // 
             this.labelEncodingSlicesHint.AutoSize = true;
@@ -1036,6 +953,142 @@ namespace WebMConverter
             this.labelEncodingSlicesHint.Text = "Split frames into slices before encoding them. Results in a higher quality per fr" +
     "ame. 4 slices is standard for 720p resolutions.";
             this.labelEncodingSlicesHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelAdvancedWarning
+            // 
+            this.labelAdvancedWarning.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.labelAdvancedWarning, 3);
+            this.labelAdvancedWarning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelAdvancedWarning.Location = new System.Drawing.Point(3, 3);
+            this.labelAdvancedWarning.Margin = new System.Windows.Forms.Padding(3);
+            this.labelAdvancedWarning.Name = "labelAdvancedWarning";
+            this.labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
+            this.labelAdvancedWarning.TabIndex = 32;
+            this.labelAdvancedWarning.Text = "Don\'t modify these unless you know what you\'re doing!";
+            this.labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBoxAdvancedProcessing
+            // 
+            this.groupBoxAdvancedProcessing.Controls.Add(this.tableLayoutPanelAdvancedProcessing);
+            this.groupBoxAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
+            this.groupBoxAdvancedProcessing.Name = "groupBoxAdvancedProcessing";
+            this.groupBoxAdvancedProcessing.Size = new System.Drawing.Size(1041, 76);
+            this.groupBoxAdvancedProcessing.TabIndex = 0;
+            this.groupBoxAdvancedProcessing.TabStop = false;
+            this.groupBoxAdvancedProcessing.Text = "Processing";
+            // 
+            // tableLayoutPanelAdvancedProcessing
+            // 
+            this.tableLayoutPanelAdvancedProcessing.ColumnCount = 3;
+            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingLevelsHint, 2, 0);
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingDeinterlaceHint, 2, 1);
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxLevels, 0, 0);
+            this.tableLayoutPanelAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelAdvancedProcessing.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanelAdvancedProcessing.Name = "tableLayoutPanelAdvancedProcessing";
+            this.tableLayoutPanelAdvancedProcessing.RowCount = 2;
+            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelAdvancedProcessing.Size = new System.Drawing.Size(1035, 57);
+            this.tableLayoutPanelAdvancedProcessing.TabIndex = 1;
+            // 
+            // labelProcessingLevelsHint
+            // 
+            this.labelProcessingLevelsHint.AutoSize = true;
+            this.labelProcessingLevelsHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelProcessingLevelsHint.Location = new System.Drawing.Point(230, 0);
+            this.labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
+            this.labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
+            this.labelProcessingLevelsHint.TabIndex = 27;
+            this.labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
+    "hed out in browsers. This option expands the color ranges to the full range.";
+            this.labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelProcessingDeinterlaceHint
+            // 
+            this.labelProcessingDeinterlaceHint.AutoSize = true;
+            this.labelProcessingDeinterlaceHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
+            this.labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
+            this.labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 29);
+            this.labelProcessingDeinterlaceHint.TabIndex = 32;
+            this.labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxDeinterlace
+            // 
+            this.boxDeinterlace.AutoSize = true;
+            this.boxDeinterlace.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxDeinterlace, 2);
+            this.boxDeinterlace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
+            this.boxDeinterlace.Name = "boxDeinterlace";
+            this.boxDeinterlace.Size = new System.Drawing.Size(221, 23);
+            this.boxDeinterlace.TabIndex = 34;
+            this.boxDeinterlace.Text = "Deinterlace:";
+            this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxDeinterlace.UseVisualStyleBackColor = true;
+            this.boxDeinterlace.CheckedChanged += new System.EventHandler(this.boxDeinterlace_CheckedChanged);
+            // 
+            // boxLevels
+            // 
+            this.boxLevels.AutoSize = true;
+            this.boxLevels.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxLevels, 2);
+            this.boxLevels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxLevels.Location = new System.Drawing.Point(3, 3);
+            this.boxLevels.Name = "boxLevels";
+            this.boxLevels.Size = new System.Drawing.Size(221, 22);
+            this.boxLevels.TabIndex = 33;
+            this.boxLevels.Text = "Expand color ranges:";
+            this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxLevels.UseVisualStyleBackColor = true;
+            this.boxLevels.CheckedChanged += new System.EventHandler(this.boxLevels_CheckedChanged);
+            // 
+            // panelHideTheOptions
+            // 
+            this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelHideTheOptions.Controls.Add(this.panelContainTheProgressBar);
+            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 88);
+            this.panelHideTheOptions.Name = "panelHideTheOptions";
+            this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
+            this.panelHideTheOptions.TabIndex = 3;
+            // 
+            // panelContainTheProgressBar
+            // 
+            this.panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panelContainTheProgressBar.AutoSize = true;
+            this.panelContainTheProgressBar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panelContainTheProgressBar.BackColor = System.Drawing.SystemColors.Control;
+            this.panelContainTheProgressBar.Controls.Add(this.labelIndexingProgress);
+            this.panelContainTheProgressBar.Controls.Add(this.progressBarIndexing);
+            this.panelContainTheProgressBar.Location = new System.Drawing.Point(299, 148);
+            this.panelContainTheProgressBar.Name = "panelContainTheProgressBar";
+            this.panelContainTheProgressBar.Size = new System.Drawing.Size(469, 61);
+            this.panelContainTheProgressBar.TabIndex = 0;
+            // 
+            // labelIndexingProgress
+            // 
+            this.labelIndexingProgress.BackColor = System.Drawing.Color.Transparent;
+            this.labelIndexingProgress.Location = new System.Drawing.Point(4, 5);
+            this.labelIndexingProgress.Name = "labelIndexingProgress";
+            this.labelIndexingProgress.Size = new System.Drawing.Size(460, 23);
+            this.labelIndexingProgress.TabIndex = 1;
+            this.labelIndexingProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // progressBarIndexing
+            // 
+            this.progressBarIndexing.Location = new System.Drawing.Point(6, 32);
+            this.progressBarIndexing.Margin = new System.Windows.Forms.Padding(6);
+            this.progressBarIndexing.Name = "progressBarIndexing";
+            this.progressBarIndexing.Size = new System.Drawing.Size(457, 23);
+            this.progressBarIndexing.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBarIndexing.TabIndex = 0;
+            this.progressBarIndexing.Value = 30;
             // 
             // statusStrip
             // 
@@ -1051,7 +1104,7 @@ namespace WebMConverter
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1021, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1052, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1100,21 +1153,24 @@ namespace WebMConverter
             this.tableLayoutPanelGeneralBitrate.PerformLayout();
             this.tableLayoutPanelGeneralSizeLimit.ResumeLayout(false);
             this.tableLayoutPanelGeneralSizeLimit.PerformLayout();
-            this.panelHideTheOptions.ResumeLayout(false);
-            this.panelHideTheOptions.PerformLayout();
-            this.panelContainTheProgressBar.ResumeLayout(false);
             this.tabPageAdvanced.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.groupBoxAdvancedEncoding.ResumeLayout(false);
             this.tableLayoutPanelEncodingAdvanced.ResumeLayout(false);
             this.tableLayoutPanelEncodingAdvanced.PerformLayout();
-            this.tableLayoutPanelEncodingThreads.ResumeLayout(false);
-            this.tableLayoutPanelEncodingThreads.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
             this.tableLayoutPanelEncodingSlices.ResumeLayout(false);
             this.tableLayoutPanelEncodingSlices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
+            this.tableLayoutPanelEncodingThreads.ResumeLayout(false);
+            this.tableLayoutPanelEncodingThreads.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
+            this.groupBoxAdvancedProcessing.ResumeLayout(false);
+            this.tableLayoutPanelAdvancedProcessing.ResumeLayout(false);
+            this.tableLayoutPanelAdvancedProcessing.PerformLayout();
+            this.panelHideTheOptions.ResumeLayout(false);
+            this.panelHideTheOptions.PerformLayout();
+            this.panelContainTheProgressBar.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -1175,8 +1231,6 @@ namespace WebMConverter
         private System.Windows.Forms.Panel panelContainTheProgressBar;
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDeinterlace;
-        private System.Windows.Forms.ToolStripButton toolStripButtonLevels;
         private System.Windows.Forms.TabPage tabPageAdvanced;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBoxAdvancedEncoding;
@@ -1197,6 +1251,11 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelEncodingSlicesHint;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAdvancedProcessing;
+        private System.Windows.Forms.Label labelProcessingLevelsHint;
+        private System.Windows.Forms.Label labelProcessingDeinterlaceHint;
+        private System.Windows.Forms.CheckBox boxDeinterlace;
+        private System.Windows.Forms.CheckBox boxLevels;
     }
 }
 

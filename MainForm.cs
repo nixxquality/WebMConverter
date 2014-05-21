@@ -55,8 +55,6 @@ namespace WebMConverter
             imageList.ImageSize = new Size(100, 100);
 
             imageList.Images.Add("crop", Properties.Resources.crop);
-            imageList.Images.Add("deinterlace", Properties.Resources.deinterlace);
-            imageList.Images.Add("levels", Properties.Resources.levels);
             imageList.Images.Add("resize", Properties.Resources.resize);
             imageList.Images.Add("reverse", Properties.Resources.reverse);
             imageList.Images.Add("subtitles", Properties.Resources.subtitles);
@@ -67,10 +65,12 @@ namespace WebMConverter
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //Keeping this disabled for now because threads are crashy
-
-            //int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
-            //trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+            /*
+             * Keeping this disabled for now because threads are crashy
+             *
+            int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
+            trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+             */
 
             trackThreads_Scroll(sender, e); //Update label
         }
@@ -205,46 +205,6 @@ namespace WebMConverter
             }
         }
 
-        private void toolStripButtonDeinterlace_Click(object sender, EventArgs e)
-        {
-            if (toolStripButtonAdvancedScripting.Checked)
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + new DeinterlaceFilter().ToString());
-            }
-            else
-            {
-                Filters.Deinterlace = new DeinterlaceFilter();
-                listViewProcessingScript.Items.Add("Deinterlace").ImageKey = "deinterlace";
-                toolStripButtonDeinterlace.Enabled = false;
-            }
-        }
-
-        private void toolStripButtonLevels_Click(object sender, EventArgs e)
-        {
-            if (Program.VideoColorRange == FFMSSharp.ColorRange.JPEG)
-            {
-                const string message = "From what I can see, there is no need to expand the color ranges.\n" + 
-                                       "Are you sure you want to mess with the color balance?\n" + 
-                                       "Only press OK if you're 100% sure you know what you're doing.";
-                const string caption = "Are you sure?";
-                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-
-                if (result == DialogResult.Cancel)
-                    return;
-            }
-
-            if (toolStripButtonAdvancedScripting.Checked)
-            {
-                textBoxProcessingScript.AppendText(Environment.NewLine + new LevelsFilter().ToString());
-            }
-            else
-            {
-                Filters.Levels = new LevelsFilter();
-                listViewProcessingScript.Items.Add("Levels").ImageKey = "levels";
-                toolStripButtonLevels.Enabled = false;
-            }
-        }
-
         private void toolStripButtonResize_Click(object sender, EventArgs e)
         {
             using (var form = new ResizeForm())
@@ -352,8 +312,6 @@ namespace WebMConverter
         private void toolStripFilterButtonsEnabled(bool enabled)
         {
             toolStripButtonCrop.Enabled = enabled;
-            toolStripButtonDeinterlace.Enabled = enabled;
-            toolStripButtonLevels.Enabled = enabled;
             toolStripButtonResize.Enabled = enabled;
             toolStripButtonReverse.Enabled = enabled;
             toolStripButtonSubtitle.Enabled = enabled;
@@ -371,27 +329,6 @@ namespace WebMConverter
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
-                            break;
-                        case "Deinterlace":
-                            Filters.Deinterlace = null;
-                            toolStripButtonDeinterlace.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
-                            break;
-                        case "Levels":
-                            if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
-                            {
-                                const string message = "From what I can see, you should be expanding the color ranges.\n" +
-                                                       "Are you sure you want to mess with the color balance?\n" +
-                                                       "Only press OK if you're 100% sure you know what you're doing.";
-                                const string caption = "Are you sure?";
-                                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                                if (result == DialogResult.Cancel)
-                                    break;
-                            }
-                            Filters.Levels = null;
-                            toolStripButtonLevels.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Resize":
@@ -537,24 +474,23 @@ namespace WebMConverter
 
         #region tagPageAdvanced
 
-        private void UpdateArguments(object sender, EventArgs e)
+        private void boxLevels_CheckedChanged(object sender, EventArgs e)
         {
-            try
-            {
-                string arguments = GenerateArguments();
-                if (arguments != _autoArguments || _argumentError)
-                {
-                    textBoxArguments.Text = _autoArguments = arguments;
-                    showToolTip(arguments, 5000);
-                    _argumentError = false;
-                }
-            }
-            catch (ArgumentException argExc)
-            {
-                textBoxArguments.Text = "ERROR: " + argExc.Message;
-                showToolTip("ERROR: " + argExc.Message, 5000);
-                _argumentError = true;
-            }
+            const string message = "This option is automatically set based on the input file, and it should always be correct.\n" +
+                                   "Are you sure you want to manually mess with the color balance?\n" +
+                                   "Only press OK if you're 100% sure you know what you're doing.";
+            const string caption = "Are you sure?";
+            var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+
+            if (result == DialogResult.Cancel)
+                return;
+
+            Filters.Levels = boxLevels.Checked ? new LevelsFilter() : null;
+        }
+
+        private void boxDeinterlace_CheckedChanged(object sender, EventArgs e)
+        {
+            Filters.Deinterlace = boxDeinterlace.Checked ? new DeinterlaceFilter() : null;
         }
 
         private void trackThreads_Scroll(object sender, EventArgs e)
@@ -708,9 +644,7 @@ namespace WebMConverter
 
                 if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
                 {
-                    Filters.Levels = new LevelsFilter();
-                    listViewProcessingScript.Items.Add("Levels").ImageKey = "levels";
-                    toolStripButtonLevels.Enabled = false;
+                    boxLevels.Checked = true;
                 }
 
                 panelHideTheOptions.SendToBack();
@@ -762,6 +696,26 @@ namespace WebMConverter
                 throw new Exception("Output path contains invalid characters!\nInvalid characters: " + string.Join(" ", invalidChars));
         }
 
+        private void UpdateArguments(object sender, EventArgs e)
+        {
+            try
+            {
+                string arguments = GenerateArguments();
+                if (arguments != _autoArguments || _argumentError)
+                {
+                    textBoxArguments.Text = _autoArguments = arguments;
+                    showToolTip(arguments, 5000);
+                    _argumentError = false;
+                }
+            }
+            catch (ArgumentException argExc)
+            {
+                textBoxArguments.Text = "ERROR: " + argExc.Message;
+                showToolTip("ERROR: " + argExc.Message, 5000);
+                _argumentError = true;
+            }
+        }
+
         private void GenerateAvisynthScript(string avsFileName, string avsInputFile)
         {
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
@@ -769,11 +723,21 @@ namespace WebMConverter
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
-                avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
+
                 if (boxAudio.Checked)
                     avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\"), FFAudioSource(\"{0}\",cachefile=\"{1}\"))", avsInputFile, _indexFile));
                 else
                     avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", avsInputFile, _indexFile));
+
+                if (Filters.Deinterlace != null)
+                {
+                    avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
+                    avscript.WriteLine(Filters.Deinterlace.ToString());
+                }
+
+                if (Filters.Levels != null)
+                    avscript.WriteLine(Filters.Levels.ToString());
+
                 avscript.Write(textBoxProcessingScript.Text);
             }
         }
@@ -929,10 +893,6 @@ namespace WebMConverter
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
-            if (Filters.Deinterlace != null)
-                script.AppendLine(Filters.Deinterlace.ToString());
-            if (Filters.Levels != null)
-                script.AppendLine(Filters.Levels.ToString());
             if (Filters.Subtitle != null)
                 script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Trim != null)

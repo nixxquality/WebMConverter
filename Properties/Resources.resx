@@ -127,12 +127,6 @@
   <data name="cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cross.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="deinterlace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Flaticon_32232.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="levels" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Flaticon_7502.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="resize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Flaticon_32217.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

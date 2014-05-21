@@ -202,11 +202,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
-    <None Include="Resources\Flaticon_32232.png" />
     <None Include="Resources\Flaticon_32217.png" />
     <None Include="Resources\Flaticon_9271.png" />
     <None Include="Resources\Flaticon_15003.png" />
-    <None Include="Resources\Flaticon_7502.png" />
     <None Include="Resources\Flaticon_3757.png" />
     <None Include="Resources\Flaticon_2113.png" />
     <None Include="Resources\tick.png" />
