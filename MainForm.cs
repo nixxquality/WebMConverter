@@ -476,15 +476,18 @@ namespace WebMConverter
 
         private void boxLevels_CheckedChanged(object sender, EventArgs e)
         {
-            const string message = "This option is automatically set based on the input file, and it should always be correct.\n" +
-                                   "Are you sure you want to manually mess with the color balance?\n" +
-                                   "Only press OK if you're 100% sure you know what you're doing.";
-            const string caption = "Are you sure?";
-            var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            if (boxLevels.Checked != (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG))
+            {
+                const string message = "This option is automatically set based on the input file.\n" +
+                                       "Are you sure you want to manually mess with the color balance?\n" +
+                                       "Only press OK if you're 100% sure you know what you're doing.";
+                const string caption = "Are you sure?";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
-            if (result == DialogResult.Cancel)
-                return;
-
+                if (result == DialogResult.Cancel)
+                    return;
+            }
+            
             Filters.Levels = boxLevels.Checked ? new LevelsFilter() : null;
         }
 

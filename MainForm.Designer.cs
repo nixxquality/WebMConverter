@@ -1006,7 +1006,7 @@ namespace WebMConverter
             this.labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
             this.labelProcessingLevelsHint.TabIndex = 27;
             this.labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
-    "hed out in browsers. This option expands the color ranges to the full range.";
+    "hed out in browsers. This option expands the color levels to the full range.";
             this.labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelProcessingDeinterlaceHint
