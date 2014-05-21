@@ -94,11 +94,11 @@ namespace WebMConverter
                 {
                     float i = float.Parse(textWidthOut.Text, CultureInfo.InvariantCulture);
 
-                    textWidthOut.TextChanged -= textWidthOut_TextChanged;
+                    textHeightOut.TextChanged -= textHeightOut_TextChanged;
 
                     textHeightOut.Text = ((int)(inheight / inwidth * i)).ToString();
 
-                    textWidthOut.TextChanged += textWidthOut_TextChanged;
+                    textHeightOut.TextChanged += textHeightOut_TextChanged;
                 }
             }
             catch
@@ -121,11 +121,11 @@ namespace WebMConverter
                 {
                     float i = float.Parse(textHeightOut.Text, CultureInfo.InvariantCulture);
 
-                    textHeightOut.TextChanged -= textHeightOut_TextChanged;
+                    textWidthOut.TextChanged -= textWidthOut_TextChanged;
 
                     textWidthOut.Text = ((int)(inwidth / inheight * i)).ToString();
 
-                    textHeightOut.TextChanged += textHeightOut_TextChanged;
+                    textWidthOut.TextChanged += textWidthOut_TextChanged;
                 }
             }
             catch
