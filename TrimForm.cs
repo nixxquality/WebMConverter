@@ -42,7 +42,7 @@ namespace WebMConverter
 
             trackVideoTimeline.Value = trimStart;
             previewFrame.Frame = trimStart;
-            labelTimeStamp.Text = Program.FrameToTimeStamp(trimStart);
+            labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
 
             checktrims();
         }
@@ -50,35 +50,34 @@ namespace WebMConverter
         private void trackBarVideoTimeline_Scroll(object sender, EventArgs e)
         {
             previewFrame.Frame = trackVideoTimeline.Value;
-            labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
+            labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
         }
 
         private void buttonTrimStart_Click(object sender, EventArgs e)
         {
             trimStart = trackVideoTimeline.Value;
-            labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart.ToString());
+            labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart);
             checktrims();
         }
 
         private void buttonTrimEnd_Click(object sender, EventArgs e)
         {
             trimEnd = trackVideoTimeline.Value;
-            labelTrimEnd.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimEnd), trimEnd.ToString());
+            labelTrimEnd.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimEnd), trimEnd);
             checktrims();
         }
 
         private void checktrims()
         {
-            if (trimStart == -1)
-                return;
-            if (trimEnd == -1)
-                return;
             if (trimEnd < trimStart)
             {
                 buttonConfirm.Enabled = false;
                 return;
             }
             buttonConfirm.Enabled = true;
+
+            int trimLength = trimEnd - trimStart;
+            labelTrimDuration.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimLength), trimLength); // Using trimLength is actually kind of invalid, but meh.
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
@@ -154,7 +153,6 @@ namespace WebMConverter
         internal double GetDuration()
         {
             double firsttime, lasttime;
-            var track = Program.VideoSource.Track;
 
             firsttime = Program.FrameToTime(TrimStart);
             lasttime = Program.FrameToTime(TrimEnd);

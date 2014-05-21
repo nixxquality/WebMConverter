@@ -497,6 +497,14 @@ namespace WebMConverter
 
         #region tabPageEncoding
 
+        private void textBoxNumbersOnly(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
         private void trackThreads_Scroll(object sender, EventArgs e)
         {
             labelThreads.Text = trackThreads.Value.ToString();

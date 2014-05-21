@@ -626,6 +626,7 @@ namespace WebMConverter
             this.boxBitrate.Size = new System.Drawing.Size(150, 20);
             this.boxBitrate.TabIndex = 0;
             this.boxBitrate.TextChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxBitrate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
             // labelGeneralBitrateUnit
             // 
@@ -685,6 +686,7 @@ namespace WebMConverter
             this.boxLimit.Size = new System.Drawing.Size(150, 20);
             this.boxLimit.TabIndex = 0;
             this.boxLimit.TextChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
             // labelGeneralSizeLimitUnit
             // 

@@ -34,7 +34,8 @@
             this.labelTrimStart = new System.Windows.Forms.Label();
             this.buttonTrimEnd = new System.Windows.Forms.Button();
             this.labelTrimEnd = new System.Windows.Forms.Label();
-            this.previewFrame = new WebMConverter.PreviewFrame();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelTrimDuration = new System.Windows.Forms.Label();
             this.trackVideoTimeline = new System.Windows.Forms.TrackBar();
             this.flowDialogButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonConfirm = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@
             this.toolStripMenuGoTo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuGoToFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuGoToTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.previewFrame = new WebMConverter.PreviewFrame();
             this.tableLayoutPanel.SuspendLayout();
             this.flowTrimButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).BeginInit();
@@ -55,8 +57,8 @@
             // 
             this.tableLayoutPanel.ColumnCount = 3;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel.Controls.Add(this.flowTrimButtons, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.previewFrame, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.trackVideoTimeline, 0, 1);
@@ -78,6 +80,8 @@
             this.flowTrimButtons.Controls.Add(this.labelTrimStart);
             this.flowTrimButtons.Controls.Add(this.buttonTrimEnd);
             this.flowTrimButtons.Controls.Add(this.labelTrimEnd);
+            this.flowTrimButtons.Controls.Add(this.label1);
+            this.flowTrimButtons.Controls.Add(this.labelTrimDuration);
             this.flowTrimButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowTrimButtons.Location = new System.Drawing.Point(0, 490);
             this.flowTrimButtons.Margin = new System.Windows.Forms.Padding(0);
@@ -129,17 +133,28 @@
             this.labelTrimEnd.TabIndex = 3;
             this.labelTrimEnd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // previewFrame
+            // label1
             // 
-            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
-            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewFrame.Frame = 0;
-            this.previewFrame.Location = new System.Drawing.Point(0, 0);
-            this.previewFrame.Margin = new System.Windows.Forms.Padding(0);
-            this.previewFrame.Name = "previewFrame";
-            this.previewFrame.Size = new System.Drawing.Size(744, 458);
-            this.previewFrame.TabIndex = 0;
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(377, 0);
+            this.label1.MinimumSize = new System.Drawing.Size(75, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 29);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Duration:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelTrimDuration
+            // 
+            this.labelTrimDuration.AutoSize = true;
+            this.labelTrimDuration.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelTrimDuration.Location = new System.Drawing.Point(458, 0);
+            this.labelTrimDuration.MinimumSize = new System.Drawing.Size(100, 0);
+            this.labelTrimDuration.Name = "labelTrimDuration";
+            this.labelTrimDuration.Size = new System.Drawing.Size(100, 29);
+            this.labelTrimDuration.TabIndex = 4;
+            this.labelTrimDuration.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // trackVideoTimeline
             // 
@@ -147,7 +162,7 @@
             this.trackVideoTimeline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trackVideoTimeline.Location = new System.Drawing.Point(3, 461);
             this.trackVideoTimeline.Name = "trackVideoTimeline";
-            this.trackVideoTimeline.Size = new System.Drawing.Size(658, 26);
+            this.trackVideoTimeline.Size = new System.Drawing.Size(638, 26);
             this.trackVideoTimeline.TabIndex = 1;
             this.trackVideoTimeline.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackVideoTimeline.Scroll += new System.EventHandler(this.trackBarVideoTimeline_Scroll);
@@ -192,9 +207,9 @@
             // 
             this.labelTimeStamp.AutoSize = true;
             this.labelTimeStamp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTimeStamp.Location = new System.Drawing.Point(667, 458);
+            this.labelTimeStamp.Location = new System.Drawing.Point(647, 458);
             this.labelTimeStamp.Name = "labelTimeStamp";
-            this.labelTimeStamp.Size = new System.Drawing.Size(74, 32);
+            this.labelTimeStamp.Size = new System.Drawing.Size(94, 32);
             this.labelTimeStamp.TabIndex = 6;
             this.labelTimeStamp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -231,6 +246,18 @@
             this.ToolStripMenuGoToTime.Text = "Time";
             this.ToolStripMenuGoToTime.Click += new System.EventHandler(this.ToolStripMenuGoToTime_Click);
             // 
+            // previewFrame
+            // 
+            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
+            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewFrame.Frame = 0;
+            this.previewFrame.Location = new System.Drawing.Point(0, 0);
+            this.previewFrame.Margin = new System.Windows.Forms.Padding(0);
+            this.previewFrame.Name = "previewFrame";
+            this.previewFrame.Size = new System.Drawing.Size(744, 458);
+            this.previewFrame.TabIndex = 0;
+            // 
             // TrimForm
             // 
             this.AcceptButton = this.buttonConfirm;
@@ -242,7 +269,7 @@
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(446, 299);
+            this.MinimumSize = new System.Drawing.Size(760, 583);
             this.Name = "TrimForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -278,5 +305,7 @@
         private System.Windows.Forms.Label labelTimeStamp;
         private System.Windows.Forms.Label labelTrimStart;
         private System.Windows.Forms.Label labelTrimEnd;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTrimDuration;
     }
 }
