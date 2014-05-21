@@ -92,7 +92,6 @@
             this.textWidthOut.Name = "textWidthOut";
             this.textWidthOut.Size = new System.Drawing.Size(66, 20);
             this.textWidthOut.TabIndex = 1;
-            this.textWidthOut.TextChanged += new System.EventHandler(this.textWidthOut_TextChanged);
             this.textWidthOut.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textWidthOut_KeyPress);
             // 
             // textHeightOut
@@ -102,7 +101,6 @@
             this.textHeightOut.Name = "textHeightOut";
             this.textHeightOut.Size = new System.Drawing.Size(66, 20);
             this.textHeightOut.TabIndex = 2;
-            this.textHeightOut.TextChanged += new System.EventHandler(this.textHeightOut_TextChanged);
             this.textHeightOut.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textHeightOut_KeyPress);
             // 
             // labelHeightIn
@@ -162,7 +160,6 @@
             // 
             // buttonConfirm
             // 
-            this.buttonConfirm.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonConfirm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonConfirm.Location = new System.Drawing.Point(253, 53);
             this.buttonConfirm.Name = "buttonConfirm";
