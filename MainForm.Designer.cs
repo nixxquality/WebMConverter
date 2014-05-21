@@ -42,8 +42,6 @@ namespace WebMConverter
             this.tabControlOptions = new System.Windows.Forms.TabControl();
             this.tabPageProcessing = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelProcessing = new System.Windows.Forms.TableLayoutPanel();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessingScript = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonTrim = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
@@ -102,13 +100,14 @@ namespace WebMConverter
             this.trackSlices = new System.Windows.Forms.TrackBar();
             this.labelSlices = new System.Windows.Forms.Label();
             this.labelEncodingSlicesHint = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
             this.tabControlOptions.SuspendLayout();
             this.tabPageProcessing.SuspendLayout();
             this.tableLayoutPanelProcessing.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.toolStripProcessingScript.SuspendLayout();
             this.panelProcessingScriptInput.SuspendLayout();
             this.tabPageEncoding.SuspendLayout();
@@ -129,6 +128,7 @@ namespace WebMConverter
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
             this.tableLayoutPanelEncodingSlices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMainForm
@@ -140,10 +140,11 @@ namespace WebMConverter
             this.tableLayoutPanelMainForm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMainForm.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelMainForm.Name = "tableLayoutPanelMainForm";
-            this.tableLayoutPanelMainForm.RowCount = 2;
+            this.tableLayoutPanelMainForm.RowCount = 3;
             this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMainForm.Size = new System.Drawing.Size(1067, 440);
+            this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelMainForm.Size = new System.Drawing.Size(1067, 443);
             this.tableLayoutPanelMainForm.TabIndex = 0;
             // 
             // groupBoxMain
@@ -262,7 +263,7 @@ namespace WebMConverter
             this.tabControlOptions.Location = new System.Drawing.Point(3, 87);
             this.tabControlOptions.Name = "tabControlOptions";
             this.tabControlOptions.SelectedIndex = 0;
-            this.tabControlOptions.Size = new System.Drawing.Size(1061, 350);
+            this.tabControlOptions.Size = new System.Drawing.Size(1061, 333);
             this.tabControlOptions.TabIndex = 1;
             // 
             // tabPageProcessing
@@ -271,7 +272,7 @@ namespace WebMConverter
             this.tabPageProcessing.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcessing.Name = "tabPageProcessing";
             this.tabPageProcessing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessing.Size = new System.Drawing.Size(1053, 324);
+            this.tabPageProcessing.Size = new System.Drawing.Size(1053, 307);
             this.tabPageProcessing.TabIndex = 3;
             this.tabPageProcessing.Text = "Processing";
             // 
@@ -279,37 +280,16 @@ namespace WebMConverter
             // 
             this.tableLayoutPanelProcessing.ColumnCount = 1;
             this.tableLayoutPanelProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProcessing.Controls.Add(this.statusStrip, 0, 2);
             this.tableLayoutPanelProcessing.Controls.Add(this.toolStripProcessingScript, 0, 0);
             this.tableLayoutPanelProcessing.Controls.Add(this.panelProcessingScriptInput, 0, 1);
             this.tableLayoutPanelProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelProcessing.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelProcessing.Name = "tableLayoutPanelProcessing";
-            this.tableLayoutPanelProcessing.RowCount = 3;
+            this.tableLayoutPanelProcessing.RowCount = 2;
             this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanelProcessing.Size = new System.Drawing.Size(1047, 318);
+            this.tableLayoutPanelProcessing.Size = new System.Drawing.Size(1047, 301);
             this.tableLayoutPanelProcessing.TabIndex = 0;
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 296);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1047, 22);
-            this.statusStrip.SizingGrip = false;
-            this.statusStrip.TabIndex = 5;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel
-            // 
-            this.toolStripStatusLabel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1032, 19);
-            this.toolStripStatusLabel.Spring = true;
-            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripProcessingScript
             // 
@@ -444,7 +424,7 @@ namespace WebMConverter
             this.panelProcessingScriptInput.Location = new System.Drawing.Point(0, 25);
             this.panelProcessingScriptInput.Margin = new System.Windows.Forms.Padding(0);
             this.panelProcessingScriptInput.Name = "panelProcessingScriptInput";
-            this.panelProcessingScriptInput.Size = new System.Drawing.Size(1047, 271);
+            this.panelProcessingScriptInput.Size = new System.Drawing.Size(1047, 276);
             this.panelProcessingScriptInput.TabIndex = 1;
             // 
             // listViewProcessingScript
@@ -453,7 +433,7 @@ namespace WebMConverter
             this.listViewProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.listViewProcessingScript.Margin = new System.Windows.Forms.Padding(0);
             this.listViewProcessingScript.Name = "listViewProcessingScript";
-            this.listViewProcessingScript.Size = new System.Drawing.Size(1047, 271);
+            this.listViewProcessingScript.Size = new System.Drawing.Size(1047, 276);
             this.listViewProcessingScript.TabIndex = 3;
             this.listViewProcessingScript.UseCompatibleStateImageBehavior = false;
             this.listViewProcessingScript.ItemActivate += new System.EventHandler(this.listViewProcessingScript_ItemActivate);
@@ -469,7 +449,7 @@ namespace WebMConverter
             this.textBoxProcessingScript.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxProcessingScript.Multiline = true;
             this.textBoxProcessingScript.Name = "textBoxProcessingScript";
-            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 271);
+            this.textBoxProcessingScript.Size = new System.Drawing.Size(1047, 276);
             this.textBoxProcessingScript.TabIndex = 2;
             this.textBoxProcessingScript.Text = "# This is an AviSynth script. You may write advanced commands below, or just pres" +
     "s the buttons above for smooth sailing.";
@@ -1057,6 +1037,24 @@ namespace WebMConverter
     "ame. 4 slices is standard for 720p resolutions.";
             this.labelEncodingSlicesHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(3, 424);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1067, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 6;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1021, 17);
+            this.toolStripStatusLabel.Spring = true;
+            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1064,6 +1062,7 @@ namespace WebMConverter
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 446);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tableLayoutPanelMainForm);
             this.Controls.Add(this.panelHideTheOptions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -1071,7 +1070,7 @@ namespace WebMConverter
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(975, 270);
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.Text = "WebM for Retards";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
@@ -1085,8 +1084,6 @@ namespace WebMConverter
             this.tabPageProcessing.ResumeLayout(false);
             this.tableLayoutPanelProcessing.ResumeLayout(false);
             this.tableLayoutPanelProcessing.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             this.toolStripProcessingScript.ResumeLayout(false);
             this.toolStripProcessingScript.PerformLayout();
             this.panelProcessingScriptInput.ResumeLayout(false);
@@ -1118,7 +1115,10 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingSlices.ResumeLayout(false);
             this.tableLayoutPanelEncodingSlices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1176,8 +1176,6 @@ namespace WebMConverter
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeinterlace;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripButton toolStripButtonLevels;
         private System.Windows.Forms.TabPage tabPageAdvanced;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -1197,6 +1195,8 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelAdvancedWarning;
         private System.Windows.Forms.GroupBox groupBoxAdvancedProcessing;
         private System.Windows.Forms.Label labelEncodingSlicesHint;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }
 

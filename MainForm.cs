@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using StopWatch = System.Timers.Timer;
 using System.Xml;
 
 namespace WebMConverter
@@ -39,6 +40,8 @@ namespace WebMConverter
 
         bool indexing = false;
         BackgroundWorker indexbw;
+
+        StopWatch toolTipTimer;
 
         #region MainForm
 
@@ -90,6 +93,31 @@ namespace WebMConverter
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1) // We were "Open with..."ed with a file
                 SetFile(args[1]);
+
+            clearToolTip();
+        }
+
+        void showToolTip(string message, int timer = 0)
+        {
+            clearToolTip();
+
+            toolStripStatusLabel.Text = message;
+            if (timer > 0)
+            {
+                toolTipTimer = new StopWatch(timer);
+
+                toolTipTimer.Elapsed += (sender, e) => clearToolTip();
+
+                toolTipTimer.AutoReset = false;
+                toolTipTimer.Enabled = true;
+            }
+        }
+
+        void clearToolTip(object sender = null, EventArgs e = null)
+        {
+            if (toolTipTimer != null)
+                toolTipTimer.Close();
+            toolStripStatusLabel.Text = "";
         }
 
         #endregion
@@ -441,59 +469,54 @@ namespace WebMConverter
 
         #region Tooltips
 
-        private void clearToolTip(object sender, EventArgs e)
-        {
-            toolStripStatusLabel.Text = "";
-        }
-
         private void toolStripButtonTrim_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Select a clip from your video.";
+            showToolTip("Select a clip from your video.");
         }
 
         private void toolStripButtonCrop_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Crop your video into a smaller frame.";
+            showToolTip("Crop your video into a smaller frame.");
         }
 
         private void toolStripButtonResize_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Scale your video.";
+            showToolTip("Scale your video.");
         }
 
         private void toolStripButtonReverse_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Everything is backwards!";
+            showToolTip("Everything is backwards!");
         }
 
         private void toolStripButtonSubtitle_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Burn subtitles into the video.";
+            showToolTip("Burn subtitles into the video.");
         }
 
         private void toolStripButtonDeinterlace_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Get rid of interlacing artifacts. Only useful if your input video is interlaced.";
+            showToolTip("Get rid of interlacing artifacts. Only useful if your input video is interlaced.");
         }
 
         private void toolStripButtonLevels_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Expand the color levels to PC ranges. Use this if your colors look washed out compared to the input video.";
+            showToolTip("Expand the color levels to PC ranges. Use this if your colors look washed out compared to the input video.");
         }
 
         private void buttonPreview_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Open a preview window that will loop your processing settings. Note that this doesn't reflect output encoding quality.";
+            showToolTip("Open a preview window that will loop your processing settings. Note that this doesn't reflect output encoding quality.");
         }
 
         private void toolStripButtonAdvancedScripting_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Are you a bad enough dude? Take care, there is no way back. You will have to start over if you fuck up.";
+            showToolTip("Are you a bad enough dude? Take care, there is no way back. You will have to start over if you fuck up.");
         }
 
         private void listViewProcessingScript_MouseEnter(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = "Double click a filter to edit it. Select a filter and press Delete to remove it.";
+            showToolTip("Double click a filter to edit it. Select a filter and press Delete to remove it.");
         }
 
         #endregion
@@ -522,12 +545,14 @@ namespace WebMConverter
                 if (arguments != _autoArguments || _argumentError)
                 {
                     textBoxArguments.Text = _autoArguments = arguments;
+                    showToolTip(arguments, 5000);
                     _argumentError = false;
                 }
             }
             catch (ArgumentException argExc)
             {
                 textBoxArguments.Text = "ERROR: " + argExc.Message;
+                showToolTip("ERROR: " + argExc.Message, 5000);
                 _argumentError = true;
             }
         }
