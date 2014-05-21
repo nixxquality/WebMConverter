@@ -590,6 +590,12 @@ namespace WebMConverter
                     e.Cancel = true;
                     return;
                 }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                    e.Cancel = true;
+                    return;
+                }
 
                 index.WriteIndex(_indexFile);
             };
