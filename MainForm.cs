@@ -21,13 +21,14 @@ namespace WebMConverter
         //{2} is extra arguments
         //{3} is '-pass X' if HQ mode enabled, otherwise blank
 
-        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} {3} {4} {5}";
+        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} -slices {3}{4}{5}{6}";
         //{0} is '-an' if no audio, otherwise blank
         //{1} is bitrate in kb/s
         //{2} is amount of threads to use
-        //{3} is '-fs XM' if X MB limit enabled otherwise blank
-        //{4} is '-metadata title="TITLE"' when specifying a title, otherwise blank
-        //{5} is '-quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+        //{3} is amount of slices to split the frame into
+        //{4} is ' -fs XM' if X MB limit enabled otherwise blank
+        //{5} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
+        //{6} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
 
         private string _indexFile;
 
@@ -509,11 +510,9 @@ namespace WebMConverter
             }
         }
 
-        private void trackThreads_Scroll(object sender, EventArgs e)
-        {
-            labelThreads.Text = trackThreads.Value.ToString();
-            UpdateArguments(sender, e);
-        }
+        #endregion
+
+        #region tagPageAdvanced
 
         private void UpdateArguments(object sender, EventArgs e)
         {
@@ -531,6 +530,18 @@ namespace WebMConverter
                 textBoxArguments.Text = "ERROR: " + argExc.Message;
                 _argumentError = true;
             }
+        }
+
+        private void trackThreads_Scroll(object sender, EventArgs e)
+        {
+            labelThreads.Text = trackThreads.Value.ToString();
+            UpdateArguments(sender, e);
+        }
+
+        private void trackSlices_Scroll(object sender, EventArgs e)
+        {
+            labelSlices.Text = GetSlices().ToString();
+            UpdateArguments(sender, e);
         }
 
         #endregion
@@ -815,7 +826,7 @@ namespace WebMConverter
             {
                 if (!float.TryParse(boxLimit.Text, out limit))
                     throw new ArgumentException("Invalid size limit!");
-                limitTo = string.Format("-fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
+                limitTo = string.Format(" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
             }
 
             int bitrate = 900;
@@ -833,17 +844,18 @@ namespace WebMConverter
             }
 
             int threads = trackThreads.Value;
+            int slices = GetSlices();
 
             string metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
-                metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
+                metadataTitle = string.Format(" -metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
             string HQ = "";
             if (boxHQ.Checked)
-                HQ = "-quality best -lag-in-frames 16 -auto-alt-ref 1";
+                HQ = " -quality best -lag-in-frames 16 -auto-alt-ref 1";
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, bitrate, threads, limitTo, metadataTitle, HQ);
+            return string.Format(_templateArguments, audioEnabled, bitrate, threads, slices, limitTo, metadataTitle, HQ);
         }
 
         /// <summary>
@@ -908,6 +920,11 @@ namespace WebMConverter
                 script.AppendLine(Filters.Reverse.ToString());
 
             textBoxProcessingScript.Text = script.ToString();
+        }
+
+        private int GetSlices()
+        {
+            return (int)Math.Pow(2, trackSlices.Value - 1);
         }
 
         #endregion
