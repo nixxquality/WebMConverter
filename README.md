@@ -16,6 +16,6 @@ Important to know:
 
 Screenshot:
 
-![Screenshot](http://a.pomf.se/bdlwds.png)
+![Screenshot](http://a.pomf.se/mytdhm.png)
 
 This software is released under the MIT license. See [LICENSE.md] (https://github.com/WebMBro/WebMConverter/blob/master/LICENSE.md).
