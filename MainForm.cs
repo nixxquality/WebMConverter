@@ -42,6 +42,7 @@ namespace WebMConverter
         BackgroundWorker indexbw;
 
         StopWatch toolTipTimer;
+        string avsScriptInfo;
 
         #region MainForm
 
@@ -199,6 +200,7 @@ namespace WebMConverter
                     {
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop").ImageKey = "crop";
+                        SetSlices();
                         toolStripButtonCrop.Enabled = false;
                     }
                 }
@@ -219,6 +221,7 @@ namespace WebMConverter
                     {
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize").ImageKey = "resize";
+                        SetSlices();
                         toolStripButtonResize.Enabled = false;
                     }
                 }
@@ -290,6 +293,7 @@ namespace WebMConverter
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
             GenerateAvisynthScript();
+            ProbeScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
             //}
@@ -330,11 +334,13 @@ namespace WebMConverter
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
+                            SetSlices();
                             break;
                         case "Resize":
                             Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
                             listViewProcessingScript.Items.Remove(item);
+                            SetSlices();
                             break;
                         case "Reverse":
                             Filters.Reverse = null;
@@ -367,6 +373,7 @@ namespace WebMConverter
                         if (form.ShowDialog() == DialogResult.OK)
                         {
                             Filters.Crop = form.GeneratedFilter;
+                            SetSlices();
                         }
                     }
                     break;
@@ -376,6 +383,7 @@ namespace WebMConverter
                         if (form.ShowDialog() == DialogResult.OK)
                         {
                             Filters.Resize = form.GeneratedFilter;
+                            SetSlices();
                         }
                     }
                     break;
@@ -402,6 +410,12 @@ namespace WebMConverter
                     MessageBox.Show("This filter has no options.");
                     break;
             }
+        }
+
+        void textBoxProcessingScript_Leave(object sender, EventArgs e)
+        {
+            ProbeScript();
+            SetSlices();
         }
 
         #region Tooltips
@@ -476,18 +490,6 @@ namespace WebMConverter
 
         private void boxLevels_CheckedChanged(object sender, EventArgs e)
         {
-            if (boxLevels.Checked != (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG))
-            {
-                const string message = "This option is automatically set based on the input file.\n" +
-                                       "Are you sure you want to manually mess with the color balance?\n" +
-                                       "Only press OK if you're 100% sure you know what you're doing.";
-                const string caption = "Are you sure?";
-                var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-
-                if (result == DialogResult.Cancel)
-                    return;
-            }
-            
             Filters.Levels = boxLevels.Checked ? new LevelsFilter() : null;
         }
 
@@ -649,6 +651,7 @@ namespace WebMConverter
                 {
                     boxLevels.Checked = true;
                 }
+                SetSlices();
 
                 panelHideTheOptions.SendToBack();
             });
@@ -719,7 +722,7 @@ namespace WebMConverter
             }
         }
 
-        private void GenerateAvisynthScript(string avsFileName, string avsInputFile)
+        private void WriteAvisynthScript(string avsFileName, string avsInputFile)
         {
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
             {
@@ -760,7 +763,7 @@ namespace WebMConverter
 
             // Make our temporary file for the AviSynth script
             string avsFileName = Path.GetTempFileName();
-            GenerateAvisynthScript(avsFileName, input);
+            WriteAvisynthScript(avsFileName, input);
 
             // Run ffplay
             var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth \"{0}\"", avsFileName));
@@ -795,7 +798,7 @@ namespace WebMConverter
 
             // Make our temporary file for the AviSynth script
             string avsFileName = Path.GetTempFileName();
-            GenerateAvisynthScript(avsFileName, input);
+            WriteAvisynthScript(avsFileName, input);
 
             string[] arguments;
             if (!boxHQ.Checked)
@@ -859,14 +862,8 @@ namespace WebMConverter
             if (toolStripButtonAdvancedScripting.Checked)
             {
                 // The dirty way.
-                
-                // Make our temporary file for the AviSynth script
-                string avsFileName = Path.GetTempFileName();
-                GenerateAvisynthScript(avsFileName, textBoxIn.Text);
 
-                // ffprobe it
-                var ffprobe = new FFprobe(avsFileName);
-                using (XmlReader reader = ffprobe.Probe())
+                using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
                 {
                     reader.ReadToFollowing("stream");
 
@@ -888,7 +885,55 @@ namespace WebMConverter
                 if (Filters.Trim != null)
                     return Filters.Trim.GetDuration();
 
-                return -1;
+                return Program.FrameToTime(Program.VideoSource.NumberOfFrames - 1);
+            }
+        }
+
+        private Size GetResolution()
+        {
+            if (toolStripButtonAdvancedScripting.Checked)
+            {
+                // The dirty way.
+
+                int width = -1, height = -1;
+
+                using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
+                {
+                    reader.ReadToFollowing("stream");
+
+                    while (reader.MoveToNextAttribute())
+                    {
+                        if (reader.Name == "width")
+                        {
+                            width = int.Parse(reader.Value);
+                        }
+                        if (reader.Name == "height")
+                        {
+                            height = int.Parse(reader.Value);
+                        }
+                    }
+                }
+
+                return new Size(width, height);
+            }
+            else
+            {
+                if (Filters.Resize != null)
+                {
+                    return new Size(Filters.Resize.TargetWidth, Filters.Resize.TargetHeight);
+                }
+
+                var frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
+
+                if (Filters.Crop != null)
+                {
+                    int width = frame.EncodedResolution.Width - Filters.Crop.Left + Filters.Crop.Right;
+                    int height = frame.EncodedResolution.Height - Filters.Crop.Top + Filters.Crop.Bottom;
+
+                    return new Size(width, height);
+                }
+
+                return frame.EncodedResolution;
             }
         }
 
@@ -910,9 +955,45 @@ namespace WebMConverter
             textBoxProcessingScript.Text = script.ToString();
         }
 
-        private int GetSlices()
+        void ProbeScript()
+        {
+            // Make our temporary file for the AviSynth script
+            string avsFileName = Path.GetTempFileName();
+            WriteAvisynthScript(avsFileName, textBoxIn.Text);
+
+            // ffprobe it
+            var ffprobe = new FFprobe(avsFileName);
+            avsScriptInfo = ffprobe.Probe();
+        }
+
+        int GetSlices()
         {
             return (int)Math.Pow(2, trackSlices.Value - 1);
+        }
+
+        void SetSlices()
+        {
+            var resolution = GetResolution();
+            int slices;
+
+            if (resolution.Width * resolution.Height >= 2073600) // 1080p (1920*1080)
+            {
+                slices = 4;
+            }
+            else if (resolution.Width * resolution.Height >= 921600) // 720p (1280*720)
+            {
+                slices = 3;
+            }
+            else if (resolution.Width * resolution.Height >= 307200) // 480p (640*480)
+            {
+                slices = 2;
+            }
+            else
+            {
+                slices = 1;
+            }
+
+            trackSlices.Value = slices;
         }
 
         #endregion

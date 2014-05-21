@@ -435,6 +435,7 @@ namespace WebMConverter
             this.textBoxProcessingScript.Text = "# This is an AviSynth script. You may write advanced commands below, or just pres" +
     "s the buttons above for smooth sailing.";
             this.textBoxProcessingScript.Visible = false;
+            this.textBoxProcessingScript.Leave += new System.EventHandler(this.textBoxProcessingScript_Leave);
             // 
             // tabPageEncoding
             // 
@@ -832,7 +833,7 @@ namespace WebMConverter
             this.trackSlices.Size = new System.Drawing.Size(122, 22);
             this.trackSlices.TabIndex = 0;
             this.trackSlices.Value = 1;
-            this.trackSlices.Scroll += new System.EventHandler(this.trackSlices_Scroll);
+            this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_Scroll);
             // 
             // labelSlices
             // 
@@ -883,7 +884,7 @@ namespace WebMConverter
             this.trackThreads.Size = new System.Drawing.Size(122, 22);
             this.trackThreads.TabIndex = 0;
             this.trackThreads.Value = 1;
-            this.trackThreads.Scroll += new System.EventHandler(this.trackThreads_Scroll);
+            this.trackThreads.ValueChanged += new System.EventHandler(this.trackThreads_Scroll);
             // 
             // labelThreads
             // 
@@ -964,7 +965,8 @@ namespace WebMConverter
             this.labelAdvancedWarning.Name = "labelAdvancedWarning";
             this.labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
             this.labelAdvancedWarning.TabIndex = 32;
-            this.labelAdvancedWarning.Text = "Don\'t modify these unless you know what you\'re doing!";
+            this.labelAdvancedWarning.Text = "All of these settings are automatically generated for your current settings. Do n" +
+    "ot modify any of them unless you are 100% sure you know what you\'re doing.";
             this.labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxAdvancedProcessing

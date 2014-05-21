@@ -52,7 +52,7 @@ namespace WebMConverter
             this.BeginOutputReadLine();
         }
 
-        public XmlReader Probe()
+        public string Probe()
         {
             var output = new StringBuilder();
             OutputDataReceived += (sender, args) => output.AppendLine(args.Data);
@@ -60,7 +60,7 @@ namespace WebMConverter
             Start();
             WaitForExit();
 
-            return XmlReader.Create(new StringReader(output.ToString()));
+            return output.ToString();
         }
     }
 }
