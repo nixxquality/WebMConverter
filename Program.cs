@@ -65,6 +65,7 @@ namespace WebMConverter
     {
         public static FFMSSharp.VideoSource VideoSource;
         public static FFMSSharp.ColorRange VideoColorRange;
+        public static bool VideoInterlaced;
         public static string InputFile;
         public static string FileMd5;
         public static string AttachmentDirectory;

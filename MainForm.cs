@@ -596,7 +596,9 @@ namespace WebMConverter
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
                 Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
-                Program.VideoColorRange = Program.VideoSource.GetFrame(0).ColorRange; // We're assuming that the entire video has the same color range, which should be fine.
+                var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
+                Program.VideoColorRange = frame.ColorRange; 
+                Program.VideoInterlaced = frame.InterlacedFrame;
 
                 Program.SubtitleTracks = new List<int>();
                 for (int i = 0; i <= index.NumberOfTracks; i++)
@@ -648,9 +650,9 @@ namespace WebMConverter
                 toolStripFilterButtonsEnabled(true);
 
                 if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
-                {
                     boxLevels.Checked = true;
-                }
+                if (Program.VideoInterlaced)
+                    boxDeinterlace.Checked = true;
                 SetSlices();
 
                 panelHideTheOptions.SendToBack();

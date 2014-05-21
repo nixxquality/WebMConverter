@@ -1019,6 +1019,7 @@ namespace WebMConverter
             this.labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
             this.labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 29);
             this.labelProcessingDeinterlaceHint.TabIndex = 32;
+            this.labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
             this.labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // boxDeinterlace
