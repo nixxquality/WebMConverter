@@ -624,7 +624,7 @@ namespace WebMConverter
                 }
                 else
                 {
-                    using (var dialog = new TrackSelectForm("Video", videoTracks))
+                    using (var dialog = new TrackSelectDialog("Video", videoTracks))
                     {
                         dialog.ShowDialog();
                         videotrack = dialog.SelectedTrack;
@@ -637,7 +637,7 @@ namespace WebMConverter
                 }
                 else
                 {
-                    using (var dialog = new TrackSelectForm("Audio", audioTracks))
+                    using (var dialog = new TrackSelectDialog("Audio", audioTracks))
                     {
                         dialog.ShowDialog();
                         audiotrack = dialog.SelectedTrack;

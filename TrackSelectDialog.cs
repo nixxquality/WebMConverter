@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace WebMConverter
 {
-    public partial class TrackSelectForm : Form
+    public partial class TrackSelectDialog : Form
     {
         public int SelectedTrack
         { get { return (int)comboBoxTracks.SelectedValue; } }
 
-        public TrackSelectForm(string tracktype, IEnumerable<int> tracks)
+        public TrackSelectDialog(string tracktype, IEnumerable<int> tracks)
         {
             InitializeComponent();
 

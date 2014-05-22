@@ -1,6 +1,6 @@
 ﻿namespace WebMConverter
 {
-    partial class TrackSelectForm
+    partial class TrackSelectDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -75,7 +75,7 @@
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
             // 
-            // TrackSelectForm
+            // TrackSelectDialog
             // 
             this.AcceptButton = this.buttonConfirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,7 +83,7 @@
             this.ClientSize = new System.Drawing.Size(310, 28);
             this.ControlBox = false;
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Name = "TrackSelectForm";
+            this.Name = "TrackSelectDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select Track";
             this.flowLayoutPanel1.ResumeLayout(false);
