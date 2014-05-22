@@ -44,6 +44,9 @@ namespace WebMConverter
         StopWatch toolTipTimer;
         string avsScriptInfo;
 
+        int videotrack = -1;
+        int audiotrack = -1;
+
         #region MainForm
 
         public MainForm()
@@ -601,7 +604,47 @@ namespace WebMConverter
             };
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
-                Program.VideoSource = index.VideoSource(path, index.GetFirstTrackOfType(FFMSSharp.TrackType.Video));
+                List<int> videoTracks = new List<int>(), audioTracks = new List<int>();
+                for (int i = 0; i < index.NumberOfTracks; i++)
+                {
+                    switch(index.GetTrack(i).TrackType)
+                    {
+                        case FFMSSharp.TrackType.Video:
+                            videoTracks.Add(i);
+                            break;
+                        case FFMSSharp.TrackType.Audio:
+                            audioTracks.Add(i);
+                            break;
+                    }
+                }
+
+                if (videoTracks.Count == 1)
+                {
+                    videotrack = videoTracks[0];
+                }
+                else
+                {
+                    using (var dialog = new TrackSelectForm("Video", videoTracks))
+                    {
+                        dialog.ShowDialog();
+                        videotrack = dialog.SelectedTrack;
+                    }
+                }
+
+                if (audioTracks.Count == 1)
+                {
+                    audiotrack = audioTracks[0];
+                }
+                else
+                {
+                    using (var dialog = new TrackSelectForm("Audio", audioTracks))
+                    {
+                        dialog.ShowDialog();
+                        audiotrack = dialog.SelectedTrack;
+                    }
+                }
+
+                Program.VideoSource = index.VideoSource(path, videotrack);
                 var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
                 Program.VideoColorRange = frame.ColorRange; 
                 Program.VideoInterlaced = frame.InterlacedFrame;
@@ -739,9 +782,9 @@ namespace WebMConverter
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
 
                 if (boxAudio.Checked)
-                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\"), FFAudioSource(\"{0}\",cachefile=\"{1}\"))", avsInputFile, _indexFile));
+                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2}), FFAudioSource(\"{0}\",cachefile=\"{1}\",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack));
                 else
-                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\")", avsInputFile, _indexFile));
+                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2})", avsInputFile, _indexFile, videotrack));
 
                 if (Filters.Deinterlace != null)
                 {
