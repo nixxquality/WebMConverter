@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FFMSsharp, Version=2.0.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\FFMSSharp.2.0.1.0\lib\net40-Client\FFMSsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -160,6 +164,7 @@
     <EmbeddedResource Include="Filters\TrimForm.resx">
       <DependentUpon>TrimForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -228,12 +233,6 @@
     <None Include="Resources\tick.png" />
     <None Include="Resources\cross.png" />
     <None Include="Resources\clock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="FFMSSharp\FFMSsharp\FFMSsharp.csproj">
-      <Project>{303ca7dc-1b7e-45be-9a90-a37d72ce4791}</Project>
-      <Name>FFMSsharp</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
