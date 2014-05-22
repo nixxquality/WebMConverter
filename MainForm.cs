@@ -202,9 +202,30 @@ namespace WebMConverter
                     else
                     {
                         Filters.Crop = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Crop").ImageKey = "crop";
+                        listViewProcessingScript.Items.Add("Crop", "crop");
                         SetSlices();
                         toolStripButtonCrop.Enabled = false;
+                    }
+                }
+            }
+        }
+
+        private void toolStripButtonMultipleTrim_Click(object sender, EventArgs e)
+        {
+            using (var form = new MultipleTrimForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                    }
+                    else
+                    {
+                        Filters.MultipleTrim = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Multiple Trim", "trim");
+                        GenerateArguments();
+                        toolStripButtonTrim.Enabled = false;
                     }
                 }
             }
@@ -223,7 +244,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Resize = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Resize").ImageKey = "resize";
+                        listViewProcessingScript.Items.Add("Resize", "resize");
                         SetSlices();
                         toolStripButtonResize.Enabled = false;
                     }
@@ -240,7 +261,7 @@ namespace WebMConverter
             else
             {
                 Filters.Reverse = new ReverseFilter();
-                listViewProcessingScript.Items.Add("Reverse").ImageKey = "reverse";
+                listViewProcessingScript.Items.Add("Reverse", "reverse");
                 toolStripButtonReverse.Enabled = false;
             }
         }
@@ -259,7 +280,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Subtitle = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Subtitle").ImageKey = "subtitles";
+                        listViewProcessingScript.Items.Add("Subtitle", "subtitles");
                         toolStripButtonSubtitle.Enabled = false;
                     }
                 }
@@ -279,7 +300,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Trim = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Trim").ImageKey = "trim";
+                        listViewProcessingScript.Items.Add("Trim", "trim");
                         GenerateArguments();
                         toolStripButtonTrim.Enabled = false;
                     }
@@ -339,6 +360,12 @@ namespace WebMConverter
                             listViewProcessingScript.Items.Remove(item);
                             SetSlices();
                             break;
+                        case "Multiple Trim":
+                            Filters.MultipleTrim = null;
+                            toolStripButtonTrim.Enabled = true;
+                            GenerateArguments();
+                            listViewProcessingScript.Items.Remove(item);
+                            break;
                         case "Resize":
                             Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
@@ -377,6 +404,16 @@ namespace WebMConverter
                         {
                             Filters.Crop = form.GeneratedFilter;
                             SetSlices();
+                        }
+                    }
+                    break;
+                case "Multiple Trim":
+                    using (var form = new MultipleTrimForm(Filters.MultipleTrim))
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            Filters.MultipleTrim = form.GeneratedFilter;
+                            GenerateArguments();
                         }
                     }
                     break;
@@ -426,6 +463,11 @@ namespace WebMConverter
         private void toolStripButtonTrim_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Select a clip from your video.");
+        }
+
+        private void toolStripButtonMultipleTrim_MouseEnter(object sender, EventArgs e)
+        {
+            showToolTip("Select many clips from your video, and sort them on a timeline.");
         }
 
         private void toolStripButtonCrop_MouseEnter(object sender, EventArgs e)
@@ -935,6 +977,8 @@ namespace WebMConverter
 
                 if (Filters.Trim != null)
                     return Filters.Trim.GetDuration();
+                if (Filters.MultipleTrim != null)
+                    return Filters.MultipleTrim.GetDuration();
 
                 return Program.FrameToTime(Program.VideoSource.NumberOfFrames - 1);
             }
@@ -996,6 +1040,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Trim != null)
                 script.AppendLine(Filters.Trim.ToString());
+            if (Filters.MultipleTrim != null)
+                script.AppendLine(Filters.MultipleTrim.ToString());
             if (Filters.Crop != null)
                 script.AppendLine(Filters.Crop.ToString());
             if (Filters.Resize != null)

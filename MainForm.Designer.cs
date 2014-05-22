@@ -43,7 +43,6 @@ namespace WebMConverter
             this.tabPageProcessing = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelProcessing = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripProcessingScript = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonTrim = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
@@ -105,6 +104,8 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButtonTrim = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripButtonMultipleTrim = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -314,17 +315,6 @@ namespace WebMConverter
             this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
             this.toolStripProcessingScript.TabIndex = 0;
             this.toolStripProcessingScript.TabStop = true;
-            // 
-            // toolStripButtonTrim
-            // 
-            this.toolStripButtonTrim.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonTrim.Enabled = false;
-            this.toolStripButtonTrim.Name = "toolStripButtonTrim";
-            this.toolStripButtonTrim.Size = new System.Drawing.Size(36, 22);
-            this.toolStripButtonTrim.Text = "Trim";
-            this.toolStripButtonTrim.Click += new System.EventHandler(this.toolStripButtonTrim_Click);
-            this.toolStripButtonTrim.MouseEnter += new System.EventHandler(this.toolStripButtonTrim_MouseEnter);
-            this.toolStripButtonTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // toolStripButtonCrop
             // 
@@ -1111,6 +1101,28 @@ namespace WebMConverter
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // toolStripButtonTrim
+            // 
+            this.toolStripButtonTrim.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonMultipleTrim});
+            this.toolStripButtonTrim.Enabled = false;
+            this.toolStripButtonTrim.Margin = new System.Windows.Forms.Padding(0, 1, 3, 2);
+            this.toolStripButtonTrim.Name = "toolStripButtonTrim";
+            this.toolStripButtonTrim.Size = new System.Drawing.Size(48, 22);
+            this.toolStripButtonTrim.Text = "Trim";
+            this.toolStripButtonTrim.ButtonClick += new System.EventHandler(this.toolStripButtonTrim_Click);
+            this.toolStripButtonTrim.MouseEnter += new System.EventHandler(this.toolStripButtonTrim_MouseEnter);
+            this.toolStripButtonTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // toolStripButtonMultipleTrim
+            // 
+            this.toolStripButtonMultipleTrim.Name = "toolStripButtonMultipleTrim";
+            this.toolStripButtonMultipleTrim.Size = new System.Drawing.Size(152, 22);
+            this.toolStripButtonMultipleTrim.Text = "Multiple Trim";
+            this.toolStripButtonMultipleTrim.Click += new System.EventHandler(this.toolStripButtonMultipleTrim_Click);
+            this.toolStripButtonMultipleTrim.MouseEnter += new System.EventHandler(this.toolStripButtonMultipleTrim_MouseEnter);
+            this.toolStripButtonMultipleTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1197,7 +1209,6 @@ namespace WebMConverter
         private System.Windows.Forms.TabPage tabPageProcessing;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProcessing;
         private System.Windows.Forms.ToolStrip toolStripProcessingScript;
-        private System.Windows.Forms.ToolStripButton toolStripButtonTrim;
         private System.Windows.Forms.ToolStripButton toolStripButtonCrop;
         private System.Windows.Forms.ToolStripButton toolStripButtonResize;
         private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
@@ -1259,6 +1270,8 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelProcessingDeinterlaceHint;
         private System.Windows.Forms.CheckBox boxDeinterlace;
         private System.Windows.Forms.CheckBox boxLevels;
+        private System.Windows.Forms.ToolStripSplitButton toolStripButtonTrim;
+        private System.Windows.Forms.ToolStripMenuItem toolStripButtonMultipleTrim;
     }
 }
 

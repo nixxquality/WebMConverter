@@ -109,6 +109,7 @@
             this.ClientSize = new System.Drawing.Size(197, 59);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GoToDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Go to...";

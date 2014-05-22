@@ -83,6 +83,7 @@
             this.ClientSize = new System.Drawing.Size(310, 28);
             this.ControlBox = false;
             this.Controls.Add(this.flowLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "TrackSelectDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select Track";

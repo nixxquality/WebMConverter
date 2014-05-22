@@ -76,6 +76,12 @@
     <Compile Include="Dialogs\GoToDialog.Designer.cs">
       <DependentUpon>GoToDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\MultipleTrimForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filters\MultipleTrimForm.Designer.cs">
+      <DependentUpon>MultipleTrimForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\GoToDialog.resx">
       <DependentUpon>GoToDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filters\MultipleTrimForm.resx">
+      <DependentUpon>MultipleTrimForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
