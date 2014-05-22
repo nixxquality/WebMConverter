@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -55,10 +55,10 @@
     <Compile Include="ConverterForm.Designer.cs">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CropForm.cs">
+    <Compile Include="Filters\CropForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CropForm.Designer.cs">
+    <Compile Include="Filters\CropForm.Designer.cs">
       <DependentUpon>CropForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FFmpeg.cs">
@@ -70,10 +70,10 @@
     <Compile Include="FFprobe.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GoToDialog.cs">
+    <Compile Include="Dialogs\GoToDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GoToDialog.Designer.cs">
+    <Compile Include="Dialogs\GoToDialog.Designer.cs">
       <DependentUpon>GoToDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -90,37 +90,37 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResizeForm.cs">
+    <Compile Include="Filters\ResizeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ResizeForm.Designer.cs">
+    <Compile Include="Filters\ResizeForm.Designer.cs">
       <DependentUpon>ResizeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubtitleForm.cs">
+    <Compile Include="Filters\SubtitleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubtitleForm.Designer.cs">
+    <Compile Include="Filters\SubtitleForm.Designer.cs">
       <DependentUpon>SubtitleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrackSelectDialog.cs">
+    <Compile Include="Dialogs\TrackSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TrackSelectDialog.Designer.cs">
+    <Compile Include="Dialogs\TrackSelectDialog.Designer.cs">
       <DependentUpon>TrackSelectDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrimForm.cs">
+    <Compile Include="Filters\TrimForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TrimForm.Designer.cs">
+    <Compile Include="Filters\TrimForm.Designer.cs">
       <DependentUpon>TrimForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="ConverterForm.resx">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CropForm.resx">
+    <EmbeddedResource Include="Filters\CropForm.resx">
       <DependentUpon>CropForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GoToDialog.resx">
+    <EmbeddedResource Include="Dialogs\GoToDialog.resx">
       <DependentUpon>GoToDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -139,16 +139,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ResizeForm.resx">
+    <EmbeddedResource Include="Filters\ResizeForm.resx">
       <DependentUpon>ResizeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubtitleForm.resx">
+    <EmbeddedResource Include="Filters\SubtitleForm.resx">
       <DependentUpon>SubtitleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TrackSelectDialog.resx">
+    <EmbeddedResource Include="Dialogs\TrackSelectDialog.resx">
       <DependentUpon>TrackSelectDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TrimForm.resx">
+    <EmbeddedResource Include="Filters\TrimForm.resx">
       <DependentUpon>TrimForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -210,7 +210,7 @@
     <Content Include="Binaries\TDeint.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icon.ico" />
+    <Content Include="Resources\icon.ico" />
     <None Include="Resources\Flaticon_32217.png" />
     <None Include="Resources\Flaticon_9271.png" />
     <None Include="Resources\Flaticon_15003.png" />
