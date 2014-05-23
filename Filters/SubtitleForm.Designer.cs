@@ -197,6 +197,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Name = "SubtitleForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Subtitles";
             this.tableLayoutPanelMain.ResumeLayout(false);

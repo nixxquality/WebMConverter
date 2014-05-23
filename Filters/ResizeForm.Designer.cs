@@ -194,6 +194,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ResizeForm";
             this.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.ShowInTaskbar = false;
             this.Text = "Resize";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

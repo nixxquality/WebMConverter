@@ -36,6 +36,7 @@
             this.labelTrimEnd = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.labelTrimDuration = new System.Windows.Forms.Label();
+            this.previewFrame = new WebMConverter.PreviewFrame();
             this.trackVideoTimeline = new System.Windows.Forms.TrackBar();
             this.flowDialogButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonConfirm = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.toolStripMenuGoTo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuGoToFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuGoToTime = new System.Windows.Forms.ToolStripMenuItem();
-            this.previewFrame = new WebMConverter.PreviewFrame();
             this.tableLayoutPanel.SuspendLayout();
             this.flowTrimButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackVideoTimeline)).BeginInit();
@@ -71,7 +71,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(744, 520);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(744, 543);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // flowTrimButtons
@@ -83,7 +83,7 @@
             this.flowTrimButtons.Controls.Add(this.label1);
             this.flowTrimButtons.Controls.Add(this.labelTrimDuration);
             this.flowTrimButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowTrimButtons.Location = new System.Drawing.Point(0, 490);
+            this.flowTrimButtons.Location = new System.Drawing.Point(0, 513);
             this.flowTrimButtons.Margin = new System.Windows.Forms.Padding(0);
             this.flowTrimButtons.Name = "flowTrimButtons";
             this.flowTrimButtons.Size = new System.Drawing.Size(564, 30);
@@ -156,11 +156,23 @@
             this.labelTrimDuration.TabIndex = 4;
             this.labelTrimDuration.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // previewFrame
+            // 
+            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
+            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewFrame.Frame = 0;
+            this.previewFrame.Location = new System.Drawing.Point(0, 0);
+            this.previewFrame.Margin = new System.Windows.Forms.Padding(0);
+            this.previewFrame.Name = "previewFrame";
+            this.previewFrame.Size = new System.Drawing.Size(744, 481);
+            this.previewFrame.TabIndex = 0;
+            // 
             // trackVideoTimeline
             // 
             this.tableLayoutPanel.SetColumnSpan(this.trackVideoTimeline, 2);
             this.trackVideoTimeline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackVideoTimeline.Location = new System.Drawing.Point(3, 461);
+            this.trackVideoTimeline.Location = new System.Drawing.Point(3, 484);
             this.trackVideoTimeline.Name = "trackVideoTimeline";
             this.trackVideoTimeline.Size = new System.Drawing.Size(638, 26);
             this.trackVideoTimeline.TabIndex = 1;
@@ -175,7 +187,7 @@
             this.flowDialogButtons.Controls.Add(this.buttonCancel);
             this.flowDialogButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowDialogButtons.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowDialogButtons.Location = new System.Drawing.Point(564, 490);
+            this.flowDialogButtons.Location = new System.Drawing.Point(564, 513);
             this.flowDialogButtons.Margin = new System.Windows.Forms.Padding(0);
             this.flowDialogButtons.Name = "flowDialogButtons";
             this.flowDialogButtons.Size = new System.Drawing.Size(180, 30);
@@ -207,7 +219,7 @@
             // 
             this.labelTimeStamp.AutoSize = true;
             this.labelTimeStamp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTimeStamp.Location = new System.Drawing.Point(647, 458);
+            this.labelTimeStamp.Location = new System.Drawing.Point(647, 481);
             this.labelTimeStamp.Name = "labelTimeStamp";
             this.labelTimeStamp.Size = new System.Drawing.Size(94, 32);
             this.labelTimeStamp.TabIndex = 6;
@@ -246,31 +258,20 @@
             this.ToolStripMenuGoToTime.Text = "Time";
             this.ToolStripMenuGoToTime.Click += new System.EventHandler(this.ToolStripMenuGoToTime_Click);
             // 
-            // previewFrame
-            // 
-            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.tableLayoutPanel.SetColumnSpan(this.previewFrame, 3);
-            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewFrame.Frame = 0;
-            this.previewFrame.Location = new System.Drawing.Point(0, 0);
-            this.previewFrame.Margin = new System.Windows.Forms.Padding(0);
-            this.previewFrame.Name = "previewFrame";
-            this.previewFrame.Size = new System.Drawing.Size(744, 458);
-            this.previewFrame.TabIndex = 0;
-            // 
             // TrimForm
             // 
             this.AcceptButton = this.buttonConfirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(744, 544);
+            this.ClientSize = new System.Drawing.Size(744, 567);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(760, 583);
             this.Name = "TrimForm";
+            this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Trim";

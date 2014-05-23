@@ -210,6 +210,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(466, 310);
             this.Name = "CaptionForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Caption";
             this.Load += new System.EventHandler(this.CaptionForm_Load);
