@@ -41,11 +41,11 @@
             this.borderColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.previewFrame = new WebMConverter.PreviewFrame();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialogTextColor = new System.Windows.Forms.ColorDialog();
             this.colorDialogBorderColor = new System.Windows.Forms.ColorDialog();
             this.numericBorderThickness = new System.Windows.Forms.NumericUpDown();
+            this.previewFrame = new WebMConverter.PreviewFrame();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericBorderThickness)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +80,7 @@
             this.endToolStripMenuItem});
             this.trimTimingToolStripMenuItem.Enabled = false;
             this.trimTimingToolStripMenuItem.Name = "trimTimingToolStripMenuItem";
-            this.trimTimingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.trimTimingToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.trimTimingToolStripMenuItem.Text = "Trim timing...";
             // 
             // startToolStripMenuItem
@@ -100,14 +100,14 @@
             // frameToolStripMenuItem
             // 
             this.frameToolStripMenuItem.Name = "frameToolStripMenuItem";
-            this.frameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.frameToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.frameToolStripMenuItem.Text = "Frame";
             this.frameToolStripMenuItem.Click += new System.EventHandler(this.frameToolStripMenuItem_Click);
             // 
             // timeToolStripMenuItem
             // 
             this.timeToolStripMenuItem.Name = "timeToolStripMenuItem";
-            this.timeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.timeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.timeToolStripMenuItem.Text = "Time";
             this.timeToolStripMenuItem.Click += new System.EventHandler(this.timeToolStripMenuItem_Click);
             // 
@@ -161,17 +161,6 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // previewFrame
-            // 
-            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.previewFrame.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewFrame.Frame = 0;
-            this.previewFrame.Location = new System.Drawing.Point(0, 0);
-            this.previewFrame.Name = "previewFrame";
-            this.previewFrame.Size = new System.Drawing.Size(744, 544);
-            this.previewFrame.TabIndex = 3;
-            // 
             // fontDialog1
             // 
             this.fontDialog1.Font = new System.Drawing.Font("Impact", 63.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -193,6 +182,17 @@
             0});
             this.numericBorderThickness.ValueChanged += new System.EventHandler(this.UpdateTextLayout);
             // 
+            // previewFrame
+            // 
+            this.previewFrame.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.previewFrame.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewFrame.Frame = 0;
+            this.previewFrame.Location = new System.Drawing.Point(0, 27);
+            this.previewFrame.Name = "previewFrame";
+            this.previewFrame.Size = new System.Drawing.Size(744, 517);
+            this.previewFrame.TabIndex = 3;
+            // 
             // CaptionForm
             // 
             this.AcceptButton = this.buttonConfirm;
@@ -205,8 +205,8 @@
             this.Controls.Add(this.numericBorderThickness);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonConfirm);
-            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.previewFrame);
+            this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(466, 310);
             this.Name = "CaptionForm";
