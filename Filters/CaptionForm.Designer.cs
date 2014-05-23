@@ -115,7 +115,7 @@
             // 
             this.boxText.Name = "boxText";
             this.boxText.Size = new System.Drawing.Size(100, 23);
-            this.boxText.Text = "Wooh!";
+            this.boxText.Text = "Text goes here";
             this.boxText.TextChanged += new System.EventHandler(this.UpdateTextLayout);
             // 
             // fontToolStripMenuItem

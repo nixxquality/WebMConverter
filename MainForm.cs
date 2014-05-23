@@ -529,7 +529,7 @@ namespace WebMConverter
 
         private void toolStripButtonCaption_MouseEnter(object sender, EventArgs e)
         {
-            showToolTip("Add some funny text to your video");
+            showToolTip("Add some funny text to your video.");
         }
 
         private void buttonPreview_MouseEnter(object sender, EventArgs e)

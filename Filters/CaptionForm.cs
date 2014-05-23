@@ -79,7 +79,7 @@ namespace WebMConverter
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.FillPath(new SolidBrush(colorDialogTextColor.Color), path);
-            g.DrawPath(new Pen(new SolidBrush(colorDialogBorderColor.Color), (int)numericBorderThickness.Value), path);
+            g.DrawPath(new Pen(new SolidBrush(colorDialogBorderColor.Color), (float)numericBorderThickness.Value * scale), path);
         }
 
         void previewPicture_MouseDown(object sender, MouseEventArgs e)
