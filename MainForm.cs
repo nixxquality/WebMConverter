@@ -700,7 +700,7 @@ namespace WebMConverter
                 {
                     using (var dialog = new TrackSelectDialog("Video", videoTracks))
                     {
-                        dialog.ShowDialog(this);
+                        dialog.ShowDialog();
                         videotrack = dialog.SelectedTrack;
                     }
                 }
@@ -713,7 +713,7 @@ namespace WebMConverter
                 {
                     using (var dialog = new TrackSelectDialog("Audio", audioTracks))
                     {
-                        dialog.ShowDialog(this);
+                        dialog.ShowDialog();
                         audiotrack = dialog.SelectedTrack;
                     }
                 }
