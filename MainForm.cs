@@ -136,7 +136,7 @@ namespace WebMConverter
                 dialog.CheckPathExists = true;
                 dialog.ValidateNames = true;
 
-                if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                if (dialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
                     SetFile(dialog.FileName);
             }
         }
@@ -149,7 +149,7 @@ namespace WebMConverter
                 dialog.ValidateNames = true;
                 dialog.Filter = "WebM files|*.webm";
 
-                if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                if (dialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
                     textBoxOut.Text = dialog.FileName;
             }
         }
@@ -189,11 +189,31 @@ namespace WebMConverter
 
         #region tabPageProcessing
 
+        private void toolStripButtonCaption_Click(object sender, EventArgs e)
+        {
+            using (var form = new CaptionForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                    }
+                    else
+                    {
+                        Filters.Caption = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Caption", "subtitles"); // todo: get another icon
+                        toolStripButtonCaption.Enabled = false;
+                    }
+                }
+            }
+        }
+
         private void toolStripButtonCrop_Click(object sender, EventArgs e)
         {
             using (var form = new CropForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
@@ -214,7 +234,7 @@ namespace WebMConverter
         {
             using (var form = new MultipleTrimForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
@@ -235,7 +255,7 @@ namespace WebMConverter
         {
             using (var form = new ResizeForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
@@ -270,7 +290,7 @@ namespace WebMConverter
         {
             using (var form = new SubtitleForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
@@ -291,7 +311,7 @@ namespace WebMConverter
         {
             using (var form = new TrimForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
@@ -310,14 +330,16 @@ namespace WebMConverter
 
         private void toolStripButtonAdvancedScripting_Click(object sender, EventArgs e)
         {
+            ProbeScript();
             toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
             //if (toolStripButton1.Checked)
             //{
             listViewProcessingScript.Hide();
+            if (Filters.Caption != null)
+                Filters.Caption.BeforeEncode(GetResolution());
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
             GenerateAvisynthScript();
-            ProbeScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
             //}
@@ -339,6 +361,7 @@ namespace WebMConverter
 
         private void toolStripFilterButtonsEnabled(bool enabled)
         {
+            toolStripButtonCaption.Enabled = enabled;
             toolStripButtonCrop.Enabled = enabled;
             toolStripButtonResize.Enabled = enabled;
             toolStripButtonReverse.Enabled = enabled;
@@ -354,6 +377,11 @@ namespace WebMConverter
                 {
                     switch (item.Text)
                     {
+                        case "Caption":
+                            Filters.Caption = null;
+                            toolStripButtonCaption.Enabled = true;
+                            listViewProcessingScript.Items.Remove(item);
+                            break;
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
@@ -397,10 +425,19 @@ namespace WebMConverter
         {
             switch (listViewProcessingScript.FocusedItem.Text)
             {
+                case "Caption":
+                    using (var form = new CaptionForm(Filters.Caption))
+                    {
+                        if (form.ShowDialog(this) == DialogResult.OK)
+                        {
+                            Filters.Caption = form.GeneratedFilter;
+                        }
+                    }
+                    break;
                 case "Crop":
                     using (var form = new CropForm(Filters.Crop))
                     {
-                        if (form.ShowDialog() == DialogResult.OK)
+                        if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Crop = form.GeneratedFilter;
                             SetSlices();
@@ -410,7 +447,7 @@ namespace WebMConverter
                 case "Multiple Trim":
                     using (var form = new MultipleTrimForm(Filters.MultipleTrim))
                     {
-                        if (form.ShowDialog() == DialogResult.OK)
+                        if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.MultipleTrim = form.GeneratedFilter;
                             GenerateArguments();
@@ -420,7 +457,7 @@ namespace WebMConverter
                 case "Resize":
                     using (var form = new ResizeForm(Filters.Resize))
                     {
-                        if (form.ShowDialog() == DialogResult.OK)
+                        if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Resize = form.GeneratedFilter;
                             SetSlices();
@@ -430,7 +467,7 @@ namespace WebMConverter
                 case "Subtitle":
                     using (var form = new SubtitleForm(Filters.Subtitle))
                     {
-                        if (form.ShowDialog() == DialogResult.OK)
+                        if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Subtitle = form.GeneratedFilter;
                         }
@@ -439,7 +476,7 @@ namespace WebMConverter
                 case "Trim":
                     using (var form = new TrimForm(Filters.Trim))
                     {
-                        if (form.ShowDialog() == DialogResult.OK)
+                        if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Trim = form.GeneratedFilter;
                             GenerateArguments();
@@ -490,14 +527,9 @@ namespace WebMConverter
             showToolTip("Burn subtitles into the video.");
         }
 
-        private void toolStripButtonDeinterlace_MouseEnter(object sender, EventArgs e)
+        private void toolStripButtonCaption_MouseEnter(object sender, EventArgs e)
         {
-            showToolTip("Get rid of interlacing artifacts. Only useful if your input video is interlaced.");
-        }
-
-        private void toolStripButtonLevels_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Expand the color levels to PC ranges. Use this if your colors look washed out compared to the input video.");
+            showToolTip("Add some funny text to your video");
         }
 
         private void buttonPreview_MouseEnter(object sender, EventArgs e)
@@ -668,7 +700,7 @@ namespace WebMConverter
                 {
                     using (var dialog = new TrackSelectDialog("Video", videoTracks))
                     {
-                        dialog.ShowDialog();
+                        dialog.ShowDialog(this);
                         videotrack = dialog.SelectedTrack;
                     }
                 }
@@ -681,7 +713,7 @@ namespace WebMConverter
                 {
                     using (var dialog = new TrackSelectDialog("Audio", audioTracks))
                     {
-                        dialog.ShowDialog();
+                        dialog.ShowDialog(this);
                         audiotrack = dialog.SelectedTrack;
                     }
                 }
@@ -849,6 +881,8 @@ namespace WebMConverter
             ValidateInputFile(input);
 
             // Generate the script if we're in simple mode
+            if (Filters.Caption != null)
+                Filters.Caption.BeforeEncode(GetResolution());
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
             if (!toolStripButtonAdvancedScripting.Checked)
@@ -884,6 +918,8 @@ namespace WebMConverter
                 options = GenerateArguments();
 
             // Generate the script if we're in simple mode
+            if (Filters.Caption != null)
+                Filters.Caption.BeforeEncode(GetResolution());
             if (Filters.Subtitle != null)
                 Filters.Subtitle.BeforeEncode();
             if (!toolStripButtonAdvancedScripting.Checked)
@@ -903,7 +939,7 @@ namespace WebMConverter
                 arguments[1] = string.Format(_template, avsFileName, output, options, "-pass 2");
             }
 
-            new ConverterForm(this, arguments).ShowDialog();
+            new ConverterForm(this, arguments).ShowDialog(this);
         }
 
         private string GenerateArguments()
@@ -984,7 +1020,7 @@ namespace WebMConverter
             }
         }
 
-        private Size GetResolution()
+        public Size GetResolution()
         {
             if (toolStripButtonAdvancedScripting.Checked)
             {
@@ -1038,6 +1074,8 @@ namespace WebMConverter
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
             if (Filters.Subtitle != null)
                 script.AppendLine(Filters.Subtitle.ToString());
+            if (Filters.Caption != null)
+                script.AppendLine(Filters.Caption.ToString());
             if (Filters.Trim != null)
                 script.AppendLine(Filters.Trim.ToString());
             if (Filters.MultipleTrim != null)

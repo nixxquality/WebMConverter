@@ -107,7 +107,7 @@ namespace WebMConverter
         {
             held = false;
             heldCorner = Corner.None;
-            previewFrame.Picture .Invalidate();
+            previewFrame.Picture.Invalidate();
         }
 
         private void previewPicture_MouseMove(object sender, MouseEventArgs e)

@@ -11,6 +11,7 @@ namespace WebMConverter
 
     static class Filters
     {
+        internal static CaptionFilter Caption = null;
         internal static CropFilter Crop = null;
         internal static DeinterlaceFilter Deinterlace = null;
         internal static LevelsFilter Levels = null;
@@ -22,6 +23,7 @@ namespace WebMConverter
 
         internal static void ResetFilters()
         {
+            Caption = null;
             Crop = null;
             Deinterlace = null;
             Levels = null;
