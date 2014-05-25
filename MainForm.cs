@@ -722,7 +722,7 @@ namespace WebMConverter
                     this.Invoke((MethodInvoker)delegate
                     {
                         var dialog = new TrackSelectDialog("Video", videoTracks);
-                        dialog.ShowDialog();
+                        dialog.ShowDialog(this);
                         videotrack = dialog.SelectedTrack;
                     });
                 }
@@ -736,7 +736,7 @@ namespace WebMConverter
                     this.Invoke((MethodInvoker)delegate
                     {
                         var dialog = new TrackSelectDialog("Audio", audioTracks);
-                        dialog.ShowDialog();
+                        dialog.ShowDialog(this);
                         audiotrack = dialog.SelectedTrack;
                     });
                 }
