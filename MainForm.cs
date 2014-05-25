@@ -294,7 +294,6 @@ namespace WebMConverter
                 {
                     if (toolStripButtonAdvancedScripting.Checked)
                     {
-                        form.GeneratedFilter.BeforeEncode();
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
                     else
@@ -337,8 +336,6 @@ namespace WebMConverter
             listViewProcessingScript.Hide();
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(GetResolution());
-            if (Filters.Subtitle != null)
-                Filters.Subtitle.BeforeEncode();
             GenerateAvisynthScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
@@ -678,6 +675,30 @@ namespace WebMConverter
             };
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
+                Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
+                Directory.CreateDirectory(Program.AttachmentDirectory);
+
+                Program.SubtitleTracks = new List<int>();
+                for (int i = 0; i <= index.NumberOfTracks; i++)
+                {
+                    if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
+                    {
+                        Program.SubtitleTracks.Add(i);
+                        using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, i, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", i)))))
+                        {
+                            ffmpeg.Start();
+                            ffmpeg.WaitForExit();
+                        }
+                    }
+                }
+
+                using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
+                {
+                    ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
+                    ffmpeg.Start();
+                    ffmpeg.WaitForExit();
+                }
+
                 List<int> videoTracks = new List<int>(), audioTracks = new List<int>();
                 for (int i = 0; i < index.NumberOfTracks; i++)
                 {
@@ -722,22 +743,6 @@ namespace WebMConverter
                 var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
                 Program.VideoColorRange = frame.ColorRange; 
                 Program.VideoInterlaced = frame.InterlacedFrame;
-
-                Program.SubtitleTracks = new List<int>();
-                for (int i = 0; i <= index.NumberOfTracks; i++)
-                {
-                    if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
-                        Program.SubtitleTracks.Add(i);
-                }
-
-                Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
-                Directory.CreateDirectory(Program.AttachmentDirectory);
-
-                var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile));
-                ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
-                ffmpeg.Start();
-
-                ffmpeg.WaitForExit();
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
@@ -883,8 +888,6 @@ namespace WebMConverter
             // Generate the script if we're in simple mode
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(GetResolution());
-            if (Filters.Subtitle != null)
-                Filters.Subtitle.BeforeEncode();
             if (!toolStripButtonAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
@@ -920,8 +923,6 @@ namespace WebMConverter
             // Generate the script if we're in simple mode
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(GetResolution());
-            if (Filters.Subtitle != null)
-                Filters.Subtitle.BeforeEncode();
             if (!toolStripButtonAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 

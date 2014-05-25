@@ -45,11 +45,11 @@ namespace WebMConverter
         {
             if (checkBoxInternalSubs.Checked)
             {
-                GeneratedFilter = new SubtitleFilter(Program.InputFile, (int)comboBoxVideoTracks.SelectedValue);
+                GeneratedFilter = new SubtitleFilter(Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", (int)comboBoxVideoTracks.SelectedValue)), (int)comboBoxVideoTracks.SelectedValue);
             }
             else
             {
-                GeneratedFilter = new SubtitleFilter(textBoxSubtitleFile.Text, 0);
+                GeneratedFilter = new SubtitleFilter(textBoxSubtitleFile.Text);
             }
         }
 
@@ -78,32 +78,18 @@ namespace WebMConverter
 
     public class SubtitleFilter
     {
-        private string actualFileName;
         public readonly string FileName;
         public readonly int Track;
 
-        public SubtitleFilter(string FileName, int Track)
+        public SubtitleFilter(string fileName, int track = -1)
         {
-            this.FileName = FileName;
-            this.Track = Track;
-        }
-
-        public void BeforeEncode()
-        {
-            if (FileName == Program.InputFile)
-            {
-                actualFileName = Path.Combine(Program.AttachmentDirectory, "sub.ass"); // stub
-                var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, Track, actualFileName));
-                ffmpeg.Start();
-                ffmpeg.WaitForExit();
-            }
-            else
-                actualFileName = FileName;
+            FileName = fileName;
+            Track = track;
         }
 
         public override string ToString()
         {
-            return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", actualFileName, Program.AttachmentDirectory);
+            return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", FileName, Program.AttachmentDirectory);
         }
     }
 }
