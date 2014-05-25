@@ -719,11 +719,12 @@ namespace WebMConverter
                 }
                 else
                 {
-                    using (var dialog = new TrackSelectDialog("Video", videoTracks))
+                    this.Invoke((MethodInvoker)delegate
                     {
+                        var dialog = new TrackSelectDialog("Video", videoTracks);
                         dialog.ShowDialog();
                         videotrack = dialog.SelectedTrack;
-                    }
+                    });
                 }
 
                 if (audioTracks.Count == 1)
@@ -732,11 +733,12 @@ namespace WebMConverter
                 }
                 else
                 {
-                    using (var dialog = new TrackSelectDialog("Audio", audioTracks))
+                    this.Invoke((MethodInvoker)delegate
                     {
+                        var dialog = new TrackSelectDialog("Audio", audioTracks);
                         dialog.ShowDialog();
                         audiotrack = dialog.SelectedTrack;
-                    }
+                    });
                 }
 
                 Program.VideoSource = index.VideoSource(path, videotrack);
@@ -762,7 +764,7 @@ namespace WebMConverter
                 }
                 else
                 {
-                    labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
+                    labelIndexingProgress.Text = "Extracting subtitle tracks and attachments...";
                     progressBarIndexing.Value = 30;
                     progressBarIndexing.Style = ProgressBarStyle.Marquee;
 
@@ -791,7 +793,7 @@ namespace WebMConverter
                 index = new FFMSSharp.Index(_indexFile);
                 if (index.BelongsToFile(path))
                 {
-                    labelIndexingProgress.Text = "Looking up subtitle tracks and extracting attachments...";
+                    labelIndexingProgress.Text = "Extracting subtitle tracks and attachments...";
                     progressBarIndexing.Value = 30;
                     progressBarIndexing.Style = ProgressBarStyle.Marquee;
 
