@@ -780,7 +780,7 @@ namespace WebMConverter
                 toolStripFilterButtonsEnabled(true);
 
                 if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
-                    boxLevels.Checked = true;
+                    //boxLevels.Checked = true;
                 if (Program.VideoInterlaced)
                     boxDeinterlace.Checked = true;
                 SetSlices();
