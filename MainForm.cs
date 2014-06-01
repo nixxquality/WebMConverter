@@ -16,11 +16,10 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
-        private const string _template = "-f avisynth -i \"{0}\" {2} {3} -f webm -y \"{1}\"";
-        //{0} is input file
-        //{1} is output file
-        //{2} is extra arguments
-        //{3} is '-pass X' if HQ mode enabled, otherwise blank
+        private const string _template = " {1} {2} -f webm -y \"{0}\"";
+        //{0} is output file
+        //{1} is extra arguments
+        //{2} is '-pass X' if HQ mode enabled, otherwise blank
 
         private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} -slices {3}{4}{5}{6}";
         //{0} is '-an' if no audio, otherwise blank
@@ -69,12 +68,8 @@ namespace WebMConverter
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            /*
-             * Keeping this disabled for now because threads are crashy
-             *
-            int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
+            int threads = Environment.ProcessorCount;
             trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
-             */
 
             trackThreads_Scroll(sender, e); //Update label
         }
@@ -934,18 +929,18 @@ namespace WebMConverter
 
             string[] arguments;
             if (!boxHQ.Checked)
-                arguments = new[] { string.Format(_template, avsFileName, output, options, "", "") };
+                arguments = new[] { string.Format(_template, output, options, "", "") };
             else
             {
                 arguments = new string[2];
-                arguments[0] = string.Format(_template, avsFileName, "NUL", options, "-pass 1"); // Windows
-                arguments[1] = string.Format(_template, avsFileName, output, options, "-pass 2");
+                arguments[0] = string.Format(_template, "NUL", options, "-pass 1"); // Windows
+                arguments[1] = string.Format(_template, output, options, "-pass 2");
 
                 if (!arguments[0].Contains("-an")) // skip audio encoding on the first pass
                     arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
             }
 
-            new ConverterForm(this, arguments).ShowDialog(this);
+            new ConverterForm(this, avsFileName, arguments).ShowDialog(this);
         }
 
         private string GenerateArguments()

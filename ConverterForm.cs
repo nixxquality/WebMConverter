@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -20,14 +21,22 @@ namespace WebMConverter
         private bool twopass;
         private bool cancelTwopass;
 
-        private MainForm _owner;
+        string infile;
+        bool needToPipe;
+        FFmpeg pipeFFmpeg;
 
-        public ConverterForm(MainForm mainForm, string[] args)
+        public ConverterForm(MainForm mainForm, string input, string[] args)
         {
             InitializeComponent();
 
+            infile = input;
             _arguments = args;
-            _owner = mainForm;
+            needToPipe = Environment.Is64BitOperatingSystem;
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                AddInputFileToArguments(ref args[i]);
+            }
         }
 
         private void ProcessOnErrorDataReceived(object sender, DataReceivedEventArgs args)
@@ -66,6 +75,46 @@ namespace WebMConverter
                 SinglePass(argument);
         }
 
+        void AddInputFileToArguments(ref string argument)
+        {
+            if (needToPipe)
+            {
+                argument = string.Format("-f nut -i pipe:0 {0}", argument);
+            }
+            else
+            {
+                argument = string.Format("-f avisynth -i \"{0}\" {1}", infile, argument);
+            }
+        }
+
+        void StartPipe(FFmpeg ffmpeg)
+        {
+            if (!needToPipe)
+                return;
+
+            string proxyargs = string.Format("-f avisynth -i \"{0}\" -f nut -c copy pipe:1", infile);
+            textBoxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
+
+            pipeFFmpeg = new FFmpeg(proxyargs, true);
+
+            pipeFFmpeg.ErrorDataReceived += (o, args) => Console.WriteLine("Proxy: " + args.Data);
+            pipeFFmpeg.Start(false);
+            var bw = new BackgroundWorker();
+            bw.DoWork += delegate(object o, DoWorkEventArgs args)
+            {
+                try
+                {
+                    pipeFFmpeg.StandardOutput.BaseStream.CopyTo(ffmpeg.StandardInput.BaseStream);
+                }
+                catch (IOException)
+                {
+                    return;
+                }
+            };
+            pipeFFmpeg.Exited += (o, args) => ffmpeg.StandardInput.Close();
+            bw.RunWorkerAsync();
+        }
+
         private void SinglePass(string argument)
         {
             _ffmpegProcess = new FFmpeg(argument);
@@ -85,6 +134,7 @@ namespace WebMConverter
             }));
 
             _ffmpegProcess.Start();
+            StartPipe(_ffmpegProcess);
         }
 
         private void MultiPass(string[] arguments)
@@ -118,6 +168,7 @@ namespace WebMConverter
             }));
 
             _ffmpegProcess.Start();
+            StartPipe(_ffmpegProcess);
         }
 
         private void Exited(object sender, EventArgs eventArgs)
@@ -179,7 +230,7 @@ namespace WebMConverter
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Process.Start(_owner.textBoxOut.Text); //Play result video
+            Process.Start((Owner as MainForm).textBoxOut.Text); //Play result video
         }
     }
 }

@@ -14,7 +14,7 @@ namespace WebMConverter
             if (win32)
                 folder = "Win32";
             else
-                if (Environment.Is64BitProcess)
+                if (Environment.Is64BitOperatingSystem)
                     folder = "Win64";
                 else
                     folder = "Win32";
@@ -33,9 +33,15 @@ namespace WebMConverter
 
         new public void Start()
         {
+            Start(true);
+        }
+
+        public void Start(bool OutputReadLine)
+        {
             base.Start();
             this.BeginErrorReadLine();
-            this.BeginOutputReadLine();
+            if (OutputReadLine)
+                this.BeginOutputReadLine();
         }
     }
 }

@@ -233,7 +233,9 @@
     <Content Include="Binaries\Win32\TDeint.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\Win64\ffmpeg.exe" />
+    <Content Include="Binaries\Win64\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\Flaticon_32217.png" />
     <None Include="Resources\Flaticon_9271.png" />
