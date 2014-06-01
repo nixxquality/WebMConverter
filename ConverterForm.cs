@@ -17,8 +17,8 @@ namespace WebMConverter
         private bool _panic;
 
         int currentPass = 0;
-        private bool _multipass;
-        private bool _cancelMultipass;
+        private bool twopass;
+        private bool cancelTwopass;
 
         private MainForm _owner;
 
@@ -45,20 +45,22 @@ namespace WebMConverter
         private void ConverterForm_Load(object sender, EventArgs e)
         {
             string argument = null;
-           _multipass = true;
+            twopass = true;
             if (_arguments.Length == 1)
             {
-                _multipass = false;
+                twopass = false;
                 argument = _arguments[0];
             }
 
-            if (_multipass)
-                for (int i = 0; i < _arguments.Length; i++)
-                    textBoxOutput.AppendText(string.Format("\nArguments for pass {0}: {1}", i + 1, _arguments[i]));
+            if (twopass)
+            {
+                textBoxOutput.AppendText(string.Format("{0}Arguments for pass 1: {1}", Environment.NewLine, _arguments[0]));
+                textBoxOutput.AppendText(string.Format("{0}Arguments for pass 2: {1}", Environment.NewLine, _arguments[1]));
+            }
             else
                 textBoxOutput.AppendText("\nArguments: " + argument);
 
-            if (_multipass)
+            if (twopass)
                 MultiPass(_arguments);
             else
                 SinglePass(argument);
@@ -71,16 +73,16 @@ namespace WebMConverter
             _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
             _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
             _ffmpegProcess.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
-                                                                              {
-                                                                                  if (_panic) return; //This should stop that one exception when closing the converter
-                                                                                  textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
-                                                                                  buttonCancel.Enabled = false;
+            {
+                if (_panic) return; //This should stop that one exception when closing the converter
+                textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
+                buttonCancel.Enabled = false;
 
-                                                                                  _timer = new Timer();
-                                                                                  _timer.Interval = 500;
-                                                                                  _timer.Tick += Exited;
-                                                                                  _timer.Start();
-                                                                              }));
+                _timer = new Timer();
+                _timer.Interval = 500;
+                _timer.Tick += Exited;
+                _timer.Start();
+            }));
 
             _ffmpegProcess.Start();
         }
@@ -99,7 +101,7 @@ namespace WebMConverter
                 textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
 
                 currentPass++;
-                if (currentPass < passes && !_cancelMultipass)
+                if (currentPass < passes && !cancelTwopass)
                 {
                     textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
 
@@ -126,7 +128,7 @@ namespace WebMConverter
 
             if (process.ExitCode != 0)
             {
-                if (_cancelMultipass)
+                if (cancelTwopass)
                     textBoxOutput.AppendText("\n\nConversion cancelled.");
                 else
                 {
@@ -153,7 +155,7 @@ namespace WebMConverter
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            _cancelMultipass = true;
+            cancelTwopass = true;
 
             if (!_ended || _panic) //Prevent stack overflow
             {

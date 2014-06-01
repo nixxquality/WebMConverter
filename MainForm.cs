@@ -938,8 +938,11 @@ namespace WebMConverter
             else
             {
                 arguments = new string[2];
-                arguments[0] = string.Format(_template, avsFileName, output, options, "-pass 1");
+                arguments[0] = string.Format(_template, avsFileName, "NUL", options, "-pass 1"); // Windows
                 arguments[1] = string.Format(_template, avsFileName, output, options, "-pass 2");
+
+                if (!arguments[0].Contains("-an")) // skip audio encoding on the first pass
+                    arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
             }
 
             new ConverterForm(this, arguments).ShowDialog(this);
