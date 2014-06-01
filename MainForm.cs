@@ -7,10 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using StopWatch = System.Timers.Timer;
 using System.Xml;
+using System.Net;
 
 namespace WebMConverter
 {
@@ -51,6 +51,9 @@ namespace WebMConverter
         public MainForm()
         {
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32"));
+
+            updatecheck = new BackgroundWorker();
+            updatecheck.DoWork += updatecheck_DoWork;
 
             InitializeComponent();
 
@@ -93,7 +96,7 @@ namespace WebMConverter
             if (args.Length > 1) // We were "Open with..."ed with a file
                 SetFile(args[1]);
 
-            clearToolTip();
+            updatecheck.RunWorkerAsync();
         }
 
         void showToolTip(string message, int timer = 0)
@@ -1130,6 +1133,79 @@ namespace WebMConverter
             }
 
             trackSlices.Value = slices;
+        }
+
+        #endregion
+
+        #region Update check
+
+        const string githubowner = "nixxquality";
+        const string githubrepo = "WebMConverter";
+        const string githubasset = "Converter.zip";
+
+        BackgroundWorker updatecheck;
+
+        void updatecheck_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var thisVersion = new Version(Application.ProductVersion);
+
+            showToolTip("Checking for updates...", 2000);
+            
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("https://api.github.com/repos/{0}/{1}/releases", githubowner, githubrepo));
+            request.UserAgent = "WebMConverter-UpdateCheck";
+            var response = request.GetResponse();
+            string json;
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                json = sr.ReadToEnd();
+            }
+            dynamic releases = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+
+            string latestTag = releases[0].tag_name;
+            var latestVersion = new Version(latestTag.Substring(1));
+
+            if (thisVersion.CompareTo(latestVersion) >= 0)
+            {
+                showToolTip("Up to date!", 1000);
+                return;
+            }
+            else
+            {
+                bool asset_available = false;
+
+                try {
+                    foreach (dynamic asset in releases[0].assets)
+                    {
+                        if (asset.name == githubasset)
+                        {
+                            asset_available = true;
+                        }
+                    }
+
+                    if (!asset_available)
+                        throw new Exception("");
+                }
+                catch {
+                    showToolTip(string.Format("You're not up to date! Please visit github.com/{0}/{1}/releases/", githubowner, githubrepo));
+                    return;
+                }
+
+                const string text = "There is a new version of WebM for Retards!\nWould you like to download it now?";
+                const string caption = "Update available";
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    DialogResult result;
+
+                    result = MessageBox.Show(this, text, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(string.Format("https://github.com/{0}/{1}/releases/download/{2}/{3}", githubowner, githubrepo, latestTag, githubasset));
+                        Application.Exit();
+                    }
+                });
+            }
         }
 
         #endregion
