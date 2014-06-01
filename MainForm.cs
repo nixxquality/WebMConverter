@@ -99,6 +99,7 @@ namespace WebMConverter
             updatecheck.RunWorkerAsync();
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         void showToolTip(string message, int timer = 0)
         {
             clearToolTip();
@@ -115,6 +116,7 @@ namespace WebMConverter
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         void clearToolTip(object sender = null, EventArgs e = null)
         {
             if (toolTipTimer != null)
@@ -492,51 +494,61 @@ namespace WebMConverter
 
         #region Tooltips
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonTrim_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Select a clip from your video.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonMultipleTrim_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Select many clips from your video, and sort them on a timeline.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonCrop_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Crop your video into a smaller frame.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonResize_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Scale your video.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonReverse_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Everything is backwards!");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonSubtitle_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Burn subtitles into the video.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonCaption_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Add some funny text to your video.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void buttonPreview_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Open a preview window that will loop your processing settings. Note that this doesn't reflect output encoding quality.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void toolStripButtonAdvancedScripting_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Are you a bad enough dude? Take care, there is no way back. You will have to start over if you fuck up.");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         private void listViewProcessingScript_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Double click a filter to edit it. Select a filter and press Delete to remove it.");

@@ -45,12 +45,8 @@ namespace WebMConverter
             labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
 
             checktrims();
-        }
 
-        private void trackBarVideoTimeline_Scroll(object sender, EventArgs e)
-        {
-            previewFrame.Frame = trackVideoTimeline.Value;
-            labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
+            trackVideoTimeline.MouseWheel += trackVideoTimeline_MouseWheel;
         }
 
         private void buttonTrimStart_Click(object sender, EventArgs e)
@@ -93,12 +89,7 @@ namespace WebMConverter
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    int i = 0;
-                    int.TryParse(dialog.Result, out i);
-                    i = Math.Max(0, Math.Min(trackVideoTimeline.Maximum - 1, i)); // Make sure we don't go out of bounds.
-                    previewFrame.Frame = i;
-                    trackVideoTimeline.Value = i;
-                    labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
+                    SetFrame(int.Parse(dialog.Result));
                 }
             }
         }
@@ -119,18 +110,64 @@ namespace WebMConverter
                         MessageBox.Show("That's not a valid timestamp.");
                         return;
                     }
-                    int i = Program.TimeToFrame(time);
-                    i = Math.Max(0, Math.Min(trackVideoTimeline.Maximum - 1, i)); // Make sure we don't go out of bounds.
-                    previewFrame.Frame = i;
-                    trackVideoTimeline.Value = i;
-                    labelTimeStamp.Text = Program.FrameToTimeStamp(trackVideoTimeline.Value);
+                    SetFrame(Program.TimeToFrame(time));
                 }
             }
         }
 
-        private void trackVideoTimeline_Leave(object sender, EventArgs e)
+        void trackVideoTimeline_MouseWheel(object sender, MouseEventArgs e)
         {
-            trackVideoTimeline.Focus(); // You're not going anywhere~
+            int modifier = 0;
+            if (e.Delta > 0)
+                modifier = -1;
+            else if (e.Delta < 0)
+                modifier = 1;
+
+            if (modifier != 0)
+            {
+                SetFrame(modifier, true);
+            }
+
+            ((HandledMouseEventArgs)e).Handled = true;
+        }
+
+        private void TrimForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            int modifier = 0;
+            switch (e.KeyData)
+            {
+                case Keys.Left:
+                    modifier = -1;
+                    break;
+                case Keys.Right:
+                    modifier = 1;
+                    break;
+            }
+            
+            if (modifier != 0)
+            {
+                SetFrame(modifier, true);
+                e.Handled = true;
+            }
+        }
+
+        void SetFrame(int frame, bool modifier = false)
+        {
+            if (modifier)
+                frame += trackVideoTimeline.Value;
+
+            trackVideoTimeline.Value = Math.Max(0, Math.Min(trackVideoTimeline.Maximum, frame)); // Make sure we don't go out of bounds.
+        }
+
+        private void trackVideoTimeline_ValueChanged(object sender, EventArgs e)
+        {
+            previewFrame.Frame = trackVideoTimeline.Value;
+            labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
+        }
+
+        private void TrimForm_Shown(object sender, EventArgs e)
+        {
+            this.Focus();
         }
     }
 

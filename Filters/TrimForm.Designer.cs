@@ -177,8 +177,7 @@
             this.trackVideoTimeline.Size = new System.Drawing.Size(638, 26);
             this.trackVideoTimeline.TabIndex = 1;
             this.trackVideoTimeline.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackVideoTimeline.Scroll += new System.EventHandler(this.trackBarVideoTimeline_Scroll);
-            this.trackVideoTimeline.Leave += new System.EventHandler(this.trackVideoTimeline_Leave);
+            this.trackVideoTimeline.ValueChanged += new System.EventHandler(this.trackVideoTimeline_ValueChanged);
             // 
             // flowDialogButtons
             // 
@@ -268,6 +267,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(760, 583);
             this.Name = "TrimForm";
@@ -275,6 +275,8 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Trim";
+            this.Shown += new System.EventHandler(this.TrimForm_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TrimForm_KeyDown);
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.flowTrimButtons.ResumeLayout(false);
