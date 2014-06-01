@@ -6,10 +6,21 @@ namespace WebMConverter
 {
     class FFmpeg : Process //Refactoring, faggots.
     {
-        public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "ffmpeg.exe");
+        public string FFmpegPath;
 
-        public FFmpeg(string argument)
+        public FFmpeg(string argument, bool win32 = false)
         {
+            string folder;
+            if (win32)
+                folder = "Win32";
+            else
+                if (Environment.Is64BitProcess)
+                    folder = "Win64";
+                else
+                    folder = "Win32";
+
+            FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries", folder, "ffmpeg.exe");
+
             this.StartInfo.FileName = FFmpegPath;
             this.StartInfo.Arguments = argument;
             this.StartInfo.RedirectStandardInput = true;

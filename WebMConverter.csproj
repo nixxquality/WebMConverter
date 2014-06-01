@@ -188,51 +188,52 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Binaries\assrender.dll">
+    <Content Include="Binaries\Win32\assrender.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\avcodec-55.dll">
+    <Content Include="Binaries\Win32\avcodec-55.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\avdevice-55.dll">
+    <Content Include="Binaries\Win32\avdevice-55.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\avfilter-4.dll">
+    <Content Include="Binaries\Win32\avfilter-4.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\avformat-55.dll">
+    <Content Include="Binaries\Win32\avformat-55.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\avutil-52.dll">
+    <Content Include="Binaries\Win32\avutil-52.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\ffmpeg.exe">
+    <Content Include="Binaries\Win32\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\ffms2.dll">
+    <Content Include="Binaries\Win32\ffms2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\ffplay.exe">
+    <Content Include="Binaries\Win32\ffplay.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\ffprobe.exe">
+    <Content Include="Binaries\Win32\ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\gpl-3.0.txt">
+    <Content Include="Binaries\Win32\gpl-3.0.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\postproc-52.dll">
+    <Content Include="Binaries\Win32\postproc-52.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\swresample-0.dll">
+    <Content Include="Binaries\Win32\swresample-0.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\swscale-2.dll">
+    <Content Include="Binaries\Win32\swscale-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Binaries\TDeint.dll">
+    <Content Include="Binaries\Win32\TDeint.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Binaries\Win64\ffmpeg.exe" />
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\Flaticon_32217.png" />
     <None Include="Resources\Flaticon_9271.png" />

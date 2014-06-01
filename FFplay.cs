@@ -6,7 +6,7 @@ namespace WebMConverter
 {
     class FFplay : Process
     {
-        public string FFplayPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "ffplay.exe");
+        public string FFplayPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32", "ffplay.exe");
 
         public FFplay(string argument)
         {
