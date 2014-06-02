@@ -16,6 +16,7 @@ namespace WebMConverter
         public CaptionFilter GeneratedFilter;
 
         Point point;
+        string text;
 
         Size videoResolution;
         Point held;
@@ -37,11 +38,15 @@ namespace WebMConverter
             if (filterToEdit != null)
             {
                 point = filterToEdit.Placement;
-                boxText.Text = filterToEdit.Text;
+                text = filterToEdit.Text;
                 fontDialog1.Font = filterToEdit.Style;
                 colorDialogTextColor.Color = filterToEdit.TextColor;
                 colorDialogBorderColor.Color = filterToEdit.BorderColor;
                 numericBorderThickness.Value = filterToEdit.BorderThickness;
+            }
+            else
+            {
+                text = "Text goes here";
             }
 
             previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
@@ -75,7 +80,7 @@ namespace WebMConverter
             var scaledsize = fontDialog1.Font.Size * scale;
             var scaledpoint = new Point(basePoint.X + (int)(point.X * scale), basePoint.Y + (int)(point.Y * scale));
 
-            path.AddString(boxText.Text, fontDialog1.Font.FontFamily, (int)fontDialog1.Font.Style, scaledsize, scaledpoint, StringFormat.GenericDefault);
+            path.AddString(text, fontDialog1.Font.FontFamily, (int)fontDialog1.Font.Style, scaledsize, scaledpoint, StringFormat.GenericDefault);
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.FillPath(new SolidBrush(colorDialogTextColor.Color), path);
@@ -134,7 +139,7 @@ namespace WebMConverter
 
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
-            GeneratedFilter = new CaptionFilter(point, boxText.Text, fontDialog1.Font, colorDialogTextColor.Color, colorDialogBorderColor.Color, (int)numericBorderThickness.Value);
+            GeneratedFilter = new CaptionFilter(point, text, fontDialog1.Font, colorDialogTextColor.Color, colorDialogBorderColor.Color, (int)numericBorderThickness.Value);
 
             DialogResult = DialogResult.OK;
         }
@@ -183,6 +188,19 @@ namespace WebMConverter
                     i = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, i)); // Make sure we don't go out of bounds.
                     previewFrame.Frame = i;
                 }
+            }
+        }
+
+        private void setTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new TextInputDialog(text))
+            {
+                dialog.boxText.TextChanged += delegate(object o, EventArgs args)
+                {
+                     text = (o as TextBox).Text;
+                     UpdateTextLayout(o, args);
+                };
+                dialog.ShowDialog(this);
             }
         }
     }

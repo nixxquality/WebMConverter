@@ -35,7 +35,6 @@
             this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.boxText = new System.Windows.Forms.ToolStripTextBox();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +45,7 @@
             this.colorDialogBorderColor = new System.Windows.Forms.ColorDialog();
             this.numericBorderThickness = new System.Windows.Forms.NumericUpDown();
             this.previewFrame = new WebMConverter.PreviewFrame();
+            this.setTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericBorderThickness)).BeginInit();
             this.SuspendLayout();
@@ -54,13 +54,13 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.previewToolStripMenuItem,
-            this.boxText,
+            this.setTextToolStripMenuItem,
             this.fontToolStripMenuItem,
             this.textColorToolStripMenuItem,
             this.borderColorToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(744, 27);
+            this.menuStrip.Size = new System.Drawing.Size(744, 24);
             this.menuStrip.TabIndex = 0;
             // 
             // previewToolStripMenuItem
@@ -70,7 +70,7 @@
             this.frameToolStripMenuItem,
             this.timeToolStripMenuItem});
             this.previewToolStripMenuItem.Name = "previewToolStripMenuItem";
-            this.previewToolStripMenuItem.Size = new System.Drawing.Size(69, 23);
+            this.previewToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.previewToolStripMenuItem.Text = "Preview...";
             // 
             // trimTimingToolStripMenuItem
@@ -111,31 +111,24 @@
             this.timeToolStripMenuItem.Text = "Time";
             this.timeToolStripMenuItem.Click += new System.EventHandler(this.timeToolStripMenuItem_Click);
             // 
-            // boxText
-            // 
-            this.boxText.Name = "boxText";
-            this.boxText.Size = new System.Drawing.Size(100, 23);
-            this.boxText.Text = "Text goes here";
-            this.boxText.TextChanged += new System.EventHandler(this.UpdateTextLayout);
-            // 
             // fontToolStripMenuItem
             // 
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(43, 23);
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.fontToolStripMenuItem.Text = "Font";
             this.fontToolStripMenuItem.Click += new System.EventHandler(this.fontToolStripMenuItem_Click);
             // 
             // textColorToolStripMenuItem
             // 
             this.textColorToolStripMenuItem.Name = "textColorToolStripMenuItem";
-            this.textColorToolStripMenuItem.Size = new System.Drawing.Size(71, 23);
+            this.textColorToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.textColorToolStripMenuItem.Text = "Text color";
             this.textColorToolStripMenuItem.Click += new System.EventHandler(this.textColorToolStripMenuItem_Click);
             // 
             // borderColorToolStripMenuItem
             // 
             this.borderColorToolStripMenuItem.Name = "borderColorToolStripMenuItem";
-            this.borderColorToolStripMenuItem.Size = new System.Drawing.Size(84, 23);
+            this.borderColorToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.borderColorToolStripMenuItem.Text = "Border color";
             this.borderColorToolStripMenuItem.Click += new System.EventHandler(this.borderColorToolStripMenuItem_Click);
             // 
@@ -171,7 +164,7 @@
             // 
             // numericBorderThickness
             // 
-            this.numericBorderThickness.Location = new System.Drawing.Point(379, 4);
+            this.numericBorderThickness.Location = new System.Drawing.Point(329, 2);
             this.numericBorderThickness.Name = "numericBorderThickness";
             this.numericBorderThickness.Size = new System.Drawing.Size(61, 20);
             this.numericBorderThickness.TabIndex = 4;
@@ -188,10 +181,17 @@
             this.previewFrame.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.previewFrame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewFrame.Frame = 0;
-            this.previewFrame.Location = new System.Drawing.Point(0, 27);
+            this.previewFrame.Location = new System.Drawing.Point(0, 24);
             this.previewFrame.Name = "previewFrame";
-            this.previewFrame.Size = new System.Drawing.Size(744, 517);
+            this.previewFrame.Size = new System.Drawing.Size(744, 520);
             this.previewFrame.TabIndex = 3;
+            // 
+            // setTextToolStripMenuItem
+            // 
+            this.setTextToolStripMenuItem.Name = "setTextToolStripMenuItem";
+            this.setTextToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.setTextToolStripMenuItem.Text = "Set text";
+            this.setTextToolStripMenuItem.Click += new System.EventHandler(this.setTextToolStripMenuItem_Click);
             // 
             // CaptionForm
             // 
@@ -235,12 +235,12 @@
         private System.Windows.Forms.ToolStripMenuItem frameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeToolStripMenuItem;
         private System.Windows.Forms.FontDialog fontDialog1;
-        private System.Windows.Forms.ToolStripTextBox boxText;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialogTextColor;
         private System.Windows.Forms.ColorDialog colorDialogBorderColor;
         private System.Windows.Forms.ToolStripMenuItem textColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem borderColorToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown numericBorderThickness;
+        private System.Windows.Forms.ToolStripMenuItem setTextToolStripMenuItem;
     }
 }
