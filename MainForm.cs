@@ -101,7 +101,7 @@ namespace WebMConverter
 
         void setToolTip(string message)
         {
-            if (this.IsDisposed)
+            if (this.IsDisposed || toolStripStatusLabel.IsDisposed)
                 return;
 
             if (this.InvokeRequired)
@@ -354,7 +354,7 @@ namespace WebMConverter
             //{
             listViewProcessingScript.Hide();
             if (Filters.Caption != null)
-                Filters.Caption.BeforeEncode(GetResolution());
+                Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
             GenerateAvisynthScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
@@ -918,7 +918,7 @@ namespace WebMConverter
 
             // Generate the script if we're in simple mode
             if (Filters.Caption != null)
-                Filters.Caption.BeforeEncode(GetResolution());
+                Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
             if (!toolStripButtonAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 

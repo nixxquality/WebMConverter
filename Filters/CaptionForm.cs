@@ -105,7 +105,8 @@ namespace WebMConverter
 
         private void CaptionForm_Load(object sender, EventArgs e)
         {
-            videoResolution = (this.Owner as MainForm).GetResolution();
+            var frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+            videoResolution = frame.EncodedResolution;
         }
 
         private void UpdateTextLayout(object sender, EventArgs e)
