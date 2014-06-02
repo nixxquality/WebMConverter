@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using StopWatch = System.Timers.Timer;
 using System.Xml;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace WebMConverter
 {
@@ -52,9 +53,6 @@ namespace WebMConverter
         {
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32"));
 
-            updatecheck = new BackgroundWorker();
-            updatecheck.DoWork += updatecheck_DoWork;
-
             InitializeComponent();
 
             ImageList imageList = new ImageList();
@@ -90,21 +88,41 @@ namespace WebMConverter
             SetFile(files[0]);
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            var args = Environment.GetCommandLineArgs();
-            if (args.Length > 1) // We were "Open with..."ed with a file
-                SetFile(args[1]);
-
-            updatecheck.RunWorkerAsync();
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        void showToolTip(string message, int timer = 0)
+        async void MainForm_Shown(object sender, EventArgs e)
         {
             clearToolTip();
 
-            toolStripStatusLabel.Text = message;
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1) // We were "Open with..."ed with a file
+                SetFile(args[1]);
+            
+            await Task.Run(() => CheckUpdate());
+        }
+
+        void setToolTip(string message)
+        {
+            if (this.IsDisposed)
+                return;
+
+            if (this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    toolStripStatusLabel.Text = message;
+                });
+            }
+            else
+            {
+                toolStripStatusLabel.Text = message;
+            }
+        }
+
+        public void showToolTip(string message, int timer = 0)
+        {
+            clearToolTip();
+
+            setToolTip(message);
+
             if (timer > 0)
             {
                 toolTipTimer = new StopWatch(timer);
@@ -117,11 +135,12 @@ namespace WebMConverter
         }
 
         [System.Diagnostics.DebuggerStepThrough]
-        void clearToolTip(object sender = null, EventArgs e = null)
+        public void clearToolTip(object sender = null, EventArgs e = null)
         {
             if (toolTipTimer != null)
                 toolTipTimer.Close();
-            toolStripStatusLabel.Text = "";
+
+            setToolTip("");
         }
 
         #endregion
@@ -1155,9 +1174,7 @@ namespace WebMConverter
         const string githubrepo = "WebMConverter";
         const string githubasset = "Converter.zip";
 
-        BackgroundWorker updatecheck;
-
-        void updatecheck_DoWork(object sender, DoWorkEventArgs e)
+        void CheckUpdate()
         {
             var thisVersion = new Version(Application.ProductVersion);
 
@@ -1185,7 +1202,8 @@ namespace WebMConverter
             {
                 bool asset_available = false;
 
-                try {
+                try
+                {
                     foreach (dynamic asset in releases[0].assets)
                     {
                         if (asset.name == githubasset)
@@ -1197,7 +1215,8 @@ namespace WebMConverter
                     if (!asset_available)
                         throw new Exception("");
                 }
-                catch {
+                catch
+                {
                     showToolTip(string.Format("You're not up to date! Please visit github.com/{0}/{1}/releases/", githubowner, githubrepo));
                     return;
                 }
