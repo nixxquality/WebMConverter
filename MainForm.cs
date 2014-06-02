@@ -117,6 +117,7 @@ namespace WebMConverter
             }
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         public void showToolTip(string message, int timer = 0)
         {
             clearToolTip();
