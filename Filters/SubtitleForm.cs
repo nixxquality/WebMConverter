@@ -18,14 +18,22 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
-            foreach (int Track in Program.SubtitleTracks)
+            if (Program.SubtitleTracks.Count == 0)
             {
-                subtitleTracks.Add(Track, string.Format("Track #{0}", Track)); // Todo: Add more meaningful information
+                checkBoxInternalSubs.Checked = false;
+                checkBoxInternalSubs.Enabled = false;
             }
-            comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
-            comboBoxVideoTracks.ValueMember = "Key";
-            comboBoxVideoTracks.DisplayMember = "Value";
+            else
+            {
+                Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
+                foreach (int Track in Program.SubtitleTracks)
+                {
+                    subtitleTracks.Add(Track, string.Format("Track #{0}", Track)); // Todo: Add more meaningful information
+                }
+                comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
+                comboBoxVideoTracks.ValueMember = "Key";
+                comboBoxVideoTracks.DisplayMember = "Value";
+            }
         }
 
         public SubtitleForm(SubtitleFilter SubtitleFilter) : this()
@@ -38,6 +46,8 @@ namespace WebMConverter
             {
                 checkBoxInternalSubs.Checked = false;
                 textBoxSubtitleFile.Text = SubtitleFilter.FileName;
+                if (Program.SubtitleTracks.Count == 0)
+                    checkBoxInternalSubs.Enabled = false;
             }
         }
 
