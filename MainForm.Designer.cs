@@ -107,6 +107,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButtonOverlay = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -309,6 +310,7 @@ namespace WebMConverter
             this.toolStripButtonReverse,
             this.toolStripButtonAdvancedScripting,
             this.buttonPreview,
+            this.toolStripButtonOverlay,
             this.toolStripButtonCaption});
             this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.toolStripProcessingScript.Name = "toolStripProcessingScript";
@@ -1132,9 +1134,20 @@ namespace WebMConverter
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1021, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1052, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripButtonOverlay
+            // 
+            this.toolStripButtonOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonOverlay.Enabled = false;
+            this.toolStripButtonOverlay.Name = "toolStripButtonOverlay";
+            this.toolStripButtonOverlay.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonOverlay.Text = "Overlay";
+            this.toolStripButtonOverlay.Click += new System.EventHandler(this.toolStripButtonOverlay_Click);
+            this.toolStripButtonOverlay.MouseEnter += new System.EventHandler(this.toolStripButtonOverlay_MouseEnter);
+            this.toolStripButtonOverlay.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // MainForm
             // 
@@ -1286,6 +1299,7 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripSplitButton toolStripButtonTrim;
         private System.Windows.Forms.ToolStripMenuItem toolStripButtonMultipleTrim;
         private System.Windows.Forms.ToolStripButton toolStripButtonCaption;
+        private System.Windows.Forms.ToolStripButton toolStripButtonOverlay;
     }
 }
 

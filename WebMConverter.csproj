@@ -73,6 +73,12 @@
     <Compile Include="Dialogs\TextInputDialog.Designer.cs">
       <DependentUpon>TextInputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\OverlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filters\OverlayForm.Designer.cs">
+      <DependentUpon>OverlayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Filters\CaptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TextInputDialog.resx">
       <DependentUpon>TextInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filters\OverlayForm.resx">
+      <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\CaptionForm.resx">
       <DependentUpon>CaptionForm.cs</DependentUpon>

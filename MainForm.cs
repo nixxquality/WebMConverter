@@ -271,6 +271,26 @@ namespace WebMConverter
             }
         }
 
+        private void toolStripButtonOverlay_Click(object sender, EventArgs e)
+        {
+            using (var form = new OverlayForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (toolStripButtonAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                    }
+                    else
+                    {
+                        Filters.Overlay = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Overlay", "subtitles"); // todo: get another icon
+                        toolStripButtonOverlay.Enabled = false;
+                    }
+                }
+            }
+        }
+
         private void toolStripButtonResize_Click(object sender, EventArgs e)
         {
             using (var form = new ResizeForm())
@@ -380,6 +400,7 @@ namespace WebMConverter
         {
             toolStripButtonCaption.Enabled = enabled;
             toolStripButtonCrop.Enabled = enabled;
+            toolStripButtonOverlay.Enabled = enabled;
             toolStripButtonResize.Enabled = enabled;
             toolStripButtonReverse.Enabled = enabled;
             toolStripButtonSubtitle.Enabled = enabled;
@@ -397,43 +418,41 @@ namespace WebMConverter
                         case "Caption":
                             Filters.Caption = null;
                             toolStripButtonCaption.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Crop":
                             Filters.Crop = null;
                             toolStripButtonCrop.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
                             SetSlices();
                             break;
                         case "Multiple Trim":
                             Filters.MultipleTrim = null;
                             toolStripButtonTrim.Enabled = true;
                             GenerateArguments();
-                            listViewProcessingScript.Items.Remove(item);
+                            break;
+                        case "Overlay":
+                            Filters.Overlay = null;
+                            toolStripButtonOverlay.Enabled = true;
                             break;
                         case "Resize":
                             Filters.Resize = null;
                             toolStripButtonResize.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
                             SetSlices();
                             break;
                         case "Reverse":
                             Filters.Reverse = null;
                             toolStripButtonReverse.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Subtitle":
                             Filters.Subtitle = null;
                             toolStripButtonSubtitle.Enabled = true;
-                            listViewProcessingScript.Items.Remove(item);
                             break;
                         case "Trim":
                             Filters.Trim = null;
                             toolStripButtonTrim.Enabled = true;
                             GenerateArguments();
-                            listViewProcessingScript.Items.Remove(item);
                             break;
                     }
+                    listViewProcessingScript.Items.Remove(item);
                 }
             }
         }
@@ -468,6 +487,15 @@ namespace WebMConverter
                         {
                             Filters.MultipleTrim = form.GeneratedFilter;
                             GenerateArguments();
+                        }
+                    }
+                    break;
+                case "Overlay":
+                    using (var form = new OverlayForm(Filters.Overlay))
+                    {
+                        if (form.ShowDialog(this) == DialogResult.OK)
+                        {
+                            Filters.Overlay = form.GeneratedFilter;
                         }
                     }
                     break;
@@ -548,6 +576,12 @@ namespace WebMConverter
         private void toolStripButtonSubtitle_MouseEnter(object sender, EventArgs e)
         {
             showToolTip("Burn subtitles into the video.");
+        }
+
+        [System.Diagnostics.DebuggerStepThrough]
+        private void toolStripButtonOverlay_MouseEnter(object sender, EventArgs e)
+        {
+            showToolTip("Overlay a picture on top of your video.");
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -1112,6 +1146,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Caption != null)
                 script.AppendLine(Filters.Caption.ToString());
+            if (Filters.Overlay != null)
+                script.AppendLine(Filters.Overlay.ToString());
             if (Filters.Trim != null)
                 script.AppendLine(Filters.Trim.ToString());
             if (Filters.MultipleTrim != null)
