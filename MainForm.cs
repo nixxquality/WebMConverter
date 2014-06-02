@@ -772,8 +772,9 @@ namespace WebMConverter
 
                 Program.VideoSource = index.VideoSource(path, videotrack);
                 var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
-                Program.VideoColorRange = frame.ColorRange; 
+                Program.VideoColorRange = frame.ColorRange;
                 Program.VideoInterlaced = frame.InterlacedFrame;
+                SetSlices(frame.EncodedResolution);
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
@@ -812,7 +813,6 @@ namespace WebMConverter
                     //boxLevels.Checked = true;
                 if (Program.VideoInterlaced)
                     boxDeinterlace.Checked = true;
-                SetSlices();
 
                 panelHideTheOptions.SendToBack();
             });
@@ -1143,7 +1143,11 @@ namespace WebMConverter
 
         void SetSlices()
         {
-            var resolution = GetResolution();
+            SetSlices(GetResolution());
+        }
+
+        void SetSlices(Size resolution)
+        {
             int slices;
 
             if (resolution.Width * resolution.Height >= 2073600) // 1080p (1920*1080)
