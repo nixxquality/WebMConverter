@@ -165,9 +165,9 @@ namespace WebMConverter
             labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
         }
 
-        private void TrimForm_Shown(object sender, EventArgs e)
+        private void trackVideoTimeline_Leave(object sender, EventArgs e)
         {
-            this.Focus();
+            trackVideoTimeline.Focus();
         }
     }
 

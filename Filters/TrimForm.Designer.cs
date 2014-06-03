@@ -95,6 +95,7 @@
             this.buttonTrimStart.Name = "buttonTrimStart";
             this.buttonTrimStart.Size = new System.Drawing.Size(75, 23);
             this.buttonTrimStart.TabIndex = 0;
+            this.buttonTrimStart.TabStop = false;
             this.buttonTrimStart.Text = "Set Start:";
             this.buttonTrimStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTrimStart.UseVisualStyleBackColor = true;
@@ -117,6 +118,7 @@
             this.buttonTrimEnd.Name = "buttonTrimEnd";
             this.buttonTrimEnd.Size = new System.Drawing.Size(75, 23);
             this.buttonTrimEnd.TabIndex = 1;
+            this.buttonTrimEnd.TabStop = false;
             this.buttonTrimEnd.Text = "Set End:";
             this.buttonTrimEnd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTrimEnd.UseVisualStyleBackColor = true;
@@ -167,6 +169,7 @@
             this.previewFrame.Name = "previewFrame";
             this.previewFrame.Size = new System.Drawing.Size(744, 481);
             this.previewFrame.TabIndex = 0;
+            this.previewFrame.TabStop = false;
             // 
             // trackVideoTimeline
             // 
@@ -175,9 +178,10 @@
             this.trackVideoTimeline.Location = new System.Drawing.Point(3, 484);
             this.trackVideoTimeline.Name = "trackVideoTimeline";
             this.trackVideoTimeline.Size = new System.Drawing.Size(638, 26);
-            this.trackVideoTimeline.TabIndex = 1;
+            this.trackVideoTimeline.TabIndex = 0;
             this.trackVideoTimeline.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackVideoTimeline.ValueChanged += new System.EventHandler(this.trackVideoTimeline_ValueChanged);
+            this.trackVideoTimeline.Leave += new System.EventHandler(this.trackVideoTimeline_Leave);
             // 
             // flowDialogButtons
             // 
@@ -200,6 +204,7 @@
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(75, 23);
             this.buttonConfirm.TabIndex = 0;
+            this.buttonConfirm.TabStop = false;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
             this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
@@ -211,6 +216,7 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
+            this.buttonCancel.TabStop = false;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
@@ -275,7 +281,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Trim";
-            this.Shown += new System.EventHandler(this.TrimForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TrimForm_KeyDown);
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
