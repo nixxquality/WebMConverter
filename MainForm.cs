@@ -46,6 +46,7 @@ namespace WebMConverter
 
         int videotrack = -1;
         int audiotrack = -1;
+        bool audioDisabled;
 
         #region MainForm
 
@@ -777,7 +778,10 @@ namespace WebMConverter
                     }
                 }
 
-                if (videoTracks.Count == 1)
+                if (videoTracks.Count == 0)
+                    throw new Exception("No video tracks found!");
+
+                else if (videoTracks.Count == 1)
                 {
                     videotrack = videoTracks[0];
                 }
@@ -791,9 +795,14 @@ namespace WebMConverter
                     });
                 }
 
-                if (audioTracks.Count == 1)
+                if (audioTracks.Count == 0)
+                {
+                    audioDisabled = true;
+                }
+                else if (audioTracks.Count == 1)
                 {
                     audiotrack = audioTracks[0];
+                    audioDisabled = false;
                 }
                 else
                 {
@@ -803,6 +812,7 @@ namespace WebMConverter
                         dialog.ShowDialog(this);
                         audiotrack = dialog.SelectedTrack;
                     });
+                    audioDisabled = false;
                 }
 
                 Program.VideoSource = index.VideoSource(path, videotrack);
@@ -819,13 +829,7 @@ namespace WebMConverter
 
                 if (e.Cancelled)
                 {
-                    textBoxIn.Text = "";
-                    textBoxOut.Text = "";
-                    Program.InputFile = path;
-                    Program.FileMd5 = null;
-                    buttonBrowseIn.Enabled = true;
-                    textBoxIn.Enabled = true;
-                    panelHideTheOptions.SendToBack();
+                    CancelIndexing();
                 }
                 else
                 {
@@ -836,8 +840,22 @@ namespace WebMConverter
                     extractbw.RunWorkerAsync();
                 }
             };
-            extractbw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(delegate
+            extractbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
+                if (e.Error != null)
+                {
+                    CancelIndexing();
+                    const string text = "We couldn't find any video tracks!\nPlease use another input file.";
+                    const string caption = "ERROR";
+                    MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                if (audioDisabled)
+                {
+                    const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
+                    const string caption = "FYI";
+                    MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 buttonGo.Enabled = true;
                 buttonPreview.Enabled = true;
                 buttonBrowseIn.Enabled = true;
@@ -850,7 +868,7 @@ namespace WebMConverter
                     boxDeinterlace.Checked = true;
 
                 panelHideTheOptions.SendToBack();
-            });
+            };
 
             if (File.Exists(_indexFile))
             {
@@ -872,6 +890,17 @@ namespace WebMConverter
             progressBarIndexing.Style = ProgressBarStyle.Continuous;
             labelIndexingProgress.Text = "Indexing...";
             indexbw.RunWorkerAsync();
+        }
+
+        private void CancelIndexing()
+        {
+            textBoxIn.Text = "";
+            textBoxOut.Text = "";
+            Program.InputFile = null;
+            Program.FileMd5 = null;
+            buttonBrowseIn.Enabled = true;
+            textBoxIn.Enabled = true;
+            panelHideTheOptions.SendToBack();
         }
 
         private void ValidateInputFile(string input)

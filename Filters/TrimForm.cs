@@ -54,6 +54,7 @@ namespace WebMConverter
             trimStart = trackVideoTimeline.Value;
             labelTrimStart.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimStart), trimStart);
             checktrims();
+            trackVideoTimeline_Focus(sender, e);
         }
 
         private void buttonTrimEnd_Click(object sender, EventArgs e)
@@ -61,6 +62,7 @@ namespace WebMConverter
             trimEnd = trackVideoTimeline.Value;
             labelTrimEnd.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trimEnd), trimEnd);
             checktrims();
+            trackVideoTimeline_Focus(sender, e);
         }
 
         private void checktrims()
@@ -165,7 +167,7 @@ namespace WebMConverter
             labelTimeStamp.Text = string.Format("{0} ({1})", Program.FrameToTimeStamp(trackVideoTimeline.Value), trackVideoTimeline.Value);
         }
 
-        private void trackVideoTimeline_Leave(object sender, EventArgs e)
+        private void trackVideoTimeline_Focus(object sender, EventArgs e)
         {
             trackVideoTimeline.Focus();
         }

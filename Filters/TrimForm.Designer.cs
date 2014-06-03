@@ -181,7 +181,6 @@
             this.trackVideoTimeline.TabIndex = 0;
             this.trackVideoTimeline.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.trackVideoTimeline.ValueChanged += new System.EventHandler(this.trackVideoTimeline_ValueChanged);
-            this.trackVideoTimeline.Leave += new System.EventHandler(this.trackVideoTimeline_Leave);
             // 
             // flowDialogButtons
             // 
