@@ -68,6 +68,7 @@ namespace WebMConverter
             tableLayoutPanelSubtitleFileSelector.Visible = !checkBoxInternalSubs.Checked;
             comboBoxVideoTracks.Visible = checkBoxInternalSubs.Checked;
             label2.Text = checkBoxInternalSubs.Checked ? "Subtitle track:" : "Subtitle file:";
+            checkBoxInternalSubs.Text = checkBoxInternalSubs.Checked ? "Yes" : "No";
         }
 
         private void buttonSelectSubtitleFile_Click(object sender, EventArgs e)

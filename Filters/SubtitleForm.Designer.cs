@@ -100,6 +100,7 @@
             this.checkBoxInternalSubs.Size = new System.Drawing.Size(85, 20);
             this.checkBoxInternalSubs.TabIndex = 1;
             this.checkBoxInternalSubs.Text = "Yes";
+            this.checkBoxInternalSubs.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.checkBoxInternalSubs.UseVisualStyleBackColor = true;
             this.checkBoxInternalSubs.CheckedChanged += new System.EventHandler(this.checkBoxInternalSubs_CheckedChanged);
             // 
