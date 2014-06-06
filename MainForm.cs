@@ -23,14 +23,15 @@ namespace WebMConverter
         //{1} is extra arguments
         //{2} is '-pass X' if HQ mode enabled, otherwise blank
 
-        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} -slices {3}{4}{5}{6}";
+        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} -slices {3}{4}{5}{6}{7}";
         //{0} is '-an' if no audio, otherwise blank
-        //{1} is bitrate in kb/s
+        //{1} is video bitrate in kb/s
         //{2} is amount of threads to use
         //{3} is amount of slices to split the frame into
-        //{4} is ' -fs XM' if X MB limit enabled otherwise blank
-        //{5} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
-        //{6} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+        //{4} is ' -b:a XK' if audio bitrate specified otherwise blank
+        //{5} is ' -fs XM' if X MB limit enabled otherwise blank
+        //{6} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
+        //{7} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
 
         private string _indexFile;
 
@@ -624,6 +625,12 @@ namespace WebMConverter
             }
         }
 
+        private void boxAudio_CheckedChanged(object sender, EventArgs e)
+        {
+            boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
+            UpdateArguments(sender, e);
+        }
+
         #endregion
 
         #region tagPageAdvanced
@@ -1079,22 +1086,36 @@ namespace WebMConverter
                 limitTo = string.Format(" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
             }
 
-            int bitrate = 900;
-            if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
+            int audiobitrate = -1;
+            if (boxAudio.Checked)
+                audiobitrate = 64;
+
+            if (!string.IsNullOrWhiteSpace(boxAudioBitrate.Text))
             {
-                if (!int.TryParse(boxBitrate.Text, out bitrate))
-                    throw new ArgumentException("Invalid bitrate!");
+                if (!int.TryParse(boxAudioBitrate.Text, out audiobitrate))
+                    throw new ArgumentException("Invalid audio bitrate!");
+            }
+
+            int videobitrate = 900;
+            if (!string.IsNullOrWhiteSpace(boxVideoBitrate.Text))
+            {
+                if (!int.TryParse(boxVideoBitrate.Text, out videobitrate))
+                    throw new ArgumentException("Invalid video bitrate!");
             }
             else if (limit != 0)
             {
                 double duration = GetDuration();
 
                 if (duration > 0)
-                    bitrate = (int)(8192 * limit / duration);
+                    videobitrate = (int)(8192 * limit / duration) - audiobitrate;
             }
 
             int threads = trackThreads.Value;
             int slices = GetSlices();
+
+            string audiobitratearg = "";
+            if (audiobitrate != -1)
+                audiobitratearg = string.Format(" -b:a {0}K", audiobitrate);
 
             string metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
@@ -1105,7 +1126,7 @@ namespace WebMConverter
                 HQ = " -quality best -lag-in-frames 16 -auto-alt-ref 1";
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, bitrate, threads, slices, limitTo, metadataTitle, HQ);
+            return string.Format(_templateArguments, audioEnabled, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ);
         }
 
         /// <summary>
