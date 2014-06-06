@@ -269,7 +269,7 @@ namespace WebMConverter
                         Filters.MultipleTrim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Multiple Trim", "trim");
                         GenerateArguments();
-                        (sender as ToolStripItem).Enabled = false;
+                        (sender as ToolStripMenuItem).OwnerItem.Enabled = false;
                     }
                 }
             }
