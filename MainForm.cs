@@ -645,6 +645,11 @@ namespace WebMConverter
             Filters.Deinterlace = boxDeinterlace.Checked ? new DeinterlaceFilter() : null;
         }
 
+        private void boxDenoise_CheckedChanged(object sender, EventArgs e)
+        {
+            Filters.Denoise = boxDenoise.Checked ? new DenoiseFilter() : null;
+        }
+
         private void trackThreads_Scroll(object sender, EventArgs e)
         {
             labelThreads.Text = trackThreads.Value.ToString();
@@ -998,6 +1003,12 @@ namespace WebMConverter
                 {
                     avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
                     avscript.WriteLine(Filters.Deinterlace.ToString());
+                }
+                
+                if (Filters.Denoise != null)
+                {
+                    avscript.WriteLine("LoadPlugin(PluginPath+\"hqdn3d.dll\")");
+                    avscript.WriteLine(Filters.Denoise.ToString());
                 }
 
                 if (Filters.Levels != null)

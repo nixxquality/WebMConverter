@@ -115,6 +115,8 @@ namespace WebMConverter
             this.boxAudioBitrate = new System.Windows.Forms.TextBox();
             this.labelAudioBitrateUnit = new System.Windows.Forms.Label();
             this.labelAudioBitrateHint = new System.Windows.Forms.Label();
+            this.boxDenoise = new System.Windows.Forms.CheckBox();
+            this.labelProcessingDenoiseHint = new System.Windows.Forms.Label();
             this.tableLayoutPanelMainForm.SuspendLayout();
             this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanelGroupMain.SuspendLayout();
@@ -737,7 +739,7 @@ namespace WebMConverter
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 301);
@@ -748,7 +750,7 @@ namespace WebMConverter
             this.groupBoxAdvancedEncoding.AutoSize = true;
             this.groupBoxAdvancedEncoding.Controls.Add(this.tableLayoutPanelEncodingAdvanced);
             this.groupBoxAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAdvancedEncoding.Location = new System.Drawing.Point(3, 113);
+            this.groupBoxAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
             this.groupBoxAdvancedEncoding.Name = "groupBoxAdvancedEncoding";
             this.groupBoxAdvancedEncoding.Size = new System.Drawing.Size(1041, 104);
             this.groupBoxAdvancedEncoding.TabIndex = 33;
@@ -937,8 +939,8 @@ namespace WebMConverter
             this.labelAdvancedWarning.Name = "labelAdvancedWarning";
             this.labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
             this.labelAdvancedWarning.TabIndex = 32;
-            this.labelAdvancedWarning.Text = "All of these settings are automatically generated for your current settings. Do n" +
-    "ot modify any of them unless you are 100% sure you know what you\'re doing.";
+            this.labelAdvancedWarning.Text = "Do not modify these settings unless you are 100% sure you know what you\'re doing." +
+    "";
             this.labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxAdvancedProcessing
@@ -947,7 +949,7 @@ namespace WebMConverter
             this.groupBoxAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
             this.groupBoxAdvancedProcessing.Name = "groupBoxAdvancedProcessing";
-            this.groupBoxAdvancedProcessing.Size = new System.Drawing.Size(1041, 76);
+            this.groupBoxAdvancedProcessing.Size = new System.Drawing.Size(1041, 104);
             this.groupBoxAdvancedProcessing.TabIndex = 0;
             this.groupBoxAdvancedProcessing.TabStop = false;
             this.groupBoxAdvancedProcessing.Text = "Processing";
@@ -958,6 +960,8 @@ namespace WebMConverter
             this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingDenoiseHint, 2, 2);
+            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxDenoise, 0, 2);
             this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingLevelsHint, 2, 0);
             this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingDeinterlaceHint, 2, 1);
             this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
@@ -965,10 +969,11 @@ namespace WebMConverter
             this.tableLayoutPanelAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelAdvancedProcessing.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanelAdvancedProcessing.Name = "tableLayoutPanelAdvancedProcessing";
-            this.tableLayoutPanelAdvancedProcessing.RowCount = 2;
+            this.tableLayoutPanelAdvancedProcessing.RowCount = 3;
             this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelAdvancedProcessing.Size = new System.Drawing.Size(1035, 57);
+            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanelAdvancedProcessing.Size = new System.Drawing.Size(1035, 85);
             this.tableLayoutPanelAdvancedProcessing.TabIndex = 1;
             // 
             // labelProcessingLevelsHint
@@ -989,7 +994,7 @@ namespace WebMConverter
             this.labelProcessingDeinterlaceHint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
             this.labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
-            this.labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 29);
+            this.labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 28);
             this.labelProcessingDeinterlaceHint.TabIndex = 32;
             this.labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
             this.labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1002,7 +1007,7 @@ namespace WebMConverter
             this.boxDeinterlace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
             this.boxDeinterlace.Name = "boxDeinterlace";
-            this.boxDeinterlace.Size = new System.Drawing.Size(221, 23);
+            this.boxDeinterlace.Size = new System.Drawing.Size(221, 22);
             this.boxDeinterlace.TabIndex = 34;
             this.boxDeinterlace.Text = "Deinterlace:";
             this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1253,6 +1258,33 @@ namespace WebMConverter
             this.labelAudioBitrateHint.Text = "Determines the quality of the audio.";
             this.labelAudioBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // boxDenoise
+            // 
+            this.boxDenoise.AutoSize = true;
+            this.boxDenoise.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxDenoise, 2);
+            this.boxDenoise.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxDenoise.Location = new System.Drawing.Point(3, 59);
+            this.boxDenoise.Name = "boxDenoise";
+            this.boxDenoise.Size = new System.Drawing.Size(221, 23);
+            this.boxDenoise.TabIndex = 35;
+            this.boxDenoise.Text = "Denoise:";
+            this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxDenoise.UseVisualStyleBackColor = true;
+            this.boxDenoise.CheckedChanged += new System.EventHandler(this.boxDenoise_CheckedChanged);
+            // 
+            // labelProcessingDenoiseHint
+            // 
+            this.labelProcessingDenoiseHint.AutoSize = true;
+            this.labelProcessingDenoiseHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
+            this.labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
+            this.labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
+            this.labelProcessingDenoiseHint.TabIndex = 36;
+            this.labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
+    "hen it comes to bitrate.";
+            this.labelProcessingDenoiseHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1416,6 +1448,8 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox boxAudioBitrate;
         private System.Windows.Forms.Label labelAudioBitrateUnit;
         private System.Windows.Forms.Label labelAudioBitrateHint;
+        private System.Windows.Forms.Label labelProcessingDenoiseHint;
+        private System.Windows.Forms.CheckBox boxDenoise;
     }
 }
 

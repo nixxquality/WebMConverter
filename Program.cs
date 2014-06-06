@@ -14,6 +14,7 @@ namespace WebMConverter
         internal static CaptionFilter Caption = null;
         internal static CropFilter Crop = null;
         internal static DeinterlaceFilter Deinterlace = null;
+        internal static DenoiseFilter Denoise = null;
         internal static LevelsFilter Levels = null;
         internal static MultipleTrimFilter MultipleTrim = null;
         internal static OverlayFilter Overlay = null;
@@ -27,6 +28,7 @@ namespace WebMConverter
             Caption = null;
             Crop = null;
             Deinterlace = null;
+            Denoise = null;
             Levels = null;
             MultipleTrim = null;
             Overlay = null;
@@ -42,6 +44,13 @@ namespace WebMConverter
         public override string ToString()
         {
             return "tdeint()";
+        }
+    }
+    public class DenoiseFilter
+    {
+        public override string ToString()
+        {
+            return "hqdn3d()";
         }
     }
     public class ReverseFilter
