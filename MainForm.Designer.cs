@@ -28,193 +28,250 @@ namespace WebMConverter
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TableLayoutPanel tableMainForm;
+            System.Windows.Forms.GroupBox groupMain;
+            System.Windows.Forms.TableLayoutPanel tableMain;
+            System.Windows.Forms.Label labelInputFile;
+            System.Windows.Forms.Label labelOutputFile;
+            System.Windows.Forms.Button buttonBrowseOut;
+            System.Windows.Forms.TabControl tabControlOptions;
+            System.Windows.Forms.TabPage tabProcessing;
+            System.Windows.Forms.TableLayoutPanel tableProcessing;
+            System.Windows.Forms.ToolStrip toolStripProcessing;
+            System.Windows.Forms.Panel panelProcessingInput;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.tableLayoutPanelMainForm = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxMain = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelGroupMain = new System.Windows.Forms.TableLayoutPanel();
-            this.labelInputFile = new System.Windows.Forms.Label();
+            System.Windows.Forms.TabPage tabEncoding;
+            System.Windows.Forms.TableLayoutPanel tableEncoding;
+            System.Windows.Forms.GroupBox groupEncodingGeneral;
+            System.Windows.Forms.TableLayoutPanel tableEncodingGeneral;
+            System.Windows.Forms.Label labelGeneralTitle;
+            System.Windows.Forms.Label labelGeneralTitleHint;
+            System.Windows.Forms.Label labelGeneralSizeLimitHint;
+            System.Windows.Forms.TableLayoutPanel tableGeneralSizeLimit;
+            System.Windows.Forms.Label labelGeneralSizeLimitUnit;
+            System.Windows.Forms.Label labelGeneralSizeLimit;
+            System.Windows.Forms.GroupBox groupEncodingVideo;
+            System.Windows.Forms.Label labelVideoBitrate;
+            System.Windows.Forms.TableLayoutPanel tableVideoBitrate;
+            System.Windows.Forms.Label labelVideoBitrateUnit;
+            System.Windows.Forms.Label labelVideoBitrateHint;
+            System.Windows.Forms.Label labelVideoHQHint;
+            System.Windows.Forms.GroupBox groupEncodingAudio;
+            System.Windows.Forms.TableLayoutPanel tableEncodingAudio;
+            System.Windows.Forms.Label labelAudioHint;
+            System.Windows.Forms.Label labelAudioBitrate;
+            System.Windows.Forms.TableLayoutPanel tableAudioBitrate;
+            System.Windows.Forms.Label labelAudioBitrateUnit;
+            System.Windows.Forms.Label labelAudioBitrateHint;
+            System.Windows.Forms.TabPage tabAdvanced;
+            System.Windows.Forms.TableLayoutPanel tableAdvanced;
+            System.Windows.Forms.Label labelAdvancedWarning;
+            System.Windows.Forms.GroupBox groupAdvancedProcessing;
+            System.Windows.Forms.TableLayoutPanel tableAdvancedProcessing;
+            System.Windows.Forms.Label labelProcessingLevelsHint;
+            System.Windows.Forms.Label labelProcessingDeinterlaceHint;
+            System.Windows.Forms.Label labelProcessingDenoiseHint;
+            System.Windows.Forms.GroupBox groupAdvancedEncoding;
+            System.Windows.Forms.TableLayoutPanel tableAdvancedEncoding;
+            System.Windows.Forms.Label labelEncodingThreads;
+            System.Windows.Forms.TableLayoutPanel tableEncodingThreads;
+            System.Windows.Forms.Label labelEncodingThreadsHint;
+            System.Windows.Forms.Label labelEncodingSlices;
+            System.Windows.Forms.TableLayoutPanel tableEncodingSlices;
+            System.Windows.Forms.Label labelEncodingSlicesHint;
+            System.Windows.Forms.Label labelEncodingCrf;
+            System.Windows.Forms.Label labelEncodingCrfHint;
+            System.Windows.Forms.Label labelEncodingArguments;
+            System.Windows.Forms.Panel panelContainTheProgressBar;
+            System.Windows.Forms.StatusStrip statusStrip;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
-            this.labelOutputFile = new System.Windows.Forms.Label();
             this.textBoxOut = new System.Windows.Forms.TextBox();
-            this.buttonBrowseOut = new System.Windows.Forms.Button();
             this.buttonGo = new System.Windows.Forms.Button();
-            this.tabControlOptions = new System.Windows.Forms.TabControl();
-            this.tabPageProcessing = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanelProcessing = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStripProcessingScript = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonTrim = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripButtonMultipleTrim = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButtonCrop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonResize = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSubtitle = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonReverse = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAdvancedScripting = new System.Windows.Forms.ToolStripButton();
+            this.buttonTrim = new System.Windows.Forms.ToolStripSplitButton();
+            this.buttonMultipleTrim = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonCrop = new System.Windows.Forms.ToolStripButton();
+            this.buttonResize = new System.Windows.Forms.ToolStripButton();
+            this.buttonSubtitle = new System.Windows.Forms.ToolStripButton();
+            this.buttonReverse = new System.Windows.Forms.ToolStripButton();
+            this.boxAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonOverlay = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCaption = new System.Windows.Forms.ToolStripButton();
-            this.panelProcessingScriptInput = new System.Windows.Forms.Panel();
+            this.buttonOverlay = new System.Windows.Forms.ToolStripButton();
+            this.buttonCaption = new System.Windows.Forms.ToolStripButton();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
+            this.imageListFilters = new System.Windows.Forms.ImageList(this.components);
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
-            this.tabPageEncoding = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanelEncoding = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxEncodingGeneral = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelEncodingGeneral = new System.Windows.Forms.TableLayoutPanel();
-            this.labelGeneralSizeLimitHint = new System.Windows.Forms.Label();
-            this.tableLayoutPanelGeneralSizeLimit = new System.Windows.Forms.TableLayoutPanel();
+            this.boxTitle = new System.Windows.Forms.TextBox();
             this.boxLimit = new System.Windows.Forms.TextBox();
-            this.labelGeneralSizeLimitUnit = new System.Windows.Forms.Label();
-            this.labelGeneralSizeLimit = new System.Windows.Forms.Label();
-            this.labelGeneralTitle = new System.Windows.Forms.Label();
-            this.labelMetadataTitleHint = new System.Windows.Forms.Label();
-            this.boxMetadataTitle = new System.Windows.Forms.TextBox();
-            this.groupBoxEncodingVideo = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanelEncodingVideo = new System.Windows.Forms.TableLayoutPanel();
-            this.labelVideoBitrate = new System.Windows.Forms.Label();
-            this.tableLayoutPanelVideoBitrate = new System.Windows.Forms.TableLayoutPanel();
             this.boxVideoBitrate = new System.Windows.Forms.TextBox();
-            this.labelVideoBitrateUnit = new System.Windows.Forms.Label();
-            this.labelVideoBitrateHint = new System.Windows.Forms.Label();
             this.boxHQ = new System.Windows.Forms.CheckBox();
-            this.labelVideoHQHint = new System.Windows.Forms.Label();
-            this.groupBoxEncodingAudio = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanelAudioBitrate = new System.Windows.Forms.TableLayoutPanel();
-            this.boxAudioBitrate = new System.Windows.Forms.TextBox();
-            this.labelAudioBitrateUnit = new System.Windows.Forms.Label();
-            this.labelGeneralAudioHint = new System.Windows.Forms.Label();
             this.boxAudio = new System.Windows.Forms.CheckBox();
-            this.labelAudioBitrate = new System.Windows.Forms.Label();
-            this.labelAudioBitrateHint = new System.Windows.Forms.Label();
-            this.tabPageAdvanced = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxAdvancedEncoding = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelEncodingAdvanced = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanelEncodingSlices = new System.Windows.Forms.TableLayoutPanel();
-            this.trackSlices = new System.Windows.Forms.TrackBar();
-            this.labelSlices = new System.Windows.Forms.Label();
-            this.labelEncodingThreads = new System.Windows.Forms.Label();
-            this.tableLayoutPanelEncodingThreads = new System.Windows.Forms.TableLayoutPanel();
+            this.boxAudioBitrate = new System.Windows.Forms.TextBox();
+            this.boxLevels = new System.Windows.Forms.CheckBox();
+            this.boxDeinterlace = new System.Windows.Forms.CheckBox();
+            this.boxDenoise = new System.Windows.Forms.CheckBox();
             this.trackThreads = new System.Windows.Forms.TrackBar();
             this.labelThreads = new System.Windows.Forms.Label();
-            this.labelEncodingThreadsHint = new System.Windows.Forms.Label();
-            this.labelEncodingArguments = new System.Windows.Forms.Label();
-            this.textBoxArguments = new System.Windows.Forms.TextBox();
-            this.labelEncodingSlices = new System.Windows.Forms.Label();
-            this.labelEncodingSlicesHint = new System.Windows.Forms.Label();
-            this.labelAdvancedWarning = new System.Windows.Forms.Label();
-            this.groupBoxAdvancedProcessing = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanelAdvancedProcessing = new System.Windows.Forms.TableLayoutPanel();
-            this.labelProcessingDenoiseHint = new System.Windows.Forms.Label();
-            this.boxDenoise = new System.Windows.Forms.CheckBox();
-            this.labelProcessingLevelsHint = new System.Windows.Forms.Label();
-            this.labelProcessingDeinterlaceHint = new System.Windows.Forms.Label();
-            this.boxDeinterlace = new System.Windows.Forms.CheckBox();
-            this.boxLevels = new System.Windows.Forms.CheckBox();
-            this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
+            this.trackSlices = new System.Windows.Forms.TrackBar();
+            this.labelSlices = new System.Windows.Forms.Label();
+            this.numericCrf = new System.Windows.Forms.NumericUpDown();
+            this.boxArguments = new System.Windows.Forms.TextBox();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelVideoCrf = new System.Windows.Forms.Label();
-            this.numericCrf = new System.Windows.Forms.NumericUpDown();
-            this.labelVideoCrfHint = new System.Windows.Forms.Label();
-            this.tableLayoutPanelMainForm.SuspendLayout();
-            this.groupBoxMain.SuspendLayout();
-            this.tableLayoutPanelGroupMain.SuspendLayout();
-            this.tabControlOptions.SuspendLayout();
-            this.tabPageProcessing.SuspendLayout();
-            this.tableLayoutPanelProcessing.SuspendLayout();
-            this.toolStripProcessingScript.SuspendLayout();
-            this.panelProcessingScriptInput.SuspendLayout();
-            this.tabPageEncoding.SuspendLayout();
-            this.tableLayoutPanelEncoding.SuspendLayout();
-            this.groupBoxEncodingGeneral.SuspendLayout();
-            this.tableLayoutPanelEncodingGeneral.SuspendLayout();
-            this.tableLayoutPanelGeneralSizeLimit.SuspendLayout();
-            this.groupBoxEncodingVideo.SuspendLayout();
+            this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            tableMainForm = new System.Windows.Forms.TableLayoutPanel();
+            groupMain = new System.Windows.Forms.GroupBox();
+            tableMain = new System.Windows.Forms.TableLayoutPanel();
+            labelInputFile = new System.Windows.Forms.Label();
+            labelOutputFile = new System.Windows.Forms.Label();
+            buttonBrowseOut = new System.Windows.Forms.Button();
+            tabControlOptions = new System.Windows.Forms.TabControl();
+            tabProcessing = new System.Windows.Forms.TabPage();
+            tableProcessing = new System.Windows.Forms.TableLayoutPanel();
+            toolStripProcessing = new System.Windows.Forms.ToolStrip();
+            panelProcessingInput = new System.Windows.Forms.Panel();
+            tabEncoding = new System.Windows.Forms.TabPage();
+            tableEncoding = new System.Windows.Forms.TableLayoutPanel();
+            groupEncodingGeneral = new System.Windows.Forms.GroupBox();
+            tableEncodingGeneral = new System.Windows.Forms.TableLayoutPanel();
+            labelGeneralTitle = new System.Windows.Forms.Label();
+            labelGeneralTitleHint = new System.Windows.Forms.Label();
+            labelGeneralSizeLimitHint = new System.Windows.Forms.Label();
+            tableGeneralSizeLimit = new System.Windows.Forms.TableLayoutPanel();
+            labelGeneralSizeLimitUnit = new System.Windows.Forms.Label();
+            labelGeneralSizeLimit = new System.Windows.Forms.Label();
+            groupEncodingVideo = new System.Windows.Forms.GroupBox();
+            labelVideoBitrate = new System.Windows.Forms.Label();
+            tableVideoBitrate = new System.Windows.Forms.TableLayoutPanel();
+            labelVideoBitrateUnit = new System.Windows.Forms.Label();
+            labelVideoBitrateHint = new System.Windows.Forms.Label();
+            labelVideoHQHint = new System.Windows.Forms.Label();
+            groupEncodingAudio = new System.Windows.Forms.GroupBox();
+            tableEncodingAudio = new System.Windows.Forms.TableLayoutPanel();
+            labelAudioHint = new System.Windows.Forms.Label();
+            labelAudioBitrate = new System.Windows.Forms.Label();
+            tableAudioBitrate = new System.Windows.Forms.TableLayoutPanel();
+            labelAudioBitrateUnit = new System.Windows.Forms.Label();
+            labelAudioBitrateHint = new System.Windows.Forms.Label();
+            tabAdvanced = new System.Windows.Forms.TabPage();
+            tableAdvanced = new System.Windows.Forms.TableLayoutPanel();
+            labelAdvancedWarning = new System.Windows.Forms.Label();
+            groupAdvancedProcessing = new System.Windows.Forms.GroupBox();
+            tableAdvancedProcessing = new System.Windows.Forms.TableLayoutPanel();
+            labelProcessingLevelsHint = new System.Windows.Forms.Label();
+            labelProcessingDeinterlaceHint = new System.Windows.Forms.Label();
+            labelProcessingDenoiseHint = new System.Windows.Forms.Label();
+            groupAdvancedEncoding = new System.Windows.Forms.GroupBox();
+            tableAdvancedEncoding = new System.Windows.Forms.TableLayoutPanel();
+            labelEncodingThreads = new System.Windows.Forms.Label();
+            tableEncodingThreads = new System.Windows.Forms.TableLayoutPanel();
+            labelEncodingThreadsHint = new System.Windows.Forms.Label();
+            labelEncodingSlices = new System.Windows.Forms.Label();
+            tableEncodingSlices = new System.Windows.Forms.TableLayoutPanel();
+            labelEncodingSlicesHint = new System.Windows.Forms.Label();
+            labelEncodingCrf = new System.Windows.Forms.Label();
+            labelEncodingCrfHint = new System.Windows.Forms.Label();
+            labelEncodingArguments = new System.Windows.Forms.Label();
+            panelContainTheProgressBar = new System.Windows.Forms.Panel();
+            statusStrip = new System.Windows.Forms.StatusStrip();
+            tableMainForm.SuspendLayout();
+            groupMain.SuspendLayout();
+            tableMain.SuspendLayout();
+            tabControlOptions.SuspendLayout();
+            tabProcessing.SuspendLayout();
+            tableProcessing.SuspendLayout();
+            toolStripProcessing.SuspendLayout();
+            panelProcessingInput.SuspendLayout();
+            tabEncoding.SuspendLayout();
+            tableEncoding.SuspendLayout();
+            groupEncodingGeneral.SuspendLayout();
+            tableEncodingGeneral.SuspendLayout();
+            tableGeneralSizeLimit.SuspendLayout();
+            groupEncodingVideo.SuspendLayout();
             this.tableLayoutPanelEncodingVideo.SuspendLayout();
-            this.tableLayoutPanelVideoBitrate.SuspendLayout();
-            this.groupBoxEncodingAudio.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanelAudioBitrate.SuspendLayout();
-            this.tabPageAdvanced.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.groupBoxAdvancedEncoding.SuspendLayout();
-            this.tableLayoutPanelEncodingAdvanced.SuspendLayout();
-            this.tableLayoutPanelEncodingSlices.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
-            this.tableLayoutPanelEncodingThreads.SuspendLayout();
+            tableVideoBitrate.SuspendLayout();
+            groupEncodingAudio.SuspendLayout();
+            tableEncodingAudio.SuspendLayout();
+            tableAudioBitrate.SuspendLayout();
+            tabAdvanced.SuspendLayout();
+            tableAdvanced.SuspendLayout();
+            groupAdvancedProcessing.SuspendLayout();
+            tableAdvancedProcessing.SuspendLayout();
+            groupAdvancedEncoding.SuspendLayout();
+            tableAdvancedEncoding.SuspendLayout();
+            tableEncodingThreads.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
-            this.groupBoxAdvancedProcessing.SuspendLayout();
-            this.tableLayoutPanelAdvancedProcessing.SuspendLayout();
-            this.panelHideTheOptions.SuspendLayout();
-            this.panelContainTheProgressBar.SuspendLayout();
-            this.statusStrip.SuspendLayout();
+            tableEncodingSlices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCrf)).BeginInit();
+            panelContainTheProgressBar.SuspendLayout();
+            statusStrip.SuspendLayout();
+            this.panelHideTheOptions.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tableLayoutPanelMainForm
+            // tableMainForm
             // 
-            this.tableLayoutPanelMainForm.ColumnCount = 1;
-            this.tableLayoutPanelMainForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMainForm.Controls.Add(this.groupBoxMain, 0, 0);
-            this.tableLayoutPanelMainForm.Controls.Add(this.tabControlOptions, 0, 1);
-            this.tableLayoutPanelMainForm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelMainForm.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanelMainForm.Name = "tableLayoutPanelMainForm";
-            this.tableLayoutPanelMainForm.RowCount = 3;
-            this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
-            this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelMainForm.Size = new System.Drawing.Size(1067, 443);
-            this.tableLayoutPanelMainForm.TabIndex = 0;
+            tableMainForm.ColumnCount = 1;
+            tableMainForm.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableMainForm.Controls.Add(groupMain, 0, 0);
+            tableMainForm.Controls.Add(tabControlOptions, 0, 1);
+            tableMainForm.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableMainForm.Location = new System.Drawing.Point(3, 3);
+            tableMainForm.Name = "tableMainForm";
+            tableMainForm.RowCount = 3;
+            tableMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
+            tableMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableMainForm.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableMainForm.Size = new System.Drawing.Size(1067, 443);
+            tableMainForm.TabIndex = 0;
             // 
-            // groupBoxMain
+            // groupMain
             // 
-            this.groupBoxMain.Controls.Add(this.tableLayoutPanelGroupMain);
-            this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxMain.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Size = new System.Drawing.Size(1061, 78);
-            this.groupBoxMain.TabIndex = 0;
-            this.groupBoxMain.TabStop = false;
-            this.groupBoxMain.Text = "Main";
+            groupMain.Controls.Add(tableMain);
+            groupMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupMain.Location = new System.Drawing.Point(3, 3);
+            groupMain.Name = "groupMain";
+            groupMain.Size = new System.Drawing.Size(1061, 78);
+            groupMain.TabIndex = 0;
+            groupMain.TabStop = false;
+            groupMain.Text = "Main";
             // 
-            // tableLayoutPanelGroupMain
+            // tableMain
             // 
-            this.tableLayoutPanelGroupMain.ColumnCount = 4;
-            this.tableLayoutPanelGroupMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanelGroupMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelGroupMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68F));
-            this.tableLayoutPanelGroupMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
-            this.tableLayoutPanelGroupMain.Controls.Add(this.labelInputFile, 0, 0);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.textBoxIn, 1, 0);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.buttonBrowseIn, 2, 0);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.labelOutputFile, 0, 1);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.textBoxOut, 1, 1);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.buttonBrowseOut, 2, 1);
-            this.tableLayoutPanelGroupMain.Controls.Add(this.buttonGo, 3, 0);
-            this.tableLayoutPanelGroupMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelGroupMain.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelGroupMain.Name = "tableLayoutPanelGroupMain";
-            this.tableLayoutPanelGroupMain.RowCount = 2;
-            this.tableLayoutPanelGroupMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelGroupMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelGroupMain.Size = new System.Drawing.Size(1055, 59);
-            this.tableLayoutPanelGroupMain.TabIndex = 0;
+            tableMain.ColumnCount = 4;
+            tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 68F));
+            tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            tableMain.Controls.Add(labelInputFile, 0, 0);
+            tableMain.Controls.Add(this.textBoxIn, 1, 0);
+            tableMain.Controls.Add(this.buttonBrowseIn, 2, 0);
+            tableMain.Controls.Add(labelOutputFile, 0, 1);
+            tableMain.Controls.Add(this.textBoxOut, 1, 1);
+            tableMain.Controls.Add(buttonBrowseOut, 2, 1);
+            tableMain.Controls.Add(this.buttonGo, 3, 0);
+            tableMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableMain.Location = new System.Drawing.Point(3, 16);
+            tableMain.Name = "tableMain";
+            tableMain.RowCount = 2;
+            tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableMain.Size = new System.Drawing.Size(1055, 59);
+            tableMain.TabIndex = 0;
             // 
             // labelInputFile
             // 
-            this.labelInputFile.AutoSize = true;
-            this.labelInputFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelInputFile.Location = new System.Drawing.Point(3, 0);
-            this.labelInputFile.Name = "labelInputFile";
-            this.labelInputFile.Size = new System.Drawing.Size(63, 29);
-            this.labelInputFile.TabIndex = 0;
-            this.labelInputFile.Text = "Input file:";
-            this.labelInputFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelInputFile.AutoSize = true;
+            labelInputFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelInputFile.Location = new System.Drawing.Point(3, 0);
+            labelInputFile.Name = "labelInputFile";
+            labelInputFile.Size = new System.Drawing.Size(63, 29);
+            labelInputFile.TabIndex = 0;
+            labelInputFile.Text = "Input file:";
+            labelInputFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // textBoxIn
             // 
@@ -237,14 +294,14 @@ namespace WebMConverter
             // 
             // labelOutputFile
             // 
-            this.labelOutputFile.AutoSize = true;
-            this.labelOutputFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelOutputFile.Location = new System.Drawing.Point(3, 29);
-            this.labelOutputFile.Name = "labelOutputFile";
-            this.labelOutputFile.Size = new System.Drawing.Size(63, 30);
-            this.labelOutputFile.TabIndex = 3;
-            this.labelOutputFile.Text = "Output file:";
-            this.labelOutputFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelOutputFile.AutoSize = true;
+            labelOutputFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelOutputFile.Location = new System.Drawing.Point(3, 29);
+            labelOutputFile.Name = "labelOutputFile";
+            labelOutputFile.Size = new System.Drawing.Size(63, 30);
+            labelOutputFile.TabIndex = 3;
+            labelOutputFile.Text = "Output file:";
+            labelOutputFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // textBoxOut
             // 
@@ -256,14 +313,14 @@ namespace WebMConverter
             // 
             // buttonBrowseOut
             // 
-            this.buttonBrowseOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonBrowseOut.Location = new System.Drawing.Point(913, 32);
-            this.buttonBrowseOut.Name = "buttonBrowseOut";
-            this.buttonBrowseOut.Size = new System.Drawing.Size(62, 24);
-            this.buttonBrowseOut.TabIndex = 3;
-            this.buttonBrowseOut.Text = "Browse";
-            this.buttonBrowseOut.UseVisualStyleBackColor = true;
-            this.buttonBrowseOut.Click += new System.EventHandler(this.buttonBrowseOut_Click);
+            buttonBrowseOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            buttonBrowseOut.Location = new System.Drawing.Point(913, 32);
+            buttonBrowseOut.Name = "buttonBrowseOut";
+            buttonBrowseOut.Size = new System.Drawing.Size(62, 24);
+            buttonBrowseOut.TabIndex = 3;
+            buttonBrowseOut.Text = "Browse";
+            buttonBrowseOut.UseVisualStyleBackColor = true;
+            buttonBrowseOut.Click += new System.EventHandler(this.buttonBrowseOut_Click);
             // 
             // buttonGo
             // 
@@ -271,7 +328,7 @@ namespace WebMConverter
             this.buttonGo.Enabled = false;
             this.buttonGo.Location = new System.Drawing.Point(981, 3);
             this.buttonGo.Name = "buttonGo";
-            this.tableLayoutPanelGroupMain.SetRowSpan(this.buttonGo, 2);
+            tableMain.SetRowSpan(this.buttonGo, 2);
             this.buttonGo.Size = new System.Drawing.Size(71, 53);
             this.buttonGo.TabIndex = 4;
             this.buttonGo.Text = "Convert";
@@ -280,145 +337,155 @@ namespace WebMConverter
             // 
             // tabControlOptions
             // 
-            this.tabControlOptions.Controls.Add(this.tabPageProcessing);
-            this.tabControlOptions.Controls.Add(this.tabPageEncoding);
-            this.tabControlOptions.Controls.Add(this.tabPageAdvanced);
-            this.tabControlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlOptions.Location = new System.Drawing.Point(3, 87);
-            this.tabControlOptions.Name = "tabControlOptions";
-            this.tabControlOptions.SelectedIndex = 0;
-            this.tabControlOptions.Size = new System.Drawing.Size(1061, 333);
-            this.tabControlOptions.TabIndex = 1;
+            tabControlOptions.Controls.Add(tabProcessing);
+            tabControlOptions.Controls.Add(tabEncoding);
+            tabControlOptions.Controls.Add(tabAdvanced);
+            tabControlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            tabControlOptions.Location = new System.Drawing.Point(3, 87);
+            tabControlOptions.Name = "tabControlOptions";
+            tabControlOptions.SelectedIndex = 0;
+            tabControlOptions.Size = new System.Drawing.Size(1061, 333);
+            tabControlOptions.TabIndex = 1;
             // 
-            // tabPageProcessing
+            // tabProcessing
             // 
-            this.tabPageProcessing.Controls.Add(this.tableLayoutPanelProcessing);
-            this.tabPageProcessing.Location = new System.Drawing.Point(4, 22);
-            this.tabPageProcessing.Name = "tabPageProcessing";
-            this.tabPageProcessing.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcessing.Size = new System.Drawing.Size(1053, 307);
-            this.tabPageProcessing.TabIndex = 3;
-            this.tabPageProcessing.Text = "Processing";
+            tabProcessing.Controls.Add(tableProcessing);
+            tabProcessing.Location = new System.Drawing.Point(4, 22);
+            tabProcessing.Name = "tabProcessing";
+            tabProcessing.Padding = new System.Windows.Forms.Padding(3);
+            tabProcessing.Size = new System.Drawing.Size(1053, 307);
+            tabProcessing.TabIndex = 3;
+            tabProcessing.Text = "Processing";
             // 
-            // tableLayoutPanelProcessing
+            // tableProcessing
             // 
-            this.tableLayoutPanelProcessing.ColumnCount = 1;
-            this.tableLayoutPanelProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProcessing.Controls.Add(this.toolStripProcessingScript, 0, 0);
-            this.tableLayoutPanelProcessing.Controls.Add(this.panelProcessingScriptInput, 0, 1);
-            this.tableLayoutPanelProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelProcessing.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanelProcessing.Name = "tableLayoutPanelProcessing";
-            this.tableLayoutPanelProcessing.RowCount = 2;
-            this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanelProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelProcessing.Size = new System.Drawing.Size(1047, 301);
-            this.tableLayoutPanelProcessing.TabIndex = 0;
+            tableProcessing.ColumnCount = 1;
+            tableProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableProcessing.Controls.Add(toolStripProcessing, 0, 0);
+            tableProcessing.Controls.Add(panelProcessingInput, 0, 1);
+            tableProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableProcessing.Location = new System.Drawing.Point(3, 3);
+            tableProcessing.Name = "tableProcessing";
+            tableProcessing.RowCount = 2;
+            tableProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            tableProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableProcessing.Size = new System.Drawing.Size(1047, 301);
+            tableProcessing.TabIndex = 0;
             // 
-            // toolStripProcessingScript
+            // toolStripProcessing
             // 
-            this.toolStripProcessingScript.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripProcessingScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonTrim,
-            this.toolStripButtonCrop,
-            this.toolStripButtonResize,
-            this.toolStripButtonSubtitle,
-            this.toolStripButtonReverse,
-            this.toolStripButtonAdvancedScripting,
+            toolStripProcessing.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolStripProcessing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonTrim,
+            this.buttonCrop,
+            this.buttonResize,
+            this.buttonSubtitle,
+            this.buttonReverse,
+            this.boxAdvancedScripting,
             this.buttonPreview,
-            this.toolStripButtonOverlay,
-            this.toolStripButtonCaption});
-            this.toolStripProcessingScript.Location = new System.Drawing.Point(0, 0);
-            this.toolStripProcessingScript.Name = "toolStripProcessingScript";
-            this.toolStripProcessingScript.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripProcessingScript.ShowItemToolTips = false;
-            this.toolStripProcessingScript.Size = new System.Drawing.Size(1047, 25);
-            this.toolStripProcessingScript.TabIndex = 0;
-            this.toolStripProcessingScript.TabStop = true;
+            this.buttonOverlay,
+            this.buttonCaption});
+            toolStripProcessing.Location = new System.Drawing.Point(0, 0);
+            toolStripProcessing.Name = "toolStripProcessing";
+            toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            toolStripProcessing.ShowItemToolTips = false;
+            toolStripProcessing.Size = new System.Drawing.Size(1047, 25);
+            toolStripProcessing.TabIndex = 0;
+            toolStripProcessing.TabStop = true;
             // 
-            // toolStripButtonTrim
+            // buttonTrim
             // 
-            this.toolStripButtonTrim.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonMultipleTrim});
-            this.toolStripButtonTrim.Enabled = false;
-            this.toolStripButtonTrim.Margin = new System.Windows.Forms.Padding(0, 1, 3, 2);
-            this.toolStripButtonTrim.Name = "toolStripButtonTrim";
-            this.toolStripButtonTrim.Size = new System.Drawing.Size(48, 22);
-            this.toolStripButtonTrim.Text = "Trim";
-            this.toolStripButtonTrim.ButtonClick += new System.EventHandler(this.toolStripButtonTrim_Click);
-            this.toolStripButtonTrim.MouseEnter += new System.EventHandler(this.toolStripButtonTrim_MouseEnter);
-            this.toolStripButtonTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonTrim.AccessibleDescription = "Select a clip from your video.";
+            this.buttonTrim.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonMultipleTrim});
+            this.buttonTrim.Enabled = false;
+            this.buttonTrim.Margin = new System.Windows.Forms.Padding(0, 1, 3, 2);
+            this.buttonTrim.Name = "buttonTrim";
+            this.buttonTrim.Size = new System.Drawing.Size(48, 22);
+            this.buttonTrim.Text = "Trim";
+            this.buttonTrim.ButtonClick += new System.EventHandler(this.buttonTrim_Click);
+            this.buttonTrim.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonMultipleTrim
+            // buttonMultipleTrim
             // 
-            this.toolStripButtonMultipleTrim.Name = "toolStripButtonMultipleTrim";
-            this.toolStripButtonMultipleTrim.Size = new System.Drawing.Size(146, 22);
-            this.toolStripButtonMultipleTrim.Text = "Multiple Trim";
-            this.toolStripButtonMultipleTrim.Click += new System.EventHandler(this.toolStripButtonMultipleTrim_Click);
-            this.toolStripButtonMultipleTrim.MouseEnter += new System.EventHandler(this.toolStripButtonMultipleTrim_MouseEnter);
-            this.toolStripButtonMultipleTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonMultipleTrim.AccessibleDescription = "Select many clips from your video, and sort them on a timeline.";
+            this.buttonMultipleTrim.Name = "buttonMultipleTrim";
+            this.buttonMultipleTrim.Size = new System.Drawing.Size(152, 22);
+            this.buttonMultipleTrim.Text = "Multiple Trim";
+            this.buttonMultipleTrim.Click += new System.EventHandler(this.buttonMultipleTrim_Click);
+            this.buttonMultipleTrim.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonMultipleTrim.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonCrop
+            // buttonCrop
             // 
-            this.toolStripButtonCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonCrop.Enabled = false;
-            this.toolStripButtonCrop.Name = "toolStripButtonCrop";
-            this.toolStripButtonCrop.Size = new System.Drawing.Size(37, 22);
-            this.toolStripButtonCrop.Text = "Crop";
-            this.toolStripButtonCrop.Click += new System.EventHandler(this.toolStripButtonCrop_Click);
-            this.toolStripButtonCrop.MouseEnter += new System.EventHandler(this.toolStripButtonCrop_MouseEnter);
-            this.toolStripButtonCrop.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonCrop.AccessibleDescription = "Crop your video into a smaller frame.";
+            this.buttonCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonCrop.Enabled = false;
+            this.buttonCrop.Name = "buttonCrop";
+            this.buttonCrop.Size = new System.Drawing.Size(37, 22);
+            this.buttonCrop.Text = "Crop";
+            this.buttonCrop.Click += new System.EventHandler(this.buttonCrop_Click);
+            this.buttonCrop.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonCrop.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonResize
+            // buttonResize
             // 
-            this.toolStripButtonResize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonResize.Enabled = false;
-            this.toolStripButtonResize.Name = "toolStripButtonResize";
-            this.toolStripButtonResize.Size = new System.Drawing.Size(43, 22);
-            this.toolStripButtonResize.Text = "Resize";
-            this.toolStripButtonResize.Click += new System.EventHandler(this.toolStripButtonResize_Click);
-            this.toolStripButtonResize.MouseEnter += new System.EventHandler(this.toolStripButtonResize_MouseEnter);
-            this.toolStripButtonResize.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonResize.AccessibleDescription = "Scale your video.";
+            this.buttonResize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonResize.Enabled = false;
+            this.buttonResize.Name = "buttonResize";
+            this.buttonResize.Size = new System.Drawing.Size(43, 22);
+            this.buttonResize.Text = "Resize";
+            this.buttonResize.Click += new System.EventHandler(this.buttonResize_Click);
+            this.buttonResize.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonResize.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonSubtitle
+            // buttonSubtitle
             // 
-            this.toolStripButtonSubtitle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonSubtitle.Enabled = false;
-            this.toolStripButtonSubtitle.Name = "toolStripButtonSubtitle";
-            this.toolStripButtonSubtitle.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButtonSubtitle.Text = "Subtitles";
-            this.toolStripButtonSubtitle.Click += new System.EventHandler(this.toolStripButtonSubtitle_Click);
-            this.toolStripButtonSubtitle.MouseEnter += new System.EventHandler(this.toolStripButtonSubtitle_MouseEnter);
-            this.toolStripButtonSubtitle.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonSubtitle.AccessibleDescription = "Burn subtitles into the video.";
+            this.buttonSubtitle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonSubtitle.Enabled = false;
+            this.buttonSubtitle.Name = "buttonSubtitle";
+            this.buttonSubtitle.Size = new System.Drawing.Size(56, 22);
+            this.buttonSubtitle.Text = "Subtitles";
+            this.buttonSubtitle.Click += new System.EventHandler(this.buttonSubtitle_Click);
+            this.buttonSubtitle.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonSubtitle.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonReverse
+            // buttonReverse
             // 
-            this.toolStripButtonReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonReverse.Enabled = false;
-            this.toolStripButtonReverse.Name = "toolStripButtonReverse";
-            this.toolStripButtonReverse.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButtonReverse.Text = "Reverse";
-            this.toolStripButtonReverse.Click += new System.EventHandler(this.toolStripButtonReverse_Click);
-            this.toolStripButtonReverse.MouseEnter += new System.EventHandler(this.toolStripButtonReverse_MouseEnter);
-            this.toolStripButtonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonReverse.AccessibleDescription = "Everything is backwards!";
+            this.buttonReverse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonReverse.Enabled = false;
+            this.buttonReverse.Name = "buttonReverse";
+            this.buttonReverse.Size = new System.Drawing.Size(51, 22);
+            this.buttonReverse.Text = "Reverse";
+            this.buttonReverse.Click += new System.EventHandler(this.buttonReverse_Click);
+            this.buttonReverse.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonAdvancedScripting
+            // boxAdvancedScripting
             // 
-            this.toolStripButtonAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
-            this.toolStripButtonAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolStripButtonAdvancedScripting.Name = "toolStripButtonAdvancedScripting";
-            this.toolStripButtonAdvancedScripting.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonAdvancedScripting.Text = "Advanced";
-            this.toolStripButtonAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripButtonAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripButtonAdvancedScripting.CheckedChanged += new System.EventHandler(this.toolStripButtonAdvancedScripting_CheckedChanged);
-            this.toolStripButtonAdvancedScripting.Click += new System.EventHandler(this.toolStripButtonAdvancedScripting_Click);
-            this.toolStripButtonAdvancedScripting.MouseEnter += new System.EventHandler(this.toolStripButtonAdvancedScripting_MouseEnter);
-            this.toolStripButtonAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
+    "t over if you fuck up.";
+            this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.boxAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
+            this.boxAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxAdvancedScripting.Name = "boxAdvancedScripting";
+            this.boxAdvancedScripting.Size = new System.Drawing.Size(80, 22);
+            this.boxAdvancedScripting.Text = "Advanced";
+            this.boxAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.boxAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.boxAdvancedScripting.CheckedChanged += new System.EventHandler(this.boxAdvancedScripting_CheckedChanged);
+            this.boxAdvancedScripting.Click += new System.EventHandler(this.boxAdvancedScripting_Click);
+            this.boxAdvancedScripting.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.boxAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // buttonPreview
             // 
+            this.buttonPreview.AccessibleDescription = "Open a preview window that will loop your processing settings. Note that this doe" +
+    "sn\'t reflect output encoding quality.";
             this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.buttonPreview.Enabled = false;
@@ -426,45 +493,49 @@ namespace WebMConverter
             this.buttonPreview.Size = new System.Drawing.Size(84, 22);
             this.buttonPreview.Text = "Preview filters";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
-            this.buttonPreview.MouseEnter += new System.EventHandler(this.buttonPreview_MouseEnter);
+            this.buttonPreview.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonOverlay
+            // buttonOverlay
             // 
-            this.toolStripButtonOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonOverlay.Enabled = false;
-            this.toolStripButtonOverlay.Name = "toolStripButtonOverlay";
-            this.toolStripButtonOverlay.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButtonOverlay.Text = "Overlay";
-            this.toolStripButtonOverlay.Click += new System.EventHandler(this.toolStripButtonOverlay_Click);
-            this.toolStripButtonOverlay.MouseEnter += new System.EventHandler(this.toolStripButtonOverlay_MouseEnter);
-            this.toolStripButtonOverlay.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonOverlay.AccessibleDescription = "Overlay a picture on top of your video.";
+            this.buttonOverlay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonOverlay.Enabled = false;
+            this.buttonOverlay.Name = "buttonOverlay";
+            this.buttonOverlay.Size = new System.Drawing.Size(51, 22);
+            this.buttonOverlay.Text = "Overlay";
+            this.buttonOverlay.Click += new System.EventHandler(this.buttonOverlay_Click);
+            this.buttonOverlay.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonOverlay.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // toolStripButtonCaption
+            // buttonCaption
             // 
-            this.toolStripButtonCaption.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonCaption.Enabled = false;
-            this.toolStripButtonCaption.Name = "toolStripButtonCaption";
-            this.toolStripButtonCaption.Size = new System.Drawing.Size(53, 22);
-            this.toolStripButtonCaption.Text = "Caption";
-            this.toolStripButtonCaption.Click += new System.EventHandler(this.toolStripButtonCaption_Click);
-            this.toolStripButtonCaption.MouseEnter += new System.EventHandler(this.toolStripButtonCaption_MouseEnter);
-            this.toolStripButtonCaption.MouseLeave += new System.EventHandler(this.clearToolTip);
+            this.buttonCaption.AccessibleDescription = "Add some funny text to your video.";
+            this.buttonCaption.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonCaption.Enabled = false;
+            this.buttonCaption.Name = "buttonCaption";
+            this.buttonCaption.Size = new System.Drawing.Size(53, 22);
+            this.buttonCaption.Text = "Caption";
+            this.buttonCaption.Click += new System.EventHandler(this.buttonCaption_Click);
+            this.buttonCaption.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonCaption.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // panelProcessingScriptInput
+            // panelProcessingInput
             // 
-            this.panelProcessingScriptInput.Controls.Add(this.listViewProcessingScript);
-            this.panelProcessingScriptInput.Controls.Add(this.textBoxProcessingScript);
-            this.panelProcessingScriptInput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelProcessingScriptInput.Location = new System.Drawing.Point(0, 25);
-            this.panelProcessingScriptInput.Margin = new System.Windows.Forms.Padding(0);
-            this.panelProcessingScriptInput.Name = "panelProcessingScriptInput";
-            this.panelProcessingScriptInput.Size = new System.Drawing.Size(1047, 276);
-            this.panelProcessingScriptInput.TabIndex = 1;
+            panelProcessingInput.Controls.Add(this.listViewProcessingScript);
+            panelProcessingInput.Controls.Add(this.textBoxProcessingScript);
+            panelProcessingInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            panelProcessingInput.Location = new System.Drawing.Point(0, 25);
+            panelProcessingInput.Margin = new System.Windows.Forms.Padding(0);
+            panelProcessingInput.Name = "panelProcessingInput";
+            panelProcessingInput.Size = new System.Drawing.Size(1047, 276);
+            panelProcessingInput.TabIndex = 1;
             // 
             // listViewProcessingScript
             // 
+            this.listViewProcessingScript.AccessibleDescription = "Double click a filter to edit it. Select a filter and press Delete to remove it.";
             this.listViewProcessingScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewProcessingScript.LargeImageList = this.imageListFilters;
             this.listViewProcessingScript.Location = new System.Drawing.Point(0, 0);
             this.listViewProcessingScript.Margin = new System.Windows.Forms.Padding(0);
             this.listViewProcessingScript.Name = "listViewProcessingScript";
@@ -473,8 +544,18 @@ namespace WebMConverter
             this.listViewProcessingScript.UseCompatibleStateImageBehavior = false;
             this.listViewProcessingScript.ItemActivate += new System.EventHandler(this.listViewProcessingScript_ItemActivate);
             this.listViewProcessingScript.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listViewProcessingScript_KeyUp);
-            this.listViewProcessingScript.MouseEnter += new System.EventHandler(this.listViewProcessingScript_MouseEnter);
+            this.listViewProcessingScript.MouseEnter += new System.EventHandler(this.ControlTooltip);
             this.listViewProcessingScript.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // imageListFilters
+            // 
+            this.imageListFilters.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListFilters.ImageStream")));
+            this.imageListFilters.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListFilters.Images.SetKeyName(0, "Trim");
+            this.imageListFilters.Images.SetKeyName(1, "Crop");
+            this.imageListFilters.Images.SetKeyName(2, "Subtitles");
+            this.imageListFilters.Images.SetKeyName(3, "Reverse");
+            this.imageListFilters.Images.SetKeyName(4, "Resize");
             // 
             // textBoxProcessingScript
             // 
@@ -491,96 +572,130 @@ namespace WebMConverter
             this.textBoxProcessingScript.Visible = false;
             this.textBoxProcessingScript.Leave += new System.EventHandler(this.textBoxProcessingScript_Leave);
             // 
-            // tabPageEncoding
+            // tabEncoding
             // 
-            this.tabPageEncoding.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageEncoding.Controls.Add(this.tableLayoutPanelEncoding);
-            this.tabPageEncoding.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEncoding.Name = "tabPageEncoding";
-            this.tabPageEncoding.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEncoding.Size = new System.Drawing.Size(1053, 307);
-            this.tabPageEncoding.TabIndex = 0;
-            this.tabPageEncoding.Text = "Encoding";
+            tabEncoding.BackColor = System.Drawing.SystemColors.Control;
+            tabEncoding.Controls.Add(tableEncoding);
+            tabEncoding.Location = new System.Drawing.Point(4, 22);
+            tabEncoding.Name = "tabEncoding";
+            tabEncoding.Padding = new System.Windows.Forms.Padding(3);
+            tabEncoding.Size = new System.Drawing.Size(1053, 307);
+            tabEncoding.TabIndex = 0;
+            tabEncoding.Text = "Encoding";
             // 
-            // tableLayoutPanelEncoding
+            // tableEncoding
             // 
-            this.tableLayoutPanelEncoding.ColumnCount = 1;
-            this.tableLayoutPanelEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncoding.Controls.Add(this.groupBoxEncodingGeneral, 0, 0);
-            this.tableLayoutPanelEncoding.Controls.Add(this.groupBoxEncodingVideo, 0, 1);
-            this.tableLayoutPanelEncoding.Controls.Add(this.groupBoxEncodingAudio, 0, 2);
-            this.tableLayoutPanelEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncoding.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanelEncoding.Name = "tableLayoutPanelEncoding";
-            this.tableLayoutPanelEncoding.RowCount = 4;
-            this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncoding.Size = new System.Drawing.Size(1047, 301);
-            this.tableLayoutPanelEncoding.TabIndex = 0;
+            tableEncoding.ColumnCount = 1;
+            tableEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableEncoding.Controls.Add(groupEncodingGeneral, 0, 0);
+            tableEncoding.Controls.Add(groupEncodingVideo, 0, 1);
+            tableEncoding.Controls.Add(groupEncodingAudio, 0, 2);
+            tableEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableEncoding.Location = new System.Drawing.Point(3, 3);
+            tableEncoding.Name = "tableEncoding";
+            tableEncoding.RowCount = 4;
+            tableEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableEncoding.Size = new System.Drawing.Size(1047, 301);
+            tableEncoding.TabIndex = 0;
             // 
-            // groupBoxEncodingGeneral
+            // groupEncodingGeneral
             // 
-            this.groupBoxEncodingGeneral.Controls.Add(this.tableLayoutPanelEncodingGeneral);
-            this.groupBoxEncodingGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxEncodingGeneral.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxEncodingGeneral.Name = "groupBoxEncodingGeneral";
-            this.groupBoxEncodingGeneral.Size = new System.Drawing.Size(1041, 73);
-            this.groupBoxEncodingGeneral.TabIndex = 0;
-            this.groupBoxEncodingGeneral.TabStop = false;
-            this.groupBoxEncodingGeneral.Text = "General";
+            groupEncodingGeneral.Controls.Add(tableEncodingGeneral);
+            groupEncodingGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupEncodingGeneral.Location = new System.Drawing.Point(3, 3);
+            groupEncodingGeneral.Name = "groupEncodingGeneral";
+            groupEncodingGeneral.Size = new System.Drawing.Size(1041, 73);
+            groupEncodingGeneral.TabIndex = 0;
+            groupEncodingGeneral.TabStop = false;
+            groupEncodingGeneral.Text = "General";
             // 
-            // tableLayoutPanelEncodingGeneral
+            // tableEncodingGeneral
             // 
-            this.tableLayoutPanelEncodingGeneral.ColumnCount = 4;
-            this.tableLayoutPanelEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanelEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
-            this.tableLayoutPanelEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.labelGeneralSizeLimitHint, 2, 1);
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.tableLayoutPanelGeneralSizeLimit, 1, 1);
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.labelGeneralSizeLimit, 0, 1);
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.labelGeneralTitle, 0, 0);
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.labelMetadataTitleHint, 3, 0);
-            this.tableLayoutPanelEncodingGeneral.Controls.Add(this.boxMetadataTitle, 1, 0);
-            this.tableLayoutPanelEncodingGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncodingGeneral.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelEncodingGeneral.Name = "tableLayoutPanelEncodingGeneral";
-            this.tableLayoutPanelEncodingGeneral.RowCount = 2;
-            this.tableLayoutPanelEncodingGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingGeneral.Size = new System.Drawing.Size(1035, 54);
-            this.tableLayoutPanelEncodingGeneral.TabIndex = 0;
+            tableEncodingGeneral.ColumnCount = 4;
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableEncodingGeneral.Controls.Add(labelGeneralTitle, 0, 0);
+            tableEncodingGeneral.Controls.Add(this.boxTitle, 1, 0);
+            tableEncodingGeneral.Controls.Add(labelGeneralTitleHint, 3, 0);
+            tableEncodingGeneral.Controls.Add(labelGeneralSizeLimitHint, 2, 1);
+            tableEncodingGeneral.Controls.Add(tableGeneralSizeLimit, 1, 1);
+            tableEncodingGeneral.Controls.Add(labelGeneralSizeLimit, 0, 1);
+            tableEncodingGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableEncodingGeneral.Location = new System.Drawing.Point(3, 16);
+            tableEncodingGeneral.Name = "tableEncodingGeneral";
+            tableEncodingGeneral.RowCount = 2;
+            tableEncodingGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableEncodingGeneral.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableEncodingGeneral.Size = new System.Drawing.Size(1035, 54);
+            tableEncodingGeneral.TabIndex = 0;
+            // 
+            // labelGeneralTitle
+            // 
+            labelGeneralTitle.AutoSize = true;
+            labelGeneralTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralTitle.Location = new System.Drawing.Point(3, 0);
+            labelGeneralTitle.Name = "labelGeneralTitle";
+            labelGeneralTitle.Size = new System.Drawing.Size(73, 28);
+            labelGeneralTitle.TabIndex = 0;
+            labelGeneralTitle.Text = "Title:";
+            labelGeneralTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // boxTitle
+            // 
+            this.boxTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            tableEncodingGeneral.SetColumnSpan(this.boxTitle, 2);
+            this.boxTitle.Location = new System.Drawing.Point(85, 4);
+            this.boxTitle.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.boxTitle.Name = "boxTitle";
+            this.boxTitle.Size = new System.Drawing.Size(384, 20);
+            this.boxTitle.TabIndex = 0;
+            this.boxTitle.TextChanged += new System.EventHandler(this.UpdateArguments);
+            // 
+            // labelGeneralTitleHint
+            // 
+            labelGeneralTitleHint.AutoSize = true;
+            labelGeneralTitleHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralTitleHint.Location = new System.Drawing.Point(478, 0);
+            labelGeneralTitleHint.Name = "labelGeneralTitleHint";
+            labelGeneralTitleHint.Size = new System.Drawing.Size(554, 28);
+            labelGeneralTitleHint.TabIndex = 2;
+            labelGeneralTitleHint.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
+    " the source of a video, for example. Leave blank for no title.";
+            labelGeneralTitleHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelGeneralSizeLimitHint
             // 
-            this.labelGeneralSizeLimitHint.AutoSize = true;
-            this.tableLayoutPanelEncodingGeneral.SetColumnSpan(this.labelGeneralSizeLimitHint, 2);
-            this.labelGeneralSizeLimitHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGeneralSizeLimitHint.Location = new System.Drawing.Point(230, 28);
-            this.labelGeneralSizeLimitHint.Name = "labelGeneralSizeLimitHint";
-            this.labelGeneralSizeLimitHint.Size = new System.Drawing.Size(802, 28);
-            this.labelGeneralSizeLimitHint.TabIndex = 12;
-            this.labelGeneralSizeLimitHint.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
+            labelGeneralSizeLimitHint.AutoSize = true;
+            tableEncodingGeneral.SetColumnSpan(labelGeneralSizeLimitHint, 2);
+            labelGeneralSizeLimitHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralSizeLimitHint.Location = new System.Drawing.Point(230, 28);
+            labelGeneralSizeLimitHint.Name = "labelGeneralSizeLimitHint";
+            labelGeneralSizeLimitHint.Size = new System.Drawing.Size(802, 28);
+            labelGeneralSizeLimitHint.TabIndex = 12;
+            labelGeneralSizeLimitHint.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
     "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB.";
-            this.labelGeneralSizeLimitHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelGeneralSizeLimitHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanelGeneralSizeLimit
+            // tableGeneralSizeLimit
             // 
-            this.tableLayoutPanelGeneralSizeLimit.ColumnCount = 2;
-            this.tableLayoutPanelGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelGeneralSizeLimit.Controls.Add(this.boxLimit, 0, 0);
-            this.tableLayoutPanelGeneralSizeLimit.Controls.Add(this.labelGeneralSizeLimitUnit, 1, 0);
-            this.tableLayoutPanelGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelGeneralSizeLimit.Location = new System.Drawing.Point(82, 28);
-            this.tableLayoutPanelGeneralSizeLimit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tableLayoutPanelGeneralSizeLimit.Name = "tableLayoutPanelGeneralSizeLimit";
-            this.tableLayoutPanelGeneralSizeLimit.RowCount = 1;
-            this.tableLayoutPanelGeneralSizeLimit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelGeneralSizeLimit.Size = new System.Drawing.Size(142, 28);
-            this.tableLayoutPanelGeneralSizeLimit.TabIndex = 11;
+            tableGeneralSizeLimit.ColumnCount = 2;
+            tableGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableGeneralSizeLimit.Controls.Add(this.boxLimit, 0, 0);
+            tableGeneralSizeLimit.Controls.Add(labelGeneralSizeLimitUnit, 1, 0);
+            tableGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableGeneralSizeLimit.Location = new System.Drawing.Point(82, 28);
+            tableGeneralSizeLimit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            tableGeneralSizeLimit.Name = "tableGeneralSizeLimit";
+            tableGeneralSizeLimit.RowCount = 1;
+            tableGeneralSizeLimit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableGeneralSizeLimit.Size = new System.Drawing.Size(142, 28);
+            tableGeneralSizeLimit.TabIndex = 11;
             // 
             // boxLimit
             // 
@@ -594,70 +709,36 @@ namespace WebMConverter
             // 
             // labelGeneralSizeLimitUnit
             // 
-            this.labelGeneralSizeLimitUnit.AutoSize = true;
-            this.labelGeneralSizeLimitUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGeneralSizeLimitUnit.Location = new System.Drawing.Point(105, 0);
-            this.labelGeneralSizeLimitUnit.Name = "labelGeneralSizeLimitUnit";
-            this.labelGeneralSizeLimitUnit.Size = new System.Drawing.Size(34, 28);
-            this.labelGeneralSizeLimitUnit.TabIndex = 1;
-            this.labelGeneralSizeLimitUnit.Text = "MB";
-            this.labelGeneralSizeLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelGeneralSizeLimitUnit.AutoSize = true;
+            labelGeneralSizeLimitUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralSizeLimitUnit.Location = new System.Drawing.Point(105, 0);
+            labelGeneralSizeLimitUnit.Name = "labelGeneralSizeLimitUnit";
+            labelGeneralSizeLimitUnit.Size = new System.Drawing.Size(34, 28);
+            labelGeneralSizeLimitUnit.TabIndex = 1;
+            labelGeneralSizeLimitUnit.Text = "MB";
+            labelGeneralSizeLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelGeneralSizeLimit
             // 
-            this.labelGeneralSizeLimit.AutoSize = true;
-            this.labelGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGeneralSizeLimit.Location = new System.Drawing.Point(3, 28);
-            this.labelGeneralSizeLimit.Name = "labelGeneralSizeLimit";
-            this.labelGeneralSizeLimit.Size = new System.Drawing.Size(73, 28);
-            this.labelGeneralSizeLimit.TabIndex = 10;
-            this.labelGeneralSizeLimit.Text = "Size limit:";
-            this.labelGeneralSizeLimit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelGeneralSizeLimit.AutoSize = true;
+            labelGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralSizeLimit.Location = new System.Drawing.Point(3, 28);
+            labelGeneralSizeLimit.Name = "labelGeneralSizeLimit";
+            labelGeneralSizeLimit.Size = new System.Drawing.Size(73, 28);
+            labelGeneralSizeLimit.TabIndex = 10;
+            labelGeneralSizeLimit.Text = "Size limit:";
+            labelGeneralSizeLimit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // labelGeneralTitle
+            // groupEncodingVideo
             // 
-            this.labelGeneralTitle.AutoSize = true;
-            this.labelGeneralTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGeneralTitle.Location = new System.Drawing.Point(3, 0);
-            this.labelGeneralTitle.Name = "labelGeneralTitle";
-            this.labelGeneralTitle.Size = new System.Drawing.Size(73, 28);
-            this.labelGeneralTitle.TabIndex = 0;
-            this.labelGeneralTitle.Text = "Title:";
-            this.labelGeneralTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelMetadataTitleHint
-            // 
-            this.labelMetadataTitleHint.AutoSize = true;
-            this.labelMetadataTitleHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelMetadataTitleHint.Location = new System.Drawing.Point(478, 0);
-            this.labelMetadataTitleHint.Name = "labelMetadataTitleHint";
-            this.labelMetadataTitleHint.Size = new System.Drawing.Size(554, 28);
-            this.labelMetadataTitleHint.TabIndex = 2;
-            this.labelMetadataTitleHint.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
-    " the source of a video, for example. Leave blank for no title.";
-            this.labelMetadataTitleHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // boxMetadataTitle
-            // 
-            this.boxMetadataTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanelEncodingGeneral.SetColumnSpan(this.boxMetadataTitle, 2);
-            this.boxMetadataTitle.Location = new System.Drawing.Point(85, 4);
-            this.boxMetadataTitle.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            this.boxMetadataTitle.Name = "boxMetadataTitle";
-            this.boxMetadataTitle.Size = new System.Drawing.Size(384, 20);
-            this.boxMetadataTitle.TabIndex = 0;
-            this.boxMetadataTitle.TextChanged += new System.EventHandler(this.UpdateArguments);
-            // 
-            // groupBoxEncodingVideo
-            // 
-            this.groupBoxEncodingVideo.Controls.Add(this.tableLayoutPanelEncodingVideo);
-            this.groupBoxEncodingVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxEncodingVideo.Location = new System.Drawing.Point(3, 82);
-            this.groupBoxEncodingVideo.Name = "groupBoxEncodingVideo";
-            this.groupBoxEncodingVideo.Size = new System.Drawing.Size(1041, 73);
-            this.groupBoxEncodingVideo.TabIndex = 1;
-            this.groupBoxEncodingVideo.TabStop = false;
-            this.groupBoxEncodingVideo.Text = "Video";
+            groupEncodingVideo.Controls.Add(this.tableLayoutPanelEncodingVideo);
+            groupEncodingVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupEncodingVideo.Location = new System.Drawing.Point(3, 82);
+            groupEncodingVideo.Name = "groupEncodingVideo";
+            groupEncodingVideo.Size = new System.Drawing.Size(1041, 73);
+            groupEncodingVideo.TabIndex = 1;
+            groupEncodingVideo.TabStop = false;
+            groupEncodingVideo.Text = "Video";
             // 
             // tableLayoutPanelEncodingVideo
             // 
@@ -665,11 +746,11 @@ namespace WebMConverter
             this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncodingVideo.Controls.Add(this.labelVideoBitrate, 0, 0);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(this.tableLayoutPanelVideoBitrate, 1, 0);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(this.labelVideoBitrateHint, 3, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrate, 0, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(tableVideoBitrate, 1, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrateHint, 3, 0);
             this.tableLayoutPanelEncodingVideo.Controls.Add(this.boxHQ, 0, 1);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(this.labelVideoHQHint, 2, 1);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoHQHint, 2, 1);
             this.tableLayoutPanelEncodingVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelEncodingVideo.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanelEncodingVideo.Name = "tableLayoutPanelEncodingVideo";
@@ -681,31 +762,31 @@ namespace WebMConverter
             // 
             // labelVideoBitrate
             // 
-            this.labelVideoBitrate.AutoSize = true;
-            this.labelVideoBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoBitrate.Location = new System.Drawing.Point(3, 0);
-            this.labelVideoBitrate.Name = "labelVideoBitrate";
-            this.labelVideoBitrate.Size = new System.Drawing.Size(73, 28);
-            this.labelVideoBitrate.TabIndex = 6;
-            this.labelVideoBitrate.Text = "Bitrate:";
-            this.labelVideoBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelVideoBitrate.AutoSize = true;
+            labelVideoBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelVideoBitrate.Location = new System.Drawing.Point(3, 0);
+            labelVideoBitrate.Name = "labelVideoBitrate";
+            labelVideoBitrate.Size = new System.Drawing.Size(73, 28);
+            labelVideoBitrate.TabIndex = 6;
+            labelVideoBitrate.Text = "Bitrate:";
+            labelVideoBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tableLayoutPanelVideoBitrate
+            // tableVideoBitrate
             // 
-            this.tableLayoutPanelVideoBitrate.ColumnCount = 2;
-            this.tableLayoutPanelVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelVideoBitrate.Controls.Add(this.boxVideoBitrate, 0, 0);
-            this.tableLayoutPanelVideoBitrate.Controls.Add(this.labelVideoBitrateUnit, 1, 0);
-            this.tableLayoutPanelVideoBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelVideoBitrate.Location = new System.Drawing.Point(82, 0);
-            this.tableLayoutPanelVideoBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tableLayoutPanelVideoBitrate.Name = "tableLayoutPanelVideoBitrate";
-            this.tableLayoutPanelVideoBitrate.RowCount = 1;
-            this.tableLayoutPanelVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelVideoBitrate.Size = new System.Drawing.Size(142, 28);
-            this.tableLayoutPanelVideoBitrate.TabIndex = 0;
+            tableVideoBitrate.ColumnCount = 2;
+            tableVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableVideoBitrate.Controls.Add(this.boxVideoBitrate, 0, 0);
+            tableVideoBitrate.Controls.Add(labelVideoBitrateUnit, 1, 0);
+            tableVideoBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableVideoBitrate.Location = new System.Drawing.Point(82, 0);
+            tableVideoBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            tableVideoBitrate.Name = "tableVideoBitrate";
+            tableVideoBitrate.RowCount = 1;
+            tableVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableVideoBitrate.Size = new System.Drawing.Size(142, 28);
+            tableVideoBitrate.TabIndex = 0;
             // 
             // boxVideoBitrate
             // 
@@ -719,26 +800,26 @@ namespace WebMConverter
             // 
             // labelVideoBitrateUnit
             // 
-            this.labelVideoBitrateUnit.AutoSize = true;
-            this.labelVideoBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoBitrateUnit.Location = new System.Drawing.Point(105, 0);
-            this.labelVideoBitrateUnit.Name = "labelVideoBitrateUnit";
-            this.labelVideoBitrateUnit.Size = new System.Drawing.Size(34, 28);
-            this.labelVideoBitrateUnit.TabIndex = 1;
-            this.labelVideoBitrateUnit.Text = "Kb/s";
-            this.labelVideoBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelVideoBitrateUnit.AutoSize = true;
+            labelVideoBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelVideoBitrateUnit.Location = new System.Drawing.Point(105, 0);
+            labelVideoBitrateUnit.Name = "labelVideoBitrateUnit";
+            labelVideoBitrateUnit.Size = new System.Drawing.Size(34, 28);
+            labelVideoBitrateUnit.TabIndex = 1;
+            labelVideoBitrateUnit.Text = "Kb/s";
+            labelVideoBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVideoBitrateHint
             // 
-            this.labelVideoBitrateHint.AutoSize = true;
-            this.labelVideoBitrateHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoBitrateHint.Location = new System.Drawing.Point(230, 0);
-            this.labelVideoBitrateHint.Name = "labelVideoBitrateHint";
-            this.labelVideoBitrateHint.Size = new System.Drawing.Size(802, 28);
-            this.labelVideoBitrateHint.TabIndex = 8;
-            this.labelVideoBitrateHint.Text = "Determines the quality of the video. Keep blank to let the program pick one based" +
+            labelVideoBitrateHint.AutoSize = true;
+            labelVideoBitrateHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelVideoBitrateHint.Location = new System.Drawing.Point(230, 0);
+            labelVideoBitrateHint.Name = "labelVideoBitrateHint";
+            labelVideoBitrateHint.Size = new System.Drawing.Size(802, 28);
+            labelVideoBitrateHint.TabIndex = 8;
+            labelVideoBitrateHint.Text = "Determines the quality of the video. Keep blank to let the program pick one based" +
     " on size limit and duration.";
-            this.labelVideoBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelVideoBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // boxHQ
             // 
@@ -758,64 +839,102 @@ namespace WebMConverter
             // 
             // labelVideoHQHint
             // 
-            this.labelVideoHQHint.AutoSize = true;
-            this.labelVideoHQHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoHQHint.Location = new System.Drawing.Point(230, 28);
-            this.labelVideoHQHint.Name = "labelVideoHQHint";
-            this.labelVideoHQHint.Size = new System.Drawing.Size(802, 28);
-            this.labelVideoHQHint.TabIndex = 16;
-            this.labelVideoHQHint.Text = "Enables two-pass encoding and adds some extra encoding arguments, increasing outp" +
+            labelVideoHQHint.AutoSize = true;
+            labelVideoHQHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelVideoHQHint.Location = new System.Drawing.Point(230, 28);
+            labelVideoHQHint.Name = "labelVideoHQHint";
+            labelVideoHQHint.Size = new System.Drawing.Size(802, 28);
+            labelVideoHQHint.TabIndex = 16;
+            labelVideoHQHint.Text = "Enables two-pass encoding and adds some extra encoding arguments, increasing outp" +
     "ut quality, but increases the time it takes to encode your file.";
-            this.labelVideoHQHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelVideoHQHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // groupBoxEncodingAudio
+            // groupEncodingAudio
             // 
-            this.groupBoxEncodingAudio.Controls.Add(this.tableLayoutPanel2);
-            this.groupBoxEncodingAudio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxEncodingAudio.Location = new System.Drawing.Point(3, 161);
-            this.groupBoxEncodingAudio.Name = "groupBoxEncodingAudio";
-            this.groupBoxEncodingAudio.Size = new System.Drawing.Size(1041, 73);
-            this.groupBoxEncodingAudio.TabIndex = 2;
-            this.groupBoxEncodingAudio.TabStop = false;
-            this.groupBoxEncodingAudio.Text = "Audio";
+            groupEncodingAudio.Controls.Add(tableEncodingAudio);
+            groupEncodingAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupEncodingAudio.Location = new System.Drawing.Point(3, 161);
+            groupEncodingAudio.Name = "groupEncodingAudio";
+            groupEncodingAudio.Size = new System.Drawing.Size(1041, 73);
+            groupEncodingAudio.TabIndex = 2;
+            groupEncodingAudio.TabStop = false;
+            groupEncodingAudio.Text = "Audio";
             // 
-            // tableLayoutPanel2
+            // tableEncodingAudio
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelAudioBitrate, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.labelGeneralAudioHint, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.boxAudio, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.labelAudioBitrate, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.labelAudioBitrateHint, 2, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1035, 54);
-            this.tableLayoutPanel2.TabIndex = 0;
+            tableEncodingAudio.ColumnCount = 3;
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableEncodingAudio.Controls.Add(this.boxAudio, 0, 0);
+            tableEncodingAudio.Controls.Add(labelAudioHint, 2, 0);
+            tableEncodingAudio.Controls.Add(labelAudioBitrate, 0, 1);
+            tableEncodingAudio.Controls.Add(tableAudioBitrate, 1, 1);
+            tableEncodingAudio.Controls.Add(labelAudioBitrateHint, 2, 1);
+            tableEncodingAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableEncodingAudio.Location = new System.Drawing.Point(3, 16);
+            tableEncodingAudio.Margin = new System.Windows.Forms.Padding(0);
+            tableEncodingAudio.Name = "tableEncodingAudio";
+            tableEncodingAudio.RowCount = 2;
+            tableEncodingAudio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableEncodingAudio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableEncodingAudio.Size = new System.Drawing.Size(1035, 54);
+            tableEncodingAudio.TabIndex = 0;
             // 
-            // tableLayoutPanelAudioBitrate
+            // boxAudio
             // 
-            this.tableLayoutPanelAudioBitrate.ColumnCount = 2;
-            this.tableLayoutPanelAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelAudioBitrate.Controls.Add(this.boxAudioBitrate, 0, 0);
-            this.tableLayoutPanelAudioBitrate.Controls.Add(this.labelAudioBitrateUnit, 1, 0);
-            this.tableLayoutPanelAudioBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelAudioBitrate.Location = new System.Drawing.Point(82, 27);
-            this.tableLayoutPanelAudioBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.tableLayoutPanelAudioBitrate.Name = "tableLayoutPanelAudioBitrate";
-            this.tableLayoutPanelAudioBitrate.RowCount = 1;
-            this.tableLayoutPanelAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanelAudioBitrate.Size = new System.Drawing.Size(142, 27);
-            this.tableLayoutPanelAudioBitrate.TabIndex = 21;
+            this.boxAudio.AutoSize = true;
+            this.boxAudio.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableEncodingAudio.SetColumnSpan(this.boxAudio, 2);
+            this.boxAudio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxAudio.Location = new System.Drawing.Point(6, 3);
+            this.boxAudio.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.boxAudio.Name = "boxAudio";
+            this.boxAudio.Size = new System.Drawing.Size(215, 21);
+            this.boxAudio.TabIndex = 4;
+            this.boxAudio.Text = "Enable audio:";
+            this.boxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxAudio.UseVisualStyleBackColor = true;
+            this.boxAudio.CheckedChanged += new System.EventHandler(this.boxAudio_CheckedChanged);
+            // 
+            // labelAudioHint
+            // 
+            labelAudioHint.AutoSize = true;
+            labelAudioHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelAudioHint.Location = new System.Drawing.Point(230, 0);
+            labelAudioHint.Name = "labelAudioHint";
+            labelAudioHint.Size = new System.Drawing.Size(802, 27);
+            labelAudioHint.TabIndex = 19;
+            labelAudioHint.Text = "Keep this disabled until Moot allows audio.";
+            labelAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelAudioBitrate
+            // 
+            labelAudioBitrate.AutoSize = true;
+            labelAudioBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelAudioBitrate.Location = new System.Drawing.Point(3, 27);
+            labelAudioBitrate.Name = "labelAudioBitrate";
+            labelAudioBitrate.Size = new System.Drawing.Size(73, 27);
+            labelAudioBitrate.TabIndex = 20;
+            labelAudioBitrate.Text = "Bitrate:";
+            labelAudioBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableAudioBitrate
+            // 
+            tableAudioBitrate.ColumnCount = 2;
+            tableAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableAudioBitrate.Controls.Add(this.boxAudioBitrate, 0, 0);
+            tableAudioBitrate.Controls.Add(labelAudioBitrateUnit, 1, 0);
+            tableAudioBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableAudioBitrate.Location = new System.Drawing.Point(82, 27);
+            tableAudioBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            tableAudioBitrate.Name = "tableAudioBitrate";
+            tableAudioBitrate.RowCount = 1;
+            tableAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            tableAudioBitrate.Size = new System.Drawing.Size(142, 27);
+            tableAudioBitrate.TabIndex = 21;
             // 
             // boxAudioBitrate
             // 
@@ -830,198 +949,247 @@ namespace WebMConverter
             // 
             // labelAudioBitrateUnit
             // 
-            this.labelAudioBitrateUnit.AutoSize = true;
-            this.labelAudioBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAudioBitrateUnit.Location = new System.Drawing.Point(105, 0);
-            this.labelAudioBitrateUnit.Name = "labelAudioBitrateUnit";
-            this.labelAudioBitrateUnit.Size = new System.Drawing.Size(34, 27);
-            this.labelAudioBitrateUnit.TabIndex = 1;
-            this.labelAudioBitrateUnit.Text = "Kb/s";
-            this.labelAudioBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelGeneralAudioHint
-            // 
-            this.labelGeneralAudioHint.AutoSize = true;
-            this.labelGeneralAudioHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelGeneralAudioHint.Location = new System.Drawing.Point(230, 0);
-            this.labelGeneralAudioHint.Name = "labelGeneralAudioHint";
-            this.labelGeneralAudioHint.Size = new System.Drawing.Size(802, 27);
-            this.labelGeneralAudioHint.TabIndex = 19;
-            this.labelGeneralAudioHint.Text = "Keep this disabled until Moot allows audio.";
-            this.labelGeneralAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // boxAudio
-            // 
-            this.boxAudio.AutoSize = true;
-            this.boxAudio.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel2.SetColumnSpan(this.boxAudio, 2);
-            this.boxAudio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxAudio.Location = new System.Drawing.Point(6, 3);
-            this.boxAudio.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            this.boxAudio.Name = "boxAudio";
-            this.boxAudio.Size = new System.Drawing.Size(215, 21);
-            this.boxAudio.TabIndex = 4;
-            this.boxAudio.Text = "Enable audio:";
-            this.boxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxAudio.UseVisualStyleBackColor = true;
-            this.boxAudio.CheckedChanged += new System.EventHandler(this.boxAudio_CheckedChanged);
-            // 
-            // labelAudioBitrate
-            // 
-            this.labelAudioBitrate.AutoSize = true;
-            this.labelAudioBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAudioBitrate.Location = new System.Drawing.Point(3, 27);
-            this.labelAudioBitrate.Name = "labelAudioBitrate";
-            this.labelAudioBitrate.Size = new System.Drawing.Size(73, 27);
-            this.labelAudioBitrate.TabIndex = 20;
-            this.labelAudioBitrate.Text = "Bitrate:";
-            this.labelAudioBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelAudioBitrateUnit.AutoSize = true;
+            labelAudioBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelAudioBitrateUnit.Location = new System.Drawing.Point(105, 0);
+            labelAudioBitrateUnit.Name = "labelAudioBitrateUnit";
+            labelAudioBitrateUnit.Size = new System.Drawing.Size(34, 27);
+            labelAudioBitrateUnit.TabIndex = 1;
+            labelAudioBitrateUnit.Text = "Kb/s";
+            labelAudioBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelAudioBitrateHint
             // 
-            this.labelAudioBitrateHint.AutoSize = true;
-            this.labelAudioBitrateHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAudioBitrateHint.Location = new System.Drawing.Point(230, 27);
-            this.labelAudioBitrateHint.Name = "labelAudioBitrateHint";
-            this.labelAudioBitrateHint.Size = new System.Drawing.Size(802, 27);
-            this.labelAudioBitrateHint.TabIndex = 22;
-            this.labelAudioBitrateHint.Text = "Determines the quality of the audio.";
-            this.labelAudioBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelAudioBitrateHint.AutoSize = true;
+            labelAudioBitrateHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelAudioBitrateHint.Location = new System.Drawing.Point(230, 27);
+            labelAudioBitrateHint.Name = "labelAudioBitrateHint";
+            labelAudioBitrateHint.Size = new System.Drawing.Size(802, 27);
+            labelAudioBitrateHint.TabIndex = 22;
+            labelAudioBitrateHint.Text = "Determines the quality of the audio.";
+            labelAudioBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tabPageAdvanced
+            // tabAdvanced
             // 
-            this.tabPageAdvanced.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPageAdvanced.Controls.Add(this.tableLayoutPanel1);
-            this.tabPageAdvanced.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAdvanced.Name = "tabPageAdvanced";
-            this.tabPageAdvanced.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAdvanced.Size = new System.Drawing.Size(1053, 307);
-            this.tabPageAdvanced.TabIndex = 4;
-            this.tabPageAdvanced.Text = "Advanced";
+            tabAdvanced.BackColor = System.Drawing.SystemColors.Control;
+            tabAdvanced.Controls.Add(tableAdvanced);
+            tabAdvanced.Location = new System.Drawing.Point(4, 22);
+            tabAdvanced.Name = "tabAdvanced";
+            tabAdvanced.Padding = new System.Windows.Forms.Padding(3);
+            tabAdvanced.Size = new System.Drawing.Size(1053, 307);
+            tabAdvanced.TabIndex = 4;
+            tabAdvanced.Text = "Advanced";
             // 
-            // tableLayoutPanel1
+            // tableAdvanced
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBoxAdvancedEncoding, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.labelAdvancedWarning, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBoxAdvancedProcessing, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 138F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 301);
-            this.tableLayoutPanel1.TabIndex = 1;
+            tableAdvanced.ColumnCount = 1;
+            tableAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvanced.Controls.Add(labelAdvancedWarning, 0, 0);
+            tableAdvanced.Controls.Add(groupAdvancedProcessing, 0, 1);
+            tableAdvanced.Controls.Add(groupAdvancedEncoding, 0, 2);
+            tableAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableAdvanced.Location = new System.Drawing.Point(3, 3);
+            tableAdvanced.Name = "tableAdvanced";
+            tableAdvanced.RowCount = 4;
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 138F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvanced.Size = new System.Drawing.Size(1047, 301);
+            tableAdvanced.TabIndex = 1;
             // 
-            // groupBoxAdvancedEncoding
+            // labelAdvancedWarning
             // 
-            this.groupBoxAdvancedEncoding.AutoSize = true;
-            this.groupBoxAdvancedEncoding.Controls.Add(this.tableLayoutPanelEncodingAdvanced);
-            this.groupBoxAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
-            this.groupBoxAdvancedEncoding.Name = "groupBoxAdvancedEncoding";
-            this.groupBoxAdvancedEncoding.Size = new System.Drawing.Size(1041, 132);
-            this.groupBoxAdvancedEncoding.TabIndex = 33;
-            this.groupBoxAdvancedEncoding.TabStop = false;
-            this.groupBoxAdvancedEncoding.Text = "Encoding";
+            labelAdvancedWarning.AutoSize = true;
+            tableAdvanced.SetColumnSpan(labelAdvancedWarning, 3);
+            labelAdvancedWarning.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelAdvancedWarning.Location = new System.Drawing.Point(3, 3);
+            labelAdvancedWarning.Margin = new System.Windows.Forms.Padding(3);
+            labelAdvancedWarning.Name = "labelAdvancedWarning";
+            labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
+            labelAdvancedWarning.TabIndex = 32;
+            labelAdvancedWarning.Text = "Do not modify these settings unless you are 100% sure you know what you\'re doing." +
+    "";
+            labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanelEncodingAdvanced
+            // groupAdvancedProcessing
             // 
-            this.tableLayoutPanelEncodingAdvanced.ColumnCount = 3;
-            this.tableLayoutPanelEncodingAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncodingAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanelEncodingAdvanced.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelVideoCrfHint, 2, 2);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.numericCrf, 1, 2);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelVideoCrf, 0, 2);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.tableLayoutPanelEncodingSlices, 1, 1);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelEncodingThreads, 0, 0);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.tableLayoutPanelEncodingThreads, 1, 0);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelEncodingThreadsHint, 2, 0);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelEncodingArguments, 0, 3);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.textBoxArguments, 1, 3);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelEncodingSlices, 0, 1);
-            this.tableLayoutPanelEncodingAdvanced.Controls.Add(this.labelEncodingSlicesHint, 2, 1);
-            this.tableLayoutPanelEncodingAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncodingAdvanced.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelEncodingAdvanced.Name = "tableLayoutPanelEncodingAdvanced";
-            this.tableLayoutPanelEncodingAdvanced.RowCount = 4;
-            this.tableLayoutPanelEncodingAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelEncodingAdvanced.Size = new System.Drawing.Size(1035, 113);
-            this.tableLayoutPanelEncodingAdvanced.TabIndex = 0;
+            groupAdvancedProcessing.Controls.Add(tableAdvancedProcessing);
+            groupAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
+            groupAdvancedProcessing.Name = "groupAdvancedProcessing";
+            groupAdvancedProcessing.Size = new System.Drawing.Size(1041, 104);
+            groupAdvancedProcessing.TabIndex = 0;
+            groupAdvancedProcessing.TabStop = false;
+            groupAdvancedProcessing.Text = "Processing";
             // 
-            // tableLayoutPanelEncodingSlices
+            // tableAdvancedProcessing
             // 
-            this.tableLayoutPanelEncodingSlices.ColumnCount = 2;
-            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
-            this.tableLayoutPanelEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
-            this.tableLayoutPanelEncodingSlices.Controls.Add(this.trackSlices, 0, 0);
-            this.tableLayoutPanelEncodingSlices.Controls.Add(this.labelSlices, 1, 0);
-            this.tableLayoutPanelEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncodingSlices.Location = new System.Drawing.Point(82, 31);
-            this.tableLayoutPanelEncodingSlices.Name = "tableLayoutPanelEncodingSlices";
-            this.tableLayoutPanelEncodingSlices.RowCount = 1;
-            this.tableLayoutPanelEncodingSlices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelEncodingSlices.Size = new System.Drawing.Size(142, 22);
-            this.tableLayoutPanelEncodingSlices.TabIndex = 31;
+            tableAdvancedProcessing.ColumnCount = 3;
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvancedProcessing.Controls.Add(this.boxLevels, 0, 0);
+            tableAdvancedProcessing.Controls.Add(labelProcessingLevelsHint, 2, 0);
+            tableAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
+            tableAdvancedProcessing.Controls.Add(labelProcessingDeinterlaceHint, 2, 1);
+            tableAdvancedProcessing.Controls.Add(this.boxDenoise, 0, 2);
+            tableAdvancedProcessing.Controls.Add(labelProcessingDenoiseHint, 2, 2);
+            tableAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableAdvancedProcessing.Location = new System.Drawing.Point(3, 16);
+            tableAdvancedProcessing.Name = "tableAdvancedProcessing";
+            tableAdvancedProcessing.RowCount = 3;
+            tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedProcessing.Size = new System.Drawing.Size(1035, 85);
+            tableAdvancedProcessing.TabIndex = 1;
             // 
-            // trackSlices
+            // boxLevels
             // 
-            this.trackSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackSlices.Location = new System.Drawing.Point(0, 0);
-            this.trackSlices.Margin = new System.Windows.Forms.Padding(0);
-            this.trackSlices.Maximum = 4;
-            this.trackSlices.Minimum = 1;
-            this.trackSlices.Name = "trackSlices";
-            this.trackSlices.Size = new System.Drawing.Size(122, 22);
-            this.trackSlices.TabIndex = 0;
-            this.trackSlices.Value = 1;
-            this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_Scroll);
+            this.boxLevels.AutoSize = true;
+            this.boxLevels.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableAdvancedProcessing.SetColumnSpan(this.boxLevels, 2);
+            this.boxLevels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxLevels.Location = new System.Drawing.Point(3, 3);
+            this.boxLevels.Name = "boxLevels";
+            this.boxLevels.Size = new System.Drawing.Size(221, 22);
+            this.boxLevels.TabIndex = 33;
+            this.boxLevels.Text = "Expand color ranges:";
+            this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxLevels.UseVisualStyleBackColor = true;
+            this.boxLevels.CheckedChanged += new System.EventHandler(this.boxLevels_CheckedChanged);
             // 
-            // labelSlices
+            // labelProcessingLevelsHint
             // 
-            this.labelSlices.AutoSize = true;
-            this.labelSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelSlices.Location = new System.Drawing.Point(122, 0);
-            this.labelSlices.Margin = new System.Windows.Forms.Padding(0);
-            this.labelSlices.Name = "labelSlices";
-            this.labelSlices.Size = new System.Drawing.Size(20, 22);
-            this.labelSlices.TabIndex = 1;
-            this.labelSlices.Text = "1";
-            this.labelSlices.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelProcessingLevelsHint.AutoSize = true;
+            labelProcessingLevelsHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingLevelsHint.Location = new System.Drawing.Point(230, 0);
+            labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
+            labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
+            labelProcessingLevelsHint.TabIndex = 27;
+            labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
+    "hed out in browsers. This option expands the color levels to the full range.";
+            labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxDeinterlace
+            // 
+            this.boxDeinterlace.AutoSize = true;
+            this.boxDeinterlace.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableAdvancedProcessing.SetColumnSpan(this.boxDeinterlace, 2);
+            this.boxDeinterlace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
+            this.boxDeinterlace.Name = "boxDeinterlace";
+            this.boxDeinterlace.Size = new System.Drawing.Size(221, 22);
+            this.boxDeinterlace.TabIndex = 34;
+            this.boxDeinterlace.Text = "Deinterlace:";
+            this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxDeinterlace.UseVisualStyleBackColor = true;
+            this.boxDeinterlace.CheckedChanged += new System.EventHandler(this.boxDeinterlace_CheckedChanged);
+            // 
+            // labelProcessingDeinterlaceHint
+            // 
+            labelProcessingDeinterlaceHint.AutoSize = true;
+            labelProcessingDeinterlaceHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
+            labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
+            labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 28);
+            labelProcessingDeinterlaceHint.TabIndex = 32;
+            labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
+            labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxDenoise
+            // 
+            this.boxDenoise.AutoSize = true;
+            this.boxDenoise.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableAdvancedProcessing.SetColumnSpan(this.boxDenoise, 2);
+            this.boxDenoise.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxDenoise.Location = new System.Drawing.Point(3, 59);
+            this.boxDenoise.Name = "boxDenoise";
+            this.boxDenoise.Size = new System.Drawing.Size(221, 23);
+            this.boxDenoise.TabIndex = 35;
+            this.boxDenoise.Text = "Denoise:";
+            this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxDenoise.UseVisualStyleBackColor = true;
+            this.boxDenoise.CheckedChanged += new System.EventHandler(this.boxDenoise_CheckedChanged);
+            // 
+            // labelProcessingDenoiseHint
+            // 
+            labelProcessingDenoiseHint.AutoSize = true;
+            labelProcessingDenoiseHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
+            labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
+            labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
+            labelProcessingDenoiseHint.TabIndex = 36;
+            labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
+    "hen it comes to bitrate.";
+            labelProcessingDenoiseHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupAdvancedEncoding
+            // 
+            groupAdvancedEncoding.AutoSize = true;
+            groupAdvancedEncoding.Controls.Add(tableAdvancedEncoding);
+            groupAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
+            groupAdvancedEncoding.Name = "groupAdvancedEncoding";
+            groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 132);
+            groupAdvancedEncoding.TabIndex = 33;
+            groupAdvancedEncoding.TabStop = false;
+            groupAdvancedEncoding.Text = "Encoding";
+            // 
+            // tableAdvancedEncoding
+            // 
+            tableAdvancedEncoding.ColumnCount = 3;
+            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvancedEncoding.Controls.Add(labelEncodingThreads, 0, 0);
+            tableAdvancedEncoding.Controls.Add(tableEncodingThreads, 1, 0);
+            tableAdvancedEncoding.Controls.Add(labelEncodingThreadsHint, 2, 0);
+            tableAdvancedEncoding.Controls.Add(labelEncodingSlices, 0, 1);
+            tableAdvancedEncoding.Controls.Add(tableEncodingSlices, 1, 1);
+            tableAdvancedEncoding.Controls.Add(labelEncodingSlicesHint, 2, 1);
+            tableAdvancedEncoding.Controls.Add(labelEncodingCrf, 0, 2);
+            tableAdvancedEncoding.Controls.Add(this.numericCrf, 1, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingCrfHint, 2, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 3);
+            tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 3);
+            tableAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableAdvancedEncoding.Location = new System.Drawing.Point(3, 16);
+            tableAdvancedEncoding.Name = "tableAdvancedEncoding";
+            tableAdvancedEncoding.RowCount = 4;
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 113);
+            tableAdvancedEncoding.TabIndex = 0;
             // 
             // labelEncodingThreads
             // 
-            this.labelEncodingThreads.AutoSize = true;
-            this.labelEncodingThreads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEncodingThreads.Location = new System.Drawing.Point(3, 0);
-            this.labelEncodingThreads.Name = "labelEncodingThreads";
-            this.labelEncodingThreads.Size = new System.Drawing.Size(73, 28);
-            this.labelEncodingThreads.TabIndex = 28;
-            this.labelEncodingThreads.Text = "Threads:";
-            this.labelEncodingThreads.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelEncodingThreads.AutoSize = true;
+            labelEncodingThreads.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingThreads.Location = new System.Drawing.Point(3, 0);
+            labelEncodingThreads.Name = "labelEncodingThreads";
+            labelEncodingThreads.Size = new System.Drawing.Size(73, 28);
+            labelEncodingThreads.TabIndex = 28;
+            labelEncodingThreads.Text = "Threads:";
+            labelEncodingThreads.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tableLayoutPanelEncodingThreads
+            // tableEncodingThreads
             // 
-            this.tableLayoutPanelEncodingThreads.ColumnCount = 2;
-            this.tableLayoutPanelEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
-            this.tableLayoutPanelEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
-            this.tableLayoutPanelEncodingThreads.Controls.Add(this.trackThreads, 0, 0);
-            this.tableLayoutPanelEncodingThreads.Controls.Add(this.labelThreads, 1, 0);
-            this.tableLayoutPanelEncodingThreads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelEncodingThreads.Location = new System.Drawing.Point(82, 3);
-            this.tableLayoutPanelEncodingThreads.Name = "tableLayoutPanelEncodingThreads";
-            this.tableLayoutPanelEncodingThreads.RowCount = 1;
-            this.tableLayoutPanelEncodingThreads.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelEncodingThreads.Size = new System.Drawing.Size(142, 22);
-            this.tableLayoutPanelEncodingThreads.TabIndex = 0;
+            tableEncodingThreads.ColumnCount = 2;
+            tableEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
+            tableEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
+            tableEncodingThreads.Controls.Add(this.trackThreads, 0, 0);
+            tableEncodingThreads.Controls.Add(this.labelThreads, 1, 0);
+            tableEncodingThreads.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableEncodingThreads.Location = new System.Drawing.Point(82, 3);
+            tableEncodingThreads.Name = "tableEncodingThreads";
+            tableEncodingThreads.RowCount = 1;
+            tableEncodingThreads.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableEncodingThreads.Size = new System.Drawing.Size(142, 22);
+            tableEncodingThreads.TabIndex = 0;
             // 
             // trackThreads
             // 
@@ -1050,209 +1218,155 @@ namespace WebMConverter
             // 
             // labelEncodingThreadsHint
             // 
-            this.labelEncodingThreadsHint.AutoSize = true;
-            this.labelEncodingThreadsHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEncodingThreadsHint.Location = new System.Drawing.Point(230, 0);
-            this.labelEncodingThreadsHint.Name = "labelEncodingThreadsHint";
-            this.labelEncodingThreadsHint.Size = new System.Drawing.Size(802, 28);
-            this.labelEncodingThreadsHint.TabIndex = 27;
-            this.labelEncodingThreadsHint.Text = "Determines amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe cra" +
+            labelEncodingThreadsHint.AutoSize = true;
+            labelEncodingThreadsHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingThreadsHint.Location = new System.Drawing.Point(230, 0);
+            labelEncodingThreadsHint.Name = "labelEncodingThreadsHint";
+            labelEncodingThreadsHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingThreadsHint.TabIndex = 27;
+            labelEncodingThreadsHint.Text = "Determines amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe cra" +
     "shes as soon as you click Convert.";
-            this.labelEncodingThreadsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelEncodingArguments
-            // 
-            this.labelEncodingArguments.AutoSize = true;
-            this.labelEncodingArguments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEncodingArguments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelEncodingArguments.Location = new System.Drawing.Point(3, 84);
-            this.labelEncodingArguments.Name = "labelEncodingArguments";
-            this.labelEncodingArguments.Size = new System.Drawing.Size(73, 29);
-            this.labelEncodingArguments.TabIndex = 29;
-            this.labelEncodingArguments.Text = "Arguments:";
-            this.labelEncodingArguments.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // textBoxArguments
-            // 
-            this.textBoxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanelEncodingAdvanced.SetColumnSpan(this.textBoxArguments, 2);
-            this.textBoxArguments.Location = new System.Drawing.Point(85, 88);
-            this.textBoxArguments.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            this.textBoxArguments.Name = "textBoxArguments";
-            this.textBoxArguments.Size = new System.Drawing.Size(944, 20);
-            this.textBoxArguments.TabIndex = 1;
+            labelEncodingThreadsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelEncodingSlices
             // 
-            this.labelEncodingSlices.AutoSize = true;
-            this.labelEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEncodingSlices.Location = new System.Drawing.Point(3, 28);
-            this.labelEncodingSlices.Name = "labelEncodingSlices";
-            this.labelEncodingSlices.Size = new System.Drawing.Size(73, 28);
-            this.labelEncodingSlices.TabIndex = 30;
-            this.labelEncodingSlices.Text = "Slices:";
-            this.labelEncodingSlices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelEncodingSlices.AutoSize = true;
+            labelEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingSlices.Location = new System.Drawing.Point(3, 28);
+            labelEncodingSlices.Name = "labelEncodingSlices";
+            labelEncodingSlices.Size = new System.Drawing.Size(73, 28);
+            labelEncodingSlices.TabIndex = 30;
+            labelEncodingSlices.Text = "Slices:";
+            labelEncodingSlices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableEncodingSlices
+            // 
+            tableEncodingSlices.ColumnCount = 2;
+            tableEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
+            tableEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
+            tableEncodingSlices.Controls.Add(this.trackSlices, 0, 0);
+            tableEncodingSlices.Controls.Add(this.labelSlices, 1, 0);
+            tableEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableEncodingSlices.Location = new System.Drawing.Point(82, 31);
+            tableEncodingSlices.Name = "tableEncodingSlices";
+            tableEncodingSlices.RowCount = 1;
+            tableEncodingSlices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableEncodingSlices.Size = new System.Drawing.Size(142, 22);
+            tableEncodingSlices.TabIndex = 31;
+            // 
+            // trackSlices
+            // 
+            this.trackSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackSlices.Location = new System.Drawing.Point(0, 0);
+            this.trackSlices.Margin = new System.Windows.Forms.Padding(0);
+            this.trackSlices.Maximum = 4;
+            this.trackSlices.Minimum = 1;
+            this.trackSlices.Name = "trackSlices";
+            this.trackSlices.Size = new System.Drawing.Size(122, 22);
+            this.trackSlices.TabIndex = 0;
+            this.trackSlices.Value = 1;
+            this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_Scroll);
+            // 
+            // labelSlices
+            // 
+            this.labelSlices.AutoSize = true;
+            this.labelSlices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelSlices.Location = new System.Drawing.Point(122, 0);
+            this.labelSlices.Margin = new System.Windows.Forms.Padding(0);
+            this.labelSlices.Name = "labelSlices";
+            this.labelSlices.Size = new System.Drawing.Size(20, 22);
+            this.labelSlices.TabIndex = 1;
+            this.labelSlices.Text = "1";
+            this.labelSlices.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelEncodingSlicesHint
             // 
-            this.labelEncodingSlicesHint.AutoSize = true;
-            this.labelEncodingSlicesHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEncodingSlicesHint.Location = new System.Drawing.Point(230, 28);
-            this.labelEncodingSlicesHint.Name = "labelEncodingSlicesHint";
-            this.labelEncodingSlicesHint.Size = new System.Drawing.Size(802, 28);
-            this.labelEncodingSlicesHint.TabIndex = 32;
-            this.labelEncodingSlicesHint.Text = "Split frames into slices before encoding them. Results in a higher quality per fr" +
+            labelEncodingSlicesHint.AutoSize = true;
+            labelEncodingSlicesHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingSlicesHint.Location = new System.Drawing.Point(230, 28);
+            labelEncodingSlicesHint.Name = "labelEncodingSlicesHint";
+            labelEncodingSlicesHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingSlicesHint.TabIndex = 32;
+            labelEncodingSlicesHint.Text = "Split frames into slices before encoding them. Results in a higher quality per fr" +
     "ame. 4 slices is standard for 720p resolutions.";
-            this.labelEncodingSlicesHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelEncodingSlicesHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelAdvancedWarning
+            // labelEncodingCrf
             // 
-            this.labelAdvancedWarning.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.labelAdvancedWarning, 3);
-            this.labelAdvancedWarning.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAdvancedWarning.Location = new System.Drawing.Point(3, 3);
-            this.labelAdvancedWarning.Margin = new System.Windows.Forms.Padding(3);
-            this.labelAdvancedWarning.Name = "labelAdvancedWarning";
-            this.labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
-            this.labelAdvancedWarning.TabIndex = 32;
-            this.labelAdvancedWarning.Text = "Do not modify these settings unless you are 100% sure you know what you\'re doing." +
-    "";
-            this.labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelEncodingCrf.AutoSize = true;
+            labelEncodingCrf.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingCrf.Location = new System.Drawing.Point(3, 56);
+            labelEncodingCrf.Name = "labelEncodingCrf";
+            labelEncodingCrf.Size = new System.Drawing.Size(73, 28);
+            labelEncodingCrf.TabIndex = 33;
+            labelEncodingCrf.Text = "CRF:";
+            labelEncodingCrf.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // groupBoxAdvancedProcessing
+            // numericCrf
             // 
-            this.groupBoxAdvancedProcessing.Controls.Add(this.tableLayoutPanelAdvancedProcessing);
-            this.groupBoxAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
-            this.groupBoxAdvancedProcessing.Name = "groupBoxAdvancedProcessing";
-            this.groupBoxAdvancedProcessing.Size = new System.Drawing.Size(1041, 104);
-            this.groupBoxAdvancedProcessing.TabIndex = 0;
-            this.groupBoxAdvancedProcessing.TabStop = false;
-            this.groupBoxAdvancedProcessing.Text = "Processing";
+            this.numericCrf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericCrf.Location = new System.Drawing.Point(82, 59);
+            this.numericCrf.Maximum = new decimal(new int[] {
+            51,
+            0,
+            0,
+            0});
+            this.numericCrf.Name = "numericCrf";
+            this.numericCrf.Size = new System.Drawing.Size(142, 20);
+            this.numericCrf.TabIndex = 34;
+            this.numericCrf.Value = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.numericCrf.ValueChanged += new System.EventHandler(this.UpdateArguments);
             // 
-            // tableLayoutPanelAdvancedProcessing
+            // labelEncodingCrfHint
             // 
-            this.tableLayoutPanelAdvancedProcessing.ColumnCount = 3;
-            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tableLayoutPanelAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingDenoiseHint, 2, 2);
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxDenoise, 0, 2);
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingLevelsHint, 2, 0);
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.labelProcessingDeinterlaceHint, 2, 1);
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
-            this.tableLayoutPanelAdvancedProcessing.Controls.Add(this.boxLevels, 0, 0);
-            this.tableLayoutPanelAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelAdvancedProcessing.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanelAdvancedProcessing.Name = "tableLayoutPanelAdvancedProcessing";
-            this.tableLayoutPanelAdvancedProcessing.RowCount = 3;
-            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanelAdvancedProcessing.Size = new System.Drawing.Size(1035, 85);
-            this.tableLayoutPanelAdvancedProcessing.TabIndex = 1;
+            labelEncodingCrfHint.AutoSize = true;
+            labelEncodingCrfHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingCrfHint.Location = new System.Drawing.Point(230, 56);
+            labelEncodingCrfHint.Name = "labelEncodingCrfHint";
+            labelEncodingCrfHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingCrfHint.TabIndex = 35;
+            labelEncodingCrfHint.Text = "Constant rate factor for the video; basically, the overall quality. A lower value" +
+    " means higher quality and filesize.";
+            labelEncodingCrfHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelProcessingDenoiseHint
+            // labelEncodingArguments
             // 
-            this.labelProcessingDenoiseHint.AutoSize = true;
-            this.labelProcessingDenoiseHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
-            this.labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
-            this.labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
-            this.labelProcessingDenoiseHint.TabIndex = 36;
-            this.labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
-    "hen it comes to bitrate.";
-            this.labelProcessingDenoiseHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelEncodingArguments.AutoSize = true;
+            labelEncodingArguments.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingArguments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            labelEncodingArguments.Location = new System.Drawing.Point(3, 84);
+            labelEncodingArguments.Name = "labelEncodingArguments";
+            labelEncodingArguments.Size = new System.Drawing.Size(73, 29);
+            labelEncodingArguments.TabIndex = 29;
+            labelEncodingArguments.Text = "Arguments:";
+            labelEncodingArguments.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // boxDenoise
+            // boxArguments
             // 
-            this.boxDenoise.AutoSize = true;
-            this.boxDenoise.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxDenoise, 2);
-            this.boxDenoise.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxDenoise.Location = new System.Drawing.Point(3, 59);
-            this.boxDenoise.Name = "boxDenoise";
-            this.boxDenoise.Size = new System.Drawing.Size(221, 23);
-            this.boxDenoise.TabIndex = 35;
-            this.boxDenoise.Text = "Denoise:";
-            this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxDenoise.UseVisualStyleBackColor = true;
-            this.boxDenoise.CheckedChanged += new System.EventHandler(this.boxDenoise_CheckedChanged);
-            // 
-            // labelProcessingLevelsHint
-            // 
-            this.labelProcessingLevelsHint.AutoSize = true;
-            this.labelProcessingLevelsHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelProcessingLevelsHint.Location = new System.Drawing.Point(230, 0);
-            this.labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
-            this.labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
-            this.labelProcessingLevelsHint.TabIndex = 27;
-            this.labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
-    "hed out in browsers. This option expands the color levels to the full range.";
-            this.labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelProcessingDeinterlaceHint
-            // 
-            this.labelProcessingDeinterlaceHint.AutoSize = true;
-            this.labelProcessingDeinterlaceHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
-            this.labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
-            this.labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 28);
-            this.labelProcessingDeinterlaceHint.TabIndex = 32;
-            this.labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
-            this.labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // boxDeinterlace
-            // 
-            this.boxDeinterlace.AutoSize = true;
-            this.boxDeinterlace.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxDeinterlace, 2);
-            this.boxDeinterlace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
-            this.boxDeinterlace.Name = "boxDeinterlace";
-            this.boxDeinterlace.Size = new System.Drawing.Size(221, 22);
-            this.boxDeinterlace.TabIndex = 34;
-            this.boxDeinterlace.Text = "Deinterlace:";
-            this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxDeinterlace.UseVisualStyleBackColor = true;
-            this.boxDeinterlace.CheckedChanged += new System.EventHandler(this.boxDeinterlace_CheckedChanged);
-            // 
-            // boxLevels
-            // 
-            this.boxLevels.AutoSize = true;
-            this.boxLevels.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanelAdvancedProcessing.SetColumnSpan(this.boxLevels, 2);
-            this.boxLevels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxLevels.Location = new System.Drawing.Point(3, 3);
-            this.boxLevels.Name = "boxLevels";
-            this.boxLevels.Size = new System.Drawing.Size(221, 22);
-            this.boxLevels.TabIndex = 33;
-            this.boxLevels.Text = "Expand color ranges:";
-            this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxLevels.UseVisualStyleBackColor = true;
-            this.boxLevels.CheckedChanged += new System.EventHandler(this.boxLevels_CheckedChanged);
-            // 
-            // panelHideTheOptions
-            // 
-            this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panelHideTheOptions.Controls.Add(this.panelContainTheProgressBar);
-            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 88);
-            this.panelHideTheOptions.Name = "panelHideTheOptions";
-            this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
-            this.panelHideTheOptions.TabIndex = 3;
+            this.boxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            tableAdvancedEncoding.SetColumnSpan(this.boxArguments, 2);
+            this.boxArguments.Location = new System.Drawing.Point(85, 88);
+            this.boxArguments.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.boxArguments.Name = "boxArguments";
+            this.boxArguments.Size = new System.Drawing.Size(944, 20);
+            this.boxArguments.TabIndex = 1;
             // 
             // panelContainTheProgressBar
             // 
-            this.panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panelContainTheProgressBar.AutoSize = true;
-            this.panelContainTheProgressBar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panelContainTheProgressBar.BackColor = System.Drawing.SystemColors.Control;
-            this.panelContainTheProgressBar.Controls.Add(this.labelIndexingProgress);
-            this.panelContainTheProgressBar.Controls.Add(this.progressBarIndexing);
-            this.panelContainTheProgressBar.Location = new System.Drawing.Point(299, 148);
-            this.panelContainTheProgressBar.Name = "panelContainTheProgressBar";
-            this.panelContainTheProgressBar.Size = new System.Drawing.Size(469, 61);
-            this.panelContainTheProgressBar.TabIndex = 0;
+            panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            panelContainTheProgressBar.AutoSize = true;
+            panelContainTheProgressBar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            panelContainTheProgressBar.BackColor = System.Drawing.SystemColors.Control;
+            panelContainTheProgressBar.Controls.Add(this.labelIndexingProgress);
+            panelContainTheProgressBar.Controls.Add(this.progressBarIndexing);
+            panelContainTheProgressBar.Location = new System.Drawing.Point(299, 148);
+            panelContainTheProgressBar.Name = "panelContainTheProgressBar";
+            panelContainTheProgressBar.Size = new System.Drawing.Size(469, 61);
+            panelContainTheProgressBar.TabIndex = 0;
             // 
             // labelIndexingProgress
             // 
@@ -1275,14 +1389,13 @@ namespace WebMConverter
             // 
             // statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(3, 424);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1067, 22);
-            this.statusStrip.SizingGrip = false;
-            this.statusStrip.TabIndex = 6;
-            this.statusStrip.Text = "statusStrip1";
+            statusStrip.Location = new System.Drawing.Point(3, 424);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new System.Drawing.Size(1067, 22);
+            statusStrip.SizingGrip = false;
+            statusStrip.TabIndex = 6;
             // 
             // toolStripStatusLabel
             // 
@@ -1291,47 +1404,14 @@ namespace WebMConverter
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelVideoCrf
+            // panelHideTheOptions
             // 
-            this.labelVideoCrf.AutoSize = true;
-            this.labelVideoCrf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoCrf.Location = new System.Drawing.Point(3, 56);
-            this.labelVideoCrf.Name = "labelVideoCrf";
-            this.labelVideoCrf.Size = new System.Drawing.Size(73, 28);
-            this.labelVideoCrf.TabIndex = 33;
-            this.labelVideoCrf.Text = "CRF:";
-            this.labelVideoCrf.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // numericCrf
-            // 
-            this.numericCrf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericCrf.Location = new System.Drawing.Point(82, 59);
-            this.numericCrf.Maximum = new decimal(new int[] {
-            51,
-            0,
-            0,
-            0});
-            this.numericCrf.Name = "numericCrf";
-            this.numericCrf.Size = new System.Drawing.Size(142, 20);
-            this.numericCrf.TabIndex = 34;
-            this.numericCrf.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
-            this.numericCrf.ValueChanged += new System.EventHandler(this.UpdateArguments);
-            // 
-            // labelVideoCrfHint
-            // 
-            this.labelVideoCrfHint.AutoSize = true;
-            this.labelVideoCrfHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVideoCrfHint.Location = new System.Drawing.Point(230, 56);
-            this.labelVideoCrfHint.Name = "labelVideoCrfHint";
-            this.labelVideoCrfHint.Size = new System.Drawing.Size(802, 28);
-            this.labelVideoCrfHint.TabIndex = 35;
-            this.labelVideoCrfHint.Text = "Constant rate factor for the video; basically, the overall quality. A lower value" +
-    " means higher quality and filesize.";
-            this.labelVideoCrfHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelHideTheOptions.Controls.Add(panelContainTheProgressBar);
+            this.panelHideTheOptions.Location = new System.Drawing.Point(3, 88);
+            this.panelHideTheOptions.Name = "panelHideTheOptions";
+            this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
+            this.panelHideTheOptions.TabIndex = 3;
             // 
             // MainForm
             // 
@@ -1340,8 +1420,8 @@ namespace WebMConverter
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 446);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.tableLayoutPanelMainForm);
+            this.Controls.Add(statusStrip);
+            this.Controls.Add(tableMainForm);
             this.Controls.Add(this.panelHideTheOptions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1354,56 +1434,56 @@ namespace WebMConverter
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HandleDragEnter);
-            this.tableLayoutPanelMainForm.ResumeLayout(false);
-            this.groupBoxMain.ResumeLayout(false);
-            this.tableLayoutPanelGroupMain.ResumeLayout(false);
-            this.tableLayoutPanelGroupMain.PerformLayout();
-            this.tabControlOptions.ResumeLayout(false);
-            this.tabPageProcessing.ResumeLayout(false);
-            this.tableLayoutPanelProcessing.ResumeLayout(false);
-            this.tableLayoutPanelProcessing.PerformLayout();
-            this.toolStripProcessingScript.ResumeLayout(false);
-            this.toolStripProcessingScript.PerformLayout();
-            this.panelProcessingScriptInput.ResumeLayout(false);
-            this.panelProcessingScriptInput.PerformLayout();
-            this.tabPageEncoding.ResumeLayout(false);
-            this.tableLayoutPanelEncoding.ResumeLayout(false);
-            this.groupBoxEncodingGeneral.ResumeLayout(false);
-            this.tableLayoutPanelEncodingGeneral.ResumeLayout(false);
-            this.tableLayoutPanelEncodingGeneral.PerformLayout();
-            this.tableLayoutPanelGeneralSizeLimit.ResumeLayout(false);
-            this.tableLayoutPanelGeneralSizeLimit.PerformLayout();
-            this.groupBoxEncodingVideo.ResumeLayout(false);
+            tableMainForm.ResumeLayout(false);
+            groupMain.ResumeLayout(false);
+            tableMain.ResumeLayout(false);
+            tableMain.PerformLayout();
+            tabControlOptions.ResumeLayout(false);
+            tabProcessing.ResumeLayout(false);
+            tableProcessing.ResumeLayout(false);
+            tableProcessing.PerformLayout();
+            toolStripProcessing.ResumeLayout(false);
+            toolStripProcessing.PerformLayout();
+            panelProcessingInput.ResumeLayout(false);
+            panelProcessingInput.PerformLayout();
+            tabEncoding.ResumeLayout(false);
+            tableEncoding.ResumeLayout(false);
+            groupEncodingGeneral.ResumeLayout(false);
+            tableEncodingGeneral.ResumeLayout(false);
+            tableEncodingGeneral.PerformLayout();
+            tableGeneralSizeLimit.ResumeLayout(false);
+            tableGeneralSizeLimit.PerformLayout();
+            groupEncodingVideo.ResumeLayout(false);
             this.tableLayoutPanelEncodingVideo.ResumeLayout(false);
             this.tableLayoutPanelEncodingVideo.PerformLayout();
-            this.tableLayoutPanelVideoBitrate.ResumeLayout(false);
-            this.tableLayoutPanelVideoBitrate.PerformLayout();
-            this.groupBoxEncodingAudio.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.tableLayoutPanelAudioBitrate.ResumeLayout(false);
-            this.tableLayoutPanelAudioBitrate.PerformLayout();
-            this.tabPageAdvanced.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.groupBoxAdvancedEncoding.ResumeLayout(false);
-            this.tableLayoutPanelEncodingAdvanced.ResumeLayout(false);
-            this.tableLayoutPanelEncodingAdvanced.PerformLayout();
-            this.tableLayoutPanelEncodingSlices.ResumeLayout(false);
-            this.tableLayoutPanelEncodingSlices.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
-            this.tableLayoutPanelEncodingThreads.ResumeLayout(false);
-            this.tableLayoutPanelEncodingThreads.PerformLayout();
+            tableVideoBitrate.ResumeLayout(false);
+            tableVideoBitrate.PerformLayout();
+            groupEncodingAudio.ResumeLayout(false);
+            tableEncodingAudio.ResumeLayout(false);
+            tableEncodingAudio.PerformLayout();
+            tableAudioBitrate.ResumeLayout(false);
+            tableAudioBitrate.PerformLayout();
+            tabAdvanced.ResumeLayout(false);
+            tableAdvanced.ResumeLayout(false);
+            tableAdvanced.PerformLayout();
+            groupAdvancedProcessing.ResumeLayout(false);
+            tableAdvancedProcessing.ResumeLayout(false);
+            tableAdvancedProcessing.PerformLayout();
+            groupAdvancedEncoding.ResumeLayout(false);
+            tableAdvancedEncoding.ResumeLayout(false);
+            tableAdvancedEncoding.PerformLayout();
+            tableEncodingThreads.ResumeLayout(false);
+            tableEncodingThreads.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
-            this.groupBoxAdvancedProcessing.ResumeLayout(false);
-            this.tableLayoutPanelAdvancedProcessing.ResumeLayout(false);
-            this.tableLayoutPanelAdvancedProcessing.PerformLayout();
+            tableEncodingSlices.ResumeLayout(false);
+            tableEncodingSlices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericCrf)).EndInit();
+            panelContainTheProgressBar.ResumeLayout(false);
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             this.panelHideTheOptions.ResumeLayout(false);
             this.panelHideTheOptions.PerformLayout();
-            this.panelContainTheProgressBar.ResumeLayout(false);
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericCrf)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1411,97 +1491,43 @@ namespace WebMConverter
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMainForm;
-        private System.Windows.Forms.GroupBox groupBoxMain;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGroupMain;
-        private System.Windows.Forms.Button buttonBrowseOut;
-        private System.Windows.Forms.Label labelOutputFile;
-        private System.Windows.Forms.Label labelInputFile;
-        private System.Windows.Forms.Button buttonGo;
-        private System.Windows.Forms.Button buttonBrowseIn;
         public System.Windows.Forms.TextBox textBoxIn;
         public System.Windows.Forms.TextBox textBoxOut;
-        private System.Windows.Forms.TabControl tabControlOptions;
-        private System.Windows.Forms.TabPage tabPageProcessing;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProcessing;
-        private System.Windows.Forms.ToolStrip toolStripProcessingScript;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCrop;
-        private System.Windows.Forms.ToolStripButton toolStripButtonResize;
-        private System.Windows.Forms.ToolStripButton toolStripButtonReverse;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdvancedScripting;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSubtitle;
-        private System.Windows.Forms.ToolStripButton buttonPreview;
-        private System.Windows.Forms.Panel panelProcessingScriptInput;
-        private System.Windows.Forms.ListView listViewProcessingScript;
+        private System.Windows.Forms.ToolStripButton buttonCrop;
+        private System.Windows.Forms.ToolStripButton buttonResize;
+        private System.Windows.Forms.ToolStripButton buttonReverse;
+        private System.Windows.Forms.ToolStripButton boxAdvancedScripting;
+        private System.Windows.Forms.ToolStripButton buttonSubtitle;
         private System.Windows.Forms.TextBox textBoxProcessingScript;
-        private System.Windows.Forms.TabPage tabPageEncoding;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncoding;
-        private System.Windows.Forms.GroupBox groupBoxEncodingGeneral;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingGeneral;
-        private System.Windows.Forms.Label labelGeneralTitle;
-        private System.Windows.Forms.TextBox boxMetadataTitle;
-        private System.Windows.Forms.Label labelMetadataTitleHint;
-        private System.Windows.Forms.GroupBox groupBoxEncodingVideo;
+        private System.Windows.Forms.TextBox boxTitle;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingVideo;
-        private System.Windows.Forms.Label labelVideoBitrate;
-        private System.Windows.Forms.Label labelVideoBitrateHint;
         private System.Windows.Forms.CheckBox boxHQ;
         private System.Windows.Forms.Panel panelHideTheOptions;
-        private System.Windows.Forms.Panel panelContainTheProgressBar;
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
-        private System.Windows.Forms.TabPage tabPageAdvanced;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.GroupBox groupBoxAdvancedEncoding;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingAdvanced;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingSlices;
         private System.Windows.Forms.TrackBar trackSlices;
         private System.Windows.Forms.Label labelSlices;
-        private System.Windows.Forms.Label labelEncodingThreads;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEncodingThreads;
         private System.Windows.Forms.TrackBar trackThreads;
         private System.Windows.Forms.Label labelThreads;
-        private System.Windows.Forms.Label labelEncodingThreadsHint;
-        private System.Windows.Forms.Label labelEncodingArguments;
-        private System.Windows.Forms.TextBox textBoxArguments;
-        private System.Windows.Forms.Label labelEncodingSlices;
-        private System.Windows.Forms.Label labelAdvancedWarning;
-        private System.Windows.Forms.GroupBox groupBoxAdvancedProcessing;
-        private System.Windows.Forms.Label labelEncodingSlicesHint;
-        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.TextBox boxArguments;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAdvancedProcessing;
-        private System.Windows.Forms.Label labelProcessingLevelsHint;
-        private System.Windows.Forms.Label labelProcessingDeinterlaceHint;
         private System.Windows.Forms.CheckBox boxDeinterlace;
         private System.Windows.Forms.CheckBox boxLevels;
-        private System.Windows.Forms.ToolStripSplitButton toolStripButtonTrim;
-        private System.Windows.Forms.ToolStripMenuItem toolStripButtonMultipleTrim;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCaption;
-        private System.Windows.Forms.ToolStripButton toolStripButtonOverlay;
-        private System.Windows.Forms.Label labelGeneralSizeLimitHint;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGeneralSizeLimit;
+        private System.Windows.Forms.ToolStripSplitButton buttonTrim;
+        private System.Windows.Forms.ToolStripMenuItem buttonMultipleTrim;
+        private System.Windows.Forms.ToolStripButton buttonCaption;
+        private System.Windows.Forms.ToolStripButton buttonOverlay;
         private System.Windows.Forms.TextBox boxLimit;
-        private System.Windows.Forms.Label labelGeneralSizeLimitUnit;
-        private System.Windows.Forms.Label labelGeneralSizeLimit;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelVideoBitrate;
         private System.Windows.Forms.TextBox boxVideoBitrate;
-        private System.Windows.Forms.Label labelVideoBitrateUnit;
-        private System.Windows.Forms.Label labelVideoHQHint;
-        private System.Windows.Forms.GroupBox groupBoxEncodingAudio;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label labelGeneralAudioHint;
         private System.Windows.Forms.CheckBox boxAudio;
-        private System.Windows.Forms.Label labelAudioBitrate;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAudioBitrate;
         private System.Windows.Forms.TextBox boxAudioBitrate;
-        private System.Windows.Forms.Label labelAudioBitrateUnit;
-        private System.Windows.Forms.Label labelAudioBitrateHint;
-        private System.Windows.Forms.Label labelProcessingDenoiseHint;
         private System.Windows.Forms.CheckBox boxDenoise;
-        private System.Windows.Forms.Label labelVideoCrfHint;
         private System.Windows.Forms.NumericUpDown numericCrf;
-        private System.Windows.Forms.Label labelVideoCrf;
+        private System.Windows.Forms.Button buttonBrowseIn;
+        private System.Windows.Forms.Button buttonGo;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.ImageList imageListFilters;
+        private System.Windows.Forms.ListView listViewProcessingScript;
     }
 }
 
