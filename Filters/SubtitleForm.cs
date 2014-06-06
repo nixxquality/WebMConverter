@@ -26,9 +26,9 @@ namespace WebMConverter
             else
             {
                 Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
-                foreach (int Track in Program.SubtitleTracks)
+                foreach (KeyValuePair<int, string> Track in Program.SubtitleTracks)
                 {
-                    subtitleTracks.Add(Track, string.Format("Track #{0}", Track)); // Todo: Add more meaningful information
+                    subtitleTracks.Add(Track.Key, string.Format("#{0}: {1}", Track.Key, Track.Value));
                 }
                 comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
                 comboBoxVideoTracks.ValueMember = "Key";

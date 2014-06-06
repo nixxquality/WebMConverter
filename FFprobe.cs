@@ -10,12 +10,12 @@ namespace WebMConverter
     class FFprobe : Process
     {
         public string FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32", "ffprobe.exe");
-        const string templateArguments = "-f {0} \"{1}\" -of xml{2}";
+        const string templateArguments = "{0} \"{1}\" -of xml{2}";
         // {0} is the format of the input file
         // {1} is the input file
-        // {2} is automatically constructed list of things to output
+        // {2} is automatically constructed list of things to output OR argument
 
-        public FFprobe(string avsInputFile, string format = "avisynth", List<string> dataToProbe = null, string argument = null)
+        public FFprobe(string inputFile, string format = "-f avisynth", List<string> dataToProbe = null, string argument = null)
         {
             if (argument == null) // No override arguments, time to construct this bad boy
             {
@@ -31,12 +31,14 @@ namespace WebMConverter
                     dataToProbeAsString += " -show_";
                     dataToProbeAsString += Type;
                 }
-
-                argument = string.Format(templateArguments, format, avsInputFile, dataToProbeAsString);
+                this.StartInfo.Arguments = string.Format(templateArguments, format, inputFile, dataToProbeAsString);
+            }
+            else
+            {
+                this.StartInfo.Arguments = string.Format(templateArguments, format, inputFile, " " + argument);
             }
 
             this.StartInfo.FileName = FFmpegPath;
-            this.StartInfo.Arguments = argument;
             this.StartInfo.RedirectStandardInput = true;
             this.StartInfo.RedirectStandardOutput = true;
             this.StartInfo.RedirectStandardError = true;

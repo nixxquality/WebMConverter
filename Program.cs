@@ -75,7 +75,7 @@ namespace WebMConverter
         public static string InputFile;
         public static string FileMd5;
         public static string AttachmentDirectory;
-        public static List<int> SubtitleTracks;
+        public static Dictionary<int, string> SubtitleTracks; // stream id, tag:title OR codec_name
 
         internal static int TimeToFrame(double time)
         {

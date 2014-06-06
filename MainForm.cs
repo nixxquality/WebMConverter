@@ -12,6 +12,7 @@ using StopWatch = System.Timers.Timer;
 using System.Xml;
 using System.Net;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace WebMConverter
 {
@@ -743,20 +744,46 @@ namespace WebMConverter
                 Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
                 Directory.CreateDirectory(Program.AttachmentDirectory);
 
-                Program.SubtitleTracks = new List<int>();
-                for (int i = 0; i <= index.NumberOfTracks; i++)
+                // Construct SubtitleTracks list and extract the subtitles
+                using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -select_streams s"))
                 {
-                    if (index.GetTrack(i).TrackType == FFMSSharp.TrackType.Subtitle)
+                    string subtitleStreamsInfo = prober.Probe();
+                    Program.SubtitleTracks = new Dictionary<int, string>();
+
+                    using (var s = new StringReader(subtitleStreamsInfo))
                     {
-                        Program.SubtitleTracks.Add(i);
-                        using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, i, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", i)))))
+                        var doc = new XPathDocument(s);
+
+                        foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
                         {
-                            ffmpeg.Start();
-                            ffmpeg.WaitForExit();
+                            int streamindex;
+                            string title;
+
+                            streamindex = int.Parse(nav.GetAttribute("index", ""));
+
+                            // Extract the subtitle file
+                            using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, streamindex, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex)))))
+                            {
+                                ffmpeg.Start();
+                                ffmpeg.WaitForExit();
+                            }
+
+                            // Get a title
+                            title = nav.GetAttribute("codec_name", "");
+
+                            if (!nav.IsEmptyElement) // There might be a tag element
+                            {
+                                nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
+                                title = nav.GetAttribute("value", "");
+                            }
+
+                            // Save it
+                            Program.SubtitleTracks.Add(streamindex, title);
                         }
                     }
                 }
 
+                // Extract attachments (internal fonts)
                 using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
                 {
                     ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
