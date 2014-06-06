@@ -897,6 +897,9 @@ namespace WebMConverter
 
         void UpdateArguments(object sender, EventArgs e)
         {
+            if (Program.InputFile == null)
+                return;
+
             try
             {
                 string arguments = GenerateArguments();
@@ -1221,7 +1224,17 @@ namespace WebMConverter
                 slices = 1;
             }
 
-            trackSlices.Value = slices;
+            if (trackSlices.InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    trackSlices.Value = slices;
+                });
+            }
+            else
+            {
+                trackSlices.Value = slices;
+            }
         }
 
         #endregion
