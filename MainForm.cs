@@ -64,8 +64,6 @@ namespace WebMConverter
         {
             int threads = Environment.ProcessorCount;
             trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
-
-            trackThreads_Scroll(sender, e); //Update label
         }
 
         void HandleDragEnter(object sender, DragEventArgs e)
@@ -152,7 +150,7 @@ namespace WebMConverter
 
         #endregion
 
-        #region groupBoxMain
+        #region groupMain
 
         void buttonBrowseIn_Click(object sender, EventArgs e)
         {
@@ -213,7 +211,7 @@ namespace WebMConverter
 
         #endregion
 
-        #region tabPageProcessing
+        #region tabProcessing
 
         void buttonCaption_Click(object sender, EventArgs e)
         {
@@ -229,7 +227,7 @@ namespace WebMConverter
                     {
                         Filters.Caption = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Caption", "subtitles"); // todo: get another icon
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -250,7 +248,7 @@ namespace WebMConverter
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop", "crop");
                         SetSlices();
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -271,7 +269,7 @@ namespace WebMConverter
                         Filters.MultipleTrim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Multiple Trim", "trim");
                         GenerateArguments();
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -291,7 +289,7 @@ namespace WebMConverter
                     {
                         Filters.Overlay = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Overlay", "subtitles"); // todo: get another icon
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -312,7 +310,7 @@ namespace WebMConverter
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize", "resize");
                         SetSlices();
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -328,7 +326,7 @@ namespace WebMConverter
             {
                 Filters.Reverse = new ReverseFilter();
                 listViewProcessingScript.Items.Add("Reverse", "reverse");
-                (sender as Button).Enabled = false;
+                (sender as ToolStripItem).Enabled = false;
             }
         }
 
@@ -346,7 +344,7 @@ namespace WebMConverter
                     {
                         Filters.Subtitle = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Subtitle", "subtitles");
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -367,7 +365,7 @@ namespace WebMConverter
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim", "trim");
                         GenerateArguments();
-                        (sender as Button).Enabled = false;
+                        (sender as ToolStripItem).Enabled = false;
                     }
                 }
             }
@@ -546,7 +544,7 @@ namespace WebMConverter
 
         #endregion
 
-        #region tabPageEncoding
+        #region tabEncoding
 
         void textBoxNumbersOnly(object sender, KeyPressEventArgs e)
         {
@@ -564,7 +562,7 @@ namespace WebMConverter
 
         #endregion
 
-        #region tagPageAdvanced
+        #region tabAdvanced
 
         void boxLevels_CheckedChanged(object sender, EventArgs e)
         {
@@ -581,15 +579,15 @@ namespace WebMConverter
             Filters.Denoise = (sender as CheckBox).Checked ? new DenoiseFilter() : null;
         }
 
-        void trackThreads_Scroll(object sender, EventArgs e)
+        void trackThreads_ValueChanged(object sender, EventArgs e)
         {
-            labelThreads.Text = (sender as TrackBar).ToString();
+            labelThreads.Text = (sender as TrackBar).Value.ToString();
             UpdateArguments(sender, e);
         }
 
-        void trackSlices_Scroll(object sender, EventArgs e)
+        void trackSlices_ValueChanged(object sender, EventArgs e)
         {
-            labelSlices.Text = (sender as TrackBar).ToString();
+            labelSlices.Text = (sender as TrackBar).Value.ToString();
             UpdateArguments(sender, e);
         }
 

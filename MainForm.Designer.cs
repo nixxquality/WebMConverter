@@ -411,7 +411,7 @@ namespace WebMConverter
             // 
             this.buttonMultipleTrim.AccessibleDescription = "Select many clips from your video, and sort them on a timeline.";
             this.buttonMultipleTrim.Name = "buttonMultipleTrim";
-            this.buttonMultipleTrim.Size = new System.Drawing.Size(152, 22);
+            this.buttonMultipleTrim.Size = new System.Drawing.Size(146, 22);
             this.buttonMultipleTrim.Text = "Multiple Trim";
             this.buttonMultipleTrim.Click += new System.EventHandler(this.buttonMultipleTrim_Click);
             this.buttonMultipleTrim.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
@@ -1202,7 +1202,7 @@ namespace WebMConverter
             this.trackThreads.Size = new System.Drawing.Size(122, 22);
             this.trackThreads.TabIndex = 0;
             this.trackThreads.Value = 1;
-            this.trackThreads.ValueChanged += new System.EventHandler(this.trackThreads_Scroll);
+            this.trackThreads.ValueChanged += new System.EventHandler(this.trackThreads_ValueChanged);
             // 
             // labelThreads
             // 
@@ -1265,7 +1265,7 @@ namespace WebMConverter
             this.trackSlices.Size = new System.Drawing.Size(122, 22);
             this.trackSlices.TabIndex = 0;
             this.trackSlices.Value = 1;
-            this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_Scroll);
+            this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_ValueChanged);
             // 
             // labelSlices
             // 
