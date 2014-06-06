@@ -58,20 +58,9 @@ namespace WebMConverter
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32"));
 
             InitializeComponent();
-
-            ImageList imageList = new ImageList();
-            imageList.ImageSize = new Size(100, 100);
-
-            imageList.Images.Add("crop", Properties.Resources.crop);
-            imageList.Images.Add("resize", Properties.Resources.resize);
-            imageList.Images.Add("reverse", Properties.Resources.reverse);
-            imageList.Images.Add("subtitles", Properties.Resources.subtitles);
-            imageList.Images.Add("trim", Properties.Resources.trim);
-
-            listViewProcessingScript.LargeImageList = imageList;
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        void MainForm_Load(object sender, EventArgs e)
         {
             int threads = Environment.ProcessorCount;
             trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
@@ -79,14 +68,14 @@ namespace WebMConverter
             trackThreads_Scroll(sender, e); //Update label
         }
 
-        private void HandleDragEnter(object sender, DragEventArgs e)
+        void HandleDragEnter(object sender, DragEventArgs e)
         {
             // show copy cursor for files
             bool dataPresent = e.Data.GetDataPresent(DataFormats.FileDrop);
             e.Effect = dataPresent ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
-        private void HandleDragDrop(object sender, DragEventArgs e)
+        void HandleDragDrop(object sender, DragEventArgs e)
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             SetFile(files[0]);
@@ -103,6 +92,7 @@ namespace WebMConverter
             await Task.Run(() => CheckUpdate());
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
         void setToolTip(string message)
         {
             if (this.IsDisposed || toolStripStatusLabel.IsDisposed)
@@ -122,7 +112,7 @@ namespace WebMConverter
         }
 
         [System.Diagnostics.DebuggerStepThrough]
-        public void showToolTip(string message, int timer = 0)
+        void showToolTip(string message, int timer = 0)
         {
             clearToolTip();
 
@@ -140,7 +130,7 @@ namespace WebMConverter
         }
 
         [System.Diagnostics.DebuggerStepThrough]
-        public void clearToolTip(object sender = null, EventArgs e = null)
+        void clearToolTip(object sender = null, EventArgs e = null)
         {
             if (toolTipTimer != null)
                 toolTipTimer.Close();
@@ -148,11 +138,23 @@ namespace WebMConverter
             setToolTip("");
         }
 
+        [System.Diagnostics.DebuggerStepThrough]
+        void ToolStripItemTooltip(object sender, EventArgs e)
+        {
+            showToolTip((sender as ToolStripItem).AccessibleDescription);
+        }
+
+        [System.Diagnostics.DebuggerStepThrough]
+        void ControlTooltip(object sender, EventArgs e)
+        {
+            showToolTip((sender as Control).AccessibleDescription);
+        }
+
         #endregion
 
         #region groupBoxMain
 
-        private void buttonBrowseIn_Click(object sender, EventArgs e)
+        void buttonBrowseIn_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
@@ -165,7 +167,7 @@ namespace WebMConverter
             }
         }
 
-        private void buttonBrowseOut_Click(object sender, EventArgs e)
+        void buttonBrowseOut_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
@@ -178,12 +180,12 @@ namespace WebMConverter
             }
         }
 
-        private void buttonGo_Click(object sender, EventArgs e)
+        void buttonGo_Click(object sender, EventArgs e)
         {
             if (indexing) // We are actually a cancel button right now.
             {
                 indexbw.CancelAsync();
-                buttonGo.Enabled = false;
+                (sender as Button).Enabled = false;
                 return;
             }
 
@@ -197,7 +199,7 @@ namespace WebMConverter
             }
         }
 
-        private void buttonPreview_Click(object sender, EventArgs e)
+        void buttonPreview_Click(object sender, EventArgs e)
         {
             try
             {
@@ -213,13 +215,13 @@ namespace WebMConverter
 
         #region tabPageProcessing
 
-        private void toolStripButtonCaption_Click(object sender, EventArgs e)
+        void buttonCaption_Click(object sender, EventArgs e)
         {
             using (var form = new CaptionForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -227,19 +229,19 @@ namespace WebMConverter
                     {
                         Filters.Caption = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Caption", "subtitles"); // todo: get another icon
-                        toolStripButtonCaption.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonCrop_Click(object sender, EventArgs e)
+        void buttonCrop_Click(object sender, EventArgs e)
         {
             using (var form = new CropForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -248,19 +250,19 @@ namespace WebMConverter
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop", "crop");
                         SetSlices();
-                        toolStripButtonCrop.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonMultipleTrim_Click(object sender, EventArgs e)
+        void buttonMultipleTrim_Click(object sender, EventArgs e)
         {
             using (var form = new MultipleTrimForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -269,19 +271,19 @@ namespace WebMConverter
                         Filters.MultipleTrim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Multiple Trim", "trim");
                         GenerateArguments();
-                        toolStripButtonTrim.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonOverlay_Click(object sender, EventArgs e)
+        void buttonOverlay_Click(object sender, EventArgs e)
         {
             using (var form = new OverlayForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -289,19 +291,19 @@ namespace WebMConverter
                     {
                         Filters.Overlay = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Overlay", "subtitles"); // todo: get another icon
-                        toolStripButtonOverlay.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonResize_Click(object sender, EventArgs e)
+        void buttonResize_Click(object sender, EventArgs e)
         {
             using (var form = new ResizeForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -310,15 +312,15 @@ namespace WebMConverter
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize", "resize");
                         SetSlices();
-                        toolStripButtonResize.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonReverse_Click(object sender, EventArgs e)
+        void buttonReverse_Click(object sender, EventArgs e)
         {
-            if (toolStripButtonAdvancedScripting.Checked)
+            if (boxAdvancedScripting.Checked)
             {
                 textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().ToString());
             }
@@ -326,17 +328,17 @@ namespace WebMConverter
             {
                 Filters.Reverse = new ReverseFilter();
                 listViewProcessingScript.Items.Add("Reverse", "reverse");
-                toolStripButtonReverse.Enabled = false;
+                (sender as Button).Enabled = false;
             }
         }
 
-        private void toolStripButtonSubtitle_Click(object sender, EventArgs e)
+        void buttonSubtitle_Click(object sender, EventArgs e)
         {
             using (var form = new SubtitleForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -344,19 +346,19 @@ namespace WebMConverter
                     {
                         Filters.Subtitle = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Subtitle", "subtitles");
-                        toolStripButtonSubtitle.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonTrim_Click(object sender, EventArgs e)
+        void buttonTrim_Click(object sender, EventArgs e)
         {
             using (var form = new TrimForm())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (toolStripButtonAdvancedScripting.Checked)
+                    if (boxAdvancedScripting.Checked)
                     {
                         textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
                     }
@@ -365,105 +367,97 @@ namespace WebMConverter
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim", "trim");
                         GenerateArguments();
-                        toolStripButtonTrim.Enabled = false;
+                        (sender as Button).Enabled = false;
                     }
                 }
             }
         }
 
-        private void toolStripButtonAdvancedScripting_Click(object sender, EventArgs e)
+        void boxAdvancedScripting_Click(object sender, EventArgs e)
         {
             ProbeScript();
-            toolStripButtonAdvancedScripting.Checked = !toolStripButtonAdvancedScripting.Checked;
-            //if (toolStripButton1.Checked)
-            //{
+            (sender as ToolStripButton).Checked = !(sender as ToolStripButton).Checked;
+
             listViewProcessingScript.Hide();
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
             GenerateAvisynthScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
-            //}
-            //else
-            //{
-            //    textBoxProcessingScript.Hide();
-            //    listViewProcessingScript.Show();
-            //}
-            // This could be used to toggle between advanced and list view, but that's hard to code. Maybe later?
-            // For now, just stay in advanced mode forever.
-            toolStripButtonAdvancedScripting.Enabled = false;
+
+            (sender as ToolStripButton).Enabled = false;
             clearToolTip(sender, e);
         }
 
-        private void toolStripButtonAdvancedScripting_CheckedChanged(object sender, EventArgs e)
+        void boxAdvancedScripting_CheckedChanged(object sender, EventArgs e)
         {
-            toolStripButtonAdvancedScripting.Image = toolStripButtonAdvancedScripting.Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // STUB: get better icons
+            (sender as ToolStripButton).Image = (sender as ToolStripButton).Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // TODO: get better icons
         }
 
-        private void toolStripFilterButtonsEnabled(bool enabled)
+        void toolStripFilterButtonsEnabled(bool enabled)
         {
-            toolStripButtonCaption.Enabled = enabled;
-            toolStripButtonCrop.Enabled = enabled;
-            toolStripButtonOverlay.Enabled = enabled;
-            toolStripButtonResize.Enabled = enabled;
-            toolStripButtonReverse.Enabled = enabled;
-            toolStripButtonSubtitle.Enabled = enabled;
-            toolStripButtonTrim.Enabled = enabled;
+            buttonCaption.Enabled = enabled;
+            buttonCrop.Enabled = enabled;
+            buttonOverlay.Enabled = enabled;
+            buttonResize.Enabled = enabled;
+            buttonReverse.Enabled = enabled;
+            buttonSubtitle.Enabled = enabled;
+            buttonTrim.Enabled = enabled;
         }
 
-        private void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e)
+        void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
-                foreach (ListViewItem item in listViewProcessingScript.SelectedItems)
+                foreach (ListViewItem item in (sender as ListView).SelectedItems)
                 {
                     switch (item.Text)
                     {
                         case "Caption":
                             Filters.Caption = null;
-                            toolStripButtonCaption.Enabled = true;
+                            buttonCaption.Enabled = true;
                             break;
                         case "Crop":
                             Filters.Crop = null;
-                            toolStripButtonCrop.Enabled = true;
+                            buttonCrop.Enabled = true;
                             SetSlices();
                             break;
                         case "Multiple Trim":
                             Filters.MultipleTrim = null;
-                            toolStripButtonTrim.Enabled = true;
+                            buttonTrim.Enabled = true;
                             GenerateArguments();
                             break;
                         case "Overlay":
                             Filters.Overlay = null;
-                            toolStripButtonOverlay.Enabled = true;
+                            buttonOverlay.Enabled = true;
                             break;
                         case "Resize":
                             Filters.Resize = null;
-                            toolStripButtonResize.Enabled = true;
+                            buttonResize.Enabled = true;
                             SetSlices();
                             break;
                         case "Reverse":
                             Filters.Reverse = null;
-                            toolStripButtonReverse.Enabled = true;
+                            buttonReverse.Enabled = true;
                             break;
                         case "Subtitle":
                             Filters.Subtitle = null;
-                            toolStripButtonSubtitle.Enabled = true;
+                            buttonSubtitle.Enabled = true;
                             break;
                         case "Trim":
                             Filters.Trim = null;
-                            toolStripButtonTrim.Enabled = true;
+                            buttonTrim.Enabled = true;
                             GenerateArguments();
                             break;
                     }
-                    listViewProcessingScript.Items.Remove(item);
+                    (sender as ListView).Items.Remove(item);
                 }
             }
         }
 
-        private void listViewProcessingScript_ItemActivate(object sender, EventArgs e)
+        void listViewProcessingScript_ItemActivate(object sender, EventArgs e)
         {
-            switch (listViewProcessingScript.FocusedItem.Text)
+            switch ((sender as ListView).FocusedItem.Text)
             {
                 case "Caption":
                     using (var form = new CaptionForm(Filters.Caption))
@@ -544,81 +538,17 @@ namespace WebMConverter
             SetSlices();
         }
 
-        #region Tooltips
-
         [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonTrim_MouseEnter(object sender, EventArgs e)
+        void listViewProcessingScript_MouseEnter(object sender, EventArgs e)
         {
-            showToolTip("Select a clip from your video.");
+            showToolTip("");
         }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonMultipleTrim_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Select many clips from your video, and sort them on a timeline.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonCrop_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Crop your video into a smaller frame.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonResize_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Scale your video.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonReverse_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Everything is backwards!");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonSubtitle_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Burn subtitles into the video.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonOverlay_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Overlay a picture on top of your video.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonCaption_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Add some funny text to your video.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void buttonPreview_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Open a preview window that will loop your processing settings. Note that this doesn't reflect output encoding quality.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void toolStripButtonAdvancedScripting_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Are you a bad enough dude? Take care, there is no way back. You will have to start over if you fuck up.");
-        }
-
-        [System.Diagnostics.DebuggerStepThrough]
-        private void listViewProcessingScript_MouseEnter(object sender, EventArgs e)
-        {
-            showToolTip("Double click a filter to edit it. Select a filter and press Delete to remove it.");
-        }
-
-        #endregion
 
         #endregion
 
         #region tabPageEncoding
 
-        private void textBoxNumbersOnly(object sender, KeyPressEventArgs e)
+        void textBoxNumbersOnly(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
@@ -626,7 +556,7 @@ namespace WebMConverter
             }
         }
 
-        private void boxAudio_CheckedChanged(object sender, EventArgs e)
+        void boxAudio_CheckedChanged(object sender, EventArgs e)
         {
             boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
             UpdateArguments(sender, e);
@@ -636,30 +566,30 @@ namespace WebMConverter
 
         #region tagPageAdvanced
 
-        private void boxLevels_CheckedChanged(object sender, EventArgs e)
+        void boxLevels_CheckedChanged(object sender, EventArgs e)
         {
-            Filters.Levels = boxLevels.Checked ? new LevelsFilter() : null;
+            Filters.Levels = (sender as CheckBox).Checked ? new LevelsFilter() : null;
         }
 
-        private void boxDeinterlace_CheckedChanged(object sender, EventArgs e)
+        void boxDeinterlace_CheckedChanged(object sender, EventArgs e)
         {
-            Filters.Deinterlace = boxDeinterlace.Checked ? new DeinterlaceFilter() : null;
+            Filters.Deinterlace = (sender as CheckBox).Checked ? new DeinterlaceFilter() : null;
         }
 
-        private void boxDenoise_CheckedChanged(object sender, EventArgs e)
+        void boxDenoise_CheckedChanged(object sender, EventArgs e)
         {
-            Filters.Denoise = boxDenoise.Checked ? new DenoiseFilter() : null;
+            Filters.Denoise = (sender as CheckBox).Checked ? new DenoiseFilter() : null;
         }
 
-        private void trackThreads_Scroll(object sender, EventArgs e)
+        void trackThreads_Scroll(object sender, EventArgs e)
         {
-            labelThreads.Text = trackThreads.Value.ToString();
+            labelThreads.Text = (sender as TrackBar).ToString();
             UpdateArguments(sender, e);
         }
 
-        private void trackSlices_Scroll(object sender, EventArgs e)
+        void trackSlices_Scroll(object sender, EventArgs e)
         {
-            labelSlices.Text = GetSlices().ToString();
+            labelSlices.Text = (sender as TrackBar).ToString();
             UpdateArguments(sender, e);
         }
 
@@ -669,7 +599,7 @@ namespace WebMConverter
 
         char[] invalidChars = Path.GetInvalidPathChars();
 
-        private void SetFile(string path)
+        void SetFile(string path)
         {
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
@@ -683,8 +613,8 @@ namespace WebMConverter
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
             string name = Path.GetFileNameWithoutExtension(path);
-            if (boxMetadataTitle.Text == _autoTitle || boxMetadataTitle.Text == "")
-                boxMetadataTitle.Text = _autoTitle = name;
+            if (boxTitle.Text == _autoTitle || boxTitle.Text == "")
+                boxTitle.Text = _autoTitle = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
             Program.InputFile = path;
@@ -693,8 +623,8 @@ namespace WebMConverter
             // Reset filters
             Filters.ResetFilters();
             listViewProcessingScript.Clear();
-            toolStripButtonAdvancedScripting.Checked = false; // STUB: this part is weak
-            toolStripButtonAdvancedScripting.Enabled = true;
+            boxAdvancedScripting.Checked = false; // STUB: this part is weak
+            boxAdvancedScripting.Enabled = true;
             textBoxProcessingScript.Hide();
             listViewProcessingScript.Show();
             GenerateAvisynthScript();
@@ -932,7 +862,7 @@ namespace WebMConverter
             indexbw.RunWorkerAsync();
         }
 
-        private void CancelIndexing()
+        void CancelIndexing()
         {
             textBoxIn.Text = "";
             textBoxOut.Text = "";
@@ -943,7 +873,7 @@ namespace WebMConverter
             panelHideTheOptions.SendToBack();
         }
 
-        private void ValidateInputFile(string input)
+        void ValidateInputFile(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new Exception("No input file!");
@@ -958,7 +888,7 @@ namespace WebMConverter
                 throw new Exception("Sorry, no moonrunes in your input file name.");
         }
 
-        private void ValidateOutputFile(string output)
+        void ValidateOutputFile(string output)
         {
             if (string.IsNullOrWhiteSpace(output))
                 throw new Exception("No output file!");
@@ -967,27 +897,27 @@ namespace WebMConverter
                 throw new Exception("Output path contains invalid characters!\nInvalid characters: " + string.Join(" ", invalidChars));
         }
 
-        private void UpdateArguments(object sender, EventArgs e)
+        void UpdateArguments(object sender, EventArgs e)
         {
             try
             {
                 string arguments = GenerateArguments();
                 if (arguments != _autoArguments || _argumentError)
                 {
-                    textBoxArguments.Text = _autoArguments = arguments;
+                    boxArguments.Text = _autoArguments = arguments;
                     showToolTip(arguments, 5000);
                     _argumentError = false;
                 }
             }
             catch (ArgumentException argExc)
             {
-                textBoxArguments.Text = "ERROR: " + argExc.Message;
+                boxArguments.Text = "ERROR: " + argExc.Message;
                 showToolTip("ERROR: " + argExc.Message, 5000);
                 _argumentError = true;
             }
         }
 
-        private void WriteAvisynthScript(string avsFileName, string avsInputFile)
+        void WriteAvisynthScript(string avsFileName, string avsInputFile)
         {
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
             {
@@ -1019,7 +949,7 @@ namespace WebMConverter
             }
         }
 
-        private void Preview()
+        void Preview()
         {
             string input = textBoxIn.Text;
             buttonPreview.Enabled = false;
@@ -1029,7 +959,7 @@ namespace WebMConverter
             // Generate the script if we're in simple mode
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
-            if (!toolStripButtonAdvancedScripting.Checked)
+            if (!boxAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
             // Make our temporary file for the AviSynth script
@@ -1040,12 +970,12 @@ namespace WebMConverter
             var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth \"{0}\"", avsFileName));
             ffplay.Exited += delegate
             {
-                toolStripProcessingScript.Invoke(new Action(() => buttonPreview.Enabled = true));
+                Invoke(new Action(() => buttonPreview.Enabled = true));
             };
             ffplay.Start();
         }
 
-        private void Convert()
+        void Convert()
         {
             string input = textBoxIn.Text;
             string output = textBoxOut.Text;
@@ -1053,7 +983,7 @@ namespace WebMConverter
             if (input == output)
                 throw new Exception("Input and output files are the same!");
 
-            string options = textBoxArguments.Text;
+            string options = boxArguments.Text;
 
             ValidateInputFile(input);
             ValidateOutputFile(output);
@@ -1064,7 +994,7 @@ namespace WebMConverter
             // Generate the script if we're in simple mode
             if (Filters.Caption != null)
                 Filters.Caption.BeforeEncode(GetResolution());
-            if (!toolStripButtonAdvancedScripting.Checked)
+            if (!boxAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
             // Make our temporary file for the AviSynth script
@@ -1087,7 +1017,7 @@ namespace WebMConverter
             new ConverterForm(this, avsFileName, arguments).ShowDialog(this);
         }
 
-        private string GenerateArguments()
+        string GenerateArguments()
         {
             float limit = 0;
             string limitTo = "";
@@ -1130,8 +1060,8 @@ namespace WebMConverter
                 audiobitratearg = string.Format(" -b:a {0}K", audiobitrate);
 
             string metadataTitle = "";
-            if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
-                metadataTitle = string.Format(" -metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
+            if (!string.IsNullOrWhiteSpace(boxTitle.Text))
+                metadataTitle = string.Format(" -metadata title=\"{0}\"", boxTitle.Text.Replace("\"", "\\\""));
 
             string HQ = "";
             if (boxHQ.Checked)
@@ -1145,9 +1075,9 @@ namespace WebMConverter
         /// Attempt to calculate the duration of the Avisynth script.
         /// </summary>
         /// <returns>The duration or -1 if automatic detection was unsuccessful.</returns>
-        private double GetDuration()
+        public double GetDuration()
         {
-            if (toolStripButtonAdvancedScripting.Checked)
+            if (boxAdvancedScripting.Checked)
             {
                 // The dirty way.
 
@@ -1181,7 +1111,7 @@ namespace WebMConverter
 
         public Size GetResolution()
         {
-            if (toolStripButtonAdvancedScripting.Checked)
+            if (boxAdvancedScripting.Checked)
             {
                 // The dirty way.
 
@@ -1227,7 +1157,7 @@ namespace WebMConverter
             }
         }
 
-        private void GenerateAvisynthScript()
+        void GenerateAvisynthScript()
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
@@ -1354,7 +1284,7 @@ namespace WebMConverter
                 const string text = "There is a new version of WebM for Retards!\nWould you like to download it now?";
                 const string caption = "Update available";
 
-                this.Invoke((MethodInvoker)delegate
+                Invoke((MethodInvoker)delegate
                 {
                     DialogResult result;
 
