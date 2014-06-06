@@ -32,6 +32,7 @@ namespace WebMConverter
                 if (filePicker.ShowDialog(this) == DialogResult.Cancel)
                 {
                     DialogResult = DialogResult.Cancel;
+                    Close();
                     return;
                 }
                 filename = filePicker.FileName;

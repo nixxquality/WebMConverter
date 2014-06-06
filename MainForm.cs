@@ -279,6 +279,9 @@ namespace WebMConverter
         {
             using (var form = new OverlayForm())
             {
+                if (form.IsDisposed) // The user cancelled the file picker
+                    return;
+
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (boxAdvancedScripting.Checked)
