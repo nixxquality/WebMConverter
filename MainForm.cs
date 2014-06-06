@@ -23,15 +23,16 @@ namespace WebMConverter
         //{1} is extra arguments
         //{2} is '-pass X' if HQ mode enabled, otherwise blank
 
-        private const string _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K -threads {2} -slices {3}{4}{5}{6}{7}";
+        private const string _templateArguments = "{0} -c:v libvpx -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}";
         //{0} is '-an' if no audio, otherwise blank
-        //{1} is video bitrate in kb/s
-        //{2} is amount of threads to use
-        //{3} is amount of slices to split the frame into
-        //{4} is ' -b:a XK' if audio bitrate specified otherwise blank
-        //{5} is ' -fs XM' if X MB limit enabled otherwise blank
-        //{6} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
-        //{7} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+        //{1} is constant rate factor
+        //{2} is video bitrate in kb/s
+        //{3} is amount of threads to use
+        //{4} is amount of slices to split the frame into
+        //{5} is ' -b:a XK' if audio bitrate specified otherwise blank
+        //{6} is ' -fs XM' if X MB limit enabled otherwise blank
+        //{7} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
+        //{8} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
 
         private string _indexFile;
 
@@ -1137,7 +1138,7 @@ namespace WebMConverter
                 HQ = " -quality best -lag-in-frames 16 -auto-alt-ref 1";
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ);
+            return string.Format(_templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ);
         }
 
         /// <summary>
