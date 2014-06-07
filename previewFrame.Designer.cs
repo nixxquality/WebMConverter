@@ -28,38 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxFrame = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFrame)).BeginInit();
+            this.Picture = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBoxFrame
+            // Picture
             // 
-            this.pictureBoxFrame.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBoxFrame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBoxFrame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxFrame.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxFrame.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBoxFrame.Name = "pictureBoxFrame";
-            this.pictureBoxFrame.Size = new System.Drawing.Size(150, 150);
-            this.pictureBoxFrame.TabIndex = 1;
-            this.pictureBoxFrame.TabStop = false;
-            this.pictureBoxFrame.SizeChanged += new System.EventHandler(this.pictureBoxFrame_SizeChanged);
+            this.Picture.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Picture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Picture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Picture.Location = new System.Drawing.Point(0, 0);
+            this.Picture.Margin = new System.Windows.Forms.Padding(0);
+            this.Picture.Name = "Picture";
+            this.Picture.Size = new System.Drawing.Size(150, 150);
+            this.Picture.TabIndex = 1;
+            this.Picture.TabStop = false;
+            this.Picture.SizeChanged += new System.EventHandler(this.pictureBoxFrame_SizeChanged);
             // 
             // PreviewFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.Controls.Add(this.pictureBoxFrame);
+            this.Controls.Add(this.Picture);
             this.Name = "PreviewFrame";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFrame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBoxFrame;
+        public System.Windows.Forms.PictureBox Picture;
+
 
     }
 }

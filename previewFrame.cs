@@ -21,8 +21,6 @@ namespace WebMConverter
             get { return (int)frame; }
             set { frame = (uint)value; GeneratePreview(); }
         }
-        public PictureBox Picture
-        { get { return pictureBoxFrame; } }
 
         public PreviewFrame()
         {
@@ -51,8 +49,8 @@ namespace WebMConverter
             Program.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSSharp.Resizer.Bilinear);
             frame = Program.VideoSource.GetFrame((int)this.frame);
 
-            pictureBoxFrame.BackgroundImage = frame.Bitmap;
-            pictureBoxFrame.ClientSize = new Size(w, h);
+            Picture.BackgroundImage = frame.Bitmap;
+            Picture.ClientSize = new Size(w, h);
 
             // Center the pictureBox in our control
             if (w == Width || w - 1 == Width || w + 1 == Width) // this looks weird but keep in mind we're dealing with an ex float here
