@@ -291,7 +291,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Overlay = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Overlay", "overlay"); // todo: get another icon
+                        listViewProcessingScript.Items.Add("Overlay", "overlay");
                         (sender as ToolStripItem).Enabled = false;
                     }
                 }
@@ -388,11 +388,6 @@ namespace WebMConverter
 
             (sender as ToolStripButton).Enabled = false;
             clearToolTip(sender, e);
-        }
-
-        void boxAdvancedScripting_CheckedChanged(object sender, EventArgs e)
-        {
-            //(sender as ToolStripButton).Image = (sender as ToolStripButton).Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // TODO: get better icons
         }
 
         void toolStripFilterButtonsEnabled(bool enabled)

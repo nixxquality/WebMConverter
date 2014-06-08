@@ -470,13 +470,9 @@ namespace WebMConverter
             this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
     "t over if you fuck up.";
             this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.boxAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxAdvancedScripting.Name = "boxAdvancedScripting";
-            this.boxAdvancedScripting.Size = new System.Drawing.Size(80, 22);
+            this.boxAdvancedScripting.Size = new System.Drawing.Size(64, 22);
             this.boxAdvancedScripting.Text = "Advanced";
-            this.boxAdvancedScripting.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.boxAdvancedScripting.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.boxAdvancedScripting.CheckedChanged += new System.EventHandler(this.boxAdvancedScripting_CheckedChanged);
             this.boxAdvancedScripting.Click += new System.EventHandler(this.boxAdvancedScripting_Click);
             this.boxAdvancedScripting.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.boxAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
