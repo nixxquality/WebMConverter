@@ -86,23 +86,27 @@ namespace WebMConverter
         public static string AttachmentDirectory;
         public static Dictionary<int, string> SubtitleTracks; // stream id, tag:title OR codec_name
 
-        internal static int TimeToFrame(double time)
+        static int TimeToFrame(double time)
         {
             return (int)((float)VideoSource.FPSNumerator / (float)VideoSource.FPSDenominator * time);
         }
+        internal static int TimeSpanToFrame(TimeSpan time)
+        {
+            return TimeToFrame(time.TotalSeconds);
+        }
 
-        internal static double FrameToTime(int frame)
+        static long FrameToTime(int frame)
         {
             var frameinfo = VideoSource.Track.GetFrameInfo(frame);
-            return frameinfo.PTS * (double)VideoSource.Track.TimeBaseNumerator / (double)VideoSource.Track.TimeBaseDenominator / 1000.0f;
+            return frameinfo.PTS * VideoSource.Track.TimeBaseNumerator / VideoSource.Track.TimeBaseDenominator;
+        }
+        internal static TimeSpan FrameToTimeSpan(int frame)
+        {
+            return new TimeSpan(Program.FrameToTime(frame) * 10000);
         }
         internal static string FrameToTimeStamp(int frame)
         {
-            double t = Program.FrameToTime(frame);
-            int h = (int)(t % 3600);
-            int m = (int)((t - h * 3600) % 60);
-            int s = (int)(t - h * 3600 - m * 60);
-            return new TimeSpan(h, m, s).ToString("c");
+            return FrameToTimeSpan(frame).ToString(@"hh\:mm\:ss");
         }
 
         /// <summary>

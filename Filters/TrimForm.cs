@@ -87,32 +87,22 @@ namespace WebMConverter
 
         private void toolStripMenuGoToFrame_Click(object sender, EventArgs e)
         {
-            using (var dialog = new GoToDialog("Frame", trackVideoTimeline.Value.ToString()))
+            using (var dialog = new InputDialog<int>("Frame", trackVideoTimeline.Value))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    SetFrame(int.Parse(dialog.Result));
+                    SetFrame(dialog.Value);
                 }
             }
         }
 
         private void ToolStripMenuGoToTime_Click(object sender, EventArgs e)
         {
-            using (var dialog = new GoToDialog("Time", Program.FrameToTimeStamp(trackVideoTimeline.Value)))
+            using (var dialog = new InputDialog<TimeSpan>("Time", Program.FrameToTimeSpan(trackVideoTimeline.Value)))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    double time;
-                    try
-                    {
-                        time = TimeSpan.Parse(dialog.Result).TotalSeconds;
-                    }
-                    catch (FormatException)
-                    {
-                        MessageBox.Show("That's not a valid timestamp.");
-                        return;
-                    }
-                    SetFrame(Program.TimeToFrame(time));
+                    SetFrame(Program.TimeSpanToFrame(dialog.Value));
                 }
             }
         }
@@ -193,8 +183,8 @@ namespace WebMConverter
         {
             double firsttime, lasttime;
 
-            firsttime = Program.FrameToTime(TrimStart);
-            lasttime = Program.FrameToTime(TrimEnd);
+            firsttime = Program.FrameToTimeSpan(TrimStart).TotalSeconds;
+            lasttime = Program.FrameToTimeSpan(TrimEnd).TotalSeconds;
 
             return lasttime - firsttime;
         }

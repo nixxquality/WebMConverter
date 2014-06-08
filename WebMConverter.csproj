@@ -94,11 +94,11 @@
     <Compile Include="FFprobe.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Dialogs\GoToDialog.cs">
+    <Compile Include="Dialogs\InputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\GoToDialog.Designer.cs">
-      <DependentUpon>GoToDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Filters\MultipleTrimForm.cs">
       <SubType>Form</SubType>
@@ -144,6 +144,12 @@
     <Compile Include="Filters\TrimForm.Designer.cs">
       <DependentUpon>TrimForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeSpanBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimeSpanBox.Designer.cs">
+      <DependentUpon>TimeSpanBox.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ConverterForm.resx">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,8 +162,8 @@
     <EmbeddedResource Include="Filters\CropForm.resx">
       <DependentUpon>CropForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\GoToDialog.resx">
-      <DependentUpon>GoToDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\MultipleTrimForm.resx">
       <DependentUpon>MultipleTrimForm.cs</DependentUpon>

@@ -1109,7 +1109,7 @@ namespace WebMConverter
                 if (Filters.MultipleTrim != null)
                     return Filters.MultipleTrim.GetDuration();
 
-                return Program.FrameToTime(Program.VideoSource.NumberOfFrames - 1);
+                return Program.FrameToTimeSpan(Program.VideoSource.NumberOfFrames - 1).TotalSeconds;
             }
         }
 

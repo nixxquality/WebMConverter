@@ -106,6 +106,7 @@
             this.labelTrimStart.AutoSize = true;
             this.labelTrimStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTrimStart.Location = new System.Drawing.Point(84, 0);
+            this.labelTrimStart.MaximumSize = new System.Drawing.Size(100, 0);
             this.labelTrimStart.MinimumSize = new System.Drawing.Size(100, 0);
             this.labelTrimStart.Name = "labelTrimStart";
             this.labelTrimStart.Size = new System.Drawing.Size(100, 29);
@@ -129,6 +130,7 @@
             this.labelTrimEnd.AutoSize = true;
             this.labelTrimEnd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTrimEnd.Location = new System.Drawing.Point(271, 0);
+            this.labelTrimEnd.MaximumSize = new System.Drawing.Size(100, 0);
             this.labelTrimEnd.MinimumSize = new System.Drawing.Size(100, 0);
             this.labelTrimEnd.Name = "labelTrimEnd";
             this.labelTrimEnd.Size = new System.Drawing.Size(100, 29);
@@ -152,6 +154,7 @@
             this.labelTrimDuration.AutoSize = true;
             this.labelTrimDuration.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTrimDuration.Location = new System.Drawing.Point(458, 0);
+            this.labelTrimDuration.MaximumSize = new System.Drawing.Size(100, 0);
             this.labelTrimDuration.MinimumSize = new System.Drawing.Size(100, 0);
             this.labelTrimDuration.Name = "labelTrimDuration";
             this.labelTrimDuration.Size = new System.Drawing.Size(100, 29);

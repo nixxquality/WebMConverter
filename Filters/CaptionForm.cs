@@ -151,35 +151,22 @@ namespace WebMConverter
 
         private void frameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var dialog = new GoToDialog("Frame", previewFrame.Frame.ToString()))
+            using (var dialog = new InputDialog<int>("Frame", previewFrame.Frame))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    int i = 0;
-                    int.TryParse(dialog.Result, out i);
-                    i = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, i)); // Make sure we don't go out of bounds.
-                    previewFrame.Frame = i;
+                    previewFrame.Frame = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, dialog.Value)); // Make sure we don't go out of bounds.
                 }
             }
         }
 
         private void timeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var dialog = new GoToDialog("Time", Program.FrameToTimeStamp(previewFrame.Frame)))
+            using (var dialog = new InputDialog<TimeSpan>("Time", Program.FrameToTimeSpan(previewFrame.Frame)))
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    double time;
-                    try
-                    {
-                        time = TimeSpan.Parse(dialog.Result).TotalSeconds;
-                    }
-                    catch (FormatException)
-                    {
-                        MessageBox.Show("That's not a valid timestamp.");
-                        return;
-                    }
-                    int i = Program.TimeToFrame(time);
+                    int i = Program.TimeSpanToFrame(dialog.Value);
                     i = Math.Max(0, Math.Min(Program.VideoSource.NumberOfFrames - 1, i)); // Make sure we don't go out of bounds.
                     previewFrame.Frame = i;
                 }
