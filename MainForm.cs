@@ -226,7 +226,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Caption = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Caption", "subtitles"); // todo: get another icon
+                        listViewProcessingScript.Items.Add("Caption", "caption");
                         (sender as ToolStripItem).Enabled = false;
                     }
                 }
