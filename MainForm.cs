@@ -585,7 +585,7 @@ namespace WebMConverter
 
         void trackSlices_ValueChanged(object sender, EventArgs e)
         {
-            labelSlices.Text = (sender as TrackBar).Value.ToString();
+            labelSlices.Text = GetSlices().ToString();
             UpdateArguments(sender, e);
         }
 

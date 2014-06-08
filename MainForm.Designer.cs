@@ -47,13 +47,11 @@ namespace WebMConverter
             System.Windows.Forms.TableLayoutPanel tableEncodingGeneral;
             System.Windows.Forms.Label labelGeneralTitle;
             System.Windows.Forms.Label labelGeneralTitleHint;
-            System.Windows.Forms.Label labelGeneralSizeLimitHint;
-            System.Windows.Forms.TableLayoutPanel tableGeneralSizeLimit;
-            System.Windows.Forms.Label labelGeneralSizeLimitUnit;
             System.Windows.Forms.Label labelGeneralSizeLimit;
+            System.Windows.Forms.Label labelGeneralSizeLimitUnit;
+            System.Windows.Forms.Label labelGeneralSizeLimitHint;
             System.Windows.Forms.GroupBox groupEncodingVideo;
             System.Windows.Forms.Label labelVideoBitrate;
-            System.Windows.Forms.TableLayoutPanel tableVideoBitrate;
             System.Windows.Forms.Label labelVideoBitrateUnit;
             System.Windows.Forms.Label labelVideoBitrateHint;
             System.Windows.Forms.Label labelVideoHQHint;
@@ -61,7 +59,6 @@ namespace WebMConverter
             System.Windows.Forms.TableLayoutPanel tableEncodingAudio;
             System.Windows.Forms.Label labelAudioHint;
             System.Windows.Forms.Label labelAudioBitrate;
-            System.Windows.Forms.TableLayoutPanel tableAudioBitrate;
             System.Windows.Forms.Label labelAudioBitrateUnit;
             System.Windows.Forms.Label labelAudioBitrateHint;
             System.Windows.Forms.TabPage tabAdvanced;
@@ -75,10 +72,8 @@ namespace WebMConverter
             System.Windows.Forms.GroupBox groupAdvancedEncoding;
             System.Windows.Forms.TableLayoutPanel tableAdvancedEncoding;
             System.Windows.Forms.Label labelEncodingThreads;
-            System.Windows.Forms.TableLayoutPanel tableEncodingThreads;
             System.Windows.Forms.Label labelEncodingThreadsHint;
             System.Windows.Forms.Label labelEncodingSlices;
-            System.Windows.Forms.TableLayoutPanel tableEncodingSlices;
             System.Windows.Forms.Label labelEncodingSlicesHint;
             System.Windows.Forms.Label labelEncodingCrf;
             System.Windows.Forms.Label labelEncodingCrfHint;
@@ -139,13 +134,11 @@ namespace WebMConverter
             tableEncodingGeneral = new System.Windows.Forms.TableLayoutPanel();
             labelGeneralTitle = new System.Windows.Forms.Label();
             labelGeneralTitleHint = new System.Windows.Forms.Label();
-            labelGeneralSizeLimitHint = new System.Windows.Forms.Label();
-            tableGeneralSizeLimit = new System.Windows.Forms.TableLayoutPanel();
-            labelGeneralSizeLimitUnit = new System.Windows.Forms.Label();
             labelGeneralSizeLimit = new System.Windows.Forms.Label();
+            labelGeneralSizeLimitUnit = new System.Windows.Forms.Label();
+            labelGeneralSizeLimitHint = new System.Windows.Forms.Label();
             groupEncodingVideo = new System.Windows.Forms.GroupBox();
             labelVideoBitrate = new System.Windows.Forms.Label();
-            tableVideoBitrate = new System.Windows.Forms.TableLayoutPanel();
             labelVideoBitrateUnit = new System.Windows.Forms.Label();
             labelVideoBitrateHint = new System.Windows.Forms.Label();
             labelVideoHQHint = new System.Windows.Forms.Label();
@@ -153,7 +146,6 @@ namespace WebMConverter
             tableEncodingAudio = new System.Windows.Forms.TableLayoutPanel();
             labelAudioHint = new System.Windows.Forms.Label();
             labelAudioBitrate = new System.Windows.Forms.Label();
-            tableAudioBitrate = new System.Windows.Forms.TableLayoutPanel();
             labelAudioBitrateUnit = new System.Windows.Forms.Label();
             labelAudioBitrateHint = new System.Windows.Forms.Label();
             tabAdvanced = new System.Windows.Forms.TabPage();
@@ -167,10 +159,8 @@ namespace WebMConverter
             groupAdvancedEncoding = new System.Windows.Forms.GroupBox();
             tableAdvancedEncoding = new System.Windows.Forms.TableLayoutPanel();
             labelEncodingThreads = new System.Windows.Forms.Label();
-            tableEncodingThreads = new System.Windows.Forms.TableLayoutPanel();
             labelEncodingThreadsHint = new System.Windows.Forms.Label();
             labelEncodingSlices = new System.Windows.Forms.Label();
-            tableEncodingSlices = new System.Windows.Forms.TableLayoutPanel();
             labelEncodingSlicesHint = new System.Windows.Forms.Label();
             labelEncodingCrf = new System.Windows.Forms.Label();
             labelEncodingCrfHint = new System.Windows.Forms.Label();
@@ -189,22 +179,17 @@ namespace WebMConverter
             tableEncoding.SuspendLayout();
             groupEncodingGeneral.SuspendLayout();
             tableEncodingGeneral.SuspendLayout();
-            tableGeneralSizeLimit.SuspendLayout();
             groupEncodingVideo.SuspendLayout();
             this.tableLayoutPanelEncodingVideo.SuspendLayout();
-            tableVideoBitrate.SuspendLayout();
             groupEncodingAudio.SuspendLayout();
             tableEncodingAudio.SuspendLayout();
-            tableAudioBitrate.SuspendLayout();
             tabAdvanced.SuspendLayout();
             tableAdvanced.SuspendLayout();
             groupAdvancedProcessing.SuspendLayout();
             tableAdvancedProcessing.SuspendLayout();
             groupAdvancedEncoding.SuspendLayout();
             tableAdvancedEncoding.SuspendLayout();
-            tableEncodingThreads.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
-            tableEncodingSlices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCrf)).BeginInit();
             panelContainTheProgressBar.SuspendLayout();
@@ -279,7 +264,7 @@ namespace WebMConverter
             this.textBoxIn.Location = new System.Drawing.Point(72, 4);
             this.textBoxIn.Name = "textBoxIn";
             this.textBoxIn.Size = new System.Drawing.Size(835, 20);
-            this.textBoxIn.TabIndex = 0;
+            this.textBoxIn.TabIndex = 1;
             // 
             // buttonBrowseIn
             // 
@@ -287,7 +272,7 @@ namespace WebMConverter
             this.buttonBrowseIn.Location = new System.Drawing.Point(913, 3);
             this.buttonBrowseIn.Name = "buttonBrowseIn";
             this.buttonBrowseIn.Size = new System.Drawing.Size(62, 23);
-            this.buttonBrowseIn.TabIndex = 1;
+            this.buttonBrowseIn.TabIndex = 2;
             this.buttonBrowseIn.Text = "Browse";
             this.buttonBrowseIn.UseVisualStyleBackColor = true;
             this.buttonBrowseIn.Click += new System.EventHandler(this.buttonBrowseIn_Click);
@@ -299,7 +284,7 @@ namespace WebMConverter
             labelOutputFile.Location = new System.Drawing.Point(3, 29);
             labelOutputFile.Name = "labelOutputFile";
             labelOutputFile.Size = new System.Drawing.Size(63, 30);
-            labelOutputFile.TabIndex = 3;
+            labelOutputFile.TabIndex = 0;
             labelOutputFile.Text = "Output file:";
             labelOutputFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -309,7 +294,7 @@ namespace WebMConverter
             this.textBoxOut.Location = new System.Drawing.Point(72, 34);
             this.textBoxOut.Name = "textBoxOut";
             this.textBoxOut.Size = new System.Drawing.Size(835, 20);
-            this.textBoxOut.TabIndex = 2;
+            this.textBoxOut.TabIndex = 3;
             // 
             // buttonBrowseOut
             // 
@@ -317,7 +302,7 @@ namespace WebMConverter
             buttonBrowseOut.Location = new System.Drawing.Point(913, 32);
             buttonBrowseOut.Name = "buttonBrowseOut";
             buttonBrowseOut.Size = new System.Drawing.Size(62, 24);
-            buttonBrowseOut.TabIndex = 3;
+            buttonBrowseOut.TabIndex = 4;
             buttonBrowseOut.Text = "Browse";
             buttonBrowseOut.UseVisualStyleBackColor = true;
             buttonBrowseOut.Click += new System.EventHandler(this.buttonBrowseOut_Click);
@@ -330,7 +315,7 @@ namespace WebMConverter
             this.buttonGo.Name = "buttonGo";
             tableMain.SetRowSpan(this.buttonGo, 2);
             this.buttonGo.Size = new System.Drawing.Size(71, 53);
-            this.buttonGo.TabIndex = 4;
+            this.buttonGo.TabIndex = 5;
             this.buttonGo.Text = "Convert";
             this.buttonGo.UseVisualStyleBackColor = true;
             this.buttonGo.Click += new System.EventHandler(this.buttonGo_Click);
@@ -605,23 +590,25 @@ namespace WebMConverter
             groupEncodingGeneral.Location = new System.Drawing.Point(3, 3);
             groupEncodingGeneral.Name = "groupEncodingGeneral";
             groupEncodingGeneral.Size = new System.Drawing.Size(1041, 73);
-            groupEncodingGeneral.TabIndex = 0;
+            groupEncodingGeneral.TabIndex = 1;
             groupEncodingGeneral.TabStop = false;
             groupEncodingGeneral.Text = "General";
             // 
             // tableEncodingGeneral
             // 
-            tableEncodingGeneral.ColumnCount = 4;
+            tableEncodingGeneral.ColumnCount = 5;
             tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 248F));
             tableEncodingGeneral.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableEncodingGeneral.Controls.Add(labelGeneralTitle, 0, 0);
             tableEncodingGeneral.Controls.Add(this.boxTitle, 1, 0);
-            tableEncodingGeneral.Controls.Add(labelGeneralTitleHint, 3, 0);
-            tableEncodingGeneral.Controls.Add(labelGeneralSizeLimitHint, 2, 1);
-            tableEncodingGeneral.Controls.Add(tableGeneralSizeLimit, 1, 1);
+            tableEncodingGeneral.Controls.Add(labelGeneralTitleHint, 4, 0);
             tableEncodingGeneral.Controls.Add(labelGeneralSizeLimit, 0, 1);
+            tableEncodingGeneral.Controls.Add(this.boxLimit, 1, 1);
+            tableEncodingGeneral.Controls.Add(labelGeneralSizeLimitUnit, 2, 1);
+            tableEncodingGeneral.Controls.Add(labelGeneralSizeLimitHint, 3, 1);
             tableEncodingGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
             tableEncodingGeneral.Location = new System.Drawing.Point(3, 16);
             tableEncodingGeneral.Name = "tableEncodingGeneral";
@@ -645,12 +632,11 @@ namespace WebMConverter
             // boxTitle
             // 
             this.boxTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            tableEncodingGeneral.SetColumnSpan(this.boxTitle, 2);
-            this.boxTitle.Location = new System.Drawing.Point(85, 4);
-            this.boxTitle.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            tableEncodingGeneral.SetColumnSpan(this.boxTitle, 3);
+            this.boxTitle.Location = new System.Drawing.Point(82, 4);
             this.boxTitle.Name = "boxTitle";
-            this.boxTitle.Size = new System.Drawing.Size(384, 20);
-            this.boxTitle.TabIndex = 0;
+            this.boxTitle.Size = new System.Drawing.Size(390, 20);
+            this.boxTitle.TabIndex = 1;
             this.boxTitle.TextChanged += new System.EventHandler(this.UpdateArguments);
             // 
             // labelGeneralTitleHint
@@ -660,10 +646,44 @@ namespace WebMConverter
             labelGeneralTitleHint.Location = new System.Drawing.Point(478, 0);
             labelGeneralTitleHint.Name = "labelGeneralTitleHint";
             labelGeneralTitleHint.Size = new System.Drawing.Size(554, 28);
-            labelGeneralTitleHint.TabIndex = 2;
+            labelGeneralTitleHint.TabIndex = 0;
             labelGeneralTitleHint.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
     " the source of a video, for example. Leave blank for no title.";
             labelGeneralTitleHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelGeneralSizeLimit
+            // 
+            labelGeneralSizeLimit.AutoSize = true;
+            labelGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralSizeLimit.Location = new System.Drawing.Point(3, 28);
+            labelGeneralSizeLimit.Name = "labelGeneralSizeLimit";
+            labelGeneralSizeLimit.Size = new System.Drawing.Size(73, 28);
+            labelGeneralSizeLimit.TabIndex = 0;
+            labelGeneralSizeLimit.Text = "Size limit:";
+            labelGeneralSizeLimit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // boxLimit
+            // 
+            this.boxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxLimit.Location = new System.Drawing.Point(82, 32);
+            this.boxLimit.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.boxLimit.Name = "boxLimit";
+            this.boxLimit.Size = new System.Drawing.Size(115, 20);
+            this.boxLimit.TabIndex = 2;
+            this.boxLimit.TextChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
+            // 
+            // labelGeneralSizeLimitUnit
+            // 
+            labelGeneralSizeLimitUnit.AutoSize = true;
+            labelGeneralSizeLimitUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelGeneralSizeLimitUnit.Location = new System.Drawing.Point(197, 28);
+            labelGeneralSizeLimitUnit.Margin = new System.Windows.Forms.Padding(0);
+            labelGeneralSizeLimitUnit.Name = "labelGeneralSizeLimitUnit";
+            labelGeneralSizeLimitUnit.Size = new System.Drawing.Size(30, 28);
+            labelGeneralSizeLimitUnit.TabIndex = 0;
+            labelGeneralSizeLimitUnit.Text = "MB";
+            labelGeneralSizeLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelGeneralSizeLimitHint
             // 
@@ -673,58 +693,10 @@ namespace WebMConverter
             labelGeneralSizeLimitHint.Location = new System.Drawing.Point(230, 28);
             labelGeneralSizeLimitHint.Name = "labelGeneralSizeLimitHint";
             labelGeneralSizeLimitHint.Size = new System.Drawing.Size(802, 28);
-            labelGeneralSizeLimitHint.TabIndex = 12;
+            labelGeneralSizeLimitHint.TabIndex = 0;
             labelGeneralSizeLimitHint.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
     "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB.";
             labelGeneralSizeLimitHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tableGeneralSizeLimit
-            // 
-            tableGeneralSizeLimit.ColumnCount = 2;
-            tableGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableGeneralSizeLimit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableGeneralSizeLimit.Controls.Add(this.boxLimit, 0, 0);
-            tableGeneralSizeLimit.Controls.Add(labelGeneralSizeLimitUnit, 1, 0);
-            tableGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableGeneralSizeLimit.Location = new System.Drawing.Point(82, 28);
-            tableGeneralSizeLimit.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            tableGeneralSizeLimit.Name = "tableGeneralSizeLimit";
-            tableGeneralSizeLimit.RowCount = 1;
-            tableGeneralSizeLimit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableGeneralSizeLimit.Size = new System.Drawing.Size(142, 28);
-            tableGeneralSizeLimit.TabIndex = 11;
-            // 
-            // boxLimit
-            // 
-            this.boxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxLimit.Location = new System.Drawing.Point(3, 4);
-            this.boxLimit.Name = "boxLimit";
-            this.boxLimit.Size = new System.Drawing.Size(96, 20);
-            this.boxLimit.TabIndex = 0;
-            this.boxLimit.TextChanged += new System.EventHandler(this.UpdateArguments);
-            this.boxLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
-            // 
-            // labelGeneralSizeLimitUnit
-            // 
-            labelGeneralSizeLimitUnit.AutoSize = true;
-            labelGeneralSizeLimitUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelGeneralSizeLimitUnit.Location = new System.Drawing.Point(105, 0);
-            labelGeneralSizeLimitUnit.Name = "labelGeneralSizeLimitUnit";
-            labelGeneralSizeLimitUnit.Size = new System.Drawing.Size(34, 28);
-            labelGeneralSizeLimitUnit.TabIndex = 1;
-            labelGeneralSizeLimitUnit.Text = "MB";
-            labelGeneralSizeLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelGeneralSizeLimit
-            // 
-            labelGeneralSizeLimit.AutoSize = true;
-            labelGeneralSizeLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelGeneralSizeLimit.Location = new System.Drawing.Point(3, 28);
-            labelGeneralSizeLimit.Name = "labelGeneralSizeLimit";
-            labelGeneralSizeLimit.Size = new System.Drawing.Size(73, 28);
-            labelGeneralSizeLimit.TabIndex = 10;
-            labelGeneralSizeLimit.Text = "Size limit:";
-            labelGeneralSizeLimit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupEncodingVideo
             // 
@@ -733,21 +705,23 @@ namespace WebMConverter
             groupEncodingVideo.Location = new System.Drawing.Point(3, 82);
             groupEncodingVideo.Name = "groupEncodingVideo";
             groupEncodingVideo.Size = new System.Drawing.Size(1041, 73);
-            groupEncodingVideo.TabIndex = 1;
+            groupEncodingVideo.TabIndex = 2;
             groupEncodingVideo.TabStop = false;
             groupEncodingVideo.Text = "Video";
             // 
             // tableLayoutPanelEncodingVideo
             // 
-            this.tableLayoutPanelEncodingVideo.ColumnCount = 3;
+            this.tableLayoutPanelEncodingVideo.ColumnCount = 4;
             this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanelEncodingVideo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrate, 0, 0);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(tableVideoBitrate, 1, 0);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrateHint, 3, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(this.boxVideoBitrate, 1, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrateUnit, 2, 0);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoBitrateHint, 4, 0);
             this.tableLayoutPanelEncodingVideo.Controls.Add(this.boxHQ, 0, 1);
-            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoHQHint, 2, 1);
+            this.tableLayoutPanelEncodingVideo.Controls.Add(labelVideoHQHint, 3, 1);
             this.tableLayoutPanelEncodingVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelEncodingVideo.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanelEncodingVideo.Name = "tableLayoutPanelEncodingVideo";
@@ -764,34 +738,18 @@ namespace WebMConverter
             labelVideoBitrate.Location = new System.Drawing.Point(3, 0);
             labelVideoBitrate.Name = "labelVideoBitrate";
             labelVideoBitrate.Size = new System.Drawing.Size(73, 28);
-            labelVideoBitrate.TabIndex = 6;
+            labelVideoBitrate.TabIndex = 0;
             labelVideoBitrate.Text = "Bitrate:";
             labelVideoBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableVideoBitrate
-            // 
-            tableVideoBitrate.ColumnCount = 2;
-            tableVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableVideoBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableVideoBitrate.Controls.Add(this.boxVideoBitrate, 0, 0);
-            tableVideoBitrate.Controls.Add(labelVideoBitrateUnit, 1, 0);
-            tableVideoBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableVideoBitrate.Location = new System.Drawing.Point(82, 0);
-            tableVideoBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            tableVideoBitrate.Name = "tableVideoBitrate";
-            tableVideoBitrate.RowCount = 1;
-            tableVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableVideoBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableVideoBitrate.Size = new System.Drawing.Size(142, 28);
-            tableVideoBitrate.TabIndex = 0;
             // 
             // boxVideoBitrate
             // 
             this.boxVideoBitrate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxVideoBitrate.Location = new System.Drawing.Point(3, 4);
+            this.boxVideoBitrate.Location = new System.Drawing.Point(82, 4);
+            this.boxVideoBitrate.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.boxVideoBitrate.Name = "boxVideoBitrate";
-            this.boxVideoBitrate.Size = new System.Drawing.Size(96, 20);
-            this.boxVideoBitrate.TabIndex = 0;
+            this.boxVideoBitrate.Size = new System.Drawing.Size(115, 20);
+            this.boxVideoBitrate.TabIndex = 1;
             this.boxVideoBitrate.TextChanged += new System.EventHandler(this.UpdateArguments);
             this.boxVideoBitrate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
@@ -799,10 +757,11 @@ namespace WebMConverter
             // 
             labelVideoBitrateUnit.AutoSize = true;
             labelVideoBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelVideoBitrateUnit.Location = new System.Drawing.Point(105, 0);
+            labelVideoBitrateUnit.Location = new System.Drawing.Point(197, 0);
+            labelVideoBitrateUnit.Margin = new System.Windows.Forms.Padding(0);
             labelVideoBitrateUnit.Name = "labelVideoBitrateUnit";
-            labelVideoBitrateUnit.Size = new System.Drawing.Size(34, 28);
-            labelVideoBitrateUnit.TabIndex = 1;
+            labelVideoBitrateUnit.Size = new System.Drawing.Size(30, 28);
+            labelVideoBitrateUnit.TabIndex = 0;
             labelVideoBitrateUnit.Text = "Kb/s";
             labelVideoBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -813,7 +772,7 @@ namespace WebMConverter
             labelVideoBitrateHint.Location = new System.Drawing.Point(230, 0);
             labelVideoBitrateHint.Name = "labelVideoBitrateHint";
             labelVideoBitrateHint.Size = new System.Drawing.Size(802, 28);
-            labelVideoBitrateHint.TabIndex = 8;
+            labelVideoBitrateHint.TabIndex = 0;
             labelVideoBitrateHint.Text = "Determines the quality of the video. Keep blank to let the program pick one based" +
     " on size limit and duration.";
             labelVideoBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -822,7 +781,7 @@ namespace WebMConverter
             // 
             this.boxHQ.AutoSize = true;
             this.boxHQ.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanelEncodingVideo.SetColumnSpan(this.boxHQ, 2);
+            this.tableLayoutPanelEncodingVideo.SetColumnSpan(this.boxHQ, 3);
             this.boxHQ.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxHQ.Location = new System.Drawing.Point(6, 31);
             this.boxHQ.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
@@ -841,7 +800,7 @@ namespace WebMConverter
             labelVideoHQHint.Location = new System.Drawing.Point(230, 28);
             labelVideoHQHint.Name = "labelVideoHQHint";
             labelVideoHQHint.Size = new System.Drawing.Size(802, 28);
-            labelVideoHQHint.TabIndex = 16;
+            labelVideoHQHint.TabIndex = 0;
             labelVideoHQHint.Text = "Enables two-pass encoding and adds some extra encoding arguments, increasing outp" +
     "ut quality, but increases the time it takes to encode your file.";
             labelVideoHQHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -853,21 +812,23 @@ namespace WebMConverter
             groupEncodingAudio.Location = new System.Drawing.Point(3, 161);
             groupEncodingAudio.Name = "groupEncodingAudio";
             groupEncodingAudio.Size = new System.Drawing.Size(1041, 73);
-            groupEncodingAudio.TabIndex = 2;
+            groupEncodingAudio.TabIndex = 3;
             groupEncodingAudio.TabStop = false;
             groupEncodingAudio.Text = "Audio";
             // 
             // tableEncodingAudio
             // 
-            tableEncodingAudio.ColumnCount = 3;
+            tableEncodingAudio.ColumnCount = 4;
             tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableEncodingAudio.Controls.Add(this.boxAudio, 0, 0);
-            tableEncodingAudio.Controls.Add(labelAudioHint, 2, 0);
+            tableEncodingAudio.Controls.Add(labelAudioHint, 3, 0);
             tableEncodingAudio.Controls.Add(labelAudioBitrate, 0, 1);
-            tableEncodingAudio.Controls.Add(tableAudioBitrate, 1, 1);
-            tableEncodingAudio.Controls.Add(labelAudioBitrateHint, 2, 1);
+            tableEncodingAudio.Controls.Add(this.boxAudioBitrate, 1, 1);
+            tableEncodingAudio.Controls.Add(labelAudioBitrateUnit, 2, 1);
+            tableEncodingAudio.Controls.Add(labelAudioBitrateHint, 3, 1);
             tableEncodingAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             tableEncodingAudio.Location = new System.Drawing.Point(3, 16);
             tableEncodingAudio.Margin = new System.Windows.Forms.Padding(0);
@@ -882,13 +843,13 @@ namespace WebMConverter
             // 
             this.boxAudio.AutoSize = true;
             this.boxAudio.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableEncodingAudio.SetColumnSpan(this.boxAudio, 2);
+            tableEncodingAudio.SetColumnSpan(this.boxAudio, 3);
             this.boxAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxAudio.Location = new System.Drawing.Point(6, 3);
             this.boxAudio.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this.boxAudio.Name = "boxAudio";
             this.boxAudio.Size = new System.Drawing.Size(215, 21);
-            this.boxAudio.TabIndex = 4;
+            this.boxAudio.TabIndex = 1;
             this.boxAudio.Text = "Enable audio:";
             this.boxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxAudio.UseVisualStyleBackColor = true;
@@ -901,7 +862,7 @@ namespace WebMConverter
             labelAudioHint.Location = new System.Drawing.Point(230, 0);
             labelAudioHint.Name = "labelAudioHint";
             labelAudioHint.Size = new System.Drawing.Size(802, 27);
-            labelAudioHint.TabIndex = 19;
+            labelAudioHint.TabIndex = 0;
             labelAudioHint.Text = "Keep this disabled until Moot allows audio.";
             labelAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -912,35 +873,19 @@ namespace WebMConverter
             labelAudioBitrate.Location = new System.Drawing.Point(3, 27);
             labelAudioBitrate.Name = "labelAudioBitrate";
             labelAudioBitrate.Size = new System.Drawing.Size(73, 27);
-            labelAudioBitrate.TabIndex = 20;
+            labelAudioBitrate.TabIndex = 0;
             labelAudioBitrate.Text = "Bitrate:";
             labelAudioBitrate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableAudioBitrate
-            // 
-            tableAudioBitrate.ColumnCount = 2;
-            tableAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableAudioBitrate.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableAudioBitrate.Controls.Add(this.boxAudioBitrate, 0, 0);
-            tableAudioBitrate.Controls.Add(labelAudioBitrateUnit, 1, 0);
-            tableAudioBitrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableAudioBitrate.Location = new System.Drawing.Point(82, 27);
-            tableAudioBitrate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            tableAudioBitrate.Name = "tableAudioBitrate";
-            tableAudioBitrate.RowCount = 1;
-            tableAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableAudioBitrate.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            tableAudioBitrate.Size = new System.Drawing.Size(142, 27);
-            tableAudioBitrate.TabIndex = 21;
             // 
             // boxAudioBitrate
             // 
             this.boxAudioBitrate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.boxAudioBitrate.Enabled = false;
-            this.boxAudioBitrate.Location = new System.Drawing.Point(3, 3);
+            this.boxAudioBitrate.Location = new System.Drawing.Point(82, 30);
+            this.boxAudioBitrate.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.boxAudioBitrate.Name = "boxAudioBitrate";
-            this.boxAudioBitrate.Size = new System.Drawing.Size(96, 20);
-            this.boxAudioBitrate.TabIndex = 0;
+            this.boxAudioBitrate.Size = new System.Drawing.Size(115, 20);
+            this.boxAudioBitrate.TabIndex = 2;
             this.boxAudioBitrate.TextChanged += new System.EventHandler(this.UpdateArguments);
             this.boxAudioBitrate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
@@ -948,10 +893,11 @@ namespace WebMConverter
             // 
             labelAudioBitrateUnit.AutoSize = true;
             labelAudioBitrateUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelAudioBitrateUnit.Location = new System.Drawing.Point(105, 0);
+            labelAudioBitrateUnit.Location = new System.Drawing.Point(197, 27);
+            labelAudioBitrateUnit.Margin = new System.Windows.Forms.Padding(0);
             labelAudioBitrateUnit.Name = "labelAudioBitrateUnit";
-            labelAudioBitrateUnit.Size = new System.Drawing.Size(34, 27);
-            labelAudioBitrateUnit.TabIndex = 1;
+            labelAudioBitrateUnit.Size = new System.Drawing.Size(30, 27);
+            labelAudioBitrateUnit.TabIndex = 0;
             labelAudioBitrateUnit.Text = "Kb/s";
             labelAudioBitrateUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -962,7 +908,7 @@ namespace WebMConverter
             labelAudioBitrateHint.Location = new System.Drawing.Point(230, 27);
             labelAudioBitrateHint.Name = "labelAudioBitrateHint";
             labelAudioBitrateHint.Size = new System.Drawing.Size(802, 27);
-            labelAudioBitrateHint.TabIndex = 22;
+            labelAudioBitrateHint.TabIndex = 0;
             labelAudioBitrateHint.Text = "Determines the quality of the audio.";
             labelAudioBitrateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1004,7 +950,7 @@ namespace WebMConverter
             labelAdvancedWarning.Margin = new System.Windows.Forms.Padding(3);
             labelAdvancedWarning.Name = "labelAdvancedWarning";
             labelAdvancedWarning.Size = new System.Drawing.Size(1041, 22);
-            labelAdvancedWarning.TabIndex = 32;
+            labelAdvancedWarning.TabIndex = 0;
             labelAdvancedWarning.Text = "Do not modify these settings unless you are 100% sure you know what you\'re doing." +
     "";
             labelAdvancedWarning.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1016,7 +962,7 @@ namespace WebMConverter
             groupAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
             groupAdvancedProcessing.Name = "groupAdvancedProcessing";
             groupAdvancedProcessing.Size = new System.Drawing.Size(1041, 104);
-            groupAdvancedProcessing.TabIndex = 0;
+            groupAdvancedProcessing.TabIndex = 1;
             groupAdvancedProcessing.TabStop = false;
             groupAdvancedProcessing.Text = "Processing";
             // 
@@ -1051,7 +997,7 @@ namespace WebMConverter
             this.boxLevels.Location = new System.Drawing.Point(3, 3);
             this.boxLevels.Name = "boxLevels";
             this.boxLevels.Size = new System.Drawing.Size(221, 22);
-            this.boxLevels.TabIndex = 33;
+            this.boxLevels.TabIndex = 1;
             this.boxLevels.Text = "Expand color ranges:";
             this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxLevels.UseVisualStyleBackColor = true;
@@ -1064,7 +1010,7 @@ namespace WebMConverter
             labelProcessingLevelsHint.Location = new System.Drawing.Point(230, 0);
             labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
             labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
-            labelProcessingLevelsHint.TabIndex = 27;
+            labelProcessingLevelsHint.TabIndex = 0;
             labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
     "hed out in browsers. This option expands the color levels to the full range.";
             labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1078,7 +1024,7 @@ namespace WebMConverter
             this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
             this.boxDeinterlace.Name = "boxDeinterlace";
             this.boxDeinterlace.Size = new System.Drawing.Size(221, 22);
-            this.boxDeinterlace.TabIndex = 34;
+            this.boxDeinterlace.TabIndex = 2;
             this.boxDeinterlace.Text = "Deinterlace:";
             this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxDeinterlace.UseVisualStyleBackColor = true;
@@ -1091,7 +1037,7 @@ namespace WebMConverter
             labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
             labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
             labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 28);
-            labelProcessingDeinterlaceHint.TabIndex = 32;
+            labelProcessingDeinterlaceHint.TabIndex = 0;
             labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
             labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1104,7 +1050,7 @@ namespace WebMConverter
             this.boxDenoise.Location = new System.Drawing.Point(3, 59);
             this.boxDenoise.Name = "boxDenoise";
             this.boxDenoise.Size = new System.Drawing.Size(221, 23);
-            this.boxDenoise.TabIndex = 35;
+            this.boxDenoise.TabIndex = 3;
             this.boxDenoise.Text = "Denoise:";
             this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxDenoise.UseVisualStyleBackColor = true;
@@ -1117,7 +1063,7 @@ namespace WebMConverter
             labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
             labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
             labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
-            labelProcessingDenoiseHint.TabIndex = 36;
+            labelProcessingDenoiseHint.TabIndex = 0;
             labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
     "hen it comes to bitrate.";
             labelProcessingDenoiseHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1130,25 +1076,28 @@ namespace WebMConverter
             groupAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
             groupAdvancedEncoding.Name = "groupAdvancedEncoding";
             groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 132);
-            groupAdvancedEncoding.TabIndex = 33;
+            groupAdvancedEncoding.TabIndex = 2;
             groupAdvancedEncoding.TabStop = false;
             groupAdvancedEncoding.Text = "Encoding";
             // 
             // tableAdvancedEncoding
             // 
-            tableAdvancedEncoding.ColumnCount = 3;
+            tableAdvancedEncoding.ColumnCount = 4;
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableAdvancedEncoding.Controls.Add(labelEncodingThreads, 0, 0);
-            tableAdvancedEncoding.Controls.Add(tableEncodingThreads, 1, 0);
-            tableAdvancedEncoding.Controls.Add(labelEncodingThreadsHint, 2, 0);
+            tableAdvancedEncoding.Controls.Add(this.trackThreads, 1, 0);
+            tableAdvancedEncoding.Controls.Add(this.labelThreads, 2, 0);
+            tableAdvancedEncoding.Controls.Add(labelEncodingThreadsHint, 3, 0);
             tableAdvancedEncoding.Controls.Add(labelEncodingSlices, 0, 1);
-            tableAdvancedEncoding.Controls.Add(tableEncodingSlices, 1, 1);
-            tableAdvancedEncoding.Controls.Add(labelEncodingSlicesHint, 2, 1);
+            tableAdvancedEncoding.Controls.Add(this.trackSlices, 1, 1);
+            tableAdvancedEncoding.Controls.Add(this.labelSlices, 2, 1);
+            tableAdvancedEncoding.Controls.Add(labelEncodingSlicesHint, 3, 1);
             tableAdvancedEncoding.Controls.Add(labelEncodingCrf, 0, 2);
             tableAdvancedEncoding.Controls.Add(this.numericCrf, 1, 2);
-            tableAdvancedEncoding.Controls.Add(labelEncodingCrfHint, 2, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingCrfHint, 3, 2);
             tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 3);
             tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 3);
             tableAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1159,6 +1108,7 @@ namespace WebMConverter
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 113);
             tableAdvancedEncoding.TabIndex = 0;
             // 
@@ -1169,35 +1119,20 @@ namespace WebMConverter
             labelEncodingThreads.Location = new System.Drawing.Point(3, 0);
             labelEncodingThreads.Name = "labelEncodingThreads";
             labelEncodingThreads.Size = new System.Drawing.Size(73, 28);
-            labelEncodingThreads.TabIndex = 28;
+            labelEncodingThreads.TabIndex = 0;
             labelEncodingThreads.Text = "Threads:";
             labelEncodingThreads.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableEncodingThreads
-            // 
-            tableEncodingThreads.ColumnCount = 2;
-            tableEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
-            tableEncodingThreads.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
-            tableEncodingThreads.Controls.Add(this.trackThreads, 0, 0);
-            tableEncodingThreads.Controls.Add(this.labelThreads, 1, 0);
-            tableEncodingThreads.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableEncodingThreads.Location = new System.Drawing.Point(82, 3);
-            tableEncodingThreads.Name = "tableEncodingThreads";
-            tableEncodingThreads.RowCount = 1;
-            tableEncodingThreads.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableEncodingThreads.Size = new System.Drawing.Size(142, 22);
-            tableEncodingThreads.TabIndex = 0;
             // 
             // trackThreads
             // 
             this.trackThreads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackThreads.Location = new System.Drawing.Point(0, 0);
+            this.trackThreads.Location = new System.Drawing.Point(79, 0);
             this.trackThreads.Margin = new System.Windows.Forms.Padding(0);
             this.trackThreads.Maximum = 16;
             this.trackThreads.Minimum = 1;
             this.trackThreads.Name = "trackThreads";
-            this.trackThreads.Size = new System.Drawing.Size(122, 22);
-            this.trackThreads.TabIndex = 0;
+            this.trackThreads.Size = new System.Drawing.Size(118, 28);
+            this.trackThreads.TabIndex = 1;
             this.trackThreads.Value = 1;
             this.trackThreads.ValueChanged += new System.EventHandler(this.trackThreads_ValueChanged);
             // 
@@ -1205,11 +1140,11 @@ namespace WebMConverter
             // 
             this.labelThreads.AutoSize = true;
             this.labelThreads.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelThreads.Location = new System.Drawing.Point(122, 0);
+            this.labelThreads.Location = new System.Drawing.Point(197, 0);
             this.labelThreads.Margin = new System.Windows.Forms.Padding(0);
             this.labelThreads.Name = "labelThreads";
-            this.labelThreads.Size = new System.Drawing.Size(20, 22);
-            this.labelThreads.TabIndex = 1;
+            this.labelThreads.Size = new System.Drawing.Size(30, 28);
+            this.labelThreads.TabIndex = 0;
             this.labelThreads.Text = "1";
             this.labelThreads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1220,7 +1155,7 @@ namespace WebMConverter
             labelEncodingThreadsHint.Location = new System.Drawing.Point(230, 0);
             labelEncodingThreadsHint.Name = "labelEncodingThreadsHint";
             labelEncodingThreadsHint.Size = new System.Drawing.Size(802, 28);
-            labelEncodingThreadsHint.TabIndex = 27;
+            labelEncodingThreadsHint.TabIndex = 0;
             labelEncodingThreadsHint.Text = "Determines amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe cra" +
     "shes as soon as you click Convert.";
             labelEncodingThreadsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1232,35 +1167,20 @@ namespace WebMConverter
             labelEncodingSlices.Location = new System.Drawing.Point(3, 28);
             labelEncodingSlices.Name = "labelEncodingSlices";
             labelEncodingSlices.Size = new System.Drawing.Size(73, 28);
-            labelEncodingSlices.TabIndex = 30;
+            labelEncodingSlices.TabIndex = 0;
             labelEncodingSlices.Text = "Slices:";
             labelEncodingSlices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableEncodingSlices
-            // 
-            tableEncodingSlices.ColumnCount = 2;
-            tableEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
-            tableEncodingSlices.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
-            tableEncodingSlices.Controls.Add(this.trackSlices, 0, 0);
-            tableEncodingSlices.Controls.Add(this.labelSlices, 1, 0);
-            tableEncodingSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            tableEncodingSlices.Location = new System.Drawing.Point(82, 31);
-            tableEncodingSlices.Name = "tableEncodingSlices";
-            tableEncodingSlices.RowCount = 1;
-            tableEncodingSlices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableEncodingSlices.Size = new System.Drawing.Size(142, 22);
-            tableEncodingSlices.TabIndex = 31;
             // 
             // trackSlices
             // 
             this.trackSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackSlices.Location = new System.Drawing.Point(0, 0);
+            this.trackSlices.Location = new System.Drawing.Point(79, 28);
             this.trackSlices.Margin = new System.Windows.Forms.Padding(0);
             this.trackSlices.Maximum = 4;
             this.trackSlices.Minimum = 1;
             this.trackSlices.Name = "trackSlices";
-            this.trackSlices.Size = new System.Drawing.Size(122, 22);
-            this.trackSlices.TabIndex = 0;
+            this.trackSlices.Size = new System.Drawing.Size(118, 28);
+            this.trackSlices.TabIndex = 2;
             this.trackSlices.Value = 1;
             this.trackSlices.ValueChanged += new System.EventHandler(this.trackSlices_ValueChanged);
             // 
@@ -1268,11 +1188,11 @@ namespace WebMConverter
             // 
             this.labelSlices.AutoSize = true;
             this.labelSlices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelSlices.Location = new System.Drawing.Point(122, 0);
+            this.labelSlices.Location = new System.Drawing.Point(197, 28);
             this.labelSlices.Margin = new System.Windows.Forms.Padding(0);
             this.labelSlices.Name = "labelSlices";
-            this.labelSlices.Size = new System.Drawing.Size(20, 22);
-            this.labelSlices.TabIndex = 1;
+            this.labelSlices.Size = new System.Drawing.Size(30, 28);
+            this.labelSlices.TabIndex = 0;
             this.labelSlices.Text = "1";
             this.labelSlices.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1283,7 +1203,7 @@ namespace WebMConverter
             labelEncodingSlicesHint.Location = new System.Drawing.Point(230, 28);
             labelEncodingSlicesHint.Name = "labelEncodingSlicesHint";
             labelEncodingSlicesHint.Size = new System.Drawing.Size(802, 28);
-            labelEncodingSlicesHint.TabIndex = 32;
+            labelEncodingSlicesHint.TabIndex = 0;
             labelEncodingSlicesHint.Text = "Split frames into slices before encoding them. Results in a higher quality per fr" +
     "ame. 4 slices is standard for 720p resolutions.";
             labelEncodingSlicesHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1295,12 +1215,13 @@ namespace WebMConverter
             labelEncodingCrf.Location = new System.Drawing.Point(3, 56);
             labelEncodingCrf.Name = "labelEncodingCrf";
             labelEncodingCrf.Size = new System.Drawing.Size(73, 28);
-            labelEncodingCrf.TabIndex = 33;
+            labelEncodingCrf.TabIndex = 0;
             labelEncodingCrf.Text = "CRF:";
             labelEncodingCrf.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // numericCrf
             // 
+            tableAdvancedEncoding.SetColumnSpan(this.numericCrf, 2);
             this.numericCrf.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericCrf.Location = new System.Drawing.Point(82, 59);
             this.numericCrf.Maximum = new decimal(new int[] {
@@ -1310,7 +1231,7 @@ namespace WebMConverter
             0});
             this.numericCrf.Name = "numericCrf";
             this.numericCrf.Size = new System.Drawing.Size(142, 20);
-            this.numericCrf.TabIndex = 34;
+            this.numericCrf.TabIndex = 3;
             this.numericCrf.Value = new decimal(new int[] {
             32,
             0,
@@ -1325,7 +1246,7 @@ namespace WebMConverter
             labelEncodingCrfHint.Location = new System.Drawing.Point(230, 56);
             labelEncodingCrfHint.Name = "labelEncodingCrfHint";
             labelEncodingCrfHint.Size = new System.Drawing.Size(802, 28);
-            labelEncodingCrfHint.TabIndex = 35;
+            labelEncodingCrfHint.TabIndex = 0;
             labelEncodingCrfHint.Text = "Constant rate factor for the video; basically, the overall quality. A lower value" +
     " means higher quality and filesize.";
             labelEncodingCrfHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1338,19 +1259,18 @@ namespace WebMConverter
             labelEncodingArguments.Location = new System.Drawing.Point(3, 84);
             labelEncodingArguments.Name = "labelEncodingArguments";
             labelEncodingArguments.Size = new System.Drawing.Size(73, 29);
-            labelEncodingArguments.TabIndex = 29;
+            labelEncodingArguments.TabIndex = 0;
             labelEncodingArguments.Text = "Arguments:";
             labelEncodingArguments.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // boxArguments
             // 
             this.boxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            tableAdvancedEncoding.SetColumnSpan(this.boxArguments, 2);
-            this.boxArguments.Location = new System.Drawing.Point(85, 88);
-            this.boxArguments.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            tableAdvancedEncoding.SetColumnSpan(this.boxArguments, 3);
+            this.boxArguments.Location = new System.Drawing.Point(82, 88);
             this.boxArguments.Name = "boxArguments";
-            this.boxArguments.Size = new System.Drawing.Size(944, 20);
-            this.boxArguments.TabIndex = 1;
+            this.boxArguments.Size = new System.Drawing.Size(950, 20);
+            this.boxArguments.TabIndex = 4;
             // 
             // panelContainTheProgressBar
             // 
@@ -1448,18 +1368,12 @@ namespace WebMConverter
             groupEncodingGeneral.ResumeLayout(false);
             tableEncodingGeneral.ResumeLayout(false);
             tableEncodingGeneral.PerformLayout();
-            tableGeneralSizeLimit.ResumeLayout(false);
-            tableGeneralSizeLimit.PerformLayout();
             groupEncodingVideo.ResumeLayout(false);
             this.tableLayoutPanelEncodingVideo.ResumeLayout(false);
             this.tableLayoutPanelEncodingVideo.PerformLayout();
-            tableVideoBitrate.ResumeLayout(false);
-            tableVideoBitrate.PerformLayout();
             groupEncodingAudio.ResumeLayout(false);
             tableEncodingAudio.ResumeLayout(false);
             tableEncodingAudio.PerformLayout();
-            tableAudioBitrate.ResumeLayout(false);
-            tableAudioBitrate.PerformLayout();
             tabAdvanced.ResumeLayout(false);
             tableAdvanced.ResumeLayout(false);
             tableAdvanced.PerformLayout();
@@ -1469,11 +1383,7 @@ namespace WebMConverter
             groupAdvancedEncoding.ResumeLayout(false);
             tableAdvancedEncoding.ResumeLayout(false);
             tableAdvancedEncoding.PerformLayout();
-            tableEncodingThreads.ResumeLayout(false);
-            tableEncodingThreads.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
-            tableEncodingSlices.ResumeLayout(false);
-            tableEncodingSlices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCrf)).EndInit();
             panelContainTheProgressBar.ResumeLayout(false);
@@ -1502,10 +1412,6 @@ namespace WebMConverter
         private System.Windows.Forms.Panel panelHideTheOptions;
         private System.Windows.Forms.ProgressBar progressBarIndexing;
         private System.Windows.Forms.Label labelIndexingProgress;
-        private System.Windows.Forms.TrackBar trackSlices;
-        private System.Windows.Forms.Label labelSlices;
-        private System.Windows.Forms.TrackBar trackThreads;
-        private System.Windows.Forms.Label labelThreads;
         private System.Windows.Forms.TextBox boxArguments;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.CheckBox boxDeinterlace;
@@ -1514,10 +1420,7 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripMenuItem buttonMultipleTrim;
         private System.Windows.Forms.ToolStripButton buttonCaption;
         private System.Windows.Forms.ToolStripButton buttonOverlay;
-        private System.Windows.Forms.TextBox boxLimit;
-        private System.Windows.Forms.TextBox boxVideoBitrate;
         private System.Windows.Forms.CheckBox boxAudio;
-        private System.Windows.Forms.TextBox boxAudioBitrate;
         private System.Windows.Forms.CheckBox boxDenoise;
         private System.Windows.Forms.NumericUpDown numericCrf;
         private System.Windows.Forms.Button buttonBrowseIn;
@@ -1525,6 +1428,13 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ImageList imageListFilters;
         private System.Windows.Forms.ListView listViewProcessingScript;
+        private System.Windows.Forms.TextBox boxLimit;
+        private System.Windows.Forms.TextBox boxVideoBitrate;
+        private System.Windows.Forms.TextBox boxAudioBitrate;
+        private System.Windows.Forms.TrackBar trackSlices;
+        private System.Windows.Forms.Label labelSlices;
+        private System.Windows.Forms.TrackBar trackThreads;
+        private System.Windows.Forms.Label labelThreads;
     }
 }
 
