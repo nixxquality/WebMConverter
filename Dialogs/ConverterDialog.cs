@@ -7,7 +7,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace WebMConverter
 {
-    public partial class ConverterForm : Form
+    public partial class ConverterDialog : Form
     {
         private string[] _arguments;
         //private Process _process;
@@ -25,7 +25,7 @@ namespace WebMConverter
         bool needToPipe;
         FFmpeg pipeFFmpeg;
 
-        public ConverterForm(MainForm mainForm, string input, string[] args)
+        public ConverterDialog(MainForm mainForm, string input, string[] args)
         {
             InitializeComponent();
 

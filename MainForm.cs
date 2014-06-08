@@ -1018,7 +1018,7 @@ namespace WebMConverter
                     arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
             }
 
-            new ConverterForm(this, avsFileName, arguments).ShowDialog(this);
+            new ConverterDialog(this, avsFileName, arguments).ShowDialog(this);
         }
 
         string GenerateArguments()

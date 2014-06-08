@@ -1,6 +1,6 @@
 ﻿namespace WebMConverter
 {
-    partial class ConverterForm
+    partial class ConverterDialog
     {
         /// <summary>
         /// Required designer variable.

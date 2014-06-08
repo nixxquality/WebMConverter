@@ -62,11 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConverterForm.cs">
+    <Compile Include="Dialogs\ConverterDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConverterForm.Designer.cs">
-      <DependentUpon>ConverterForm.cs</DependentUpon>
+    <Compile Include="Dialogs\ConverterDialog.Designer.cs">
+      <DependentUpon>ConverterDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Filters\OverlayForm.cs">
       <SubType>Form</SubType>
@@ -86,13 +86,13 @@
     <Compile Include="Filters\CropForm.Designer.cs">
       <DependentUpon>CropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FFmpeg.cs">
+    <Compile Include="Components\FFmpeg.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FFplay.cs">
+    <Compile Include="Components\FFplay.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FFprobe.cs">
+    <Compile Include="Components\FFprobe.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Dialogs\InputDialog.cs">
@@ -113,10 +113,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PreviewFrame.cs">
+    <Compile Include="Components\PreviewFrame.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PreviewFrame.Designer.cs">
+    <Compile Include="Components\PreviewFrame.Designer.cs">
       <DependentUpon>PreviewFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -145,15 +145,12 @@
     <Compile Include="Filters\TrimForm.Designer.cs">
       <DependentUpon>TrimForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TimeSpanBox.cs">
+    <Compile Include="Components\TimeSpanBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TimeSpanBox.Designer.cs">
+    <Compile Include="Components\TimeSpanBox.Designer.cs">
       <DependentUpon>TimeSpanBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ConverterForm.resx">
-      <DependentUpon>ConverterForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Filters\OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,17 +160,11 @@
     <EmbeddedResource Include="Filters\CropForm.resx">
       <DependentUpon>CropForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\InputDialog.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Filters\MultipleTrimForm.resx">
       <DependentUpon>MultipleTrimForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PreviewFrame.resx">
-      <DependentUpon>PreviewFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -190,9 +181,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\SubtitleForm.resx">
       <DependentUpon>SubtitleForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\TrackSelectDialog.resx">
-      <DependentUpon>TrackSelectDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\TrimForm.resx">
       <DependentUpon>TrimForm.cs</DependentUpon>
