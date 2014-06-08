@@ -98,7 +98,7 @@ namespace WebMConverter
 
             pipeFFmpeg = new FFmpeg(proxyargs, true);
 
-            pipeFFmpeg.ErrorDataReceived += (o, args) => Console.WriteLine("Proxy: " + args.Data);
+            pipeFFmpeg.ErrorDataReceived += (o, args) => Debug.WriteLine("Proxy: " + args.Data);
             pipeFFmpeg.Start(false);
             var bw = new BackgroundWorker();
             bw.DoWork += delegate(object o, DoWorkEventArgs args)

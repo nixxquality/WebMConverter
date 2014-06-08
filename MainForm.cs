@@ -23,7 +23,7 @@ namespace WebMConverter
         //{1} is extra arguments
         //{2} is '-pass X' if HQ mode enabled, otherwise blank
 
-        private const string _templateArguments = "{0} -c:v libvpx -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}";
+        private const string _templateArguments = "{0} -c:v {9} -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}{10}";
         //{0} is '-an' if no audio, otherwise blank
         //{1} is constant rate factor
         //{2} is video bitrate in kb/s
@@ -33,6 +33,8 @@ namespace WebMConverter
         //{6} is ' -fs XM' if X MB limit enabled otherwise blank
         //{7} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
         //{8} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+        //{9} is 'libvpx(-vp9)' changing depending on NGOV mode
+        //{10} is ' -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
 
         private string _indexFile;
 
@@ -1066,8 +1068,31 @@ namespace WebMConverter
             if (boxHQ.Checked)
                 HQ = " -quality best -lag-in-frames 16 -auto-alt-ref 1";
 
-            string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ);
+            string vcodec;
+            string acodec;
+            if (boxNGOV.Checked)
+            {
+                vcodec = "libvpx-vp9";
+                acodec = "libopus";
+            }
+            else
+            {
+                vcodec = "libvpx";
+                acodec = "libvorbis";
+            }
+
+            string audioEnabled;
+            if (boxAudio.Checked)
+            {
+                audioEnabled = "";
+                acodec = " -c:a " + acodec;
+            }
+            else
+            {
+                audioEnabled = acodec = "";
+            }
+
+            return string.Format(_templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
         }
 
         /// <summary>

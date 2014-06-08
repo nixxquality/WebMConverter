@@ -80,6 +80,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
+            System.Windows.Forms.Label labelEncodingNGOVHint;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -117,6 +118,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.boxNGOV = new System.Windows.Forms.CheckBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -167,6 +169,7 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
+            labelEncodingNGOVHint = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -914,6 +917,7 @@ namespace WebMConverter
             // 
             // tabAdvanced
             // 
+            tabAdvanced.AutoScroll = true;
             tabAdvanced.BackColor = System.Drawing.SystemColors.Control;
             tabAdvanced.Controls.Add(tableAdvanced);
             tabAdvanced.Location = new System.Drawing.Point(4, 22);
@@ -933,11 +937,11 @@ namespace WebMConverter
             tableAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
             tableAdvanced.Location = new System.Drawing.Point(3, 3);
             tableAdvanced.Name = "tableAdvanced";
-            tableAdvanced.RowCount = 4;
+            tableAdvanced.RowCount = 3;
             tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 138F));
-            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableAdvanced.Size = new System.Drawing.Size(1047, 301);
             tableAdvanced.TabIndex = 1;
             // 
@@ -1075,7 +1079,7 @@ namespace WebMConverter
             groupAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
             groupAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
             groupAdvancedEncoding.Name = "groupAdvancedEncoding";
-            groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 132);
+            groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 157);
             groupAdvancedEncoding.TabIndex = 2;
             groupAdvancedEncoding.TabStop = false;
             groupAdvancedEncoding.Text = "Encoding";
@@ -1087,6 +1091,8 @@ namespace WebMConverter
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvancedEncoding.Controls.Add(labelEncodingNGOVHint, 3, 3);
+            tableAdvancedEncoding.Controls.Add(this.boxNGOV, 0, 3);
             tableAdvancedEncoding.Controls.Add(labelEncodingThreads, 0, 0);
             tableAdvancedEncoding.Controls.Add(this.trackThreads, 1, 0);
             tableAdvancedEncoding.Controls.Add(this.labelThreads, 2, 0);
@@ -1098,18 +1104,18 @@ namespace WebMConverter
             tableAdvancedEncoding.Controls.Add(labelEncodingCrf, 0, 2);
             tableAdvancedEncoding.Controls.Add(this.numericCrf, 1, 2);
             tableAdvancedEncoding.Controls.Add(labelEncodingCrfHint, 3, 2);
-            tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 3);
-            tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 3);
+            tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 4);
+            tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 4);
             tableAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
             tableAdvancedEncoding.Location = new System.Drawing.Point(3, 16);
             tableAdvancedEncoding.Name = "tableAdvancedEncoding";
-            tableAdvancedEncoding.RowCount = 4;
+            tableAdvancedEncoding.RowCount = 5;
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 113);
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 138);
             tableAdvancedEncoding.TabIndex = 0;
             // 
             // labelEncodingThreads
@@ -1256,9 +1262,9 @@ namespace WebMConverter
             labelEncodingArguments.AutoSize = true;
             labelEncodingArguments.Dock = System.Windows.Forms.DockStyle.Fill;
             labelEncodingArguments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            labelEncodingArguments.Location = new System.Drawing.Point(3, 84);
+            labelEncodingArguments.Location = new System.Drawing.Point(3, 112);
             labelEncodingArguments.Name = "labelEncodingArguments";
-            labelEncodingArguments.Size = new System.Drawing.Size(73, 29);
+            labelEncodingArguments.Size = new System.Drawing.Size(73, 28);
             labelEncodingArguments.TabIndex = 0;
             labelEncodingArguments.Text = "Arguments:";
             labelEncodingArguments.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1267,10 +1273,10 @@ namespace WebMConverter
             // 
             this.boxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             tableAdvancedEncoding.SetColumnSpan(this.boxArguments, 3);
-            this.boxArguments.Location = new System.Drawing.Point(82, 88);
+            this.boxArguments.Location = new System.Drawing.Point(82, 116);
             this.boxArguments.Name = "boxArguments";
             this.boxArguments.Size = new System.Drawing.Size(950, 20);
-            this.boxArguments.TabIndex = 4;
+            this.boxArguments.TabIndex = 5;
             // 
             // panelContainTheProgressBar
             // 
@@ -1329,6 +1335,34 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
+            // 
+            // boxNGOV
+            // 
+            this.boxNGOV.AutoSize = true;
+            this.boxNGOV.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableAdvancedEncoding.SetColumnSpan(this.boxNGOV, 3);
+            this.boxNGOV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxNGOV.Location = new System.Drawing.Point(3, 87);
+            this.boxNGOV.Name = "boxNGOV";
+            this.boxNGOV.Size = new System.Drawing.Size(221, 22);
+            this.boxNGOV.TabIndex = 4;
+            this.boxNGOV.Text = "VP9/Opus";
+            this.boxNGOV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxNGOV.UseVisualStyleBackColor = true;
+            this.boxNGOV.CheckedChanged += new System.EventHandler(this.UpdateArguments);
+            // 
+            // labelEncodingNGOVHint
+            // 
+            labelEncodingNGOVHint.AutoSize = true;
+            labelEncodingNGOVHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingNGOVHint.Location = new System.Drawing.Point(230, 84);
+            labelEncodingNGOVHint.Name = "labelEncodingNGOVHint";
+            labelEncodingNGOVHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingNGOVHint.TabIndex = 0;
+            labelEncodingNGOVHint.Text = "Use the next-gen VP9/Opus encoders instead of the standard VP8/Vorbis. Will resul" +
+    "t in extremely long encoding times and less compatibility.\r\nKeep this disabled u" +
+    "ntil Moot allows VP9 WebMs.";
+            labelEncodingNGOVHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
@@ -1435,6 +1469,7 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelSlices;
         private System.Windows.Forms.TrackBar trackThreads;
         private System.Windows.Forms.Label labelThreads;
+        private System.Windows.Forms.CheckBox boxNGOV;
     }
 }
 
