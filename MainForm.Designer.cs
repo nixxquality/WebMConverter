@@ -556,6 +556,7 @@ namespace WebMConverter
             this.imageListFilters.Images.SetKeyName(2, "Subtitles");
             this.imageListFilters.Images.SetKeyName(3, "Reverse");
             this.imageListFilters.Images.SetKeyName(4, "Resize");
+            this.imageListFilters.Images.SetKeyName(5, "Overlay");
             // 
             // textBoxProcessingScript
             // 

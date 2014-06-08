@@ -291,7 +291,7 @@ namespace WebMConverter
                     else
                     {
                         Filters.Overlay = form.GeneratedFilter;
-                        listViewProcessingScript.Items.Add("Overlay", "subtitles"); // todo: get another icon
+                        listViewProcessingScript.Items.Add("Overlay", "overlay"); // todo: get another icon
                         (sender as ToolStripItem).Enabled = false;
                     }
                 }
