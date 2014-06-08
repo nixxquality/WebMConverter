@@ -71,6 +71,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelProcessingDenoiseHint;
             System.Windows.Forms.GroupBox groupAdvancedEncoding;
             System.Windows.Forms.TableLayoutPanel tableAdvancedEncoding;
+            System.Windows.Forms.Label labelEncodingNGOVHint;
             System.Windows.Forms.Label labelEncodingThreads;
             System.Windows.Forms.Label labelEncodingThreadsHint;
             System.Windows.Forms.Label labelEncodingSlices;
@@ -80,7 +81,6 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
-            System.Windows.Forms.Label labelEncodingNGOVHint;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -108,6 +108,7 @@ namespace WebMConverter
             this.boxLevels = new System.Windows.Forms.CheckBox();
             this.boxDeinterlace = new System.Windows.Forms.CheckBox();
             this.boxDenoise = new System.Windows.Forms.CheckBox();
+            this.boxNGOV = new System.Windows.Forms.CheckBox();
             this.trackThreads = new System.Windows.Forms.TrackBar();
             this.labelThreads = new System.Windows.Forms.Label();
             this.trackSlices = new System.Windows.Forms.TrackBar();
@@ -118,7 +119,6 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.boxNGOV = new System.Windows.Forms.CheckBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -160,6 +160,7 @@ namespace WebMConverter
             labelProcessingDenoiseHint = new System.Windows.Forms.Label();
             groupAdvancedEncoding = new System.Windows.Forms.GroupBox();
             tableAdvancedEncoding = new System.Windows.Forms.TableLayoutPanel();
+            labelEncodingNGOVHint = new System.Windows.Forms.Label();
             labelEncodingThreads = new System.Windows.Forms.Label();
             labelEncodingThreadsHint = new System.Windows.Forms.Label();
             labelEncodingSlices = new System.Windows.Forms.Label();
@@ -169,7 +170,6 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
-            labelEncodingNGOVHint = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -1118,6 +1118,34 @@ namespace WebMConverter
             tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 138);
             tableAdvancedEncoding.TabIndex = 0;
             // 
+            // labelEncodingNGOVHint
+            // 
+            labelEncodingNGOVHint.AutoSize = true;
+            labelEncodingNGOVHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingNGOVHint.Location = new System.Drawing.Point(230, 84);
+            labelEncodingNGOVHint.Name = "labelEncodingNGOVHint";
+            labelEncodingNGOVHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingNGOVHint.TabIndex = 0;
+            labelEncodingNGOVHint.Text = "Use the next-gen VP9/Opus encoders instead of the standard VP8/Vorbis. Will resul" +
+    "t in extremely long encoding times and less compatibility.\r\nKeep this disabled u" +
+    "ntil Moot allows VP9 WebMs.";
+            labelEncodingNGOVHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxNGOV
+            // 
+            this.boxNGOV.AutoSize = true;
+            this.boxNGOV.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            tableAdvancedEncoding.SetColumnSpan(this.boxNGOV, 3);
+            this.boxNGOV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxNGOV.Location = new System.Drawing.Point(3, 87);
+            this.boxNGOV.Name = "boxNGOV";
+            this.boxNGOV.Size = new System.Drawing.Size(221, 22);
+            this.boxNGOV.TabIndex = 4;
+            this.boxNGOV.Text = "VP9/Opus:";
+            this.boxNGOV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxNGOV.UseVisualStyleBackColor = true;
+            this.boxNGOV.CheckedChanged += new System.EventHandler(this.UpdateArguments);
+            // 
             // labelEncodingThreads
             // 
             labelEncodingThreads.AutoSize = true;
@@ -1335,34 +1363,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
-            // 
-            // boxNGOV
-            // 
-            this.boxNGOV.AutoSize = true;
-            this.boxNGOV.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableAdvancedEncoding.SetColumnSpan(this.boxNGOV, 3);
-            this.boxNGOV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxNGOV.Location = new System.Drawing.Point(3, 87);
-            this.boxNGOV.Name = "boxNGOV";
-            this.boxNGOV.Size = new System.Drawing.Size(221, 22);
-            this.boxNGOV.TabIndex = 4;
-            this.boxNGOV.Text = "VP9/Opus";
-            this.boxNGOV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxNGOV.UseVisualStyleBackColor = true;
-            this.boxNGOV.CheckedChanged += new System.EventHandler(this.UpdateArguments);
-            // 
-            // labelEncodingNGOVHint
-            // 
-            labelEncodingNGOVHint.AutoSize = true;
-            labelEncodingNGOVHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelEncodingNGOVHint.Location = new System.Drawing.Point(230, 84);
-            labelEncodingNGOVHint.Name = "labelEncodingNGOVHint";
-            labelEncodingNGOVHint.Size = new System.Drawing.Size(802, 28);
-            labelEncodingNGOVHint.TabIndex = 0;
-            labelEncodingNGOVHint.Text = "Use the next-gen VP9/Opus encoders instead of the standard VP8/Vorbis. Will resul" +
-    "t in extremely long encoding times and less compatibility.\r\nKeep this disabled u" +
-    "ntil Moot allows VP9 WebMs.";
-            labelEncodingNGOVHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
