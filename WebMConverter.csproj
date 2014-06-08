@@ -151,6 +151,9 @@
     <Compile Include="Components\TimeSpanBox.Designer.cs">
       <DependentUpon>TimeSpanBox.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dialogs\ConverterDialog.resx">
+      <DependentUpon>ConverterDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Filters\OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>

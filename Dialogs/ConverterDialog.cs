@@ -28,6 +28,7 @@ namespace WebMConverter
         public ConverterDialog(MainForm mainForm, string input, string[] args)
         {
             InitializeComponent();
+            pictureStatus.BackgroundImage = StatusImages.Images["Happening"];
 
             infile = input;
             _arguments = args;
@@ -42,13 +43,13 @@ namespace WebMConverter
         private void ProcessOnErrorDataReceived(object sender, DataReceivedEventArgs args)
         {
             if (args.Data != null)
-                textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
+                boxOutput.Invoke((Action)(() => boxOutput.AppendText("\n" + args.Data)));
         }
 
         private void ProcessOnOutputDataReceived(object sender, DataReceivedEventArgs args)
         {
             if (args.Data != null)
-                textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
+                boxOutput.Invoke((Action)(() => boxOutput.AppendText("\n" + args.Data)));
         }
 
         private void ConverterForm_Load(object sender, EventArgs e)
@@ -63,11 +64,11 @@ namespace WebMConverter
 
             if (twopass)
             {
-                textBoxOutput.AppendText(string.Format("{0}Arguments for pass 1: {1}", Environment.NewLine, _arguments[0]));
-                textBoxOutput.AppendText(string.Format("{0}Arguments for pass 2: {1}", Environment.NewLine, _arguments[1]));
+                boxOutput.AppendText(string.Format("{0}Arguments for pass 1: {1}", Environment.NewLine, _arguments[0]));
+                boxOutput.AppendText(string.Format("{0}Arguments for pass 2: {1}", Environment.NewLine, _arguments[1]));
             }
             else
-                textBoxOutput.AppendText("\nArguments: " + argument);
+                boxOutput.AppendText("\nArguments: " + argument);
 
             if (twopass)
                 MultiPass(_arguments);
@@ -93,7 +94,7 @@ namespace WebMConverter
                 return;
 
             string proxyargs = string.Format("-f avisynth -i \"{0}\" -f nut -c copy pipe:1", infile);
-            textBoxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
+            boxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
 
             pipeFFmpeg = new FFmpeg(proxyargs, true);
 
@@ -121,10 +122,10 @@ namespace WebMConverter
 
             _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
             _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
-            _ffmpegProcess.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.Exited += (o, args) => boxOutput.Invoke((Action)(() =>
             {
                 if (_panic) return; //This should stop that one exception when closing the converter
-                textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
+                boxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
                 buttonCancel.Enabled = false;
 
                 _timer = new Timer();
@@ -145,15 +146,15 @@ namespace WebMConverter
 
             _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
             _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
-            _ffmpegProcess.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.Exited += (o, args) => boxOutput.Invoke((Action)(() =>
             {
                 if (_panic) return; //This should stop that one exception when closing the converter
-                textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
+                boxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
 
                 currentPass++;
                 if (currentPass < passes && !cancelTwopass)
                 {
-                    textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
+                    boxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
 
                     MultiPass(arguments); //Sort of recursion going on here, be careful with stack overflows and shit
                     return;
@@ -180,21 +181,21 @@ namespace WebMConverter
             if (process.ExitCode != 0)
             {
                 if (cancelTwopass)
-                    textBoxOutput.AppendText("\n\nConversion cancelled.");
+                    boxOutput.AppendText("\n\nConversion cancelled.");
                 else
                 {
-                    textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", process.ExitCode));
-                    textBoxOutput.AppendText("\nIf you have no idea what went wrong, open an issue on GitHub and copy paste the output of this window there.");
+                    boxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", process.ExitCode));
+                    boxOutput.AppendText("\nIf you have no idea what went wrong, open an issue on GitHub and copy paste the output of this window there.");
                 }
-                pictureBox.BackgroundImage = Properties.Resources.cross;
+                pictureStatus.BackgroundImage = StatusImages.Images["Failure"];
 
                 if (process.ExitCode == -1073741819) //This error keeps happening for me if I set threads to anything above 1, might happen for other people too
                     MessageBox.Show("It appears ffmpeg.exe crashed because of a thread error. Set the amount of threads to 1 in the advanced tab and try again.", "FYI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                textBoxOutput.AppendText("\n\nVideo converted succesfully!");
-                pictureBox.BackgroundImage = Properties.Resources.tick;
+                boxOutput.AppendText("\n\nVideo converted succesfully!");
+                pictureStatus.BackgroundImage = StatusImages.Images["Success"];
 
                 buttonPlay.Enabled = true;
             }

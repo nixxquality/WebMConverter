@@ -392,7 +392,7 @@ namespace WebMConverter
 
         void boxAdvancedScripting_CheckedChanged(object sender, EventArgs e)
         {
-            (sender as ToolStripButton).Image = (sender as ToolStripButton).Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // TODO: get better icons
+            //(sender as ToolStripButton).Image = (sender as ToolStripButton).Checked ? WebMConverter.Properties.Resources.tick : WebMConverter.Properties.Resources.cross; // TODO: get better icons
         }
 
         void toolStripFilterButtonsEnabled(bool enabled)

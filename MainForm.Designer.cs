@@ -470,7 +470,6 @@ namespace WebMConverter
             this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
     "t over if you fuck up.";
             this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.boxAdvancedScripting.Image = global::WebMConverter.Properties.Resources.cross;
             this.boxAdvancedScripting.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxAdvancedScripting.Name = "boxAdvancedScripting";
             this.boxAdvancedScripting.Size = new System.Drawing.Size(80, 22);
