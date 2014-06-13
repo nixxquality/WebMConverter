@@ -215,22 +215,90 @@ namespace WebMConverter
 
         #region tabProcessing
 
+        enum ProcessingMode : byte
+        {
+            Simple,
+            Graph,
+            Script
+        }
+        ProcessingMode processingMode = ProcessingMode.Simple;
+
+        void SetProcessingMode(ProcessingMode newMode, object sender, EventArgs e)
+        {
+            switch (processingMode)
+            {
+                case ProcessingMode.Simple:
+                    const string message = "You are entering advanced territory, and there is no way back.\nOnly proceed if you know what you're doing.";
+                    const string caption = "Are you sure?";
+                    if (MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                        return;
+                    simpleToolStripMenuItem.Enabled = false;
+
+                    listViewProcessingScript.Hide();
+                    GenerateAvisynthScript();
+
+                    simpleToolStripMenuItem.Checked = false;
+                    break;
+                case ProcessingMode.Graph:
+
+                    graphToolStripMenuItem.Checked = false;
+                    break;
+                case ProcessingMode.Script:
+                    textBoxProcessingScript.Hide();
+
+                    scriptToolStripMenuItem.Checked = false;
+                    break;
+            }
+
+            processingMode = newMode;
+
+            switch (processingMode)
+            {
+                case ProcessingMode.Script:
+                    ProbeScript();
+                    clearToolTip(sender, e);
+                    textBoxProcessingScript.Show();
+                    toolStripFilterButtonsEnabled(true);
+                    break;
+            }
+
+            (sender as ToolStripMenuItem).Checked = true;
+        }
+
+        void simpleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetProcessingMode(ProcessingMode.Simple, sender, e);
+        }
+
+        void graphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetProcessingMode(ProcessingMode.Graph, sender, e);
+        }
+
+        void scriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetProcessingMode(ProcessingMode.Script, sender, e);
+        }
+
         void buttonCaption_Click(object sender, EventArgs e)
         {
             using (var form = new CaptionForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Caption = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Caption", "caption");
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
@@ -239,19 +307,22 @@ namespace WebMConverter
         {
             using (var form = new CropForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Crop = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Crop", "crop");
                         SetSlices();
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
@@ -260,19 +331,22 @@ namespace WebMConverter
         {
             using (var form = new MultipleTrimForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.MultipleTrim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Multiple Trim", "trim");
                         GenerateArguments();
                         (sender as ToolStripMenuItem).OwnerItem.Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
@@ -284,18 +358,21 @@ namespace WebMConverter
                 if (form.IsDisposed) // The user cancelled the file picker
                     return;
 
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Overlay = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Overlay", "overlay");
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
@@ -304,34 +381,40 @@ namespace WebMConverter
         {
             using (var form = new ResizeForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Resize = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Resize", "resize");
                         SetSlices();
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
 
         void buttonReverse_Click(object sender, EventArgs e)
         {
-            if (boxAdvancedScripting.Checked)
+            switch (processingMode)
             {
-                textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().ToString());
-            }
-            else
-            {
-                Filters.Reverse = new ReverseFilter();
-                listViewProcessingScript.Items.Add("Reverse", "reverse");
-                (sender as ToolStripItem).Enabled = false;
+                case ProcessingMode.Simple:
+                    Filters.Reverse = new ReverseFilter();
+                    listViewProcessingScript.Items.Add("Reverse", "reverse");
+                    (sender as ToolStripItem).Enabled = false;
+                    break;
+                case ProcessingMode.Graph:
+                    throw new NotImplementedException(); // TODO
+                case ProcessingMode.Script:
+                    textBoxProcessingScript.AppendText(Environment.NewLine + new ReverseFilter().ToString());
+                    break;
             }
         }
 
@@ -339,18 +422,21 @@ namespace WebMConverter
         {
             using (var form = new SubtitleForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Subtitle = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Subtitle", "subtitles");
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
         }
@@ -359,35 +445,24 @@ namespace WebMConverter
         {
             using (var form = new TrimForm())
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (form.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                switch (processingMode)
                 {
-                    if (boxAdvancedScripting.Checked)
-                    {
-                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
-                    }
-                    else
-                    {
+                    case ProcessingMode.Simple:
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim", "trim");
                         GenerateArguments();
                         (sender as ToolStripItem).Enabled = false;
-                    }
+                        break;
+                    case ProcessingMode.Graph:
+                        throw new NotImplementedException(); // TODO
+                    case ProcessingMode.Script:
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                        break;
                 }
             }
-        }
-
-        void boxAdvancedScripting_Click(object sender, EventArgs e)
-        {
-            ProbeScript();
-            (sender as ToolStripButton).Checked = !(sender as ToolStripButton).Checked;
-
-            listViewProcessingScript.Hide();
-            GenerateAvisynthScript();
-            textBoxProcessingScript.Show();
-            toolStripFilterButtonsEnabled(true);
-
-            (sender as ToolStripButton).Enabled = false;
-            clearToolTip(sender, e);
         }
 
         void toolStripFilterButtonsEnabled(bool enabled)
@@ -619,8 +694,8 @@ namespace WebMConverter
             // Reset filters
             Filters.ResetFilters();
             listViewProcessingScript.Clear();
-            boxAdvancedScripting.Checked = false; // STUB: this part is weak
-            boxAdvancedScripting.Enabled = true;
+            processingMode = ProcessingMode.Simple;
+            buttonProcessingMode.Enabled = true;
             textBoxProcessingScript.Hide();
             listViewProcessingScript.Show();
             GenerateAvisynthScript();
@@ -955,8 +1030,8 @@ namespace WebMConverter
 
             ValidateInputFile(input);
 
-            // Generate the script if we're in simple mode
-            if (!boxAdvancedScripting.Checked)
+            // Generate the script if we're not in script mode
+            if (processingMode != ProcessingMode.Script)
                 GenerateAvisynthScript();
 
             // Make our temporary file for the AviSynth script
@@ -988,8 +1063,8 @@ namespace WebMConverter
             if (options.Trim() == "" || _argumentError)
                 options = GenerateArguments();
 
-            // Generate the script if we're in simple mode
-            if (!boxAdvancedScripting.Checked)
+            // Generate the script if we're not in script mode
+            if (processingMode != ProcessingMode.Script)
                 GenerateAvisynthScript();
 
             // Make our temporary file for the AviSynth script
@@ -1095,87 +1170,102 @@ namespace WebMConverter
         /// <returns>The duration or -1 if automatic detection was unsuccessful.</returns>
         public double GetDuration()
         {
-            if (boxAdvancedScripting.Checked)
+            switch (processingMode)
             {
-                // The dirty way.
+                case ProcessingMode.Simple:
+                    if (Filters.Trim != null)
+                        return Filters.Trim.GetDuration();
 
-                using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
-                {
-                    reader.ReadToFollowing("stream");
+                    if (Filters.MultipleTrim != null)
+                        return Filters.MultipleTrim.GetDuration();
 
-                    while (reader.MoveToNextAttribute())
+                    return Program.FrameToTimeSpan(Program.VideoSource.NumberOfFrames - 1).TotalSeconds;
+
+                case ProcessingMode.Graph:
+                    throw new NotImplementedException(); // TODO
+
+                case ProcessingMode.Script:
+                    using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
                     {
-                        if (reader.Name == "duration")
+                        reader.ReadToFollowing("stream");
+
+                        while (reader.MoveToNextAttribute())
                         {
-                            return double.Parse(reader.Value);
+                            if (reader.Name == "duration")
+                            {
+                                return double.Parse(reader.Value);
+                            }
                         }
                     }
-                }
 
-                return -1;
+                    break;
             }
-            else
-            {
-                // The easy way.
 
-                if (Filters.Trim != null)
-                    return Filters.Trim.GetDuration();
-                if (Filters.MultipleTrim != null)
-                    return Filters.MultipleTrim.GetDuration();
-
-                return Program.FrameToTimeSpan(Program.VideoSource.NumberOfFrames - 1).TotalSeconds;
-            }
+            throw new Exception("We couldn't detect the duration of the video.");
         }
 
         public Size GetResolution()
         {
-            if (boxAdvancedScripting.Checked)
+            int width, height;
+
+            switch (processingMode)
             {
-                // The dirty way.
-
-                int width = -1, height = -1;
-
-                using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
-                {
-                    reader.ReadToFollowing("stream");
-
-                    while (reader.MoveToNextAttribute())
+                case ProcessingMode.Simple:
+                    if (Filters.Resize != null)
                     {
-                        if (reader.Name == "width")
+                        return new Size(Filters.Resize.TargetWidth, Filters.Resize.TargetHeight);
+                    }
+
+                    var frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
+
+                    if (Filters.Crop != null)
+                    {
+                        width = frame.EncodedResolution.Width - Filters.Crop.Left + Filters.Crop.Right;
+                        height = frame.EncodedResolution.Height - Filters.Crop.Top + Filters.Crop.Bottom;
+
+                        return new Size(width, height);
+                    }
+
+                    return frame.EncodedResolution;
+
+                case ProcessingMode.Graph:
+                    throw new NotImplementedException(); // TODO
+
+                case ProcessingMode.Script:
+                    width = height = -1;
+
+                    using (XmlReader reader = XmlReader.Create(new StringReader(avsScriptInfo)))
+                    {
+                        reader.ReadToFollowing("stream");
+
+                        while (reader.MoveToNextAttribute())
                         {
-                            width = int.Parse(reader.Value);
-                        }
-                        if (reader.Name == "height")
-                        {
-                            height = int.Parse(reader.Value);
+                            if (reader.Name == "width")
+                            {
+                                width = int.Parse(reader.Value);
+                            }
+                            if (reader.Name == "height")
+                            {
+                                height = int.Parse(reader.Value);
+                            }
                         }
                     }
-                }
-
-                return new Size(width, height);
-            }
-            else
-            {
-                if (Filters.Resize != null)
-                {
-                    return new Size(Filters.Resize.TargetWidth, Filters.Resize.TargetHeight);
-                }
-
-                var frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
-
-                if (Filters.Crop != null)
-                {
-                    int width = frame.EncodedResolution.Width - Filters.Crop.Left + Filters.Crop.Right;
-                    int height = frame.EncodedResolution.Height - Filters.Crop.Top + Filters.Crop.Bottom;
 
                     return new Size(width, height);
-                }
-
-                return frame.EncodedResolution;
             }
+
+            throw new Exception("We couldn't detect the resolution of the video.");
         }
 
         void GenerateAvisynthScript()
+        {
+            if (processingMode == ProcessingMode.Simple)
+                GenerateAvisynthScriptSimple();
+            if (processingMode == ProcessingMode.Graph)
+                GenerateAvisynthScriptGraph();
+        }
+
+        void GenerateAvisynthScriptSimple()
         {
             StringBuilder script = new StringBuilder();
             script.AppendLine("# This is an AviSynth script. You may write advanced commands below, or just press the buttons above for smooth sailing.");
@@ -1200,6 +1290,11 @@ namespace WebMConverter
                 script.AppendLine(Filters.Reverse.ToString());
 
             textBoxProcessingScript.Text = script.ToString();
+        }
+
+        private void GenerateAvisynthScriptGraph()
+        {
+            throw new NotImplementedException(); // TODO
         }
 
         void ProbeScript()

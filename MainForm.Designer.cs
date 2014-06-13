@@ -91,7 +91,6 @@ namespace WebMConverter
             this.buttonResize = new System.Windows.Forms.ToolStripButton();
             this.buttonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.buttonReverse = new System.Windows.Forms.ToolStripButton();
-            this.boxAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.buttonOverlay = new System.Windows.Forms.ToolStripButton();
             this.buttonCaption = new System.Windows.Forms.ToolStripButton();
@@ -119,6 +118,10 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.buttonProcessingMode = new System.Windows.Forms.ToolStripDropDownButton();
+            this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -369,10 +372,10 @@ namespace WebMConverter
             this.buttonResize,
             this.buttonSubtitle,
             this.buttonReverse,
-            this.boxAdvancedScripting,
-            this.buttonPreview,
             this.buttonOverlay,
-            this.buttonCaption});
+            this.buttonCaption,
+            this.buttonProcessingMode,
+            this.buttonPreview});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -452,18 +455,6 @@ namespace WebMConverter
             this.buttonReverse.Click += new System.EventHandler(this.buttonReverse_Click);
             this.buttonReverse.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.buttonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
-            // boxAdvancedScripting
-            // 
-            this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
-    "t over if you fuck up.";
-            this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.boxAdvancedScripting.Name = "boxAdvancedScripting";
-            this.boxAdvancedScripting.Size = new System.Drawing.Size(64, 22);
-            this.boxAdvancedScripting.Text = "Advanced";
-            this.boxAdvancedScripting.Click += new System.EventHandler(this.boxAdvancedScripting_Click);
-            this.boxAdvancedScripting.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
-            this.boxAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // buttonPreview
             // 
@@ -1364,6 +1355,41 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
+            // buttonProcessingMode
+            // 
+            this.buttonProcessingMode.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonProcessingMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonProcessingMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simpleToolStripMenuItem,
+            this.graphToolStripMenuItem,
+            this.scriptToolStripMenuItem});
+            this.buttonProcessingMode.Name = "buttonProcessingMode";
+            this.buttonProcessingMode.Size = new System.Drawing.Size(51, 22);
+            this.buttonProcessingMode.Text = "Mode";
+            // 
+            // simpleToolStripMenuItem
+            // 
+            this.simpleToolStripMenuItem.Checked = true;
+            this.simpleToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simpleToolStripMenuItem.Text = "Simple";
+            this.simpleToolStripMenuItem.Click += new System.EventHandler(this.simpleToolStripMenuItem_Click);
+            // 
+            // graphToolStripMenuItem
+            // 
+            this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
+            this.graphToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.graphToolStripMenuItem.Text = "Graph";
+            this.graphToolStripMenuItem.Click += new System.EventHandler(this.graphToolStripMenuItem_Click);
+            // 
+            // scriptToolStripMenuItem
+            // 
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.scriptToolStripMenuItem.Text = "Script";
+            this.scriptToolStripMenuItem.Click += new System.EventHandler(this.scriptToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1437,7 +1463,6 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripButton buttonCrop;
         private System.Windows.Forms.ToolStripButton buttonResize;
         private System.Windows.Forms.ToolStripButton buttonReverse;
-        private System.Windows.Forms.ToolStripButton boxAdvancedScripting;
         private System.Windows.Forms.ToolStripButton buttonSubtitle;
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.TextBox boxTitle;
@@ -1470,6 +1495,10 @@ namespace WebMConverter
         private System.Windows.Forms.TrackBar trackThreads;
         private System.Windows.Forms.Label labelThreads;
         private System.Windows.Forms.CheckBox boxNGOV;
+        private System.Windows.Forms.ToolStripDropDownButton buttonProcessingMode;
+        private System.Windows.Forms.ToolStripMenuItem simpleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
     }
 }
 
