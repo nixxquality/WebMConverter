@@ -382,8 +382,6 @@ namespace WebMConverter
             (sender as ToolStripButton).Checked = !(sender as ToolStripButton).Checked;
 
             listViewProcessingScript.Hide();
-            if (Filters.Caption != null)
-                Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
             GenerateAvisynthScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
@@ -958,8 +956,6 @@ namespace WebMConverter
             ValidateInputFile(input);
 
             // Generate the script if we're in simple mode
-            if (Filters.Caption != null)
-                Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
             if (!boxAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
@@ -993,8 +989,6 @@ namespace WebMConverter
                 options = GenerateArguments();
 
             // Generate the script if we're in simple mode
-            if (Filters.Caption != null)
-                Filters.Caption.BeforeEncode(GetResolution());
             if (!boxAdvancedScripting.Checked)
                 GenerateAvisynthScript();
 
@@ -1188,7 +1182,10 @@ namespace WebMConverter
             if (Filters.Subtitle != null)
                 script.AppendLine(Filters.Subtitle.ToString());
             if (Filters.Caption != null)
+            {
+                Filters.Caption.BeforeEncode(Program.VideoSource.GetFrame(0).EncodedResolution);
                 script.AppendLine(Filters.Caption.ToString());
+            }
             if (Filters.Overlay != null)
                 script.AppendLine(Filters.Overlay.ToString());
             if (Filters.Trim != null)
