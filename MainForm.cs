@@ -615,6 +615,7 @@ namespace WebMConverter
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
             Program.InputFile = path;
             Program.FileMd5 = null;
+            audioDisabled = false;
 
             // Reset filters
             Filters.ResetFilters();
@@ -662,16 +663,36 @@ namespace WebMConverter
 
                 try
                 {
-                    index = indexer.Index();
+                    if (audioDisabled) // Indexing failed because of the audio, so the user disabled it.
+                    {
+                        List<int> indexList = new List<int>(); // An empty list means index no tracks.
+                        index = indexer.Index(indexList);
+                    }
+                    else
+                    {
+                        index = indexer.Index();
+                    }
                 }
                 catch (OperationCanceledException)
                 {
+                    audioDisabled = false; // This enables us to cancel the bw even if audio was disabled by the user.
                     e.Cancel = true;
                     return;
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show(error.Message);
+                    if (error.Message.StartsWith("Audio format change detected"))
+                    {
+                        const string message = "\nIf you were planning on making a WebM with audio, I'm afraid that's not going to happen.\nWould you like to index the file without audio?";
+                        const string caption = "Error";
+                        var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                        audioDisabled = (result == DialogResult.OK);
+                    }
+                    else
+                    {
+                        MessageBox.Show(error.Message);
+                    }
                     e.Cancel = true;
                     return;
                 }
@@ -761,24 +782,27 @@ namespace WebMConverter
                     });
                 }
 
-                if (audioTracks.Count == 0)
+                if (!audioDisabled)
                 {
-                    audioDisabled = true;
-                }
-                else if (audioTracks.Count == 1)
-                {
-                    audiotrack = audioTracks[0];
-                    audioDisabled = false;
-                }
-                else
-                {
-                    this.Invoke((MethodInvoker)delegate
+                    if (audioTracks.Count == 0)
                     {
-                        var dialog = new TrackSelectDialog("Audio", audioTracks);
-                        dialog.ShowDialog(this);
-                        audiotrack = dialog.SelectedTrack;
-                    });
-                    audioDisabled = false;
+                        audioDisabled = true;
+                    }
+                    else if (audioTracks.Count == 1)
+                    {
+                        audiotrack = audioTracks[0];
+                        audioDisabled = false;
+                    }
+                    else
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            var dialog = new TrackSelectDialog("Audio", audioTracks);
+                            dialog.ShowDialog(this);
+                            audiotrack = dialog.SelectedTrack;
+                        });
+                        audioDisabled = false;
+                    }
                 }
 
                 Program.VideoSource = index.VideoSource(path, videotrack);
@@ -789,6 +813,12 @@ namespace WebMConverter
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
+                if (audioDisabled == true && e.Cancelled)
+                {
+                    indexbw.RunWorkerAsync();
+                    return;
+                }
+
                 indexing = false;
                 buttonGo.Enabled = false;
                 buttonGo.Text = "Convert";
@@ -820,6 +850,7 @@ namespace WebMConverter
                     const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
                     const string caption = "FYI";
                     MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    boxAudio.Enabled = false;
                 }
 
                 buttonGo.Enabled = true;
@@ -841,6 +872,15 @@ namespace WebMConverter
                 index = new FFMSSharp.Index(_indexFile);
                 if (index.BelongsToFile(path))
                 {
+                    try
+                    {
+                        index.GetFirstIndexedTrackOfType(FFMSSharp.TrackType.Audio);
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        audioDisabled = true;
+                    }
+                        
                     labelIndexingProgress.Text = "Extracting subtitle tracks and attachments...";
                     progressBarIndexing.Value = 30;
                     progressBarIndexing.Style = ProgressBarStyle.Marquee;
