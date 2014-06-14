@@ -734,7 +734,9 @@ namespace WebMConverter
                             if (!nav.IsEmptyElement) // There might be a tag element
                             {
                                 nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
-                                title = nav.GetAttribute("value", "");
+                                var titleTag = nav.GetAttribute("value", "");
+
+                                title = titleTag == "" ? title : titleTag;
                             }
 
                             // Save it
