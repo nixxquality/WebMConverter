@@ -81,6 +81,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
+            System.Windows.Forms.Label labelProcessingAviSourceHint;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -119,6 +120,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.boxAviSource = new System.Windows.Forms.CheckBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -170,6 +172,7 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
+            labelProcessingAviSourceHint = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -972,16 +975,19 @@ namespace WebMConverter
             // 
             // tableAdvancedProcessing
             // 
-            tableAdvancedProcessing.ColumnCount = 3;
-            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            tableAdvancedProcessing.ColumnCount = 4;
             tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableAdvancedProcessing.Controls.Add(labelProcessingAviSourceHint, 3, 0);
+            tableAdvancedProcessing.Controls.Add(this.boxAviSource, 2, 0);
             tableAdvancedProcessing.Controls.Add(this.boxLevels, 0, 0);
-            tableAdvancedProcessing.Controls.Add(labelProcessingLevelsHint, 2, 0);
+            tableAdvancedProcessing.Controls.Add(labelProcessingLevelsHint, 1, 0);
             tableAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
-            tableAdvancedProcessing.Controls.Add(labelProcessingDeinterlaceHint, 2, 1);
+            tableAdvancedProcessing.Controls.Add(labelProcessingDeinterlaceHint, 1, 1);
             tableAdvancedProcessing.Controls.Add(this.boxDenoise, 0, 2);
-            tableAdvancedProcessing.Controls.Add(labelProcessingDenoiseHint, 2, 2);
+            tableAdvancedProcessing.Controls.Add(labelProcessingDenoiseHint, 1, 2);
             tableAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             tableAdvancedProcessing.Location = new System.Drawing.Point(3, 16);
             tableAdvancedProcessing.Name = "tableAdvancedProcessing";
@@ -996,11 +1002,10 @@ namespace WebMConverter
             // 
             this.boxLevels.AutoSize = true;
             this.boxLevels.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableAdvancedProcessing.SetColumnSpan(this.boxLevels, 2);
             this.boxLevels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxLevels.Location = new System.Drawing.Point(3, 3);
             this.boxLevels.Name = "boxLevels";
-            this.boxLevels.Size = new System.Drawing.Size(221, 22);
+            this.boxLevels.Size = new System.Drawing.Size(142, 22);
             this.boxLevels.TabIndex = 1;
             this.boxLevels.Text = "Expand color ranges:";
             this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1011,23 +1016,22 @@ namespace WebMConverter
             // 
             labelProcessingLevelsHint.AutoSize = true;
             labelProcessingLevelsHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelProcessingLevelsHint.Location = new System.Drawing.Point(230, 0);
+            labelProcessingLevelsHint.Location = new System.Drawing.Point(151, 0);
             labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
-            labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
+            labelProcessingLevelsHint.Size = new System.Drawing.Size(363, 28);
             labelProcessingLevelsHint.TabIndex = 0;
-            labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
-    "hed out in browsers. This option expands the color levels to the full range.";
+            labelProcessingLevelsHint.Text = "If your output colors look a bit washed out, it might be because of a poorly enco" +
+    "ded input file. This option expands the color levels to the full range.";
             labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // boxDeinterlace
             // 
             this.boxDeinterlace.AutoSize = true;
             this.boxDeinterlace.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableAdvancedProcessing.SetColumnSpan(this.boxDeinterlace, 2);
             this.boxDeinterlace.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxDeinterlace.Location = new System.Drawing.Point(3, 31);
             this.boxDeinterlace.Name = "boxDeinterlace";
-            this.boxDeinterlace.Size = new System.Drawing.Size(221, 22);
+            this.boxDeinterlace.Size = new System.Drawing.Size(142, 22);
             this.boxDeinterlace.TabIndex = 2;
             this.boxDeinterlace.Text = "Deinterlace:";
             this.boxDeinterlace.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1038,9 +1042,9 @@ namespace WebMConverter
             // 
             labelProcessingDeinterlaceHint.AutoSize = true;
             labelProcessingDeinterlaceHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(230, 28);
+            labelProcessingDeinterlaceHint.Location = new System.Drawing.Point(151, 28);
             labelProcessingDeinterlaceHint.Name = "labelProcessingDeinterlaceHint";
-            labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(802, 28);
+            labelProcessingDeinterlaceHint.Size = new System.Drawing.Size(363, 28);
             labelProcessingDeinterlaceHint.TabIndex = 0;
             labelProcessingDeinterlaceHint.Text = "Attempt to deinterlace an interlaced input video.";
             labelProcessingDeinterlaceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1049,11 +1053,10 @@ namespace WebMConverter
             // 
             this.boxDenoise.AutoSize = true;
             this.boxDenoise.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableAdvancedProcessing.SetColumnSpan(this.boxDenoise, 2);
             this.boxDenoise.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxDenoise.Location = new System.Drawing.Point(3, 59);
             this.boxDenoise.Name = "boxDenoise";
-            this.boxDenoise.Size = new System.Drawing.Size(221, 23);
+            this.boxDenoise.Size = new System.Drawing.Size(142, 23);
             this.boxDenoise.TabIndex = 3;
             this.boxDenoise.Text = "Denoise:";
             this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1064,9 +1067,9 @@ namespace WebMConverter
             // 
             labelProcessingDenoiseHint.AutoSize = true;
             labelProcessingDenoiseHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
+            labelProcessingDenoiseHint.Location = new System.Drawing.Point(151, 56);
             labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
-            labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
+            labelProcessingDenoiseHint.Size = new System.Drawing.Size(363, 29);
             labelProcessingDenoiseHint.TabIndex = 0;
             labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
     "hen it comes to bitrate.";
@@ -1364,6 +1367,31 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
+            // boxAviSource
+            // 
+            this.boxAviSource.AutoSize = true;
+            this.boxAviSource.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxAviSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxAviSource.Location = new System.Drawing.Point(520, 3);
+            this.boxAviSource.Name = "boxAviSource";
+            this.boxAviSource.Size = new System.Drawing.Size(142, 22);
+            this.boxAviSource.TabIndex = 4;
+            this.boxAviSource.Text = "Use AVISource:";
+            this.boxAviSource.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxAviSource.UseVisualStyleBackColor = true;
+            // 
+            // labelProcessingAviSourceHint
+            // 
+            labelProcessingAviSourceHint.AutoSize = true;
+            labelProcessingAviSourceHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingAviSourceHint.Location = new System.Drawing.Point(668, 0);
+            labelProcessingAviSourceHint.Name = "labelProcessingAviSourceHint";
+            labelProcessingAviSourceHint.Size = new System.Drawing.Size(364, 28);
+            labelProcessingAviSourceHint.TabIndex = 5;
+            labelProcessingAviSourceHint.Text = "In some rare cases, FFVideoSource will fail where AVISource succeeds. Use this in" +
+    " that case.";
+            labelProcessingAviSourceHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1470,6 +1498,7 @@ namespace WebMConverter
         private System.Windows.Forms.TrackBar trackThreads;
         private System.Windows.Forms.Label labelThreads;
         private System.Windows.Forms.CheckBox boxNGOV;
+        private System.Windows.Forms.CheckBox boxAviSource;
     }
 }
 

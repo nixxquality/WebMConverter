@@ -966,10 +966,17 @@ namespace WebMConverter
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
 
-                if (boxAudio.Checked)
-                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2}), FFAudioSource(\"{0}\",cachefile=\"{1}\",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack));
+                if (boxAviSource.Checked)
+                {
+                    avscript.WriteLine(string.Format("AVISource(\"{0}\", {1})", avsInputFile, boxAudio.Checked));
+                }
                 else
-                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2})", avsInputFile, _indexFile, videotrack));
+                {
+                    if (boxAudio.Checked)
+                        avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2}), FFAudioSource(\"{0}\",cachefile=\"{1}\",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack));
+                    else
+                        avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2})", avsInputFile, _indexFile, videotrack));
+                }
 
                 if (Filters.Deinterlace != null)
                 {
