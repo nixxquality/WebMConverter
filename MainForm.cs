@@ -18,12 +18,16 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
-        private const string _template = " {1} {2} -f webm -y \"{0}\"";
+        const string template = " {1}{2} -f webm -y \"{0}\"";
         //{0} is output file
         //{1} is extra arguments
-        //{2} is '-pass X' if HQ mode enabled, otherwise blank
+        //{2} is '-pass X -passlogfile X' if HQ mode enabled, otherwise blank
 
-        private const string _templateArguments = "{0} -c:v {9} -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}{10}";
+        const string passArgument = " -pass {0} -passlogfile \"{1}\"";
+        //{0} is pass number (1 or 2)
+        //{1} is the prefix for the pass .log file
+
+        const string templateArguments = "{0} -c:v {9} -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}{10}";
         //{0} is '-an' if no audio, otherwise blank
         //{1} is constant rate factor
         //{2} is video bitrate in kb/s
@@ -1040,12 +1044,12 @@ namespace WebMConverter
 
             string[] arguments;
             if (!boxHQ.Checked)
-                arguments = new[] { string.Format(_template, output, options, "", "") };
+                arguments = new[] { string.Format(template, output, options, "", "") };
             else
             {
-                arguments = new string[2];
-                arguments[0] = string.Format(_template, "NUL", options, "-pass 1"); // Windows
-                arguments[1] = string.Format(_template, output, options, "-pass 2");
+                arguments = new string[2]; //           vvv is Windows only
+                arguments[0] = string.Format(template, "NUL", options, string.Format(passArgument, 1, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
+                arguments[1] = string.Format(template, output, options, string.Format(passArgument, 2, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
 
                 if (!arguments[0].Contains("-an")) // skip audio encoding on the first pass
                     arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
@@ -1128,7 +1132,7 @@ namespace WebMConverter
                 audioEnabled = acodec = "";
             }
 
-            return string.Format(_templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
+            return string.Format(templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
         }
 
         /// <summary>
