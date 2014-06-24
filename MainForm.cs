@@ -58,6 +58,8 @@ namespace WebMConverter
         int audiotrack = -1;
         bool audioDisabled;
 
+        Size? sarScaling = null;
+
         #region MainForm
 
         public MainForm()
@@ -843,6 +845,7 @@ namespace WebMConverter
                 var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
                 Program.VideoColorRange = frame.ColorRange;
                 Program.VideoInterlaced = frame.InterlacedFrame;
+                ProbeSampleAspectRatio(frame.EncodedResolution);
                 SetSlices(frame.EncodedResolution);
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
@@ -1018,6 +1021,9 @@ namespace WebMConverter
                 if (Filters.Levels != null)
                     avscript.WriteLine(Filters.Levels.ToString());
 
+                if (sarScaling.HasValue)
+                    avscript.WriteLine(new ResizeFilter(sarScaling.Value.Width, sarScaling.Value.Height));
+
                 avscript.Write(textBoxProcessingScript.Text);
             }
         }
@@ -1161,6 +1167,48 @@ namespace WebMConverter
             }
 
             return string.Format(templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
+        }
+
+        void ProbeSampleAspectRatio(Size size)
+        {
+            var videoinfo = new FFprobe(Program.InputFile, "").Probe();
+            string[] sar = null, dar = null;
+
+            using (XmlReader reader = XmlReader.Create(new StringReader(videoinfo)))
+            {
+                reader.ReadToFollowing("stream");
+
+                while (reader.MoveToNextAttribute())
+                {
+                    if (reader.Name == "sample_aspect_ratio")
+                    {
+                        if (reader.Value == "1:1") return;
+                        sar = reader.Value.Split(':');
+                    }
+                    if (reader.Name == "display_aspect_ratio")
+                    {
+                        dar = reader.Value.Split(':');
+                    }
+                }
+            }
+
+            float SarNum, SarDen, DarNum, DarDen;
+            SarNum = float.Parse(sar[0]);
+            SarDen = float.Parse(sar[1]);
+            DarNum = float.Parse(dar[0]);
+            DarDen = float.Parse(dar[1]);
+
+            int w = size.Width, h = size.Height;
+            if (SarNum != DarNum)
+            {
+                h = (int)(h / (SarNum / SarDen));
+            }
+            if (SarDen != DarDen)
+            {
+                w = (int)(w * (SarNum / SarDen));
+            }
+
+            sarScaling = new Size(w, h);
         }
 
         /// <summary>
