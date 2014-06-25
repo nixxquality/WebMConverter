@@ -28,33 +28,14 @@ namespace WebMConverter
             None
         }
 
+        readonly CropFilter InputFilter;
         public CropFilter GeneratedFilter;
 
         public CropForm(CropFilter CropPixels = null)
         {
             InitializeComponent();
 
-            if (CropPixels == null)
-            {
-                cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
-            }
-            else
-            {
-                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-
-                cropPercent = new RectangleF(
-                    (float)CropPixels.Left / (float)frame.EncodedResolution.Width,
-                    (float)CropPixels.Top / (float)frame.EncodedResolution.Height,
-                    (float)(frame.EncodedResolution.Width - CropPixels.Left + CropPixels.Right) / (float)frame.EncodedResolution.Width,
-                    (float)(frame.EncodedResolution.Height - CropPixels.Top + CropPixels.Bottom) / (float)frame.EncodedResolution.Height
-                );
-            }
-
-            if (Filters.Trim != null)
-            {
-                previewFrame.Frame = Filters.Trim.TrimStart;
-                trimTimingToolStripMenuItem.Enabled = true;
-            }
+            InputFilter = CropPixels;
 
             this.previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
             this.previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
@@ -261,12 +242,23 @@ namespace WebMConverter
             if (cropPercent.Bottom > 1)
                 cropPercent.Height = 1 - cropPercent.Y;
 
-            FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+            int width, height;
+            if ((Owner as MainForm).SarCompensate)
+            {
+                width = (Owner as MainForm).SarWidth;
+                height = (Owner as MainForm).SarHeight;
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                width = frame.EncodedResolution.Width;
+                height = frame.EncodedResolution.Height;
+            }
             GeneratedFilter = new CropFilter(
-                (int)(frame.EncodedResolution.Width * cropPercent.Left),
-                (int)(frame.EncodedResolution.Height * cropPercent.Top),
-                -(int)(frame.EncodedResolution.Width - frame.EncodedResolution.Width * cropPercent.Right),
-                -(int)(frame.EncodedResolution.Height - frame.EncodedResolution.Height * cropPercent.Bottom)
+                (int)(width * cropPercent.Left),
+                (int)(height * cropPercent.Top),
+                -(int)(width - width * cropPercent.Right),
+                -(int)(height - height * cropPercent.Bottom)
             );
 
             DialogResult = DialogResult.OK;
@@ -306,6 +298,42 @@ namespace WebMConverter
         private void endToolStripMenuItem_Click(object sender, EventArgs e)
         {
             previewFrame.Frame = Filters.Trim.TrimEnd;
+        }
+
+        void CropForm_Load(object sender, EventArgs e)
+        {
+            if (InputFilter == null)
+            {
+                cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
+            }
+            else
+            {
+                int width, height;
+                if ((Owner as MainForm).SarCompensate)
+                {
+                    width = (Owner as MainForm).SarWidth;
+                    height = (Owner as MainForm).SarHeight;
+                }
+                else
+                {
+                    FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                    width = frame.EncodedResolution.Width;
+                    height = frame.EncodedResolution.Height;
+                }
+
+                cropPercent = new RectangleF(
+                    (float)InputFilter.Left / (float)width,
+                    (float)InputFilter.Top / (float)height,
+                    (float)(width - InputFilter.Left + InputFilter.Right) / (float)width,
+                    (float)(height - InputFilter.Top + InputFilter.Bottom) / (float)height
+                );
+            }
+
+            if (Filters.Trim != null)
+            {
+                previewFrame.Frame = Filters.Trim.TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
         }
     }
 
