@@ -58,7 +58,9 @@ namespace WebMConverter
         int audiotrack = -1;
         bool audioDisabled;
 
-        Size? sarScaling = null;
+        public bool SarCompensate = false;
+        public int SarWidth;
+        public int SarHeight;
 
         #region MainForm
 
@@ -735,58 +737,6 @@ namespace WebMConverter
             };
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
-                Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
-                Directory.CreateDirectory(Program.AttachmentDirectory);
-
-                // Construct SubtitleTracks list and extract the subtitles
-                using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -select_streams s"))
-                {
-                    string subtitleStreamsInfo = prober.Probe();
-                    Program.SubtitleTracks = new Dictionary<int, string>();
-
-                    using (var s = new StringReader(subtitleStreamsInfo))
-                    {
-                        var doc = new XPathDocument(s);
-
-                        foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
-                        {
-                            int streamindex;
-                            string title;
-
-                            streamindex = int.Parse(nav.GetAttribute("index", ""));
-
-                            // Extract the subtitle file
-                            using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, streamindex, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex)))))
-                            {
-                                ffmpeg.Start();
-                                ffmpeg.WaitForExit();
-                            }
-
-                            // Get a title
-                            title = nav.GetAttribute("codec_name", "");
-
-                            if (!nav.IsEmptyElement) // There might be a tag element
-                            {
-                                nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
-                                var titleTag = nav.GetAttribute("value", "");
-
-                                title = titleTag == "" ? title : titleTag;
-                            }
-
-                            // Save it
-                            Program.SubtitleTracks.Add(streamindex, title);
-                        }
-                    }
-                }
-
-                // Extract attachments (internal fonts)
-                using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
-                {
-                    ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
-                    ffmpeg.Start();
-                    ffmpeg.WaitForExit();
-                }
-
                 List<int> videoTracks = new List<int>(), audioTracks = new List<int>();
                 for (int i = 0; i < index.NumberOfTracks; i++)
                 {
@@ -841,11 +791,92 @@ namespace WebMConverter
                     }
                 }
 
+                Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
+                Directory.CreateDirectory(Program.AttachmentDirectory);
+
+                using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams"))
+                {
+                    string streamInfo = prober.Probe();
+                    Program.SubtitleTracks = new Dictionary<int, string>();
+
+                    using (var s = new StringReader(streamInfo))
+                    {
+                        var doc = new XPathDocument(s);
+
+                        foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
+                        {
+                            int streamindex;
+                            string title;
+
+                            streamindex = int.Parse(nav.GetAttribute("index", ""));
+
+                            switch (nav.GetAttribute("codec_type", ""))
+                            {
+                                case "video": // Probe for sample aspect ratio
+                                    if (streamindex != videotrack) break;
+                                    string[] sar = null, dar = null;
+
+                                    sar = nav.GetAttribute("sample_aspect_ratio", "").Split(':');
+                                    if (sar[0] == "1" && sar[1] == "1") break;
+
+                                    dar = nav.GetAttribute("display_aspect_ratio", "").Split(':');
+
+                                    float SarNum, SarDen, DarNum, DarDen;
+                                    SarNum = float.Parse(sar[0]);
+                                    SarDen = float.Parse(sar[1]);
+                                    DarNum = float.Parse(dar[0]);
+                                    DarDen = float.Parse(dar[1]);
+
+                                    SarWidth = int.Parse(nav.GetAttribute("width", ""));
+                                    SarHeight = int.Parse(nav.GetAttribute("height", ""));
+                                    if (SarNum != DarNum)
+                                    {
+                                        SarHeight = (int)(SarHeight / (SarNum / SarDen));
+                                    }
+                                    if (SarDen != DarDen)
+                                    {
+                                        SarWidth = (int)(SarWidth * (SarNum / SarDen));
+                                    }
+                                    SarCompensate = true;
+                                    break;
+                                case "subtitle": // Extract the subtitle file
+                                    using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, streamindex, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex)))))
+                                    {
+                                        ffmpeg.Start();
+                                        ffmpeg.WaitForExit();
+                                    }
+
+                                    // Get a title
+                                    title = nav.GetAttribute("codec_name", "");
+
+                                    if (!nav.IsEmptyElement) // There might be a tag element
+                                    {
+                                        nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
+                                        var titleTag = nav.GetAttribute("value", "");
+
+                                        title = titleTag == "" ? title : titleTag;
+                                    }
+
+                                    // Save it
+                                    Program.SubtitleTracks.Add(streamindex, title);
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                // Extract attachments (internal fonts)
+                using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
+                {
+                    ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
+                    ffmpeg.Start();
+                    ffmpeg.WaitForExit();
+                }
+
                 Program.VideoSource = index.VideoSource(path, videotrack);
                 var frame = Program.VideoSource.GetFrame(0); // We're assuming that the entire video has the same settings here, which should be fine. (These options usually don't vary, I hope.)
                 Program.VideoColorRange = frame.ColorRange;
                 Program.VideoInterlaced = frame.InterlacedFrame;
-                ProbeSampleAspectRatio(frame.EncodedResolution);
                 SetSlices(frame.EncodedResolution);
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
@@ -1021,8 +1052,8 @@ namespace WebMConverter
                 if (Filters.Levels != null)
                     avscript.WriteLine(Filters.Levels.ToString());
 
-                if (sarScaling.HasValue)
-                    avscript.WriteLine(new ResizeFilter(sarScaling.Value.Width, sarScaling.Value.Height));
+                if (SarCompensate)
+                    avscript.WriteLine(new ResizeFilter(SarWidth, SarHeight));
 
                 avscript.Write(textBoxProcessingScript.Text);
             }
@@ -1167,48 +1198,6 @@ namespace WebMConverter
             }
 
             return string.Format(templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
-        }
-
-        void ProbeSampleAspectRatio(Size size)
-        {
-            var videoinfo = new FFprobe(Program.InputFile, "").Probe();
-            string[] sar = null, dar = null;
-
-            using (XmlReader reader = XmlReader.Create(new StringReader(videoinfo)))
-            {
-                reader.ReadToFollowing("stream");
-
-                while (reader.MoveToNextAttribute())
-                {
-                    if (reader.Name == "sample_aspect_ratio")
-                    {
-                        if (reader.Value == "1:1") return;
-                        sar = reader.Value.Split(':');
-                    }
-                    if (reader.Name == "display_aspect_ratio")
-                    {
-                        dar = reader.Value.Split(':');
-                    }
-                }
-            }
-
-            float SarNum, SarDen, DarNum, DarDen;
-            SarNum = float.Parse(sar[0]);
-            SarDen = float.Parse(sar[1]);
-            DarNum = float.Parse(dar[0]);
-            DarDen = float.Parse(dar[1]);
-
-            int w = size.Width, h = size.Height;
-            if (SarNum != DarNum)
-            {
-                h = (int)(h / (SarNum / SarDen));
-            }
-            if (SarDen != DarDen)
-            {
-                w = (int)(w * (SarNum / SarDen));
-            }
-
-            sarScaling = new Size(w, h);
         }
 
         /// <summary>
