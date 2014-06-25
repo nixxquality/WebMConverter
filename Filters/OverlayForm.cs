@@ -101,7 +101,7 @@ namespace WebMConverter
             previewFrame.Picture.Invalidate();
         }
 
-        private void OverlayForm_Load(object sender, EventArgs e)
+        void OverlayForm_Load(object sender, EventArgs e)
         {
             if ((Owner as MainForm).SarCompensate)
             {

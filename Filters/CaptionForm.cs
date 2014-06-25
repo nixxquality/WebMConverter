@@ -98,10 +98,17 @@ namespace WebMConverter
             previewFrame.Picture.Invalidate();
         }
 
-        private void CaptionForm_Load(object sender, EventArgs e)
+        void CaptionForm_Load(object sender, EventArgs e)
         {
-            var frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-            videoResolution = frame.EncodedResolution;
+            if ((Owner as MainForm).SarCompensate)
+            {
+                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                videoResolution = frame.EncodedResolution;
+            }
         }
 
         private void UpdateTextLayout(object sender, EventArgs e)
