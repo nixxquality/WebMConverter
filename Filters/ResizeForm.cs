@@ -13,28 +13,7 @@ namespace WebMConverter
 
         public ResizeForm()
         {
-            FFMSSharp.Frame frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
-
-            if (Filters.Crop != null)
-            {
-                inwidth = frame.EncodedResolution.Width - Filters.Crop.Left + Filters.Crop.Right;
-                inheight = frame.EncodedResolution.Height - Filters.Crop.Top + Filters.Crop.Bottom;
-            }
-            else
-            {
-                inwidth = frame.EncodedResolution.Width;
-                inheight = frame.EncodedResolution.Height;
-            }
-
             InitializeComponent();
-
-            labelWidthIn.Text = inwidth.ToString();
-            textWidthOut.Text = inwidth.ToString();
-            labelHeightIn.Text = inheight.ToString();
-            textHeightOut.Text = inheight.ToString();
-
-            textWidthOut.TextChanged += textWidthOut_TextChanged;
-            textHeightOut.TextChanged += textHeightOut_TextChanged;
         }
 
         public ResizeForm(ResizeFilter ResizeFilter) : this()
@@ -124,6 +103,38 @@ namespace WebMConverter
             }
             catch
             { }
+        }
+
+        void ResizeForm_Load(object sender, EventArgs e)
+        {
+            FFMSSharp.Frame frame = Program.VideoSource.GetFrame((Filters.Trim == null) ? 0 : Filters.Trim.TrimStart); // the video may have different frame resolutions
+
+            if (Filters.Crop != null)
+            {
+                inwidth = frame.EncodedResolution.Width - Filters.Crop.Left + Filters.Crop.Right;
+                inheight = frame.EncodedResolution.Height - Filters.Crop.Top + Filters.Crop.Bottom;
+            }
+            else
+            {
+                if ((Owner as MainForm).SarCompensate)
+                {
+                    inwidth = (Owner as MainForm).SarWidth;
+                    inheight = (Owner as MainForm).SarHeight;
+                }
+                else
+                {
+                    inwidth = frame.EncodedResolution.Width;
+                    inheight = frame.EncodedResolution.Height;
+                }
+            }
+
+            labelWidthIn.Text = inwidth.ToString();
+            textWidthOut.Text = inwidth.ToString();
+            labelHeightIn.Text = inheight.ToString();
+            textHeightOut.Text = inheight.ToString();
+
+            textWidthOut.TextChanged += textWidthOut_TextChanged;
+            textHeightOut.TextChanged += textHeightOut_TextChanged;
         }
     }
 
