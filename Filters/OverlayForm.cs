@@ -103,8 +103,15 @@ namespace WebMConverter
 
         private void OverlayForm_Load(object sender, EventArgs e)
         {
-            var frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-            videoResolution = frame.EncodedResolution;
+            if ((Owner as MainForm).SarCompensate)
+            {
+                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                videoResolution = frame.EncodedResolution;
+            }
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
