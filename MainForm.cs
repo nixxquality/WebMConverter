@@ -635,6 +635,16 @@ namespace WebMConverter
 
         void SetFile(string path)
         {
+            try
+            {
+                ValidateInputFile(path);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
             panelHideTheOptions.BringToFront();
