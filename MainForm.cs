@@ -8,11 +8,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using StopWatch = System.Timers.Timer;
 using System.Xml;
-using System.Net;
-using System.Threading.Tasks;
 using System.Xml.XPath;
+using StopWatch = System.Timers.Timer;
+
 using GitHubUpdate;
 
 namespace WebMConverter
@@ -103,28 +102,38 @@ namespace WebMConverter
 
         async void CheckUpdate()
         {
-            var thisVersion = Application.ProductVersion;
-            thisVersion = thisVersion.Substring(0, thisVersion.Length - 2);
-
-            var checker = new UpdateChecker("nixxquality", "WebMConverter", thisVersion);
-
-            var update = await checker.CheckUpdate();
-
-            if (update == UpdateType.None)
+            try
             {
-                showToolTip("Up to date!", 1000);
-            }
-            else
-            {
-                Invoke(new Action(() =>
+                var checker = new UpdateChecker("nixxquality", "WebMConverter");
+
+                var update = await checker.CheckUpdate();
+
+                if (update == UpdateType.None)
                 {
-                    var result = new UpdateNotifyDialog(checker).ShowDialog(this);
-                    if (result == DialogResult.Yes)
+                    this.InvokeIfRequired(() =>
                     {
-                        checker.DownloadAsset("Converter.zip");
-                        Application.Exit();
-                    }
-                }));
+                        showToolTip("Up to date!", 1000);
+                    });
+                }
+                else
+                {
+                    this.InvokeIfRequired(() =>
+                    {
+                        var result = new UpdateNotifyDialog(checker).ShowDialog(this);
+                        if (result == DialogResult.Yes)
+                        {
+                            checker.DownloadAsset("Converter.zip");
+                            Application.Exit();
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    showToolTip("Update checking failed! " + e.Message, 2000);
+                });
             }
         }
 
