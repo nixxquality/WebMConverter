@@ -107,7 +107,7 @@ namespace WebMConverter
                 {
                     pipeFFmpeg.StandardOutput.BaseStream.CopyTo(ffmpeg.StandardInput.BaseStream);
                 }
-                catch (IOException)
+                catch (Exception)
                 {
                     return;
                 }
