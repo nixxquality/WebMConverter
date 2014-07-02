@@ -143,17 +143,10 @@ namespace WebMConverter
             if (this.IsDisposed || toolStripStatusLabel.IsDisposed)
                 return;
 
-            if (this.InvokeRequired)
-            {
-                this.Invoke((MethodInvoker)delegate
-                {
-                    toolStripStatusLabel.Text = message;
-                });
-            }
-            else
+            this.InvokeIfRequired(() =>
             {
                 toolStripStatusLabel.Text = message;
-            }
+            });
         }
 
         [System.Diagnostics.DebuggerStepThrough]
@@ -769,7 +762,7 @@ namespace WebMConverter
                 }
                 else
                 {
-                    this.Invoke((MethodInvoker)delegate
+                    this.InvokeIfRequired(() =>
                     {
                         var dialog = new TrackSelectDialog("Video", videoTracks);
                         dialog.ShowDialog(this);
@@ -790,7 +783,7 @@ namespace WebMConverter
                     }
                     else
                     {
-                        this.Invoke((MethodInvoker)delegate
+                        this.InvokeIfRequired(() =>
                         {
                             var dialog = new TrackSelectDialog("Audio", audioTracks);
                             dialog.ShowDialog(this);
@@ -1087,7 +1080,10 @@ namespace WebMConverter
             var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth \"{0}\"", avsFileName));
             ffplay.Exited += delegate
             {
-                Invoke(new Action(() => buttonPreview.Enabled = true));
+                this.InvokeIfRequired(() =>
+                {
+                    buttonPreview.Enabled = true;
+                });
             };
             ffplay.Start();
         }
@@ -1364,17 +1360,10 @@ namespace WebMConverter
                 slices = 1;
             }
 
-            if (trackSlices.InvokeRequired)
-            {
-                Invoke((MethodInvoker)delegate
-                {
-                    trackSlices.Value = slices;
-                });
-            }
-            else
+            this.InvokeIfRequired(() =>
             {
                 trackSlices.Value = slices;
-            }
+            });
         }
 
         #endregion
