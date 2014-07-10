@@ -38,7 +38,7 @@ namespace WebMConverter
         //{7} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
         //{8} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
         //{9} is 'libvpx(-vp9)' changing depending on NGOV mode
-        //{10} is ' -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
+        //{10} is ' -ac 2 -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
 
         private string _indexFile;
 
@@ -1205,7 +1205,7 @@ namespace WebMConverter
             if (boxAudio.Checked)
             {
                 audioEnabled = "";
-                acodec = " -c:a " + acodec;
+                acodec = " -ac 2 -c:a " + acodec;
             }
             else
             {
