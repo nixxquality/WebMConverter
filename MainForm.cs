@@ -96,8 +96,9 @@ namespace WebMConverter
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1) // We were "Open with..."ed with a file
                 SetFile(args[1]);
-            
+#if !DEBUG
             CheckUpdate();
+#endif
         }
 
         async void CheckUpdate()
