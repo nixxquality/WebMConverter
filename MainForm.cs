@@ -949,24 +949,32 @@ namespace WebMConverter
 
             if (File.Exists(_indexFile))
             {
-                index = new FFMSSharp.Index(_indexFile);
-                if (index.BelongsToFile(path))
+                try
                 {
-                    try
-                    {
-                        index.GetFirstIndexedTrackOfType(FFMSSharp.TrackType.Audio);
-                    }
-                    catch (KeyNotFoundException)
-                    {
-                        audioDisabled = true;
-                    }
-                        
-                    labelIndexingProgress.Text = "Extracting subtitle tracks and attachments...";
-                    progressBarIndexing.Value = 30;
-                    progressBarIndexing.Style = ProgressBarStyle.Marquee;
+                    index = new FFMSSharp.Index(_indexFile);
 
-                    extractbw.RunWorkerAsync();
-                    return;
+                    if (index.BelongsToFile(path))
+                    {
+                        try
+                        {
+                            index.GetFirstIndexedTrackOfType(FFMSSharp.TrackType.Audio);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            audioDisabled = true;
+                        }
+
+                        labelIndexingProgress.Text = "Extracting subtitle tracks and attachments...";
+                        progressBarIndexing.Value = 30;
+                        progressBarIndexing.Style = ProgressBarStyle.Marquee;
+
+                        extractbw.RunWorkerAsync();
+                        return;
+                    }
+                }
+                catch
+                {
+                    File.Delete(_indexFile);
                 }
             }
 
