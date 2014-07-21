@@ -1008,9 +1008,6 @@ namespace WebMConverter
 
             if (!File.Exists(input))
                 throw new Exception("Input file doesn't exist!");
-
-            if (input.Any(c => c > 255)) // http://stackoverflow.com/questions/4459571/
-                throw new Exception("Sorry, no moonrunes in your input file name.");
         }
 
         void ValidateOutputFile(string output)
@@ -1052,6 +1049,11 @@ namespace WebMConverter
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32")));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+
+                // UTF-8 argument bug workaround
+                // see https://github.com/FFMS/ffms2/pull/167
+                avscript.WriteLine(string.Format("FFIndex(\"{0}\", cachefile=\"{1}\", utf8=True)", avsInputFile, _indexFile));
+                // this won't actually index file file (we already did), but it will call FFMS_Init with utf8 = true properly, unlike FFVideoSource
 
                 if (boxAudio.Checked)
                     avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2}), FFAudioSource(\"{0}\",cachefile=\"{1}\",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack));
