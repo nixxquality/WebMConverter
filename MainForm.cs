@@ -853,7 +853,10 @@ namespace WebMConverter
                                     SarCompensate = true;
                                     break;
                                 case "subtitle": // Extract the subtitle file
-                                    using (var ffmpeg = new FFmpeg(string.Format("-i \"{0}\" -map 0:{1} {2} -y", Program.InputFile, streamindex, Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex)))))
+                                    string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
+                                    string arg = string.Format("-i \"{0}\" -map 0:{1} \"{2}\" -y", Program.InputFile, streamindex, file);
+
+                                    using (var ffmpeg = new FFmpeg(arg))
                                     {
                                         ffmpeg.Start();
                                         ffmpeg.WaitForExit();
