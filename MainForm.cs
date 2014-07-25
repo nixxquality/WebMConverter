@@ -854,13 +854,20 @@ namespace WebMConverter
                                     break;
                                 case "subtitle": // Extract the subtitle file
                                     string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
-                                    string arg = string.Format("-i \"{0}\" -map 0:{1} \"{2}\" -y", Program.InputFile, streamindex, file);
 
-                                    using (var ffmpeg = new FFmpeg(arg))
+                                    if (!File.Exists(file)) // If we didn't extract it already
                                     {
-                                        ffmpeg.Start();
-                                        ffmpeg.WaitForExit();
+                                        string arg = string.Format("-i \"{0}\" -map 0:{1} \"{2}\" -y", Program.InputFile, streamindex, file);
+
+                                        using (var ffmpeg = new FFmpeg(arg))
+                                        {
+                                            ffmpeg.Start();
+                                            ffmpeg.WaitForExit();
+                                        }
                                     }
+
+                                    if (!File.Exists(file)) // Holy shit, it still doesn't exist?
+                                        break; // Whatever, skip it.
 
                                     // Get a title
                                     title = nav.GetAttribute("codec_name", "");
