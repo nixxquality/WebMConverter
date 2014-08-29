@@ -18,27 +18,55 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
+        #region FFmpeg argument base strings
+
+        /// <summary>
+        /// {0} is output file
+        /// {1} is templateArguments
+        /// {2} is '-pass X -passlogfile X' if HQ mode enabled, otherwise blank
+        /// </summary>
         const string template = " {1}{2} -f webm -y \"{0}\"";
-        //{0} is output file
-        //{1} is extra arguments
-        //{2} is '-pass X -passlogfile X' if HQ mode enabled, otherwise blank
 
+        /// <summary>
+        /// {0} is pass number (1 or 2)
+        /// {1} is the prefix for the pass .log file
+        /// </summary>
         const string passArgument = " -pass {0} -passlogfile \"{1}\"";
-        //{0} is pass number (1 or 2)
-        //{1} is the prefix for the pass .log file
 
-        const string templateArguments = "{0} -c:v {9} -crf {1} -b:v {2}K -threads {3} -slices {4}{5}{6}{7}{8}{10}";
-        //{0} is '-an' if no audio, otherwise blank
-        //{1} is constant rate factor
-        //{2} is video bitrate in kb/s
-        //{3} is amount of threads to use
-        //{4} is amount of slices to split the frame into
-        //{5} is ' -b:a XK' if audio bitrate specified otherwise blank
-        //{6} is ' -fs XM' if X MB limit enabled otherwise blank
-        //{7} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
-        //{8} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
-        //{9} is 'libvpx(-vp9)' changing depending on NGOV mode
-        //{10} is ' -ac 2 -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
+        /// <summary>
+        /// {0} is '-an' if no audio, otherwise blank
+        /// {1} is amount of threads to use
+        /// {2} is amount of slices to split the frame into
+        /// {3} is ' -metadata title="TITLE"' when specifying a title, otherwise blank
+        /// {4} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
+        /// {5} is 'libvpx(-vp9)' changing depending on NGOV mode
+        /// {6} is ' -ac 2 -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
+        /// {7} is encoding mode-dependent arguments
+        /// </summary>
+        const string templateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}";
+
+        /// <summary>
+        /// {0} is video bitrate
+        /// {1} is ' -fs XM' if X MB limit enabled otherwise blank
+        /// </summary>
+        const string constantVideoArguments = " -minrate {0}K -b:v {0}K -maxrate {0}K{1}";
+        /// <summary>
+        /// {0} is audio bitrate
+        /// </summary>
+        const string constantAudioArguments = " -b:a {0}K";
+
+        /// <summary>
+        /// {0} is qmin
+        /// {1} is crf
+        /// {2} is qmax
+        /// </summary>
+        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2}";
+        /// <summary>
+        /// {0} is audio quality scale
+        /// </summary>
+        const string variableAudioArguments = " -qscale:a {0}";
+
+        #endregion
 
         private string _indexFile;
 
@@ -591,9 +619,38 @@ namespace WebMConverter
             }
         }
 
+        enum EncodingMode
+        {
+            Constant,
+            Variable
+        }
+        EncodingMode encodingMode = EncodingMode.Constant;
+
+        void boxConstant_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!(sender as RadioButton).Checked) return;
+
+            tableVideoConstantOptions.BringToFront();
+            tableAudioConstantOptions.BringToFront();
+            encodingMode = EncodingMode.Constant;
+
+            UpdateArguments(sender, e);
+        }
+
+        void boxVariable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!(sender as RadioButton).Checked) return;
+
+            tableVideoVariableOptions.BringToFront();
+            tableAudioVariableOptions.BringToFront();
+            encodingMode = EncodingMode.Variable;
+
+            UpdateArguments(sender, e);
+        }
+
         void boxAudio_CheckedChanged(object sender, EventArgs e)
         {
-            boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
+            numericAudioQuality.Enabled = boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
             UpdateArguments(sender, e);
         }
 
@@ -1161,45 +1218,61 @@ namespace WebMConverter
 
         string GenerateArguments()
         {
-            float limit = 0;
-            string limitTo = "";
-            if (!string.IsNullOrWhiteSpace(boxLimit.Text))
+            string qualityarguments = null;
+            switch (encodingMode)
             {
-                if (!float.TryParse(boxLimit.Text, out limit))
-                    throw new ArgumentException("Invalid size limit!");
-                limitTo = string.Format(" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
-            }
+                case EncodingMode.Constant:
+                    float limit = 0;
+                    string limitTo = string.Empty;
+                    if (!string.IsNullOrWhiteSpace(boxLimit.Text))
+                    {
+                        if (!float.TryParse(boxLimit.Text, out limit))
+                            throw new ArgumentException("Invalid size limit!");
+                        limitTo = string.Format(" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
+                    }
 
-            int audiobitrate = -1;
-            if (boxAudio.Checked)
-                audiobitrate = 64;
+                    int audiobitrate = -1;
+                    if (boxAudio.Checked)
+                        audiobitrate = 64;
 
-            if (!string.IsNullOrWhiteSpace(boxAudioBitrate.Text))
-            {
-                if (!int.TryParse(boxAudioBitrate.Text, out audiobitrate))
-                    throw new ArgumentException("Invalid audio bitrate!");
-            }
+                    if (!string.IsNullOrWhiteSpace(boxAudioBitrate.Text))
+                    {
+                        if (!int.TryParse(boxAudioBitrate.Text, out audiobitrate))
+                            throw new ArgumentException("Invalid audio bitrate!");
+                    }
 
-            int videobitrate = 900;
-            if (!string.IsNullOrWhiteSpace(boxVideoBitrate.Text))
-            {
-                if (!int.TryParse(boxVideoBitrate.Text, out videobitrate))
-                    throw new ArgumentException("Invalid video bitrate!");
-            }
-            else if (limit != 0)
-            {
-                double duration = GetDuration();
+                    int videobitrate = 900;
+                    if (limitTo != string.Empty)
+                    {
+                        double duration = GetDuration();
 
-                if (duration > 0)
-                    videobitrate = (int)(8192 * limit / duration) - audiobitrate;
+                        if (duration > 0)
+                            videobitrate = (int)(8192 * limit / duration) - audiobitrate;
+                    }
+                    if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
+                    {
+                        if (!int.TryParse(boxBitrate.Text, out videobitrate))
+                            throw new ArgumentException("Invalid video bitrate!");
+                    }
+
+                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo);
+                    if (audiobitrate != -1)
+                        qualityarguments += string.Format(constantAudioArguments, audiobitrate);
+
+                    break;
+                case EncodingMode.Variable:
+                    int qmin = Math.Max(0, (int)(numericCrf.Value - numericCrfTolerance.Value));
+                    int qmax = Math.Min(63, (int)(numericCrf.Value + numericCrfTolerance.Value));
+
+                    qualityarguments = string.Format(variableVideoArguments, qmin, numericCrf.Value, qmax);
+                    if (boxAudio.Checked)
+                        qualityarguments += string.Format(variableAudioArguments, numericAudioQuality.Value);
+
+                    break;
             }
 
             int threads = trackThreads.Value;
             int slices = GetSlices();
-
-            string audiobitratearg = "";
-            if (audiobitrate != -1)
-                audiobitratearg = string.Format(" -b:a {0}K", audiobitrate);
 
             string metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxTitle.Text))
@@ -1233,7 +1306,7 @@ namespace WebMConverter
                 audioEnabled = acodec = "";
             }
 
-            return string.Format(templateArguments, audioEnabled, numericCrf.Value, videobitrate, threads, slices, audiobitratearg, limitTo, metadataTitle, HQ, vcodec, acodec);
+            return string.Format(templateArguments, audioEnabled, threads, slices, metadataTitle, HQ, vcodec, acodec, qualityarguments);
         }
 
         /// <summary>
