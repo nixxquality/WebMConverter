@@ -337,7 +337,7 @@ namespace WebMConverter
                     {
                         Filters.MultipleTrim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Multiple Trim", "trim");
-                        GenerateArguments();
+                        UpdateArguments(sender, e);
                         (sender as ToolStripMenuItem).OwnerItem.Enabled = false;
                     }
                 }
@@ -436,7 +436,7 @@ namespace WebMConverter
                     {
                         Filters.Trim = form.GeneratedFilter;
                         listViewProcessingScript.Items.Add("Trim", "trim");
-                        GenerateArguments();
+                        UpdateArguments(sender, e);
                         (sender as ToolStripItem).Enabled = false;
                     }
                 }
@@ -547,7 +547,7 @@ namespace WebMConverter
                         if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.MultipleTrim = form.GeneratedFilter;
-                            GenerateArguments();
+                            UpdateArguments(sender, e);
                         }
                     }
                     break;
@@ -585,7 +585,7 @@ namespace WebMConverter
                         if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Trim = form.GeneratedFilter;
-                            GenerateArguments();
+                            UpdateArguments(sender, e);
                         }
                     }
                     break;
