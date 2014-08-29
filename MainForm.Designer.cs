@@ -1636,7 +1636,7 @@ namespace WebMConverter
             labelAudioQuality.Name = "labelAudioQuality";
             labelAudioQuality.Size = new System.Drawing.Size(73, 28);
             labelAudioQuality.TabIndex = 0;
-            labelAudioQuality.Text = "Bitrate:";
+            labelAudioQuality.Text = "Quality:";
             labelAudioQuality.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // numericAudioQuality
