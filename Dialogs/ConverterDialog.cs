@@ -97,8 +97,9 @@ namespace WebMConverter
             boxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
 
             pipeFFmpeg = new FFmpeg(proxyargs, true);
-
+#if DEBUG
             pipeFFmpeg.ErrorDataReceived += (o, args) => Debug.WriteLine("Proxy: " + args.Data);
+#endif
             pipeFFmpeg.Start(false);
             var bw = new BackgroundWorker();
             bw.DoWork += delegate(object o, DoWorkEventArgs args)
@@ -213,6 +214,9 @@ namespace WebMConverter
             {
                 if (!_ffmpegProcess.HasExited)
                     _ffmpegProcess.Kill();
+                if (needToPipe)
+                    if (!pipeFFmpeg.HasExited)
+                        pipeFFmpeg.Kill();
             }
             else
                 Close();
