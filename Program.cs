@@ -87,9 +87,47 @@ namespace WebMConverter
         public static string AttachmentDirectory;
         public static Dictionary<int, string> SubtitleTracks; // stream id, tag:title OR codec_name
 
+        const double closeenough = 0.1;
         static int TimeToFrame(double time)
         {
-            return (int)((float)VideoSource.FPSNumerator / (float)VideoSource.FPSDenominator * time);
+            int frame = (int)((float)VideoSource.FPSNumerator / (float)VideoSource.FPSDenominator * time);
+            double difference;
+            bool? subtracted = null;
+
+            FFMSSharp.Track VideoTrack = VideoSource.Track;
+            FFMSSharp.FrameInfo frameinfo;
+            while (true)
+            {
+                frameinfo = VideoTrack.GetFrameInfo(frame);
+
+                try
+                { 
+                    // To convert this to a timestamp in wallclock milliseconds, use the relation int64_t timestamp = (int64_t)((FFMS_FrameInfo->PTS * FFMS_TrackTimeBase->Num) / (double)FFMS_TrackTimeBase->Den).
+                    difference = ((frameinfo.PTS * VideoTrack.TimeBaseNumerator) / VideoTrack.TimeBaseDenominator / 1000) - time;
+                }
+                catch (NullReferenceException) // We've seeked out of bounds -- the user likely requested a time longer than the video.
+                {
+                    frame = VideoTrack.NumberOfFrames - 1;
+                    break;
+                }
+
+                if (Math.Abs(difference) < closeenough) break; // We've seeked close enough.
+
+                if (difference < 0)
+                {
+                    if (subtracted == true) break; // This prevents us from flipping in an infinite loop, in the rare case that we can't get close enough.
+                    frame += 1;
+                    subtracted = false;
+                }
+                else
+                {
+                    if (subtracted == false) break;
+                    frame -= 1;
+                    subtracted = true;
+                }
+
+            }
+            return frame;
         }
         internal static int TimeSpanToFrame(TimeSpan time)
         {
