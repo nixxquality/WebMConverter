@@ -22,5 +22,29 @@ namespace WebMConverter.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Constant")]
+        public global::WebMConverter.EncodingMode EncodingMode {
+            get {
+                return ((global::WebMConverter.EncodingMode)(this["EncodingMode"]));
+            }
+            set {
+                this["EncodingMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TryUpgrade {
+            get {
+                return ((bool)(this["TryUpgrade"]));
+            }
+            set {
+                this["TryUpgrade"] = value;
+            }
+        }
     }
 }

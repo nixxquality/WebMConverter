@@ -162,6 +162,14 @@ namespace WebMConverter
                 return;
             }
 
+            // Upgrade Application Settings if applicable
+            if (Properties.Settings.Default.TryUpgrade)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.TryUpgrade = false;
+                Properties.Settings.Default.Save();
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

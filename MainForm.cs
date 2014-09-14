@@ -96,6 +96,11 @@ namespace WebMConverter
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32"));
 
             InitializeComponent();
+
+            if (Properties.Settings.Default.EncodingMode != EncodingMode.Constant)
+            {
+                boxVariable.Checked = true;
+            }
         }
 
         void MainForm_Load(object sender, EventArgs e)
@@ -619,11 +624,6 @@ namespace WebMConverter
             }
         }
 
-        enum EncodingMode
-        {
-            Constant,
-            Variable
-        }
         EncodingMode encodingMode = EncodingMode.Constant;
 
         void boxConstant_CheckedChanged(object sender, EventArgs e)
@@ -634,7 +634,22 @@ namespace WebMConverter
             tableAudioConstantOptions.BringToFront();
             encodingMode = EncodingMode.Constant;
 
+            buttonVariableDefault.Visible = false;
+            if (encodingMode != Properties.Settings.Default.EncodingMode)
+            {
+                buttonConstantDefault.Visible = true;
+            }
+
             UpdateArguments(sender, e);
+        }
+
+        void buttonConstantDefault_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EncodingMode = EncodingMode.Constant;
+            Properties.Settings.Default.Save();
+            buttonConstantDefault.Visible = false;
+
+            showToolTip("Saved!", 1000);
         }
 
         void boxVariable_CheckedChanged(object sender, EventArgs e)
@@ -645,7 +660,22 @@ namespace WebMConverter
             tableAudioVariableOptions.BringToFront();
             encodingMode = EncodingMode.Variable;
 
+            buttonConstantDefault.Visible = false;
+            if (encodingMode != Properties.Settings.Default.EncodingMode)
+            {
+                buttonVariableDefault.Visible = true;
+            }
+
             UpdateArguments(sender, e);
+        }
+
+        void buttonVariableDefault_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EncodingMode = EncodingMode.Variable;
+            Properties.Settings.Default.Save();
+            buttonVariableDefault.Visible = false;
+
+            showToolTip("Saved!", 1000);
         }
 
         void boxAudio_CheckedChanged(object sender, EventArgs e)
@@ -1471,5 +1501,11 @@ namespace WebMConverter
         }
 
         #endregion
+    }
+
+    public enum EncodingMode
+    {
+        Constant,
+        Variable
     }
 }
