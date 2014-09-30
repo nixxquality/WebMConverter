@@ -48,8 +48,9 @@ namespace WebMConverter
         /// <summary>
         /// {0} is video bitrate
         /// {1} is ' -fs XM' if X MB limit enabled otherwise blank
+        /// {2} is buffer size (bitrate / 2)
         /// </summary>
-        const string constantVideoArguments = " -minrate {0}K -b:v {0}K -maxrate {0}K{1}";
+        const string constantVideoArguments = " -minrate {0}K -b:v {0}K -maxrate {0}K -bufsize {2}K{1}";
         /// <summary>
         /// {0} is audio bitrate
         /// </summary>
@@ -1285,7 +1286,7 @@ namespace WebMConverter
                             throw new ArgumentException("Invalid video bitrate!");
                     }
 
-                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo);
+                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo, videobitrate / 2);
                     if (audiobitrate != -1)
                         qualityarguments += string.Format(constantAudioArguments, audiobitrate);
 
