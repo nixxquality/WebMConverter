@@ -108,12 +108,22 @@ namespace WebMConverter
                 {
                     pipeFFmpeg.StandardOutput.BaseStream.CopyTo(ffmpeg.StandardInput.BaseStream);
                 }
-                catch (Exception)
+                catch
                 {
                     return;
                 }
             };
-            pipeFFmpeg.Exited += (o, args) => ffmpeg.StandardInput.Close();
+            pipeFFmpeg.Exited += delegate(object o, EventArgs args)
+            {
+                try
+                {
+                    ffmpeg.StandardInput.Close();
+                }
+                catch
+                {
+                    return;
+                }
+            };
             bw.RunWorkerAsync();
         }
 
