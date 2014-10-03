@@ -90,6 +90,8 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
+            System.Windows.Forms.Label labelEncodingFrameRate;
+            System.Windows.Forms.Label labelEncodingFrameRateHint;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -107,9 +109,11 @@ namespace WebMConverter
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.imageListFilters = new System.Windows.Forms.ImageList(this.components);
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
+            this.buttonVariableDefault = new System.Windows.Forms.Button();
             this.boxTitle = new System.Windows.Forms.TextBox();
             this.boxConstant = new System.Windows.Forms.RadioButton();
             this.boxVariable = new System.Windows.Forms.RadioButton();
+            this.buttonConstantDefault = new System.Windows.Forms.Button();
             this.tableLayoutPanelEncodingVideo = new System.Windows.Forms.TableLayoutPanel();
             this.tableVideoConstantOptions = new System.Windows.Forms.TableLayoutPanel();
             this.boxLimit = new System.Windows.Forms.TextBox();
@@ -136,8 +140,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.buttonConstantDefault = new System.Windows.Forms.Button();
-            this.buttonVariableDefault = new System.Windows.Forms.Button();
+            this.boxFrameRate = new System.Windows.Forms.TextBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -198,6 +201,8 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
+            labelEncodingFrameRate = new System.Windows.Forms.Label();
+            labelEncodingFrameRateHint = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -661,6 +666,18 @@ namespace WebMConverter
             tableEncodingGeneral.Size = new System.Drawing.Size(1035, 82);
             tableEncodingGeneral.TabIndex = 0;
             // 
+            // buttonVariableDefault
+            // 
+            this.buttonVariableDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonVariableDefault.Location = new System.Drawing.Point(170, 59);
+            this.buttonVariableDefault.Name = "buttonVariableDefault";
+            this.buttonVariableDefault.Size = new System.Drawing.Size(54, 22);
+            this.buttonVariableDefault.TabIndex = 5;
+            this.buttonVariableDefault.Text = "Default";
+            this.buttonVariableDefault.UseVisualStyleBackColor = true;
+            this.buttonVariableDefault.Visible = false;
+            this.buttonVariableDefault.Click += new System.EventHandler(this.buttonVariableDefault_Click);
+            // 
             // labelGeneralModeVariableHint
             // 
             labelGeneralModeVariableHint.AutoSize = true;
@@ -755,6 +772,18 @@ namespace WebMConverter
             this.boxVariable.Text = "Variable";
             this.boxVariable.UseVisualStyleBackColor = true;
             this.boxVariable.CheckedChanged += new System.EventHandler(this.boxVariable_CheckedChanged);
+            // 
+            // buttonConstantDefault
+            // 
+            this.buttonConstantDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonConstantDefault.Location = new System.Drawing.Point(170, 31);
+            this.buttonConstantDefault.Name = "buttonConstantDefault";
+            this.buttonConstantDefault.Size = new System.Drawing.Size(54, 22);
+            this.buttonConstantDefault.TabIndex = 4;
+            this.buttonConstantDefault.Text = "Default";
+            this.buttonConstantDefault.UseVisualStyleBackColor = true;
+            this.buttonConstantDefault.Visible = false;
+            this.buttonConstantDefault.Click += new System.EventHandler(this.buttonConstantDefault_Click);
             // 
             // groupEncodingVideo
             // 
@@ -1286,8 +1315,8 @@ namespace WebMConverter
             tableAdvanced.Name = "tableAdvanced";
             tableAdvanced.RowCount = 4;
             tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 138F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 163F));
             tableAdvanced.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             tableAdvanced.Size = new System.Drawing.Size(1047, 301);
             tableAdvanced.TabIndex = 1;
@@ -1312,7 +1341,7 @@ namespace WebMConverter
             groupAdvancedProcessing.Dock = System.Windows.Forms.DockStyle.Fill;
             groupAdvancedProcessing.Location = new System.Drawing.Point(3, 31);
             groupAdvancedProcessing.Name = "groupAdvancedProcessing";
-            groupAdvancedProcessing.Size = new System.Drawing.Size(1041, 104);
+            groupAdvancedProcessing.Size = new System.Drawing.Size(1041, 101);
             groupAdvancedProcessing.TabIndex = 1;
             groupAdvancedProcessing.TabStop = false;
             groupAdvancedProcessing.Text = "Processing";
@@ -1336,7 +1365,7 @@ namespace WebMConverter
             tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedProcessing.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableAdvancedProcessing.Size = new System.Drawing.Size(1035, 85);
+            tableAdvancedProcessing.Size = new System.Drawing.Size(1035, 82);
             tableAdvancedProcessing.TabIndex = 1;
             // 
             // boxLevels
@@ -1400,7 +1429,7 @@ namespace WebMConverter
             this.boxDenoise.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxDenoise.Location = new System.Drawing.Point(3, 59);
             this.boxDenoise.Name = "boxDenoise";
-            this.boxDenoise.Size = new System.Drawing.Size(221, 23);
+            this.boxDenoise.Size = new System.Drawing.Size(221, 22);
             this.boxDenoise.TabIndex = 3;
             this.boxDenoise.Text = "Denoise:";
             this.boxDenoise.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1413,7 +1442,7 @@ namespace WebMConverter
             labelProcessingDenoiseHint.Dock = System.Windows.Forms.DockStyle.Fill;
             labelProcessingDenoiseHint.Location = new System.Drawing.Point(230, 56);
             labelProcessingDenoiseHint.Name = "labelProcessingDenoiseHint";
-            labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 29);
+            labelProcessingDenoiseHint.Size = new System.Drawing.Size(802, 28);
             labelProcessingDenoiseHint.TabIndex = 0;
             labelProcessingDenoiseHint.Text = "Denoise the video, resulting in less detailed video but more bang for your buck w" +
     "hen it comes to bitrate.";
@@ -1424,9 +1453,9 @@ namespace WebMConverter
             groupAdvancedEncoding.AutoSize = true;
             groupAdvancedEncoding.Controls.Add(tableAdvancedEncoding);
             groupAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupAdvancedEncoding.Location = new System.Drawing.Point(3, 141);
+            groupAdvancedEncoding.Location = new System.Drawing.Point(3, 138);
             groupAdvancedEncoding.Name = "groupAdvancedEncoding";
-            groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 132);
+            groupAdvancedEncoding.Size = new System.Drawing.Size(1041, 157);
             groupAdvancedEncoding.TabIndex = 2;
             groupAdvancedEncoding.TabStop = false;
             groupAdvancedEncoding.Text = "Encoding";
@@ -1438,8 +1467,11 @@ namespace WebMConverter
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableAdvancedEncoding.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableAdvancedEncoding.Controls.Add(labelEncodingNGOVHint, 3, 2);
-            tableAdvancedEncoding.Controls.Add(this.boxNGOV, 0, 2);
+            tableAdvancedEncoding.Controls.Add(this.boxFrameRate, 1, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingFrameRateHint, 3, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingFrameRate, 0, 2);
+            tableAdvancedEncoding.Controls.Add(labelEncodingNGOVHint, 3, 3);
+            tableAdvancedEncoding.Controls.Add(this.boxNGOV, 0, 3);
             tableAdvancedEncoding.Controls.Add(labelEncodingThreads, 0, 0);
             tableAdvancedEncoding.Controls.Add(this.trackThreads, 1, 0);
             tableAdvancedEncoding.Controls.Add(this.labelThreads, 2, 0);
@@ -1448,24 +1480,26 @@ namespace WebMConverter
             tableAdvancedEncoding.Controls.Add(this.trackSlices, 1, 1);
             tableAdvancedEncoding.Controls.Add(this.labelSlices, 2, 1);
             tableAdvancedEncoding.Controls.Add(labelEncodingSlicesHint, 3, 1);
-            tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 3);
-            tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 3);
+            tableAdvancedEncoding.Controls.Add(labelEncodingArguments, 0, 4);
+            tableAdvancedEncoding.Controls.Add(this.boxArguments, 1, 4);
             tableAdvancedEncoding.Dock = System.Windows.Forms.DockStyle.Fill;
             tableAdvancedEncoding.Location = new System.Drawing.Point(3, 16);
             tableAdvancedEncoding.Name = "tableAdvancedEncoding";
-            tableAdvancedEncoding.RowCount = 4;
+            tableAdvancedEncoding.RowCount = 5;
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 113);
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            tableAdvancedEncoding.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 138);
             tableAdvancedEncoding.TabIndex = 0;
             // 
             // labelEncodingNGOVHint
             // 
             labelEncodingNGOVHint.AutoSize = true;
             labelEncodingNGOVHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelEncodingNGOVHint.Location = new System.Drawing.Point(230, 56);
+            labelEncodingNGOVHint.Location = new System.Drawing.Point(230, 84);
             labelEncodingNGOVHint.Name = "labelEncodingNGOVHint";
             labelEncodingNGOVHint.Size = new System.Drawing.Size(802, 28);
             labelEncodingNGOVHint.TabIndex = 0;
@@ -1480,7 +1514,7 @@ namespace WebMConverter
             this.boxNGOV.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             tableAdvancedEncoding.SetColumnSpan(this.boxNGOV, 3);
             this.boxNGOV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxNGOV.Location = new System.Drawing.Point(3, 59);
+            this.boxNGOV.Location = new System.Drawing.Point(3, 87);
             this.boxNGOV.Name = "boxNGOV";
             this.boxNGOV.Size = new System.Drawing.Size(221, 22);
             this.boxNGOV.TabIndex = 4;
@@ -1590,9 +1624,9 @@ namespace WebMConverter
             labelEncodingArguments.AutoSize = true;
             labelEncodingArguments.Dock = System.Windows.Forms.DockStyle.Fill;
             labelEncodingArguments.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            labelEncodingArguments.Location = new System.Drawing.Point(3, 84);
+            labelEncodingArguments.Location = new System.Drawing.Point(3, 112);
             labelEncodingArguments.Name = "labelEncodingArguments";
-            labelEncodingArguments.Size = new System.Drawing.Size(73, 29);
+            labelEncodingArguments.Size = new System.Drawing.Size(73, 28);
             labelEncodingArguments.TabIndex = 0;
             labelEncodingArguments.Text = "Arguments:";
             labelEncodingArguments.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1601,7 +1635,7 @@ namespace WebMConverter
             // 
             this.boxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             tableAdvancedEncoding.SetColumnSpan(this.boxArguments, 3);
-            this.boxArguments.Location = new System.Drawing.Point(82, 88);
+            this.boxArguments.Location = new System.Drawing.Point(82, 116);
             this.boxArguments.Name = "boxArguments";
             this.boxArguments.Size = new System.Drawing.Size(950, 20);
             this.boxArguments.TabIndex = 5;
@@ -1664,29 +1698,40 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
-            // buttonConstantDefault
+            // labelEncodingFrameRate
             // 
-            this.buttonConstantDefault.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonConstantDefault.Location = new System.Drawing.Point(170, 31);
-            this.buttonConstantDefault.Name = "buttonConstantDefault";
-            this.buttonConstantDefault.Size = new System.Drawing.Size(54, 22);
-            this.buttonConstantDefault.TabIndex = 4;
-            this.buttonConstantDefault.Text = "Default";
-            this.buttonConstantDefault.UseVisualStyleBackColor = true;
-            this.buttonConstantDefault.Visible = false;
-            this.buttonConstantDefault.Click += new System.EventHandler(this.buttonConstantDefault_Click);
+            labelEncodingFrameRate.AutoSize = true;
+            labelEncodingFrameRate.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingFrameRate.Location = new System.Drawing.Point(3, 56);
+            labelEncodingFrameRate.Name = "labelEncodingFrameRate";
+            labelEncodingFrameRate.Size = new System.Drawing.Size(73, 28);
+            labelEncodingFrameRate.TabIndex = 6;
+            labelEncodingFrameRate.Text = "Frame rate:";
+            labelEncodingFrameRate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // buttonVariableDefault
+            // labelEncodingFrameRateHint
             // 
-            this.buttonVariableDefault.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonVariableDefault.Location = new System.Drawing.Point(170, 59);
-            this.buttonVariableDefault.Name = "buttonVariableDefault";
-            this.buttonVariableDefault.Size = new System.Drawing.Size(54, 22);
-            this.buttonVariableDefault.TabIndex = 5;
-            this.buttonVariableDefault.Text = "Default";
-            this.buttonVariableDefault.UseVisualStyleBackColor = true;
-            this.buttonVariableDefault.Visible = false;
-            this.buttonVariableDefault.Click += new System.EventHandler(this.buttonVariableDefault_Click);
+            labelEncodingFrameRateHint.AutoSize = true;
+            labelEncodingFrameRateHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingFrameRateHint.Location = new System.Drawing.Point(230, 56);
+            labelEncodingFrameRateHint.Name = "labelEncodingFrameRateHint";
+            labelEncodingFrameRateHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingFrameRateHint.TabIndex = 7;
+            labelEncodingFrameRateHint.Text = "If you want to change the frame rate of your video, input your desired frame rate" +
+    " here. Keep blank to leave the frame rate alone.";
+            labelEncodingFrameRateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxFrameRate
+            // 
+            this.boxFrameRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            tableAdvancedEncoding.SetColumnSpan(this.boxFrameRate, 2);
+            this.boxFrameRate.Location = new System.Drawing.Point(82, 60);
+            this.boxFrameRate.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.boxFrameRate.Name = "boxFrameRate";
+            this.boxFrameRate.Size = new System.Drawing.Size(145, 20);
+            this.boxFrameRate.TabIndex = 8;
+            this.boxFrameRate.TextChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxFrameRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
             // MainForm
             // 
@@ -1816,6 +1861,7 @@ namespace WebMConverter
         private System.Windows.Forms.NumericUpDown numericAudioQuality;
         private System.Windows.Forms.Button buttonConstantDefault;
         private System.Windows.Forms.Button buttonVariableDefault;
+        private System.Windows.Forms.TextBox boxFrameRate;
     }
 }
 

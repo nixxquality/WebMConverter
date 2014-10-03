@@ -41,9 +41,10 @@ namespace WebMConverter
         /// {4} is ' -quality best -lag-in-frames 16 -auto-alt-ref 1' when using HQ mode, otherwise blank
         /// {5} is 'libvpx(-vp9)' changing depending on NGOV mode
         /// {6} is ' -ac 2 -c:a libopus/libvorbis' if audio is enabled, changing depending on NGOV mode
-        /// {7} is encoding mode-dependent arguments
+        /// {7} is ' -r XX' if frame rate is modified, otherwise blank
+        /// {8} is encoding mode-dependent arguments
         /// </summary>
-        const string templateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}";
+        const string templateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}{8}";
 
         /// <summary>
         /// {0} is video bitrate
@@ -1337,7 +1338,13 @@ namespace WebMConverter
                 audioEnabled = acodec = "";
             }
 
-            return string.Format(templateArguments, audioEnabled, threads, slices, metadataTitle, HQ, vcodec, acodec, qualityarguments);
+            string framerate = "";
+            if (!string.IsNullOrWhiteSpace(boxFrameRate.Text))
+            {
+                framerate = " -r " + boxFrameRate.Text;
+            }
+
+            return string.Format(templateArguments, audioEnabled, threads, slices, metadataTitle, HQ, vcodec, acodec, framerate, qualityarguments);
         }
 
         /// <summary>
