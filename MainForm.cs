@@ -1271,15 +1271,15 @@ namespace WebMConverter
                     {
                         if (!int.TryParse(boxAudioBitrate.Text, out audiobitrate))
                             throw new ArgumentException("Invalid audio bitrate!");
-                    }
 
-                    if (audiobitrate < 45)
-                    {
-                        throw new ArgumentException("Audio bitrate is too low! It has to be at least 45Kb/s");
-                    }
-                    if (audiobitrate > 500)
-                    {
-                        throw new ArgumentException("Audio bitrate is too high! It can not be higher than 500Kb/s");
+                        if (audiobitrate < 45)
+                        {
+                            throw new ArgumentException("Audio bitrate is too low! It has to be at least 45Kb/s");
+                        }
+                        if (audiobitrate > 500)
+                        {
+                            throw new ArgumentException("Audio bitrate is too high! It can not be higher than 500Kb/s");
+                        }
                     }
 
                     int videobitrate = 900;
