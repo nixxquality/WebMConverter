@@ -18,6 +18,10 @@ namespace WebMConverter
             this.StartInfo.UseShellExecute = false; //Required to redirect IO streams
             this.StartInfo.CreateNoWindow = true; //Hide console
             this.EnableRaisingEvents = true;
+#if DEBUG
+            OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+#endif
         }
 
         new public void Start()
