@@ -82,6 +82,8 @@ namespace WebMConverter
             System.Windows.Forms.Label labelProcessingDenoiseHint;
             System.Windows.Forms.GroupBox groupAdvancedEncoding;
             System.Windows.Forms.TableLayoutPanel tableAdvancedEncoding;
+            System.Windows.Forms.Label labelEncodingFrameRateHint;
+            System.Windows.Forms.Label labelEncodingFrameRate;
             System.Windows.Forms.Label labelEncodingNGOVHint;
             System.Windows.Forms.Label labelEncodingThreads;
             System.Windows.Forms.Label labelEncodingThreadsHint;
@@ -90,8 +92,6 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
-            System.Windows.Forms.Label labelEncodingFrameRate;
-            System.Windows.Forms.Label labelEncodingFrameRateHint;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -130,6 +130,7 @@ namespace WebMConverter
             this.boxLevels = new System.Windows.Forms.CheckBox();
             this.boxDeinterlace = new System.Windows.Forms.CheckBox();
             this.boxDenoise = new System.Windows.Forms.CheckBox();
+            this.boxFrameRate = new System.Windows.Forms.TextBox();
             this.boxNGOV = new System.Windows.Forms.CheckBox();
             this.trackThreads = new System.Windows.Forms.TrackBar();
             this.labelThreads = new System.Windows.Forms.Label();
@@ -140,7 +141,6 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.boxFrameRate = new System.Windows.Forms.TextBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -193,6 +193,8 @@ namespace WebMConverter
             labelProcessingDenoiseHint = new System.Windows.Forms.Label();
             groupAdvancedEncoding = new System.Windows.Forms.GroupBox();
             tableAdvancedEncoding = new System.Windows.Forms.TableLayoutPanel();
+            labelEncodingFrameRateHint = new System.Windows.Forms.Label();
+            labelEncodingFrameRate = new System.Windows.Forms.Label();
             labelEncodingNGOVHint = new System.Windows.Forms.Label();
             labelEncodingThreads = new System.Windows.Forms.Label();
             labelEncodingThreadsHint = new System.Windows.Forms.Label();
@@ -201,8 +203,6 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
-            labelEncodingFrameRate = new System.Windows.Forms.Label();
-            labelEncodingFrameRateHint = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -404,16 +404,6 @@ namespace WebMConverter
             // toolStripProcessing
             // 
             toolStripProcessing.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStripProcessing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonTrim,
-            this.buttonCrop,
-            this.buttonResize,
-            this.buttonSubtitle,
-            this.buttonReverse,
-            this.boxAdvancedScripting,
-            this.buttonPreview,
-            this.buttonOverlay,
-            this.buttonCaption});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -994,11 +984,6 @@ namespace WebMConverter
             0,
             0,
             0});
-            this.numericCrf.Minimum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
             this.numericCrf.Name = "numericCrf";
             this.numericCrf.Size = new System.Drawing.Size(142, 20);
             this.numericCrf.TabIndex = 1;
@@ -1495,6 +1480,41 @@ namespace WebMConverter
             tableAdvancedEncoding.Size = new System.Drawing.Size(1035, 138);
             tableAdvancedEncoding.TabIndex = 0;
             // 
+            // boxFrameRate
+            // 
+            this.boxFrameRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            tableAdvancedEncoding.SetColumnSpan(this.boxFrameRate, 2);
+            this.boxFrameRate.Location = new System.Drawing.Point(82, 60);
+            this.boxFrameRate.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.boxFrameRate.Name = "boxFrameRate";
+            this.boxFrameRate.Size = new System.Drawing.Size(145, 20);
+            this.boxFrameRate.TabIndex = 8;
+            this.boxFrameRate.TextChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxFrameRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
+            // 
+            // labelEncodingFrameRateHint
+            // 
+            labelEncodingFrameRateHint.AutoSize = true;
+            labelEncodingFrameRateHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingFrameRateHint.Location = new System.Drawing.Point(230, 56);
+            labelEncodingFrameRateHint.Name = "labelEncodingFrameRateHint";
+            labelEncodingFrameRateHint.Size = new System.Drawing.Size(802, 28);
+            labelEncodingFrameRateHint.TabIndex = 7;
+            labelEncodingFrameRateHint.Text = "If you want to change the frame rate of your video, input your desired frame rate" +
+    " here. Keep blank to leave the frame rate alone.";
+            labelEncodingFrameRateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelEncodingFrameRate
+            // 
+            labelEncodingFrameRate.AutoSize = true;
+            labelEncodingFrameRate.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelEncodingFrameRate.Location = new System.Drawing.Point(3, 56);
+            labelEncodingFrameRate.Name = "labelEncodingFrameRate";
+            labelEncodingFrameRate.Size = new System.Drawing.Size(73, 28);
+            labelEncodingFrameRate.TabIndex = 6;
+            labelEncodingFrameRate.Text = "Frame rate:";
+            labelEncodingFrameRate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // labelEncodingNGOVHint
             // 
             labelEncodingNGOVHint.AutoSize = true;
@@ -1697,41 +1717,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
-            // 
-            // labelEncodingFrameRate
-            // 
-            labelEncodingFrameRate.AutoSize = true;
-            labelEncodingFrameRate.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelEncodingFrameRate.Location = new System.Drawing.Point(3, 56);
-            labelEncodingFrameRate.Name = "labelEncodingFrameRate";
-            labelEncodingFrameRate.Size = new System.Drawing.Size(73, 28);
-            labelEncodingFrameRate.TabIndex = 6;
-            labelEncodingFrameRate.Text = "Frame rate:";
-            labelEncodingFrameRate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelEncodingFrameRateHint
-            // 
-            labelEncodingFrameRateHint.AutoSize = true;
-            labelEncodingFrameRateHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelEncodingFrameRateHint.Location = new System.Drawing.Point(230, 56);
-            labelEncodingFrameRateHint.Name = "labelEncodingFrameRateHint";
-            labelEncodingFrameRateHint.Size = new System.Drawing.Size(802, 28);
-            labelEncodingFrameRateHint.TabIndex = 7;
-            labelEncodingFrameRateHint.Text = "If you want to change the frame rate of your video, input your desired frame rate" +
-    " here. Keep blank to leave the frame rate alone.";
-            labelEncodingFrameRateHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // boxFrameRate
-            // 
-            this.boxFrameRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            tableAdvancedEncoding.SetColumnSpan(this.boxFrameRate, 2);
-            this.boxFrameRate.Location = new System.Drawing.Point(82, 60);
-            this.boxFrameRate.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.boxFrameRate.Name = "boxFrameRate";
-            this.boxFrameRate.Size = new System.Drawing.Size(145, 20);
-            this.boxFrameRate.TabIndex = 8;
-            this.boxFrameRate.TextChanged += new System.EventHandler(this.UpdateArguments);
-            this.boxFrameRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumbersOnly);
             // 
             // MainForm
             // 
