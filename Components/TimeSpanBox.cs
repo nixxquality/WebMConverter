@@ -22,6 +22,25 @@ namespace WebMConverter
             }
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                int index = SelectionStart;
+
+                if (char.IsDigit(Text[index]))
+                {
+                    Text = Text.Remove(index, 1).Insert(index, "0");
+                }
+
+                SelectionStart = index; // if this isn't here, the cursor jumps back to the start of the text
+
+                e.Handled = true;
+            }
+        }
+
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
