@@ -40,7 +40,6 @@ namespace WebMConverter
             System.Windows.Forms.TableLayoutPanel tableProcessing;
             System.Windows.Forms.ToolStrip toolStripProcessing;
             System.Windows.Forms.Panel panelProcessingInput;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.TabPage tabEncoding;
             System.Windows.Forms.TableLayoutPanel tableEncoding;
             System.Windows.Forms.GroupBox groupEncodingGeneral;
@@ -92,6 +91,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -141,6 +141,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.buttonExportProcessing = new System.Windows.Forms.ToolStripButton();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -410,10 +411,11 @@ namespace WebMConverter
             this.buttonResize,
             this.buttonSubtitle,
             this.buttonReverse,
-            this.boxAdvancedScripting,
-            this.buttonPreview,
             this.buttonOverlay,
-            this.buttonCaption});
+            this.buttonCaption,
+            this.boxAdvancedScripting,
+            this.buttonExportProcessing,
+            this.buttonPreview});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -1728,6 +1730,18 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
+            // buttonExportProcessing
+            // 
+            this.buttonExportProcessing.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonExportProcessing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonExportProcessing.Enabled = false;
+            this.buttonExportProcessing.Image = ((System.Drawing.Image)(resources.GetObject("buttonExportProcessing.Image")));
+            this.buttonExportProcessing.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonExportProcessing.Name = "buttonExportProcessing";
+            this.buttonExportProcessing.Size = new System.Drawing.Size(44, 22);
+            this.buttonExportProcessing.Text = "Export";
+            this.buttonExportProcessing.Click += new System.EventHandler(this.buttonExportProcessing_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1857,6 +1871,7 @@ namespace WebMConverter
         private System.Windows.Forms.Button buttonConstantDefault;
         private System.Windows.Forms.Button buttonVariableDefault;
         private System.Windows.Forms.TextBox boxFrameRate;
+        private System.Windows.Forms.ToolStripButton buttonExportProcessing;
     }
 }
 

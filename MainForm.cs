@@ -450,6 +450,22 @@ namespace WebMConverter
             }
         }
 
+        void buttonExportProcessing_Click(object sender, EventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "AviSynth script (*.avs)|*.avs";
+            dialog.FileName = Path.GetFileName(Path.ChangeExtension(Program.InputFile, "avs"));
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                // Generate the script if we're in simple mode
+                if (!boxAdvancedScripting.Checked)
+                    GenerateAvisynthScript();
+
+                WriteAvisynthScript(dialog.FileName, Program.InputFile);
+            }
+        }
+
         void boxAdvancedScripting_Click(object sender, EventArgs e)
         {
             ProbeScript();
@@ -473,6 +489,7 @@ namespace WebMConverter
             buttonReverse.Enabled = enabled;
             buttonSubtitle.Enabled = enabled;
             buttonTrim.Enabled = enabled;
+            buttonExportProcessing.Enabled = enabled;
         }
 
         void listViewProcessingScript_KeyUp(object sender, KeyEventArgs e)
@@ -754,7 +771,6 @@ namespace WebMConverter
                 showToolTip("You're loading an AviSynth script, so Processing is disabled!", 3000);
                 boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
                 buttonGo.Enabled = true;
-                buttonPreview.Enabled = true;
                 return;
             }
             else
