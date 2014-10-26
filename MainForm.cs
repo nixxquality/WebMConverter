@@ -82,6 +82,7 @@ namespace WebMConverter
 
         StopWatch toolTipTimer;
         string avsScriptInfo;
+        FileStream inputFile;
 
         int videotrack = -1;
         int audiotrack = -1;
@@ -134,6 +135,12 @@ namespace WebMConverter
 #if !DEBUG
             CheckUpdate();
 #endif
+        }
+
+        void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (inputFile != null)
+                inputFile.Close();
         }
 
         async void CheckUpdate()
@@ -752,6 +759,9 @@ namespace WebMConverter
                 return;
             }
 
+            if (inputFile != null)
+                inputFile.Close();
+
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
             string name = Path.GetFileNameWithoutExtension(path);
@@ -769,6 +779,8 @@ namespace WebMConverter
             buttonPreview.Enabled = false;
             buttonBrowseIn.Enabled = false;
             textBoxIn.Enabled = false;
+
+            inputFile = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             if (Path.GetExtension(path) == ".avs")
             {

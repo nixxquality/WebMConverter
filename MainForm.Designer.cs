@@ -39,6 +39,7 @@ namespace WebMConverter
             System.Windows.Forms.TabPage tabProcessing;
             System.Windows.Forms.TableLayoutPanel tableProcessing;
             System.Windows.Forms.ToolStrip toolStripProcessing;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.Panel panelProcessingInput;
             System.Windows.Forms.TabPage tabEncoding;
             System.Windows.Forms.TableLayoutPanel tableEncoding;
@@ -91,7 +92,6 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -102,10 +102,11 @@ namespace WebMConverter
             this.buttonResize = new System.Windows.Forms.ToolStripButton();
             this.buttonSubtitle = new System.Windows.Forms.ToolStripButton();
             this.buttonReverse = new System.Windows.Forms.ToolStripButton();
-            this.boxAdvancedScripting = new System.Windows.Forms.ToolStripButton();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.buttonOverlay = new System.Windows.Forms.ToolStripButton();
             this.buttonCaption = new System.Windows.Forms.ToolStripButton();
+            this.boxAdvancedScripting = new System.Windows.Forms.ToolStripButton();
+            this.buttonExportProcessing = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.imageListFilters = new System.Windows.Forms.ImageList(this.components);
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -141,7 +142,6 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.buttonExportProcessing = new System.Windows.Forms.ToolStripButton();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -405,17 +405,6 @@ namespace WebMConverter
             // toolStripProcessing
             // 
             toolStripProcessing.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStripProcessing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonTrim,
-            this.buttonCrop,
-            this.buttonResize,
-            this.buttonSubtitle,
-            this.buttonReverse,
-            this.buttonOverlay,
-            this.buttonCaption,
-            this.boxAdvancedScripting,
-            this.buttonExportProcessing,
-            this.buttonPreview});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -496,32 +485,6 @@ namespace WebMConverter
             this.buttonReverse.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.buttonReverse.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
-            // boxAdvancedScripting
-            // 
-            this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
-    "t over if you fuck up.";
-            this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.boxAdvancedScripting.Name = "boxAdvancedScripting";
-            this.boxAdvancedScripting.Size = new System.Drawing.Size(64, 22);
-            this.boxAdvancedScripting.Text = "Advanced";
-            this.boxAdvancedScripting.Click += new System.EventHandler(this.boxAdvancedScripting_Click);
-            this.boxAdvancedScripting.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
-            this.boxAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
-            // buttonPreview
-            // 
-            this.buttonPreview.AccessibleDescription = "Open a preview window that will loop your processing settings. Note that this doe" +
-    "sn\'t reflect output encoding quality.";
-            this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonPreview.Enabled = false;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(84, 22);
-            this.buttonPreview.Text = "Preview filters";
-            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
-            this.buttonPreview.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
-            this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
-            // 
             // buttonOverlay
             // 
             this.buttonOverlay.AccessibleDescription = "Overlay a picture on top of your video.";
@@ -545,6 +508,44 @@ namespace WebMConverter
             this.buttonCaption.Click += new System.EventHandler(this.buttonCaption_Click);
             this.buttonCaption.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.buttonCaption.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // boxAdvancedScripting
+            // 
+            this.boxAdvancedScripting.AccessibleDescription = "Are you a bad enough dude? Take care, there is no way back. You will have to star" +
+    "t over if you fuck up.";
+            this.boxAdvancedScripting.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.boxAdvancedScripting.Name = "boxAdvancedScripting";
+            this.boxAdvancedScripting.Size = new System.Drawing.Size(64, 22);
+            this.boxAdvancedScripting.Text = "Advanced";
+            this.boxAdvancedScripting.Click += new System.EventHandler(this.boxAdvancedScripting_Click);
+            this.boxAdvancedScripting.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.boxAdvancedScripting.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // buttonExportProcessing
+            // 
+            this.buttonExportProcessing.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonExportProcessing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonExportProcessing.Enabled = false;
+            this.buttonExportProcessing.Image = ((System.Drawing.Image)(resources.GetObject("buttonExportProcessing.Image")));
+            this.buttonExportProcessing.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonExportProcessing.Name = "buttonExportProcessing";
+            this.buttonExportProcessing.Size = new System.Drawing.Size(44, 22);
+            this.buttonExportProcessing.Text = "Export";
+            this.buttonExportProcessing.Click += new System.EventHandler(this.buttonExportProcessing_Click);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.AccessibleDescription = "Open a preview window that will loop your processing settings. Note that this doe" +
+    "sn\'t reflect output encoding quality.";
+            this.buttonPreview.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonPreview.Enabled = false;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(84, 22);
+            this.buttonPreview.Text = "Preview filters";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            this.buttonPreview.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // panelProcessingInput
             // 
@@ -1730,18 +1731,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
-            // buttonExportProcessing
-            // 
-            this.buttonExportProcessing.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.buttonExportProcessing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonExportProcessing.Enabled = false;
-            this.buttonExportProcessing.Image = ((System.Drawing.Image)(resources.GetObject("buttonExportProcessing.Image")));
-            this.buttonExportProcessing.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonExportProcessing.Name = "buttonExportProcessing";
-            this.buttonExportProcessing.Size = new System.Drawing.Size(44, 22);
-            this.buttonExportProcessing.Text = "Export";
-            this.buttonExportProcessing.Click += new System.EventHandler(this.buttonExportProcessing_Click);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1759,6 +1748,7 @@ namespace WebMConverter
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.Text = "WebM for Retards";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
