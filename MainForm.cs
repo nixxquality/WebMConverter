@@ -761,16 +761,39 @@ namespace WebMConverter
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
             audioDisabled = false;
 
+            progressBarIndexing.Style = ProgressBarStyle.Marquee;
+            progressBarIndexing.Value = 30;
+            panelHideTheOptions.BringToFront();
+
+            buttonGo.Enabled = false;
+            buttonPreview.Enabled = false;
+            buttonBrowseIn.Enabled = false;
+            textBoxIn.Enabled = false;
+
             if (Path.GetExtension(path) == ".avs")
             {
                 Program.InputFile = path;
                 Program.InputType = FileType.Avisynth;
-                ProbeScript();
-                boxAdvancedScripting.Enabled = false;
-                listViewProcessingScript.Enabled = false;
-                showToolTip("You're loading an AviSynth script, so Processing is disabled!", 3000);
-                boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
-                buttonGo.Enabled = true;
+
+                BackgroundWorker probebw = new BackgroundWorker();
+                probebw.DoWork += delegate(object sender, DoWorkEventArgs e)
+                {
+                    ProbeScript();
+                };
+                probebw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
+                {
+                    boxAdvancedScripting.Enabled = false;
+                    listViewProcessingScript.Enabled = false;
+                    showToolTip("You're loading an AviSynth script, so Processing is disabled!", 3000);
+
+                    boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
+                    buttonGo.Enabled = buttonBrowseIn.Enabled = textBoxIn.Enabled = true;
+                    toolStripFilterButtonsEnabled(false);
+                    panelHideTheOptions.SendToBack();
+                };
+
+                labelIndexingProgress.Text = "Probing script...";
+                probebw.RunWorkerAsync();
                 return;
             }
             else
@@ -781,15 +804,6 @@ namespace WebMConverter
                 listViewProcessingScript.Enabled = true;
                 boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = true;
             }
-
-            progressBarIndexing.Style = ProgressBarStyle.Marquee;
-            progressBarIndexing.Value = 30;
-            panelHideTheOptions.BringToFront();
-
-            buttonGo.Enabled = false;
-            buttonPreview.Enabled = false;
-            buttonBrowseIn.Enabled = false;
-            textBoxIn.Enabled = false;
 
             // Reset filters
             Filters.ResetFilters();
