@@ -735,6 +735,37 @@ namespace WebMConverter
                 return;
             }
 
+            textBoxIn.Text = path;
+            string fullPath = Path.GetDirectoryName(path);
+            string name = Path.GetFileNameWithoutExtension(path);
+            if (boxTitle.Text == _autoTitle || boxTitle.Text == "")
+                boxTitle.Text = _autoTitle = name;
+            if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
+                textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
+            audioDisabled = false;
+
+            if (Path.GetExtension(path) == ".avs")
+            {
+                Program.InputFile = path;
+                Program.InputType = FileType.Avisynth;
+                ProbeScript();
+                boxAdvancedScripting.Enabled = false;
+                listViewProcessingScript.Enabled = false;
+                showToolTip("You're loading an AviSynth script, so Processing is disabled!", 3000);
+                boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
+                buttonGo.Enabled = true;
+                buttonPreview.Enabled = true;
+                return;
+            }
+            else
+            {
+                Program.InputFile = path;
+                Program.InputType = FileType.Video;
+                Program.FileMd5 = null;
+                listViewProcessingScript.Enabled = true;
+                boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = true;
+            }
+
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
             panelHideTheOptions.BringToFront();
@@ -743,17 +774,6 @@ namespace WebMConverter
             buttonPreview.Enabled = false;
             buttonBrowseIn.Enabled = false;
             textBoxIn.Enabled = false;
-
-            textBoxIn.Text = path;
-            string fullPath = Path.GetDirectoryName(path);
-            string name = Path.GetFileNameWithoutExtension(path);
-            if (boxTitle.Text == _autoTitle || boxTitle.Text == "")
-                boxTitle.Text = _autoTitle = name;
-            if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
-                textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
-            Program.InputFile = path;
-            Program.FileMd5 = null;
-            audioDisabled = false;
 
             // Reset filters
             Filters.ResetFilters();
@@ -842,7 +862,7 @@ namespace WebMConverter
                 List<int> videoTracks = new List<int>(), audioTracks = new List<int>();
                 for (int i = 0; i < index.NumberOfTracks; i++)
                 {
-                    switch(index.GetTrack(i).TrackType)
+                    switch (index.GetTrack(i).TrackType)
                     {
                         case FFMSSharp.TrackType.Video:
                             videoTracks.Add(i);
@@ -1041,8 +1061,8 @@ namespace WebMConverter
 
                 if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
                     //boxLevels.Checked = true;
-                if (Program.VideoInterlaced)
-                    boxDeinterlace.Checked = true;
+                    if (Program.VideoInterlaced)
+                        boxDeinterlace.Checked = true;
 
                 panelHideTheOptions.SendToBack();
             };
@@ -1164,7 +1184,7 @@ namespace WebMConverter
                     avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
                     avscript.WriteLine(Filters.Deinterlace.ToString());
                 }
-                
+
                 if (Filters.Denoise != null)
                 {
                     avscript.WriteLine("LoadPlugin(PluginPath+\"hqdn3d.dll\")");
@@ -1224,13 +1244,22 @@ namespace WebMConverter
             if (options.Trim() == "" || _argumentError)
                 options = GenerateArguments();
 
-            // Generate the script if we're in simple mode
-            if (!boxAdvancedScripting.Checked)
-                GenerateAvisynthScript();
+            string avsFileName = null;
+            switch (Program.InputType)
+            {
+                case FileType.Video:
+                    // Generate the script if we're in simple mode
+                    if (!boxAdvancedScripting.Checked)
+                        GenerateAvisynthScript();
 
-            // Make our temporary file for the AviSynth script
-            string avsFileName = Path.GetTempFileName();
-            WriteAvisynthScript(avsFileName, input);
+                    // Make our temporary file for the AviSynth script
+                    avsFileName = Path.GetTempFileName();
+                    WriteAvisynthScript(avsFileName, input);
+                    break;
+                case FileType.Avisynth:
+                    avsFileName = Program.InputFile;
+                    break;
+            }
 
             string[] arguments;
             if (!boxHQ.Checked)
@@ -1362,7 +1391,7 @@ namespace WebMConverter
         /// <returns>The duration or -1 if automatic detection was unsuccessful.</returns>
         public double GetDuration()
         {
-            if (boxAdvancedScripting.Checked)
+            if (boxAdvancedScripting.Checked || Program.InputType == FileType.Avisynth)
             {
                 // The dirty way.
 
@@ -1396,7 +1425,7 @@ namespace WebMConverter
 
         public Size GetResolution()
         {
-            if (boxAdvancedScripting.Checked)
+            if (boxAdvancedScripting.Checked || Program.InputType == FileType.Avisynth)
             {
                 // The dirty way.
 
@@ -1471,9 +1500,19 @@ namespace WebMConverter
 
         void ProbeScript()
         {
-            // Make our temporary file for the AviSynth script
-            string avsFileName = Path.GetTempFileName();
-            WriteAvisynthScript(avsFileName, textBoxIn.Text);
+            string avsFileName = null;
+
+            switch (Program.InputType)
+            {
+                case FileType.Video:
+                    // Make our temporary file for the AviSynth script
+                    avsFileName = Path.GetTempFileName();
+                    WriteAvisynthScript(avsFileName, textBoxIn.Text);
+                    break;
+                case FileType.Avisynth:
+                    avsFileName = Program.InputFile;
+                    break;
+            }
 
             // ffprobe it
             var ffprobe = new FFprobe(avsFileName);

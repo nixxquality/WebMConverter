@@ -83,6 +83,7 @@ namespace WebMConverter
         public static FFMSSharp.ColorRange VideoColorRange;
         public static bool VideoInterlaced;
         public static string InputFile;
+        public static FileType InputType;
         public static string FileMd5;
         public static string AttachmentDirectory;
         public static Dictionary<int, string> SubtitleTracks; // stream id, tag:title OR codec_name
@@ -101,7 +102,7 @@ namespace WebMConverter
                 frameinfo = VideoTrack.GetFrameInfo(frame);
 
                 try
-                { 
+                {
                     // To convert this to a timestamp in wallclock milliseconds, use the relation int64_t timestamp = (int64_t)((FFMS_FrameInfo->PTS * FFMS_TrackTimeBase->Num) / (double)FFMS_TrackTimeBase->Den).
                     difference = ((frameinfo.PTS * VideoTrack.TimeBaseNumerator) / VideoTrack.TimeBaseDenominator / 1000) - time;
                 }
@@ -157,7 +158,7 @@ namespace WebMConverter
             // Check for AviSynth
             if (NativeMethods.LoadLibrary("avisynth") == IntPtr.Zero)
             {
-                MessageBox.Show(string.Format("Failed to load AviSynth: {0}.{1}I'll open the download page, go ahead and install it.", new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error()).Message, Environment.NewLine) , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Failed to load AviSynth: {0}.{1}I'll open the download page, go ahead and install it.", new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error()).Message, Environment.NewLine), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Diagnostics.Process.Start("http://avisynth.nl/index.php/Main_Page#Official_builds");
                 return;
             }
@@ -174,6 +175,12 @@ namespace WebMConverter
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+    }
+
+    public enum FileType
+    {
+        Video,
+        Avisynth
     }
 
     public static class Extensions
