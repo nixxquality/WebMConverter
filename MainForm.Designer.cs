@@ -405,6 +405,17 @@ namespace WebMConverter
             // toolStripProcessing
             // 
             toolStripProcessing.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolStripProcessing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonTrim,
+            this.buttonCrop,
+            this.buttonResize,
+            this.buttonSubtitle,
+            this.buttonReverse,
+            this.buttonOverlay,
+            this.buttonCaption,
+            this.boxAdvancedScripting,
+            this.buttonExportProcessing,
+            this.buttonPreview});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
