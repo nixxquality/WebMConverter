@@ -8,13 +8,15 @@ namespace WebMConverter
 {
     public partial class PreviewFrame : UserControl
     {
-        private uint frame;
+        uint framenumber;
+        FFMSSharp.Frame frame;
+        int cachedframenumber = -1;
 
         [DefaultValue(0)]
         public int Frame
         {
-            get { return (int)frame; }
-            set { frame = (uint)value; GeneratePreview(); }
+            get { return (int)framenumber; }
+            set { framenumber = (uint)value; GeneratePreview(); }
         }
 
         public PreviewFrame()
@@ -31,18 +33,23 @@ namespace WebMConverter
             List<int> pixelformat = new List<int>();
             pixelformat.Add(FFMSSharp.FFMS2.GetPixelFormat("bgra"));
 
+            // Load the frame, if we haven't already
+            if (cachedframenumber != framenumber)
+            {
+                cachedframenumber = (int)framenumber;
+                frame = Program.VideoSource.GetFrame(cachedframenumber);
+            }
+
             // Calculate width and height
             int w, h;
             float s;
-            FFMSSharp.Frame frame;
-            frame = Program.VideoSource.GetFrame((int)this.frame);
             s = Math.Min((float)this.Size.Width / (float)frame.EncodedResolution.Width, (float)this.Size.Height / (float)frame.EncodedResolution.Height);
             w = (int)(frame.EncodedResolution.Width * s);
             h = (int)(frame.EncodedResolution.Height * s);
 
             // Do all the work
             Program.VideoSource.SetOutputFormat(pixelformat, w, h, FFMSSharp.Resizer.Bilinear);
-            frame = Program.VideoSource.GetFrame((int)this.frame);
+            frame = Program.VideoSource.GetFrame((int)this.framenumber);
 
             Picture.BackgroundImage = frame.Bitmap;
             Picture.ClientSize = new Size(w, h);
