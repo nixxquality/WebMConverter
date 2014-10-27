@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,6 +10,7 @@ namespace WebMConverter
     {
         private uint frame;
 
+        [DefaultValue(0)]
         public int Frame
         {
             get { return (int)frame; }
