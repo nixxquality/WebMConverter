@@ -21,9 +21,9 @@ namespace WebMConverter
             else
             {
                 Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
-                foreach (KeyValuePair<int, string> Track in Program.SubtitleTracks)
+                foreach (KeyValuePair<int, Tuple<string, SubtitleType>> Track in Program.SubtitleTracks)
                 {
-                    subtitleTracks.Add(Track.Key, string.Format("#{0}: {1}", Track.Key, Track.Value));
+                    subtitleTracks.Add(Track.Key, string.Format("#{0}: {1}", Track.Key, Track.Value.Item1));
                 }
                 comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
                 comboBoxVideoTracks.ValueMember = "Key";
@@ -50,11 +50,15 @@ namespace WebMConverter
         {
             if (checkBoxInternalSubs.Checked)
             {
-                GeneratedFilter = new SubtitleFilter(Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", (int)comboBoxVideoTracks.SelectedValue)), (int)comboBoxVideoTracks.SelectedValue);
+                string filename = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", (int)comboBoxVideoTracks.SelectedValue));
+                SubtitleType type = Program.SubtitleTracks[(int)comboBoxVideoTracks.SelectedValue].Item2;
+                GeneratedFilter = new SubtitleFilter(filename, type, (int)comboBoxVideoTracks.SelectedValue);
             }
             else
             {
-                GeneratedFilter = new SubtitleFilter(textBoxSubtitleFile.Text);
+                string filename = textBoxSubtitleFile.Text;
+                SubtitleType type = Path.GetExtension(filename) == ".sub" ? SubtitleType.VobSub : SubtitleType.TextSub;
+                GeneratedFilter = new SubtitleFilter(filename, type);
             }
         }
 
@@ -71,7 +75,7 @@ namespace WebMConverter
             using (var dialog = new OpenFileDialog())
             {
                 dialog.InitialDirectory = Path.GetDirectoryName(Program.InputFile);
-                dialog.Filter = "Subtitle files (*.ass, *.srt, *.ssa)|*.ass;*.srt;*.ssa|All files|*.*";
+                dialog.Filter = "Text subtitles (*.ass, *.srt, *.ssa)|*.ass;*.srt;*.ssa|DVD subtitles (*.sub)|*.sub";
                 dialog.RestoreDirectory = true;
 
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -85,17 +89,27 @@ namespace WebMConverter
     public class SubtitleFilter
     {
         public readonly string FileName;
+        public readonly SubtitleType Type;
         public readonly int Track;
 
-        public SubtitleFilter(string fileName, int track = -1)
+        public SubtitleFilter(string fileName, SubtitleType type, int track = -1)
         {
             FileName = fileName;
+            Type = type;
             Track = track;
         }
 
         public override string ToString()
         {
-            return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", FileName, Program.AttachmentDirectory);
+            switch (Type)
+            {
+                case SubtitleType.TextSub:
+                    return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", FileName, Program.AttachmentDirectory);
+                case SubtitleType.VobSub:
+                    return string.Format("vobsub(\"{0}\")", FileName);
+                default:
+                    throw new NotImplementedException();
+            }
         }
     }
 }

@@ -961,7 +961,7 @@ namespace WebMConverter
                 using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams"))
                 {
                     string streamInfo = prober.Probe();
-                    Program.SubtitleTracks = new Dictionary<int, string>();
+                    Program.SubtitleTracks = new Dictionary<int, Tuple<string, SubtitleType>>();
 
                     using (var s = new StringReader(streamInfo))
                     {
@@ -1006,9 +1006,11 @@ namespace WebMConverter
                                 case "subtitle": // Extract the subtitle file
                                     // Get a title
                                     title = nav.GetAttribute("codec_name", "");
+                                    SubtitleType type = SubtitleType.TextSub;
 
                                     if (title == "dvdsub") // Hold on a moment, this is a vobsub!
                                     {
+                                        type = SubtitleType.VobSub;
                                         // Not supported, see https://github.com/nixxquality/WebMConverter/issues/60
                                         break;
                                     }
@@ -1038,7 +1040,7 @@ namespace WebMConverter
                                     }
 
                                     // Save it
-                                    Program.SubtitleTracks.Add(streamindex, title);
+                                    Program.SubtitleTracks.Add(streamindex, new Tuple<string, SubtitleType>(title, type));
                                     break;
                             }
                         }
