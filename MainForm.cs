@@ -1004,6 +1004,15 @@ namespace WebMConverter
                                     SarCompensate = true;
                                     break;
                                 case "subtitle": // Extract the subtitle file
+                                    // Get a title
+                                    title = nav.GetAttribute("codec_name", "");
+
+                                    if (title == "dvdsub") // Hold on a moment, this is a vobsub!
+                                    {
+                                        // Not supported, see https://github.com/nixxquality/WebMConverter/issues/60
+                                        break;
+                                    }
+                                    
                                     string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
 
                                     if (!File.Exists(file)) // If we didn't extract it already
@@ -1019,9 +1028,6 @@ namespace WebMConverter
 
                                     if (!File.Exists(file)) // Holy shit, it still doesn't exist?
                                         break; // Whatever, skip it.
-
-                                    // Get a title
-                                    title = nav.GetAttribute("codec_name", "");
 
                                     if (!nav.IsEmptyElement) // There might be a tag element
                                     {
