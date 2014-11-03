@@ -8,6 +8,7 @@ namespace WebMConverter
 {
     public partial class CaptionForm : Form
     {
+        readonly CaptionFilter InputFilter;
         public CaptionFilter GeneratedFilter;
 
         Point point;
@@ -20,28 +21,47 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            if (Filters.Trim != null)
-            {
-                previewFrame.Frame = Filters.Trim.TrimStart;
-            }
-            if (Filters.MultipleTrim != null)
-            {
-                previewFrame.Frame = Filters.MultipleTrim.Trims[0].TrimStart;
-            }
-
-            if (filterToEdit != null)
-            {
-                point = filterToEdit.Placement;
-                boxText.Text = filterToEdit.Text;
-                fontDialog1.Font = filterToEdit.Style;
-                colorDialogTextColor.Color = filterToEdit.TextColor;
-                colorDialogBorderColor.Color = filterToEdit.BorderColor;
-                numericBorderThickness.Value = filterToEdit.BorderThickness;
-            }
+            InputFilter = filterToEdit;
 
             previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
             previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
             previewFrame.Picture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseMove);
+        }
+
+        void CaptionForm_Load(object sender, EventArgs e)
+        {
+            if (InputFilter != null)
+            {
+                point = InputFilter.Placement;
+                boxText.Text = InputFilter.Text;
+                fontDialog1.Font = InputFilter.Style;
+                colorDialogTextColor.Color = InputFilter.TextColor;
+                colorDialogBorderColor.Color = InputFilter.BorderColor;
+                numericBorderThickness.Value = InputFilter.BorderThickness;
+            }
+
+            if ((Owner as MainForm).SarCompensate)
+            {
+                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                videoResolution = frame.EncodedResolution;
+            }
+
+            if ((Owner as MainForm).boxAdvancedScripting.Checked) return;
+
+            if (Filters.Trim != null)
+            {
+                previewFrame.Frame = Filters.Trim.TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
+            if (Filters.MultipleTrim != null)
+            {
+                previewFrame.Frame = Filters.MultipleTrim.Trims[0].TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
         }
 
         Point getBasePoint(PictureBox pictureBox)
@@ -96,19 +116,6 @@ namespace WebMConverter
             point.Y = beforeheld.Y + (int)((e.Y - held.Y) / scale);
 
             previewFrame.Picture.Invalidate();
-        }
-
-        void CaptionForm_Load(object sender, EventArgs e)
-        {
-            if ((Owner as MainForm).SarCompensate)
-            {
-                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
-            }
-            else
-            {
-                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-                videoResolution = frame.EncodedResolution;
-            }
         }
 
         private void UpdateTextLayout(object sender, EventArgs e)

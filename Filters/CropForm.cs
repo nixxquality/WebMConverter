@@ -45,6 +45,49 @@ namespace WebMConverter
             this.previewFrame.Picture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseUp);
         }
 
+        void CropForm_Load(object sender, EventArgs e)
+        {
+            if (InputFilter == null)
+            {
+                cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
+            }
+            else
+            {
+                int width, height;
+                if ((Owner as MainForm).SarCompensate)
+                {
+                    width = (Owner as MainForm).SarWidth;
+                    height = (Owner as MainForm).SarHeight;
+                }
+                else
+                {
+                    FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                    width = frame.EncodedResolution.Width;
+                    height = frame.EncodedResolution.Height;
+                }
+
+                cropPercent = new RectangleF(
+                    (float)InputFilter.Left / (float)width,
+                    (float)InputFilter.Top / (float)height,
+                    (float)(width - InputFilter.Left + InputFilter.Right) / (float)width,
+                    (float)(height - InputFilter.Top + InputFilter.Bottom) / (float)height
+                );
+            }
+
+            if ((Owner as MainForm).boxAdvancedScripting.Checked) return;
+
+            if (Filters.Trim != null)
+            {
+                previewFrame.Frame = Filters.Trim.TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
+            if (Filters.MultipleTrim != null)
+            {
+                previewFrame.Frame = Filters.MultipleTrim.Trims[0].TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
+            }
+        }
+
         private void previewPicture_MouseDown(object sender, MouseEventArgs e)
         {
             //This checks the distance from the rectangle corner point to the mouse, and then selects the one with the smallest distance
@@ -298,42 +341,6 @@ namespace WebMConverter
         private void endToolStripMenuItem_Click(object sender, EventArgs e)
         {
             previewFrame.Frame = Filters.Trim.TrimEnd;
-        }
-
-        void CropForm_Load(object sender, EventArgs e)
-        {
-            if (InputFilter == null)
-            {
-                cropPercent = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
-            }
-            else
-            {
-                int width, height;
-                if ((Owner as MainForm).SarCompensate)
-                {
-                    width = (Owner as MainForm).SarWidth;
-                    height = (Owner as MainForm).SarHeight;
-                }
-                else
-                {
-                    FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-                    width = frame.EncodedResolution.Width;
-                    height = frame.EncodedResolution.Height;
-                }
-
-                cropPercent = new RectangleF(
-                    (float)InputFilter.Left / (float)width,
-                    (float)InputFilter.Top / (float)height,
-                    (float)(width - InputFilter.Left + InputFilter.Right) / (float)width,
-                    (float)(height - InputFilter.Top + InputFilter.Bottom) / (float)height
-                );
-            }
-
-            if (Filters.Trim != null)
-            {
-                previewFrame.Frame = Filters.Trim.TrimStart;
-                trimTimingToolStripMenuItem.Enabled = true;
-            }
         }
     }
 
