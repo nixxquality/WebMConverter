@@ -1159,6 +1159,7 @@ namespace WebMConverter
             indexing = true;
             buttonGo.Enabled = true;
             buttonGo.Text = "Cancel";
+            progressBarIndexing.Value = 0;
             progressBarIndexing.Style = ProgressBarStyle.Continuous;
             labelIndexingProgress.Text = "Indexing...";
             indexbw.RunWorkerAsync();
