@@ -86,7 +86,7 @@ namespace WebMConverter
         public static FileType InputType;
         public static string FileMd5;
         public static string AttachmentDirectory;
-        public static Dictionary<int, string> SubtitleTracks; // stream id, tag:title OR codec_name
+        public static Dictionary<int, Tuple<string, SubtitleType>> SubtitleTracks; // stream id, <tag:title OR codec_name, textsub/vobsub>
 
         const double closeenough = 0.1;
         static int TimeToFrame(double time)
@@ -181,6 +181,12 @@ namespace WebMConverter
     {
         Video,
         Avisynth
+    }
+
+    public enum SubtitleType
+    {
+        TextSub,
+        VobSub
     }
 
     public static class Extensions

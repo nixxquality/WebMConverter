@@ -960,7 +960,7 @@ namespace WebMConverter
                 using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -show_format"))
                 {
                     string streamInfo = prober.Probe();
-                    Program.SubtitleTracks = new Dictionary<int, string>();
+                    Program.SubtitleTracks = new Dictionary<int, Tuple<string, SubtitleType>>();
 
                     using (var s = new StringReader(streamInfo))
                     {
@@ -1003,6 +1003,17 @@ namespace WebMConverter
                                     SarCompensate = true;
                                     break;
                                 case "subtitle": // Extract the subtitle file
+                                    // Get a title
+                                    streamtitle = nav.GetAttribute("codec_name", "");
+                                    SubtitleType type = SubtitleType.TextSub;
+
+                                    if (streamtitle == "dvdsub") // Hold on a moment, this is a vobsub!
+                                    {
+                                        type = SubtitleType.VobSub;
+                                        // Not supported, see https://github.com/nixxquality/WebMConverter/issues/60
+                                        break;
+                                    }
+                                    
                                     string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
 
                                     if (!File.Exists(file)) // If we didn't extract it already
@@ -1019,9 +1030,6 @@ namespace WebMConverter
                                     if (!File.Exists(file)) // Holy shit, it still doesn't exist?
                                         break; // Whatever, skip it.
 
-                                    // Get a title
-                                    streamtitle = nav.GetAttribute("codec_name", "");
-
                                     if (!nav.IsEmptyElement) // There might be a tag element
                                     {
                                         nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
@@ -1031,7 +1039,7 @@ namespace WebMConverter
                                     }
 
                                     // Save it
-                                    Program.SubtitleTracks.Add(streamindex, streamtitle);
+                                    Program.SubtitleTracks.Add(streamindex, new Tuple<string, SubtitleType>(streamtitle, type));
                                     break;
                             }
                         }
