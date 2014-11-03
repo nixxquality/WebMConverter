@@ -765,8 +765,7 @@ namespace WebMConverter
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
             string name = Path.GetFileNameWithoutExtension(path);
-            if (boxTitle.Text == _autoTitle || boxTitle.Text == "")
-                boxTitle.Text = _autoTitle = name;
+            string title = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
                 textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
             audioDisabled = false;
@@ -958,7 +957,7 @@ namespace WebMConverter
                 Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
                 Directory.CreateDirectory(Program.AttachmentDirectory);
 
-                using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams"))
+                using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -show_format"))
                 {
                     string streamInfo = prober.Probe();
                     Program.SubtitleTracks = new Dictionary<int, string>();
@@ -970,7 +969,7 @@ namespace WebMConverter
                         foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
                         {
                             int streamindex;
-                            string title;
+                            string streamtitle;
 
                             streamindex = int.Parse(nav.GetAttribute("index", ""));
 
@@ -1021,21 +1020,27 @@ namespace WebMConverter
                                         break; // Whatever, skip it.
 
                                     // Get a title
-                                    title = nav.GetAttribute("codec_name", "");
+                                    streamtitle = nav.GetAttribute("codec_name", "");
 
                                     if (!nav.IsEmptyElement) // There might be a tag element
                                     {
                                         nav.MoveTo(nav.SelectSingleNode(".//tag[@key='title']"));
                                         var titleTag = nav.GetAttribute("value", "");
 
-                                        title = titleTag == "" ? title : titleTag;
+                                        streamtitle = titleTag == "" ? streamtitle : titleTag;
                                     }
 
                                     // Save it
-                                    Program.SubtitleTracks.Add(streamindex, title);
+                                    Program.SubtitleTracks.Add(streamindex, streamtitle);
                                     break;
                             }
                         }
+
+                        try
+                        {
+                            title = doc.CreateNavigator().SelectSingleNode("//ffprobe/format/tag[@key='title']").GetAttribute("value", "");
+                        }
+                        catch { } // If we can't find a title key, no biggie.
                     }
                 }
 
@@ -1100,6 +1105,9 @@ namespace WebMConverter
                 buttonBrowseIn.Enabled = true;
                 textBoxIn.Enabled = true;
                 toolStripFilterButtonsEnabled(true);
+
+                if (boxTitle.Text == _autoTitle || boxTitle.Text == "")
+                    boxTitle.Text = _autoTitle = title;
 
                 if (Program.VideoColorRange == FFMSSharp.ColorRange.MPEG)
                     //boxLevels.Checked = true;
