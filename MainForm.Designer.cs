@@ -1828,7 +1828,6 @@ namespace WebMConverter
         private System.Windows.Forms.ToolStripButton buttonCrop;
         private System.Windows.Forms.ToolStripButton buttonResize;
         private System.Windows.Forms.ToolStripButton buttonReverse;
-        private System.Windows.Forms.ToolStripButton boxAdvancedScripting;
         private System.Windows.Forms.ToolStripButton buttonSubtitle;
         private System.Windows.Forms.TextBox textBoxProcessingScript;
         private System.Windows.Forms.TextBox boxTitle;
@@ -1873,6 +1872,7 @@ namespace WebMConverter
         private System.Windows.Forms.Button buttonVariableDefault;
         private System.Windows.Forms.TextBox boxFrameRate;
         private System.Windows.Forms.ToolStripButton buttonExportProcessing;
+        public System.Windows.Forms.ToolStripButton boxAdvancedScripting;
     }
 }
 

@@ -6,6 +6,7 @@ namespace WebMConverter
 {
     public partial class OverlayForm : Form
     {
+        readonly OverlayFilter InputFilter;
         public OverlayFilter GeneratedFilter;
 
         Point point;
@@ -20,7 +21,16 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            if (filterToEdit == null)
+            InputFilter = filterToEdit;
+
+            previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
+            previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
+            previewFrame.Picture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseMove);
+        }
+
+        void OverlayForm_Load(object sender, EventArgs e)
+        {
+            if (InputFilter == null)
             {
                 if (filePicker.ShowDialog(this) == DialogResult.Cancel)
                 {
@@ -33,24 +43,33 @@ namespace WebMConverter
             }
             else
             {
-                filename = filterToEdit.FileName;
-                point = filterToEdit.Placement;
+                filename = InputFilter.FileName;
+                point = InputFilter.Placement;
+            }
+            picture = new Bitmap(filename);
+
+            if ((Owner as MainForm).SarCompensate)
+            {
+                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
+            }
+            else
+            {
+                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
+                videoResolution = frame.EncodedResolution;
             }
 
-            picture = new Bitmap(filename);
+            if ((Owner as MainForm).boxAdvancedScripting.Checked) return;
 
             if (Filters.Trim != null)
             {
                 previewFrame.Frame = Filters.Trim.TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
             }
             if (Filters.MultipleTrim != null)
             {
                 previewFrame.Frame = Filters.MultipleTrim.Trims[0].TrimStart;
+                trimTimingToolStripMenuItem.Enabled = true;
             }
-
-            previewFrame.Picture.Paint += new System.Windows.Forms.PaintEventHandler(this.previewPicture_Paint);
-            previewFrame.Picture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseDown);
-            previewFrame.Picture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPicture_MouseMove);
         }
 
         Point getBasePoint(PictureBox pictureBox)
@@ -99,19 +118,6 @@ namespace WebMConverter
             point.Y = beforeheld.Y + (int)((e.Y - held.Y) / scale);
 
             previewFrame.Picture.Invalidate();
-        }
-
-        void OverlayForm_Load(object sender, EventArgs e)
-        {
-            if ((Owner as MainForm).SarCompensate)
-            {
-                videoResolution = new Size((Owner as MainForm).SarWidth, (Owner as MainForm).SarHeight);
-            }
-            else
-            {
-                FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
-                videoResolution = frame.EncodedResolution;
-            }
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
