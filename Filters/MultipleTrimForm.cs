@@ -30,6 +30,7 @@ namespace WebMConverter
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     listViewTrims.SelectedItems[0].Tag = form.GeneratedFilter;
+                    listViewTrims.SelectedItems[0].Text = form.GeneratedFilter.ToString();
                 }
             }
         }
