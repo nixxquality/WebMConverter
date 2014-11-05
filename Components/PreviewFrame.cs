@@ -23,14 +23,17 @@ namespace WebMConverter
 
         public PreviewFrame()
         {
+            if (Program.VideoSource != null)
+            {
+                // Prepare our "list" of accepted pixel formats
+                List<int> pixelformat = new List<int>();
+                pixelformat.Add(FFMSSharp.FFMS2.GetPixelFormat("bgra"));
+
+                var infoframe = Program.VideoSource.GetFrame((int)framenumber);
+                Program.VideoSource.SetOutputFormat(pixelformat, infoframe.EncodedResolution.Width, infoframe.EncodedResolution.Height, FFMSSharp.Resizer.Bilinear);
+            }
+
             InitializeComponent();
-
-            // Prepare our "list" of accepted pixel formats
-            List<int> pixelformat = new List<int>();
-            pixelformat.Add(FFMSSharp.FFMS2.GetPixelFormat("bgra"));
-
-            var infoframe = Program.VideoSource.GetFrame((int)framenumber);
-            Program.VideoSource.SetOutputFormat(pixelformat, infoframe.EncodedResolution.Width, infoframe.EncodedResolution.Height, FFMSSharp.Resizer.Bilinear);
         }
 
         public void GeneratePreview()
