@@ -1224,7 +1224,13 @@ namespace WebMConverter
         {
             using (StreamWriter avscript = new StreamWriter(avsFileName, false))
             {
-                avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32")));
+                // AviSynth can't LoadPlugin if the path contains non-english characters, so we convert the possibly weird path into 8.3 notation
+                StringBuilder shortPluginPath = new StringBuilder(255);
+                string pluginPath = Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32");
+                NativeMethods.GetShortPathName(@"\\?\" + pluginPath, shortPluginPath, shortPluginPath.Capacity);
+                // the \\?\ is added because GetShortPathName will fail if pluginPath is longer than 256 characters otherwise.
+
+                avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", shortPluginPath.ToString()));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
                 avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
 
