@@ -51,7 +51,7 @@ namespace WebMConverter
         /// {1} is ' -fs XM' if X MB limit enabled otherwise blank
         /// {2} is buffer size (bitrate / 2)
         /// </summary>
-        const string constantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K{1}";
+        const string constantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K{1} -qcomp 1";
         /// <summary>
         /// {0} is audio bitrate
         /// </summary>
@@ -62,7 +62,7 @@ namespace WebMConverter
         /// {1} is crf
         /// {2} is qmax
         /// </summary>
-        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2}";
+        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2} -qcomp 0";
         /// <summary>
         /// {0} is audio quality scale
         /// </summary>
