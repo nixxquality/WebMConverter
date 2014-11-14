@@ -49,9 +49,10 @@ namespace WebMConverter
         /// <summary>
         /// {0} is video bitrate
         /// {1} is ' -fs XM' if X MB limit enabled otherwise blank
-        /// {2} is buffer size (bitrate / 2)
+        /// {2} is bufsize
+        /// {3} is rc_init_occupancy
         /// </summary>
-        const string constantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K{1}";
+        const string constantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K -rc_init_occupancy {3}K -qcomp 1{1}";
         /// <summary>
         /// {0} is audio bitrate
         /// </summary>
@@ -62,7 +63,7 @@ namespace WebMConverter
         /// {1} is crf
         /// {2} is qmax
         /// </summary>
-        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2}";
+        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2} -qcomp 0";
         /// <summary>
         /// {0} is audio quality scale
         /// </summary>
@@ -1384,7 +1385,31 @@ namespace WebMConverter
                             throw new ArgumentException("Invalid video bitrate!");
                     }
 
-                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo, videobitrate / 2);
+                    /*
+                     * ffmpeg doesn't let you input the cbr arguments manually (I think) so we do a bit of math here.
+                     * ffmpeg lists this in the documentation (http://ffmpeg.org/ffmpeg-all.html#libvpx):
+                     *  rc_buf_sz         = (bufsize * 1000 / vb)
+                     *  rc_buf_optimal_sz = (bufsize * 1000 / vb * 5 / 6)
+                     *  rc_buf_initial_sz = (rc_init_occupancy * 1000 / vb)
+                     * libvpx lists this in the documentation (http://www.webmproject.org/docs/encoder-parameters/#vbr-cbr-and-cq-mode):
+                     *  --buf-initial-sz=<arg>
+                     *  --buf-optimal-sz=<arg>
+                     *  --buf-sz=<arg>
+                     *  These three parameters set (respectively) the initial assumed buffer level,
+                     *   the optimal level and an upper limit that the codec should try not to exceed.
+                     *  The numbers given are in 'milliseconds worth of data' so the actual number of bits
+                     *   that these number represent depends also on the target bit rate that the user has set.
+                     *  Typical recommended values for these three parameters might be 4000, 5000 and 6000 ms, respectively.
+                     * a bit of algebra leads us to the following conclusion:
+                     *  bufsize           = vb * 6
+                     *  rc_init_occupancy = vb * 4
+                     * However, because ffmpeg is really weird or something, init_occupancy doesn't seem to work properly
+                     *  unless we divide bufsize by 10. Don't ask me why! I don't know!
+                     */
+                    int bufsize = videobitrate * 6 / 10;
+                    int initoccupancy = videobitrate * 4;
+
+                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo, bufsize, initoccupancy);
                     if (audiobitrate != -1)
                         qualityarguments += string.Format(constantAudioArguments, audiobitrate);
 
