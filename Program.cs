@@ -75,6 +75,9 @@ namespace WebMConverter
     {
         [DllImport("kernel32", SetLastError = true)]
         public static extern IntPtr LoadLibrary(string lpFileName);
+        [DllImport("kernel32", CharSet = CharSet.Auto)]
+        public static extern int GetShortPathName([MarshalAs(UnmanagedType.LPTStr)] string path, [MarshalAs(UnmanagedType.LPTStr)] System.Text.StringBuilder shortPath, int shortPathLength);
+
     }
 
     static class Program
