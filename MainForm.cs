@@ -993,11 +993,11 @@ namespace WebMConverter
 
                                     SarWidth = int.Parse(nav.GetAttribute("width", ""));
                                     SarHeight = int.Parse(nav.GetAttribute("height", ""));
-                                    if (SarNum != DarNum)
+                                    if (DarNum < DarDen)
                                     {
                                         SarHeight = (int)(SarHeight / (SarNum / SarDen));
                                     }
-                                    if (SarDen != DarDen)
+                                    else
                                     {
                                         SarWidth = (int)(SarWidth * (SarNum / SarDen));
                                     }
