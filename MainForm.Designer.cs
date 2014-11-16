@@ -92,6 +92,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
+            System.Windows.Forms.Label labelProcessingLevels;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -128,7 +129,6 @@ namespace WebMConverter
             this.boxAudioBitrate = new System.Windows.Forms.TextBox();
             this.tableAudioVariableOptions = new System.Windows.Forms.TableLayoutPanel();
             this.numericAudioQuality = new System.Windows.Forms.NumericUpDown();
-            this.boxLevels = new System.Windows.Forms.CheckBox();
             this.boxDeinterlace = new System.Windows.Forms.CheckBox();
             this.boxDenoise = new System.Windows.Forms.CheckBox();
             this.boxFrameRate = new System.Windows.Forms.TextBox();
@@ -142,6 +142,7 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.comboLevels = new System.Windows.Forms.ComboBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -204,6 +205,7 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
+            labelProcessingLevels = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -1361,7 +1363,8 @@ namespace WebMConverter
             tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             tableAdvancedProcessing.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableAdvancedProcessing.Controls.Add(this.boxLevels, 0, 0);
+            tableAdvancedProcessing.Controls.Add(labelProcessingLevels, 0, 0);
+            tableAdvancedProcessing.Controls.Add(this.comboLevels, 1, 0);
             tableAdvancedProcessing.Controls.Add(labelProcessingLevelsHint, 2, 0);
             tableAdvancedProcessing.Controls.Add(this.boxDeinterlace, 0, 1);
             tableAdvancedProcessing.Controls.Add(labelProcessingDeinterlaceHint, 2, 1);
@@ -1377,21 +1380,6 @@ namespace WebMConverter
             tableAdvancedProcessing.Size = new System.Drawing.Size(1035, 82);
             tableAdvancedProcessing.TabIndex = 1;
             // 
-            // boxLevels
-            // 
-            this.boxLevels.AutoSize = true;
-            this.boxLevels.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableAdvancedProcessing.SetColumnSpan(this.boxLevels, 2);
-            this.boxLevels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxLevels.Location = new System.Drawing.Point(3, 3);
-            this.boxLevels.Name = "boxLevels";
-            this.boxLevels.Size = new System.Drawing.Size(221, 22);
-            this.boxLevels.TabIndex = 1;
-            this.boxLevels.Text = "Expand color ranges:";
-            this.boxLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxLevels.UseVisualStyleBackColor = true;
-            this.boxLevels.CheckedChanged += new System.EventHandler(this.boxLevels_CheckedChanged);
-            // 
             // labelProcessingLevelsHint
             // 
             labelProcessingLevelsHint.AutoSize = true;
@@ -1400,8 +1388,8 @@ namespace WebMConverter
             labelProcessingLevelsHint.Name = "labelProcessingLevelsHint";
             labelProcessingLevelsHint.Size = new System.Drawing.Size(802, 28);
             labelProcessingLevelsHint.TabIndex = 0;
-            labelProcessingLevelsHint.Text = "Movies usually store colors in the 16->235 range, which can make colours look was" +
-    "hed out in browsers. This option expands the color levels to the full range.";
+            labelProcessingLevelsHint.Text = "If your video looks either too dark or too light, this may be the fault of the in" +
+    "put color range being whack. You can manually fix this by using this option.";
             labelProcessingLevelsHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // boxDeinterlace
@@ -1742,6 +1730,31 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
+            // labelProcessingLevels
+            // 
+            labelProcessingLevels.AutoSize = true;
+            labelProcessingLevels.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingLevels.Location = new System.Drawing.Point(3, 0);
+            labelProcessingLevels.Name = "labelProcessingLevels";
+            labelProcessingLevels.Size = new System.Drawing.Size(73, 28);
+            labelProcessingLevels.TabIndex = 0;
+            labelProcessingLevels.Text = "Color levels:";
+            labelProcessingLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // comboLevels
+            // 
+            this.comboLevels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboLevels.Items.AddRange(new object[] {
+            "Leave them alone",
+            "Expand (TV -> PC)",
+            "Contract (PC -> TV)"});
+            this.comboLevels.Location = new System.Drawing.Point(82, 3);
+            this.comboLevels.Name = "comboLevels";
+            this.comboLevels.Size = new System.Drawing.Size(142, 21);
+            this.comboLevels.TabIndex = 1;
+            this.comboLevels.SelectedIndexChanged += new System.EventHandler(this.comboLevels_SelectedIndexChanged);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1839,7 +1852,6 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox boxArguments;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.CheckBox boxDeinterlace;
-        private System.Windows.Forms.CheckBox boxLevels;
         private System.Windows.Forms.ToolStripSplitButton buttonTrim;
         private System.Windows.Forms.ToolStripMenuItem buttonMultipleTrim;
         private System.Windows.Forms.ToolStripButton buttonCaption;
@@ -1873,6 +1885,7 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox boxFrameRate;
         private System.Windows.Forms.ToolStripButton buttonExportProcessing;
         public System.Windows.Forms.ToolStripButton boxAdvancedScripting;
+        private System.Windows.Forms.ComboBox comboLevels;
     }
 }
 

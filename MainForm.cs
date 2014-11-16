@@ -715,9 +715,20 @@ namespace WebMConverter
 
         #region tabAdvanced
 
-        void boxLevels_CheckedChanged(object sender, EventArgs e)
+        void comboLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Filters.Levels = (sender as CheckBox).Checked ? new LevelsFilter() : null;
+            switch (comboLevels.SelectedIndex)
+            {
+                case 0: // Leave them alone
+                    Filters.Levels = null;
+                    break;
+                case 1: // TV -> PC
+                    Filters.Levels = new LevelsFilter(LevelsConversion.TVtoPC);
+                    break;
+                case 2: // PC -> TV
+                    Filters.Levels = new LevelsFilter(LevelsConversion.PCtoTV);
+                    break;
+            }
         }
 
         void boxDeinterlace_CheckedChanged(object sender, EventArgs e)
@@ -798,7 +809,7 @@ namespace WebMConverter
                     listViewProcessingScript.Enabled = false;
                     showToolTip("You're loading an AviSynth script, so Processing is disabled!", 3000);
 
-                    boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
+                    comboLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = false;
                     buttonGo.Enabled = buttonBrowseIn.Enabled = textBoxIn.Enabled = true;
                     toolStripFilterButtonsEnabled(false);
                     panelHideTheOptions.SendToBack();
@@ -814,7 +825,8 @@ namespace WebMConverter
                 Program.InputType = FileType.Video;
                 Program.FileMd5 = null;
                 listViewProcessingScript.Enabled = true;
-                boxLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = true;
+                comboLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = true;
+                comboLevels.SelectedIndex = 0;
             }
 
             // Reset filters
@@ -976,12 +988,25 @@ namespace WebMConverter
 
                             switch (nav.GetAttribute("codec_type", ""))
                             {
-                                case "video": // Probe for sample aspect ratio
+                                case "video":
                                     if (streamindex != videotrack) break;
+
+                                    // Check if this is a FRAPS yuvj420p video - if so, we need to do something weird here.
+                                    if (nav.GetAttribute("codec_name", "") == "fraps" && nav.GetAttribute("pix_fmt", "") == "yuvj420p")
+                                    {
+                                        this.InvokeIfRequired(() =>
+                                        {
+                                            comboLevels.SelectedIndex = 2; // PC -> TV conversion
+                                        });
+                                        // If we don't do this, the contrast gets fucked.
+                                        // See: https://github.com/nixxquality/WebMConverter/issues/89
+                                    }
+
+                                    // Probe for sample aspect ratio
                                     string[] sar = null, dar = null;
 
                                     sar = nav.GetAttribute("sample_aspect_ratio", "").Split(':');
-                                    if (sar[0] == "1" && sar[1] == "1") break;
+                                    if ((sar[0] == "1" && sar[1] == "1") || (sar[0] == "0" || sar[1] == "0")) break;
 
                                     dar = nav.GetAttribute("display_aspect_ratio", "").Split(':');
 

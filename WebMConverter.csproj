@@ -75,6 +75,9 @@
     <Compile Include="Dialogs\ConverterDialog.Designer.cs">
       <DependentUpon>ConverterDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\Deinterlace.cs" />
+    <Compile Include="Filters\Denoise.cs" />
+    <Compile Include="Filters\Levels.cs" />
     <Compile Include="Filters\Overlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +117,7 @@
     <Compile Include="Filters\MultipleTrim.Designer.cs">
       <DependentUpon>MultipleTrim.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\Reverse.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
