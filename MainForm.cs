@@ -853,7 +853,7 @@ namespace WebMConverter
             });
             indexbw.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
-                FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path);
+                FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path, FFMSSharp.Source.Lavf);
 
                 indexer.UpdateIndexProgress += delegate(object sendertwo, FFMSSharp.IndexingProgressChangeEventArgs etwo)
                 {
