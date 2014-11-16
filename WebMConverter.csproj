@@ -75,23 +75,23 @@
     <Compile Include="Dialogs\ConverterDialog.Designer.cs">
       <DependentUpon>ConverterDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\OverlayForm.cs">
+    <Compile Include="Filters\Overlay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\OverlayForm.Designer.cs">
-      <DependentUpon>OverlayForm.cs</DependentUpon>
+    <Compile Include="Filters\Overlay.Designer.cs">
+      <DependentUpon>Overlay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\CaptionForm.cs">
+    <Compile Include="Filters\Caption.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\CaptionForm.Designer.cs">
-      <DependentUpon>CaptionForm.cs</DependentUpon>
+    <Compile Include="Filters\Caption.Designer.cs">
+      <DependentUpon>Caption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\CropForm.cs">
+    <Compile Include="Filters\Crop.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\CropForm.Designer.cs">
-      <DependentUpon>CropForm.cs</DependentUpon>
+    <Compile Include="Filters\Crop.Designer.cs">
+      <DependentUpon>Crop.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\FFmpeg.cs">
       <SubType>Component</SubType>
@@ -108,11 +108,11 @@
     <Compile Include="Dialogs\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\MultipleTrimForm.cs">
+    <Compile Include="Filters\MultipleTrim.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\MultipleTrimForm.Designer.cs">
-      <DependentUpon>MultipleTrimForm.cs</DependentUpon>
+    <Compile Include="Filters\MultipleTrim.Designer.cs">
+      <DependentUpon>MultipleTrim.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -128,17 +128,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Filters\ResizeForm.cs">
+    <Compile Include="Filters\Resize.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\ResizeForm.Designer.cs">
-      <DependentUpon>ResizeForm.cs</DependentUpon>
+    <Compile Include="Filters\Resize.Designer.cs">
+      <DependentUpon>Resize.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\SubtitleForm.cs">
+    <Compile Include="Filters\Subtitle.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\SubtitleForm.Designer.cs">
-      <DependentUpon>SubtitleForm.cs</DependentUpon>
+    <Compile Include="Filters\Subtitle.Designer.cs">
+      <DependentUpon>Subtitle.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TrackSelectDialog.cs">
       <SubType>Form</SubType>
@@ -146,11 +146,11 @@
     <Compile Include="Dialogs\TrackSelectDialog.Designer.cs">
       <DependentUpon>TrackSelectDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Filters\TrimForm.cs">
+    <Compile Include="Filters\Trim.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Filters\TrimForm.Designer.cs">
-      <DependentUpon>TrimForm.cs</DependentUpon>
+    <Compile Include="Filters\Trim.Designer.cs">
+      <DependentUpon>Trim.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\TimeSpanBox.cs">
       <SubType>Component</SubType>
@@ -161,17 +161,17 @@
     <EmbeddedResource Include="Dialogs\ConverterDialog.resx">
       <DependentUpon>ConverterDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\OverlayForm.resx">
-      <DependentUpon>OverlayForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Overlay.resx">
+      <DependentUpon>Overlay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\CaptionForm.resx">
-      <DependentUpon>CaptionForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Caption.resx">
+      <DependentUpon>Caption.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\CropForm.resx">
-      <DependentUpon>CropForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Crop.resx">
+      <DependentUpon>Crop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\MultipleTrimForm.resx">
-      <DependentUpon>MultipleTrimForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\MultipleTrim.resx">
+      <DependentUpon>MultipleTrim.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -186,14 +186,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Filters\ResizeForm.resx">
-      <DependentUpon>ResizeForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Resize.resx">
+      <DependentUpon>Resize.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\SubtitleForm.resx">
-      <DependentUpon>SubtitleForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Subtitle.resx">
+      <DependentUpon>Subtitle.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Filters\TrimForm.resx">
-      <DependentUpon>TrimForm.cs</DependentUpon>
+    <EmbeddedResource Include="Filters\Trim.resx">
+      <DependentUpon>Trim.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -264,7 +264,7 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
