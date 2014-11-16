@@ -39,36 +39,7 @@ namespace WebMConverter
             Trim = null;
         }
     }
-
-    public class DeinterlaceFilter
-    {
-        public override string ToString()
-        {
-            return "tdeint()";
-        }
-    }
-    public class DenoiseFilter
-    {
-        public override string ToString()
-        {
-            return "hqdn3d()";
-        }
-    }
-    public class ReverseFilter
-    {
-        public override string ToString()
-        {
-            return "Reverse()";
-        }
-    }
-    public class LevelsFilter
-    {
-        public override string ToString()
-        {
-            return "ColorYUV(levels=\"TV->PC\")";
-        }
-    }
-
+    
     #endregion
 
     static class NativeMethods
@@ -77,7 +48,6 @@ namespace WebMConverter
         public static extern IntPtr LoadLibrary(string lpFileName);
         [DllImport("kernel32", CharSet = CharSet.Auto)]
         public static extern int GetShortPathName([MarshalAs(UnmanagedType.LPTStr)] string path, [MarshalAs(UnmanagedType.LPTStr)] System.Text.StringBuilder shortPath, int shortPathLength);
-
     }
 
     static class Program
