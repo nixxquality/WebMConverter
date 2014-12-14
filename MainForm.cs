@@ -1308,11 +1308,18 @@ namespace WebMConverter
             WriteAvisynthScript(avsFileName, input);
 
             // Run ffplay
-            var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth \"{0}\"", avsFileName));
+            var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth -v error \"{0}\"", avsFileName));
             ffplay.Exited += delegate
             {
+                string error = null;
+                // if (ffplay.ExitCode != 0) // There was an error
+                // This is what I would like to do, but ffplay returns 0 even when there's an error in the script.
+                error = ffplay.ErrorLog;
+
                 this.InvokeIfRequired(() =>
                 {
+                    if (error.Length > 0)
+                        MessageBox.Show(error, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     buttonPreview.Enabled = true;
                 });
             };
