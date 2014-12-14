@@ -93,13 +93,14 @@ namespace WebMConverter
             if (!needToPipe)
                 return;
 
-            string proxyargs = string.Format("-f avisynth -i \"{0}\" -f nut -c copy pipe:1", infile);
+            string proxyargs = string.Format("-f avisynth -i \"{0}\" -f nut -c copy -v error pipe:1", infile);
             boxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
 
             pipeFFmpeg = new FFmpeg(proxyargs, true);
-#if DEBUG
-            pipeFFmpeg.ErrorDataReceived += (o, args) => Debug.WriteLine("Proxy: " + args.Data);
-#endif
+            pipeFFmpeg.ErrorDataReceived += (o, args) => boxOutput.Invoke((Action)(() =>
+            {
+                boxOutput.AppendText("\n" + args.Data);
+            }));
             pipeFFmpeg.Start(false);
             var bw = new BackgroundWorker();
             bw.DoWork += delegate(object o, DoWorkEventArgs args)
