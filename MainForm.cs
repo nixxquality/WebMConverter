@@ -13,6 +13,7 @@ using System.Xml.XPath;
 using StopWatch = System.Timers.Timer;
 
 using GitHubUpdate;
+using WebMConverter.Components;
 
 namespace WebMConverter
 {
@@ -1031,11 +1032,13 @@ namespace WebMConverter
                     using (var s = new StringReader(streamInfo))
                     {
                         var doc = new XPathDocument(s);
+                        int attachindex = 1; // mkvextract separates track and attachment indices
 
                         foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
                         {
                             int streamindex;
                             string streamtitle;
+                            string file;
 
                             streamindex = int.Parse(nav.GetAttribute("index", ""));
 
@@ -1096,7 +1099,7 @@ namespace WebMConverter
                                         break;
                                     }
                                     
-                                    string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
+                                    file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
                                     logIndexingProgress(string.Format("Found subtitle track #{0}", streamindex));
 
                                     if (!File.Exists(file)) // If we didn't extract it already
@@ -1129,6 +1132,31 @@ namespace WebMConverter
                                     // Save it
                                     Program.SubtitleTracks.Add(streamindex, new Tuple<string, SubtitleType>(streamtitle, type));
                                     break;
+                                case @"attachment": // Extract the attachment using mkvmerge
+                                    nav.MoveTo(nav.SelectSingleNode(".//tag[@key='filename']"));
+                                    var filename = nav.GetAttribute("value", "");
+
+                                    file = Path.Combine(Program.AttachmentDirectory, filename);
+                                    logIndexingProgress(string.Format("Found attachment '{0}'", filename));
+
+                                    if (File.Exists(file)) // Did we extract it already?
+                                    {
+                                        logIndexingProgress("Already extracted! Skipping...");
+                                    }
+                                    else
+                                    {
+                                        var arg = string.Format(@"attachments ""{0}"" ""{1}:{2}""", Program.InputFile, attachindex, file);
+
+                                        logIndexingProgress("Extracting...");
+                                        using (var mkvextract = new MkvExtract(arg))
+                                        {
+                                            mkvextract.Start();
+                                            mkvextract.WaitForExit();
+                                        }
+                                    }
+
+                                    attachindex += 1;
+                                    break;
                             }
                         }
 
@@ -1139,15 +1167,6 @@ namespace WebMConverter
                         }
                         catch { } // If we can't find a title key, no biggie.
                     }
-                }
-
-                // Extract attachments (internal fonts)
-                logIndexingProgress("Dumping attachments (fonts)...");
-                using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
-                {
-                    ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
-                    ffmpeg.Start();
-                    ffmpeg.WaitForExit();
                 }
 
                 Program.VideoSource = index.VideoSource(path, videotrack);
