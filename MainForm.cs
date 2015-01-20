@@ -1160,12 +1160,12 @@ namespace WebMConverter
                             }
                         }
 
-                        try
+                        var selectSingleNode = doc.CreateNavigator().SelectSingleNode("//ffprobe/format/tag[@key='title']");
+                        if (selectSingleNode != null)
                         {
-                            title = doc.CreateNavigator().SelectSingleNode("//ffprobe/format/tag[@key='title']").GetAttribute("value", "");
+                            title = selectSingleNode.GetAttribute("value", "");
                             logIndexingProgress("Found title " + title);
                         }
-                        catch { } // If we can't find a title key, no biggie.
                     }
                 }
 
