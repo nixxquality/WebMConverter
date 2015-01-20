@@ -12,7 +12,7 @@ namespace WebMConverter
     {
         uint framenumber;
         FFMSSharp.Frame frame;
-        int cachedframenumber = -1;
+        int cachedframenumber;
 
         [DefaultValue(0)]
         public int Frame
@@ -33,13 +33,18 @@ namespace WebMConverter
                 Program.VideoSource.SetOutputFormat(pixelformat, infoframe.EncodedResolution.Width, infoframe.EncodedResolution.Height, FFMSSharp.Resizer.Bilinear);
             }
 
+            cachedframenumber = -1;
+
             InitializeComponent();
         }
 
-        public void GeneratePreview()
+        public void GeneratePreview(bool force = false)
         {
             if (Program.VideoSource == null)
                 return;
+
+            if (force)
+                cachedframenumber = -1;
 
             // Load the frame, if we haven't already
             if (cachedframenumber != framenumber)

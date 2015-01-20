@@ -61,6 +61,7 @@ namespace WebMConverter
                 }
                 else
                 {
+                    // Note that because we call this, the frame used by the PreviewFrame gets disposed. We need to call GeneratePreview after we're done with this.
                     FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
                     width = frame.EncodedResolution.Width;
                     height = frame.EncodedResolution.Height;
@@ -72,6 +73,8 @@ namespace WebMConverter
                     (float)(width - InputFilter.Left + InputFilter.Right) / (float)width,
                     (float)(height - InputFilter.Top + InputFilter.Bottom) / (float)height
                 );
+
+                previewFrame.GeneratePreview(true);
             }
 
             if ((Owner as MainForm).boxAdvancedScripting.Checked) return;
