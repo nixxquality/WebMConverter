@@ -793,6 +793,14 @@ namespace WebMConverter
 
             inputFile = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
+            // Reset filters
+            Filters.ResetFilters();
+            listViewProcessingScript.Clear();
+            boxAdvancedScripting.Checked = false; // STUB: this part is weak
+            boxAdvancedScripting.Enabled = true;
+            textBoxProcessingScript.Hide();
+            listViewProcessingScript.Show();
+
             if (Path.GetExtension(path) == ".avs")
             {
                 Program.InputFile = path;
@@ -829,13 +837,6 @@ namespace WebMConverter
                 comboLevels.SelectedIndex = 0;
             }
 
-            // Reset filters
-            Filters.ResetFilters();
-            listViewProcessingScript.Clear();
-            boxAdvancedScripting.Checked = false; // STUB: this part is weak
-            boxAdvancedScripting.Enabled = true;
-            textBoxProcessingScript.Hide();
-            listViewProcessingScript.Show();
             GenerateAvisynthScript();
 
             // Hash some of the file to make sure we didn't index it already
