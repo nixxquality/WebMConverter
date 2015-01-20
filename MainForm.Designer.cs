@@ -77,6 +77,7 @@ namespace WebMConverter
             System.Windows.Forms.Label labelAdvancedWarning;
             System.Windows.Forms.GroupBox groupAdvancedProcessing;
             System.Windows.Forms.TableLayoutPanel tableAdvancedProcessing;
+            System.Windows.Forms.Label labelProcessingLevels;
             System.Windows.Forms.Label labelProcessingLevelsHint;
             System.Windows.Forms.Label labelProcessingDeinterlaceHint;
             System.Windows.Forms.Label labelProcessingDenoiseHint;
@@ -92,7 +93,6 @@ namespace WebMConverter
             System.Windows.Forms.Label labelEncodingArguments;
             System.Windows.Forms.Panel panelContainTheProgressBar;
             System.Windows.Forms.StatusStrip statusStrip;
-            System.Windows.Forms.Label labelProcessingLevels;
             this.textBoxIn = new System.Windows.Forms.TextBox();
             this.buttonBrowseIn = new System.Windows.Forms.Button();
             this.textBoxOut = new System.Windows.Forms.TextBox();
@@ -129,6 +129,7 @@ namespace WebMConverter
             this.boxAudioBitrate = new System.Windows.Forms.TextBox();
             this.tableAudioVariableOptions = new System.Windows.Forms.TableLayoutPanel();
             this.numericAudioQuality = new System.Windows.Forms.NumericUpDown();
+            this.comboLevels = new System.Windows.Forms.ComboBox();
             this.boxDeinterlace = new System.Windows.Forms.CheckBox();
             this.boxDenoise = new System.Windows.Forms.CheckBox();
             this.boxFrameRate = new System.Windows.Forms.TextBox();
@@ -142,7 +143,6 @@ namespace WebMConverter
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.comboLevels = new System.Windows.Forms.ComboBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -190,6 +190,7 @@ namespace WebMConverter
             labelAdvancedWarning = new System.Windows.Forms.Label();
             groupAdvancedProcessing = new System.Windows.Forms.GroupBox();
             tableAdvancedProcessing = new System.Windows.Forms.TableLayoutPanel();
+            labelProcessingLevels = new System.Windows.Forms.Label();
             labelProcessingLevelsHint = new System.Windows.Forms.Label();
             labelProcessingDeinterlaceHint = new System.Windows.Forms.Label();
             labelProcessingDenoiseHint = new System.Windows.Forms.Label();
@@ -205,7 +206,6 @@ namespace WebMConverter
             labelEncodingArguments = new System.Windows.Forms.Label();
             panelContainTheProgressBar = new System.Windows.Forms.Panel();
             statusStrip = new System.Windows.Forms.StatusStrip();
-            labelProcessingLevels = new System.Windows.Forms.Label();
             tableMainForm.SuspendLayout();
             groupMain.SuspendLayout();
             tableMain.SuspendLayout();
@@ -1380,6 +1380,31 @@ namespace WebMConverter
             tableAdvancedProcessing.Size = new System.Drawing.Size(1035, 82);
             tableAdvancedProcessing.TabIndex = 1;
             // 
+            // labelProcessingLevels
+            // 
+            labelProcessingLevels.AutoSize = true;
+            labelProcessingLevels.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelProcessingLevels.Location = new System.Drawing.Point(3, 0);
+            labelProcessingLevels.Name = "labelProcessingLevels";
+            labelProcessingLevels.Size = new System.Drawing.Size(73, 28);
+            labelProcessingLevels.TabIndex = 0;
+            labelProcessingLevels.Text = "Color levels:";
+            labelProcessingLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // comboLevels
+            // 
+            this.comboLevels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboLevels.Items.AddRange(new object[] {
+            "Leave them alone",
+            "Expand (TV -> PC)",
+            "Contract (PC -> TV)"});
+            this.comboLevels.Location = new System.Drawing.Point(82, 3);
+            this.comboLevels.Name = "comboLevels";
+            this.comboLevels.Size = new System.Drawing.Size(142, 21);
+            this.comboLevels.TabIndex = 1;
+            this.comboLevels.SelectedIndexChanged += new System.EventHandler(this.comboLevels_SelectedIndexChanged);
+            // 
             // labelProcessingLevelsHint
             // 
             labelProcessingLevelsHint.AutoSize = true;
@@ -1553,7 +1578,7 @@ namespace WebMConverter
             this.boxNGOV.Text = "VP9/Opus:";
             this.boxNGOV.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxNGOV.UseVisualStyleBackColor = true;
-            this.boxNGOV.CheckedChanged += new System.EventHandler(this.UpdateArguments);
+            this.boxNGOV.CheckedChanged += new System.EventHandler(this.boxNGOV_CheckedChanged);
             // 
             // labelEncodingThreads
             // 
@@ -1729,31 +1754,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
-            // 
-            // labelProcessingLevels
-            // 
-            labelProcessingLevels.AutoSize = true;
-            labelProcessingLevels.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelProcessingLevels.Location = new System.Drawing.Point(3, 0);
-            labelProcessingLevels.Name = "labelProcessingLevels";
-            labelProcessingLevels.Size = new System.Drawing.Size(73, 28);
-            labelProcessingLevels.TabIndex = 0;
-            labelProcessingLevels.Text = "Color levels:";
-            labelProcessingLevels.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // comboLevels
-            // 
-            this.comboLevels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboLevels.Items.AddRange(new object[] {
-            "Leave them alone",
-            "Expand (TV -> PC)",
-            "Contract (PC -> TV)"});
-            this.comboLevels.Location = new System.Drawing.Point(82, 3);
-            this.comboLevels.Name = "comboLevels";
-            this.comboLevels.Size = new System.Drawing.Size(142, 21);
-            this.comboLevels.TabIndex = 1;
-            this.comboLevels.SelectedIndexChanged += new System.EventHandler(this.comboLevels_SelectedIndexChanged);
             // 
             // MainForm
             // 

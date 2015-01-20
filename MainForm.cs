@@ -232,6 +232,12 @@ namespace WebMConverter
             showToolTip((sender as Control).AccessibleDescription);
         }
 
+        private void opusQualityScalingTooltip()
+        {
+            if (boxNGOV.Checked && boxAudio.Checked && boxVariable.Checked)
+                showToolTip("Audio quality scaling disabled -- Opus doesn't support it!", 5000);
+        }
+
         #endregion
 
         #region groupMain
@@ -709,6 +715,8 @@ namespace WebMConverter
         {
             numericAudioQuality.Enabled = boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
             UpdateArguments(sender, e);
+
+            opusQualityScalingTooltip();
         }
 
         #endregion
@@ -751,6 +759,14 @@ namespace WebMConverter
         {
             labelSlices.Text = GetSlices().ToString();
             UpdateArguments(sender, e);
+        }
+
+        private void boxNGOV_CheckedChanged(object sender, EventArgs e)
+        {
+            numericAudioQuality.Enabled = !(sender as CheckBox).Checked;
+            UpdateArguments(sender, e);
+
+            opusQualityScalingTooltip();
         }
 
         #endregion
@@ -1458,7 +1474,7 @@ namespace WebMConverter
                     int qmax = Math.Min(63, (int)(numericCrf.Value + numericCrfTolerance.Value));
 
                     qualityarguments = string.Format(variableVideoArguments, qmin, numericCrf.Value, qmax);
-                    if (boxAudio.Checked)
+                    if (boxAudio.Checked &! boxNGOV.Checked) // only for vorbis
                         qualityarguments += string.Format(variableAudioArguments, numericAudioQuality.Value);
 
                     break;
