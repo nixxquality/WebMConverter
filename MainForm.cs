@@ -144,6 +144,28 @@ namespace WebMConverter
                 inputFile.Close();
         }
 
+        void boxIndexingProgressDetails_CheckedChanged(object sender, EventArgs e)
+        {
+            boxIndexingProgress.Visible = (sender as CheckBox).Checked;
+            panelContainTheProgressBar.Location = new Point(
+                panelHideTheOptions.ClientSize.Width / 2 - panelContainTheProgressBar.Size.Width / 2,
+                panelHideTheOptions.ClientSize.Height / 2 - panelContainTheProgressBar.Size.Height / 2);
+        }
+
+        const int _boxIndexingProgressMaxLines = 11;
+        void logIndexingProgress(string message)
+        {
+            this.InvokeIfRequired(() =>
+            {
+                boxIndexingProgress.Text += message + Environment.NewLine;
+                var indexingProgressLines = boxIndexingProgress.Text.Split('\n');
+                if (indexingProgressLines.Length > _boxIndexingProgressMaxLines)
+                {
+                    boxIndexingProgress.Text = String.Join(Environment.NewLine, indexingProgressLines.Skip(1));
+                }
+            });
+        }
+
         async void CheckUpdate()
         {
             try
@@ -800,6 +822,7 @@ namespace WebMConverter
 
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
             progressBarIndexing.Value = 30;
+            boxIndexingProgress.Text = "";
             panelHideTheOptions.BringToFront();
 
             buttonGo.Enabled = false;
@@ -857,6 +880,7 @@ namespace WebMConverter
 
             // Hash some of the file to make sure we didn't index it already
             labelIndexingProgress.Text = "Hashing...";
+            logIndexingProgress("Hashing...");
             using (MD5 md5 = MD5.Create())
             using (FileStream stream = File.OpenRead(path))
             {
@@ -867,6 +891,7 @@ namespace WebMConverter
                 stream.Read(buffer, filename.Length, 4096 - filename.Length);
 
                 Program.FileMd5 = BitConverter.ToString(md5.ComputeHash(buffer));
+                logIndexingProgress("File hash is " + Program.FileMd5.Replace("-", ""));
                 _indexFile = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".ffindex");
             }
 
@@ -882,6 +907,7 @@ namespace WebMConverter
             });
             indexbw.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
+                logIndexingProgress("Indexing starting...");
                 FFMSSharp.Indexer indexer = new FFMSSharp.Indexer(path, FFMSSharp.Source.Lavf);
 
                 indexer.UpdateIndexProgress += delegate(object sendertwo, FFMSSharp.IndexingProgressChangeEventArgs etwo)
@@ -914,7 +940,12 @@ namespace WebMConverter
                     {
                         const string message = "\nIf you were planning on making a WebM with audio, I'm afraid that's not going to happen.\nWould you like to index the file without audio?";
                         const string caption = "Error";
-                        var result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        DialogResult result = DialogResult.Cancel;
+
+                        this.InvokeIfRequired(() =>
+                        {
+                            result = MessageBox.Show(message, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        });
 
                         audioDisabled = (result == DialogResult.OK);
                     }
@@ -930,6 +961,8 @@ namespace WebMConverter
             };
             extractbw.DoWork += new DoWorkEventHandler(delegate
             {
+                logIndexingProgress("Extraction starting...");
+
                 List<int> videoTracks = new List<int>(), audioTracks = new List<int>();
                 for (int i = 0; i < index.NumberOfTracks; i++)
                 {
@@ -956,6 +989,7 @@ namespace WebMConverter
                     this.InvokeIfRequired(() =>
                     {
                         var dialog = new TrackSelectDialog("Video", videoTracks);
+                        logIndexingProgress("Waiting for user input...");
                         dialog.ShowDialog(this);
                         videotrack = dialog.SelectedTrack;
                     });
@@ -977,6 +1011,7 @@ namespace WebMConverter
                         this.InvokeIfRequired(() =>
                         {
                             var dialog = new TrackSelectDialog("Audio", audioTracks);
+                            logIndexingProgress("Waiting for user input...");
                             dialog.ShowDialog(this);
                             audiotrack = dialog.SelectedTrack;
                         });
@@ -987,6 +1022,7 @@ namespace WebMConverter
                 Program.AttachmentDirectory = Path.Combine(Path.GetTempPath(), Program.FileMd5 + ".attachments");
                 Directory.CreateDirectory(Program.AttachmentDirectory);
 
+                logIndexingProgress("Probing input file...");
                 using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -show_format"))
                 {
                     string streamInfo = prober.Probe();
@@ -1011,6 +1047,7 @@ namespace WebMConverter
                                     // Check if this is a FRAPS yuvj420p video - if so, we need to do something weird here.
                                     if (nav.GetAttribute("codec_name", "") == "fraps" && nav.GetAttribute("pix_fmt", "") == "yuvj420p")
                                     {
+                                        logIndexingProgress("Detected yuvj420p FRAPS video, the Color Level fixing setting has been set for you.");
                                         this.InvokeIfRequired(() =>
                                         {
                                             comboLevels.SelectedIndex = 2; // PC -> TV conversion
@@ -1044,6 +1081,8 @@ namespace WebMConverter
                                         SarWidth = (int)(SarWidth * (SarNum / SarDen));
                                     }
                                     SarCompensate = true;
+                                    logIndexingProgress("We need to compensate for Sample Aspect Ratio, it seems.");
+
                                     break;
                                 case "subtitle": // Extract the subtitle file
                                     // Get a title
@@ -1058,16 +1097,22 @@ namespace WebMConverter
                                     }
                                     
                                     string file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
+                                    logIndexingProgress(string.Format("Found subtitle track #{0}", streamindex));
 
                                     if (!File.Exists(file)) // If we didn't extract it already
                                     {
                                         string arg = string.Format("-i \"{0}\" -map 0:{1} \"{2}\" -y", Program.InputFile, streamindex, file);
 
+                                        logIndexingProgress("Extracting...");
                                         using (var ffmpeg = new FFmpeg(arg))
                                         {
                                             ffmpeg.Start();
                                             ffmpeg.WaitForExit();
                                         }
+                                    }
+                                    else
+                                    {
+                                        logIndexingProgress("Already extracted! Skipping...");
                                     }
 
                                     if (!File.Exists(file)) // Holy shit, it still doesn't exist?
@@ -1090,12 +1135,14 @@ namespace WebMConverter
                         try
                         {
                             title = doc.CreateNavigator().SelectSingleNode("//ffprobe/format/tag[@key='title']").GetAttribute("value", "");
+                            logIndexingProgress("Found title " + title);
                         }
                         catch { } // If we can't find a title key, no biggie.
                     }
                 }
 
                 // Extract attachments (internal fonts)
+                logIndexingProgress("Dumping attachments (fonts)...");
                 using (var ffmpeg = new FFmpeg(string.Format("-dump_attachment:t \"\" -y -i \"{0}\"", Program.InputFile)))
                 {
                     ffmpeg.StartInfo.WorkingDirectory = Program.AttachmentDirectory;
