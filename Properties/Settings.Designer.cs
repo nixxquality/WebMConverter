@@ -46,5 +46,29 @@ namespace WebMConverter.Properties {
                 this["TryUpgrade"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RememberedFolderIn {
+            get {
+                return ((string)(this["RememberedFolderIn"]));
+            }
+            set {
+                this["RememberedFolderIn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RememberedFolderOut {
+            get {
+                return ((string)(this["RememberedFolderOut"]));
+            }
+            set {
+                this["RememberedFolderOut"] = value;
+            }
+        }
     }
 }

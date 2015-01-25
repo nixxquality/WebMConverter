@@ -267,27 +267,37 @@ namespace WebMConverter
 
         void buttonBrowseIn_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dialog = new OpenFileDialog())
+            using (var dialog = new OpenFileDialog())
             {
                 dialog.CheckFileExists = true;
                 dialog.CheckPathExists = true;
                 dialog.ValidateNames = true;
+                dialog.InitialDirectory = Properties.Settings.Default.RememberedFolderIn;
 
-                if (dialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                    SetFile(dialog.FileName);
+                if (dialog.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(dialog.FileName))
+                    return;
+
+                SetFile(dialog.FileName);
+                Properties.Settings.Default.RememberedFolderIn = Path.GetDirectoryName(dialog.FileName);
+                Properties.Settings.Default.Save();
             }
         }
 
         void buttonBrowseOut_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dialog = new SaveFileDialog())
+            using (var dialog = new SaveFileDialog())
             {
                 dialog.OverwritePrompt = true;
                 dialog.ValidateNames = true;
                 dialog.Filter = "WebM files|*.webm";
+                dialog.InitialDirectory = Properties.Settings.Default.RememberedFolderOut;
 
-                if (dialog.ShowDialog(this) == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                    textBoxOut.Text = dialog.FileName;
+                if (dialog.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(dialog.FileName))
+                    return;
+
+                textBoxOut.Text = dialog.FileName;
+                Properties.Settings.Default.RememberedFolderOut = Path.GetDirectoryName(dialog.FileName);
+                Properties.Settings.Default.Save();
             }
         }
 
