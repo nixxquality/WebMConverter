@@ -22,7 +22,7 @@ namespace WebMConverter
             FFmpegPath = Path.Combine(Environment.CurrentDirectory, "Binaries", folder, "ffmpeg.exe");
 
             this.StartInfo.FileName = FFmpegPath;
-            this.StartInfo.Arguments = argument;
+            this.StartInfo.Arguments = "-hide_banner " + argument;
             this.StartInfo.RedirectStandardInput = true;
             this.StartInfo.RedirectStandardOutput = true;
             this.StartInfo.RedirectStandardError = true;
