@@ -828,7 +828,7 @@ namespace WebMConverter
             string name = Path.GetFileNameWithoutExtension(path);
             string title = name;
             if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
-                textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
+                textBoxOut.Text = _autoOutput = Path.Combine(string.IsNullOrWhiteSpace(Properties.Settings.Default.RememberedFolderOut) ? fullPath : Properties.Settings.Default.RememberedFolderOut, name + ".webm");
             audioDisabled = false;
 
             progressBarIndexing.Style = ProgressBarStyle.Marquee;
