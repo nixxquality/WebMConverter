@@ -767,6 +767,8 @@ namespace WebMConverter
             }
 
             UpdateArguments(sender, e);
+
+            opusQualityScalingTooltip();
         }
 
         void buttonVariableDefault_Click(object sender, EventArgs e)
@@ -780,7 +782,11 @@ namespace WebMConverter
 
         void boxAudio_CheckedChanged(object sender, EventArgs e)
         {
-            numericAudioQuality.Enabled = boxAudioBitrate.Enabled = (sender as CheckBox).Checked;
+            numericAudioQuality.Enabled = boxAudioBitrate.Enabled = ((CheckBox)sender).Checked;
+            
+            if (boxNGOV.Checked)
+                numericAudioQuality.Enabled = false;
+
             UpdateArguments(sender, e);
 
             opusQualityScalingTooltip();
