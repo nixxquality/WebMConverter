@@ -56,6 +56,7 @@ namespace WebMConverter
             {
                 FFMSSharp.Frame frame = Program.VideoSource.GetFrame(previewFrame.Frame);
                 videoResolution = frame.EncodedResolution;
+                previewFrame.GeneratePreview(true);
             }
 
             if ((Owner as MainForm).boxAdvancedScripting.Checked) return;
