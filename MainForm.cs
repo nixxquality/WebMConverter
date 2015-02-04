@@ -393,6 +393,7 @@ namespace WebMConverter
                     listViewProcessingScript.Items.Add("Dub", "dub");
                     ((ToolStripItem)sender).Enabled = false;
                 }
+                boxAudio.Checked = true;
             }
         }
 
