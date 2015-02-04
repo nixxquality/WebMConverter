@@ -197,6 +197,7 @@
             this.ClientSize = new System.Drawing.Size(329, 87);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanelMain);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SubtitleForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
