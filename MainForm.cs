@@ -377,6 +377,25 @@ namespace WebMConverter
             }
         }
 
+        private void buttonDub_Click(object sender, EventArgs e)
+        {
+            using (var form = new DubForm())
+            {
+                if (form.ShowDialog(this) != DialogResult.OK) return;
+
+                if (boxAdvancedScripting.Checked)
+                {
+                    textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter);
+                }
+                else
+                {
+                    Filters.Dub = form.GeneratedFilter;
+                    listViewProcessingScript.Items.Add("Dub", "dub");
+                    ((ToolStripItem)sender).Enabled = false;
+                }
+            }
+        }
+
         void buttonMultipleTrim_Click(object sender, EventArgs e)
         {
             using (var form = new MultipleTrimForm())
@@ -531,6 +550,7 @@ namespace WebMConverter
         {
             buttonCaption.Enabled = enabled;
             buttonCrop.Enabled = enabled;
+            buttonDub.Enabled = enabled;
             buttonOverlay.Enabled = enabled;
             buttonResize.Enabled = enabled;
             buttonReverse.Enabled = enabled;
@@ -555,6 +575,10 @@ namespace WebMConverter
                             Filters.Crop = null;
                             buttonCrop.Enabled = true;
                             SetSlices();
+                            break;
+                        case @"Dub":
+                            Filters.Dub = null;
+                            buttonDub.Enabled = true;
                             break;
                         case "Multiple Trim":
                             Filters.MultipleTrim = null;
@@ -609,6 +633,15 @@ namespace WebMConverter
                         {
                             Filters.Crop = form.GeneratedFilter;
                             SetSlices();
+                        }
+                    }
+                    break;
+                case @"Dub":
+                    using (var form = new DubForm(Filters.Dub))
+                    {
+                        if (form.ShowDialog(this) == DialogResult.OK)
+                        {
+                            Filters.Dub = form.GeneratedFilter;
                         }
                     }
                     break;
@@ -1381,6 +1414,9 @@ namespace WebMConverter
 
                 if (SarCompensate)
                     avscript.WriteLine(new ResizeFilter(SarWidth, SarHeight));
+
+                if (Filters.Dub != null)
+                    avscript.WriteLine(Filters.Dub.ToString());
 
                 avscript.Write(textBoxProcessingScript.Text);
             }

@@ -107,6 +107,7 @@ namespace WebMConverter
             this.boxAdvancedScripting = new System.Windows.Forms.ToolStripButton();
             this.buttonExportProcessing = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.buttonDub = new System.Windows.Forms.ToolStripButton();
             this.listViewProcessingScript = new System.Windows.Forms.ListView();
             this.imageListFilters = new System.Windows.Forms.ImageList(this.components);
             this.textBoxProcessingScript = new System.Windows.Forms.TextBox();
@@ -240,8 +241,8 @@ namespace WebMConverter
             tableAdvancedEncoding.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).BeginInit();
-            this.panelContainTheProgressBar.SuspendLayout();
             statusStrip.SuspendLayout();
+            this.panelContainTheProgressBar.SuspendLayout();
             this.panelHideTheOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -418,7 +419,8 @@ namespace WebMConverter
             this.buttonCaption,
             this.boxAdvancedScripting,
             this.buttonExportProcessing,
-            this.buttonPreview});
+            this.buttonPreview,
+            this.buttonDub});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -560,6 +562,18 @@ namespace WebMConverter
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             this.buttonPreview.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
             this.buttonPreview.MouseLeave += new System.EventHandler(this.clearToolTip);
+            // 
+            // buttonDub
+            // 
+            this.buttonDub.AccessibleDescription = "Add or replace the audio on your video.";
+            this.buttonDub.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonDub.Enabled = false;
+            this.buttonDub.Name = "buttonDub";
+            this.buttonDub.Size = new System.Drawing.Size(33, 22);
+            this.buttonDub.Text = "Dub";
+            this.buttonDub.Click += new System.EventHandler(this.buttonDub_Click);
+            this.buttonDub.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonDub.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // panelProcessingInput
             // 
@@ -1919,6 +1933,7 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox boxIndexingProgress;
         private System.Windows.Forms.CheckBox boxIndexingProgressDetails;
         private System.Windows.Forms.Panel panelContainTheProgressBar;
+        private System.Windows.Forms.ToolStripButton buttonDub;
     }
 }
 

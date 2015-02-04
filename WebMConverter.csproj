@@ -61,6 +61,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Deployment" />
@@ -80,6 +81,12 @@
     </Compile>
     <Compile Include="Filters\Deinterlace.cs" />
     <Compile Include="Filters\Denoise.cs" />
+    <Compile Include="Filters\Dub.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filters\Dub.Designer.cs">
+      <DependentUpon>Dub.cs</DependentUpon>
+    </Compile>
     <Compile Include="Filters\Levels.cs" />
     <Compile Include="Filters\Overlay.cs">
       <SubType>Form</SubType>
@@ -167,6 +174,9 @@
     </Compile>
     <EmbeddedResource Include="Dialogs\ConverterDialog.resx">
       <DependentUpon>ConverterDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filters\Dub.resx">
+      <DependentUpon>Dub.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\Overlay.resx">
       <DependentUpon>Overlay.cs</DependentUpon>

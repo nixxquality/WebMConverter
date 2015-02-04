@@ -16,6 +16,7 @@ namespace WebMConverter
         internal static CropFilter Crop = null;
         internal static DeinterlaceFilter Deinterlace = null;
         internal static DenoiseFilter Denoise = null;
+        internal static DubFilter Dub;
         internal static LevelsFilter Levels = null;
         internal static MultipleTrimFilter MultipleTrim = null;
         internal static OverlayFilter Overlay = null;
@@ -30,6 +31,7 @@ namespace WebMConverter
             Crop = null;
             Deinterlace = null;
             Denoise = null;
+            Dub = null;
             Levels = null;
             MultipleTrim = null;
             Overlay = null;
