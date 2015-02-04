@@ -1618,7 +1618,7 @@ namespace WebMConverter
                     {
                         if (reader.Name == "duration")
                         {
-                            return double.Parse(reader.Value);
+                            return double.Parse(reader.Value, CultureInfo.InvariantCulture);
                         }
                     }
                 }
