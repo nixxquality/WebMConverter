@@ -116,9 +116,10 @@ namespace WebMConverter
 
                     indexer.UpdateIndexProgress += (ind, updateArgs) =>
                     {
-                        _worker.ReportProgress((int)(updateArgs.Current / (double)updateArgs.Total) * 100);
+                        _worker.ReportProgress((int)(((double)updateArgs.Current / updateArgs.Total) * 100));
                         indexer.CancelIndexing = _worker.CancellationPending;
                     };
+
                     try
                     {
                         var index = indexer.Index();
