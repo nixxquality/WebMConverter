@@ -613,6 +613,7 @@ namespace WebMConverter
             this.imageListFilters.Images.SetKeyName(4, "Resize");
             this.imageListFilters.Images.SetKeyName(5, "Overlay");
             this.imageListFilters.Images.SetKeyName(6, "Caption");
+            this.imageListFilters.Images.SetKeyName(7, "Dub");
             // 
             // textBoxProcessingScript
             // 
