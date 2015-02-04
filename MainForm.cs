@@ -1351,7 +1351,8 @@ namespace WebMConverter
 
                 avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", shortPluginPath.ToString()));
                 avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
-                avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+                if (Filters.Subtitle != null)
+                    avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
 
                 // UTF-8 argument bug workaround
                 // see https://github.com/FFMS/ffms2/pull/167

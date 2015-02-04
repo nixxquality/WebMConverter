@@ -138,13 +138,13 @@ namespace WebMConverter
             this.trackSlices = new System.Windows.Forms.TrackBar();
             this.labelSlices = new System.Windows.Forms.Label();
             this.boxArguments = new System.Windows.Forms.TextBox();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelContainTheProgressBar = new System.Windows.Forms.Panel();
+            this.boxIndexingProgressDetails = new System.Windows.Forms.CheckBox();
+            this.boxIndexingProgress = new System.Windows.Forms.TextBox();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.boxIndexingProgress = new System.Windows.Forms.TextBox();
-            this.boxIndexingProgressDetails = new System.Windows.Forms.CheckBox();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -1698,6 +1698,23 @@ namespace WebMConverter
             this.boxArguments.Size = new System.Drawing.Size(950, 20);
             this.boxArguments.TabIndex = 5;
             // 
+            // statusStrip
+            // 
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            statusStrip.Location = new System.Drawing.Point(3, 424);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new System.Drawing.Size(1067, 22);
+            statusStrip.SizingGrip = false;
+            statusStrip.TabIndex = 6;
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1052, 17);
+            this.toolStripStatusLabel.Spring = true;
+            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // panelContainTheProgressBar
             // 
             this.panelContainTheProgressBar.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1712,6 +1729,32 @@ namespace WebMConverter
             this.panelContainTheProgressBar.Name = "panelContainTheProgressBar";
             this.panelContainTheProgressBar.Size = new System.Drawing.Size(469, 205);
             this.panelContainTheProgressBar.TabIndex = 0;
+            // 
+            // boxIndexingProgressDetails
+            // 
+            this.boxIndexingProgressDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxIndexingProgressDetails.Appearance = System.Windows.Forms.Appearance.Button;
+            this.boxIndexingProgressDetails.AutoSize = true;
+            this.boxIndexingProgressDetails.Location = new System.Drawing.Point(414, 5);
+            this.boxIndexingProgressDetails.Name = "boxIndexingProgressDetails";
+            this.boxIndexingProgressDetails.Size = new System.Drawing.Size(49, 23);
+            this.boxIndexingProgressDetails.TabIndex = 1;
+            this.boxIndexingProgressDetails.Text = "Details";
+            this.boxIndexingProgressDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.boxIndexingProgressDetails.UseVisualStyleBackColor = true;
+            this.boxIndexingProgressDetails.CheckedChanged += new System.EventHandler(this.boxIndexingProgressDetails_CheckedChanged);
+            // 
+            // boxIndexingProgress
+            // 
+            this.boxIndexingProgress.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.boxIndexingProgress.Location = new System.Drawing.Point(6, 61);
+            this.boxIndexingProgress.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.boxIndexingProgress.Multiline = true;
+            this.boxIndexingProgress.Name = "boxIndexingProgress";
+            this.boxIndexingProgress.ReadOnly = true;
+            this.boxIndexingProgress.Size = new System.Drawing.Size(457, 138);
+            this.boxIndexingProgress.TabIndex = 0;
+            this.boxIndexingProgress.Visible = false;
             // 
             // labelIndexingProgress
             // 
@@ -1732,23 +1775,6 @@ namespace WebMConverter
             this.progressBarIndexing.TabIndex = 0;
             this.progressBarIndexing.Value = 30;
             // 
-            // statusStrip
-            // 
-            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            statusStrip.Location = new System.Drawing.Point(3, 424);
-            statusStrip.Name = "statusStrip";
-            statusStrip.Size = new System.Drawing.Size(1067, 22);
-            statusStrip.SizingGrip = false;
-            statusStrip.TabIndex = 6;
-            // 
-            // toolStripStatusLabel
-            // 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1052, 17);
-            this.toolStripStatusLabel.Spring = true;
-            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // panelHideTheOptions
             // 
             this.panelHideTheOptions.BackColor = System.Drawing.SystemColors.ControlDark;
@@ -1757,32 +1783,6 @@ namespace WebMConverter
             this.panelHideTheOptions.Name = "panelHideTheOptions";
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
-            // 
-            // boxIndexingProgress
-            // 
-            this.boxIndexingProgress.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.boxIndexingProgress.Location = new System.Drawing.Point(6, 61);
-            this.boxIndexingProgress.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            this.boxIndexingProgress.Multiline = true;
-            this.boxIndexingProgress.Name = "boxIndexingProgress";
-            this.boxIndexingProgress.ReadOnly = true;
-            this.boxIndexingProgress.Size = new System.Drawing.Size(457, 138);
-            this.boxIndexingProgress.TabIndex = 0;
-            this.boxIndexingProgress.Visible = false;
-            // 
-            // boxIndexingProgressDetails
-            // 
-            this.boxIndexingProgressDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxIndexingProgressDetails.Appearance = System.Windows.Forms.Appearance.Button;
-            this.boxIndexingProgressDetails.AutoSize = true;
-            this.boxIndexingProgressDetails.Location = new System.Drawing.Point(414, 5);
-            this.boxIndexingProgressDetails.Name = "boxIndexingProgressDetails";
-            this.boxIndexingProgressDetails.Size = new System.Drawing.Size(49, 23);
-            this.boxIndexingProgressDetails.TabIndex = 1;
-            this.boxIndexingProgressDetails.Text = "Details";
-            this.boxIndexingProgressDetails.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.boxIndexingProgressDetails.UseVisualStyleBackColor = true;
-            this.boxIndexingProgressDetails.CheckedChanged += new System.EventHandler(this.boxIndexingProgressDetails_CheckedChanged);
             // 
             // MainForm
             // 
@@ -1853,10 +1853,10 @@ namespace WebMConverter
             tableAdvancedEncoding.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackSlices)).EndInit();
-            this.panelContainTheProgressBar.ResumeLayout(false);
-            this.panelContainTheProgressBar.PerformLayout();
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
+            this.panelContainTheProgressBar.ResumeLayout(false);
+            this.panelContainTheProgressBar.PerformLayout();
             this.panelHideTheOptions.ResumeLayout(false);
             this.panelHideTheOptions.PerformLayout();
             this.ResumeLayout(false);
