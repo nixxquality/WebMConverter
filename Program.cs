@@ -50,6 +50,10 @@ namespace WebMConverter
         public static extern IntPtr LoadLibrary(string lpFileName);
         [DllImport("kernel32", CharSet = CharSet.Auto)]
         public static extern int GetShortPathName([MarshalAs(UnmanagedType.LPTStr)] string path, [MarshalAs(UnmanagedType.LPTStr)] System.Text.StringBuilder shortPath, int shortPathLength);
+        [DllImport("gdi32", CharSet = CharSet.Auto)]
+        public static extern int AddFontResourceEx(string lpszFilename, uint fl, IntPtr pdv);
+        [DllImport("gdi32", CharSet = CharSet.Auto)]
+        public static extern bool RemoveFontResourceEx(string lpFileName, uint fl, IntPtr pdv);
     }
 
     static class Program
@@ -62,6 +66,7 @@ namespace WebMConverter
         public static string FileMd5;
         public static string AttachmentDirectory;
         public static Dictionary<int, Tuple<string, SubtitleType>> SubtitleTracks; // stream id, <tag:title OR codec_name, textsub/vobsub>
+        public static List<string> AttachmentList;
 
         const double closeenough = 0.1;
         static int TimeToFrame(double time)

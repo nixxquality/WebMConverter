@@ -143,6 +143,7 @@ namespace WebMConverter
         {
             if (inputFile != null)
                 inputFile.Close();
+            UnloadFonts();
         }
 
         void boxIndexingProgressDetails_CheckedChanged(object sender, EventArgs e)
@@ -156,6 +157,9 @@ namespace WebMConverter
         const int _boxIndexingProgressMaxLines = 11;
         void logIndexingProgress(string message)
         {
+#if DEBUG
+            Console.WriteLine(message);
+#endif
             this.InvokeIfRequired(() =>
             {
                 boxIndexingProgress.Text += message + Environment.NewLine;
@@ -862,6 +866,7 @@ namespace WebMConverter
 
             if (inputFile != null)
                 inputFile.Close();
+            UnloadFonts();
 
             textBoxIn.Text = path;
             string fullPath = Path.GetDirectoryName(path);
@@ -1078,11 +1083,12 @@ namespace WebMConverter
                 {
                     string streamInfo = prober.Probe();
                     Program.SubtitleTracks = new Dictionary<int, Tuple<string, SubtitleType>>();
+                    Program.AttachmentList = new List<string>();
 
                     using (var s = new StringReader(streamInfo))
                     {
                         var doc = new XPathDocument(s);
-                        int attachindex = 1; // mkvextract separates track and attachment indices
+                        var attachindex = 0; // mkvextract separates track and attachment indices
 
                         foreach (XPathNavigator nav in doc.CreateNavigator().Select("//ffprobe/streams/stream"))
                         {
@@ -1186,26 +1192,34 @@ namespace WebMConverter
                                     nav.MoveTo(nav.SelectSingleNode(".//tag[@key='filename']"));
                                     var filename = nav.GetAttribute("value", "");
 
+                                    nav.MoveToNext();
+                                    var mimetype = nav.GetAttribute("value", "");
+
                                     file = Path.Combine(Program.AttachmentDirectory, filename);
                                     logIndexingProgress(string.Format("Found attachment '{0}'", filename));
+
+                                    attachindex += 1;
+
+                                    if (!mimetype.Contains(@"font"))
+                                    {
+                                        logIndexingProgress("Not a font! Skipping...");
+                                        break;
+                                    }
+
+                                    Program.AttachmentList.Add(filename);
 
                                     if (File.Exists(file)) // Did we extract it already?
                                     {
                                         logIndexingProgress("Already extracted! Skipping...");
+                                        break;
                                     }
-                                    else
+
+                                    logIndexingProgress("Extracting...");
+                                    using (var mkvextract = new MkvExtract(string.Format(@"attachments ""{0}"" ""{1}:{2}""", Program.InputFile, attachindex, file)))
                                     {
-                                        var arg = string.Format(@"attachments ""{0}"" ""{1}:{2}""", Program.InputFile, attachindex, file);
-
-                                        logIndexingProgress("Extracting...");
-                                        using (var mkvextract = new MkvExtract(arg))
-                                        {
-                                            mkvextract.Start();
-                                            mkvextract.WaitForExit();
-                                        }
+                                        mkvextract.Start();
+                                        mkvextract.WaitForExit();
                                     }
-
-                                    attachindex += 1;
                                     break;
                             }
                         }
@@ -1224,6 +1238,7 @@ namespace WebMConverter
                 Program.VideoColorRange = frame.ColorRange;
                 Program.VideoInterlaced = frame.InterlacedFrame;
                 SetSlices(frame.EncodedResolution);
+                LoadFonts(msg => logIndexingProgress((string)msg));
             });
             indexbw.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
             {
@@ -1389,30 +1404,30 @@ namespace WebMConverter
                 NativeMethods.GetShortPathName(@"\\?\" + pluginPath, shortPluginPath, shortPluginPath.Capacity);
                 // the \\?\ is added because GetShortPathName will fail if pluginPath is longer than 256 characters otherwise.
 
-                avscript.WriteLine(string.Format("PluginPath = \"{0}\\\"", shortPluginPath.ToString()));
-                avscript.WriteLine("LoadPlugin(PluginPath+\"ffms2.dll\")");
+                avscript.WriteLine(@"PluginPath = ""{0}\""", shortPluginPath);
+                avscript.WriteLine(@"LoadPlugin(PluginPath+""ffms2.dll"")");
                 if (Filters.Subtitle != null)
-                    avscript.WriteLine("LoadCPlugin(PluginPath+\"assrender.dll\")");
+                    avscript.WriteLine(@"LoadPlugin(PluginPath+""VSFilter.dll"")");
 
                 // UTF-8 argument bug workaround
                 // see https://github.com/FFMS/ffms2/pull/167
-                avscript.WriteLine(string.Format("FFIndex(\"{0}\", cachefile=\"{1}\", utf8=True)", avsInputFile, _indexFile));
+                avscript.WriteLine(@"FFIndex(""{0}"", cachefile=""{1}"", utf8=True)", avsInputFile, _indexFile);
                 // this won't actually index file file (we already did), but it will call FFMS_Init with utf8 = true properly, unlike FFVideoSource
 
                 if (boxAudio.Checked)
-                    avscript.WriteLine(string.Format("AudioDub(FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2}), FFAudioSource(\"{0}\",cachefile=\"{1}\",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack));
+                    avscript.WriteLine(@"AudioDub(FFVideoSource(""{0}"",cachefile=""{1}"",track={2}), FFAudioSource(""{0}"",cachefile=""{1}"",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack);
                 else
-                    avscript.WriteLine(string.Format("FFVideoSource(\"{0}\",cachefile=\"{1}\",track={2})", avsInputFile, _indexFile, videotrack));
+                    avscript.WriteLine(@"FFVideoSource(""{0}"",cachefile=""{1}"",track={2})", avsInputFile, _indexFile, videotrack);
 
                 if (Filters.Deinterlace != null)
                 {
-                    avscript.WriteLine("LoadPlugin(PluginPath+\"TDeint.dll\")");
+                    avscript.WriteLine(@"LoadPlugin(PluginPath+""TDeint.dll"")");
                     avscript.WriteLine(Filters.Deinterlace.ToString());
                 }
 
                 if (Filters.Denoise != null)
                 {
-                    avscript.WriteLine("LoadPlugin(PluginPath+\"hqdn3d.dll\")");
+                    avscript.WriteLine(@"LoadPlugin(PluginPath+""hqdn3d.dll"")");
                     avscript.WriteLine(Filters.Denoise.ToString());
                 }
 
@@ -1813,6 +1828,30 @@ namespace WebMConverter
             {
                 trackSlices.Value = slices;
             });
+        }
+
+        private void LoadFonts(Action<object> action = null)
+        {
+            Program.AttachmentList.ForEach(filename =>
+            {
+                if (action != null) action(string.Format("Loading font {0}", filename));
+
+                var ret = NativeMethods.AddFontResourceEx(Path.Combine(Program.AttachmentDirectory, filename), 0, IntPtr.Zero);
+
+                if (ret == 0 && action != null) action("Failed!");
+            });
+        }
+
+        private void UnloadFonts()
+        {
+            if (Program.AttachmentList == null)
+                return;
+
+            Program.AttachmentList.ForEach(filename =>
+            {
+                NativeMethods.RemoveFontResourceEx(Path.Combine(Program.AttachmentDirectory, filename), 0, IntPtr.Zero);
+            });
+            Program.AttachmentList = null;
         }
 
         #endregion

@@ -104,9 +104,9 @@ namespace WebMConverter
             switch (Type)
             {
                 case SubtitleType.TextSub:
-                    return string.Format("assrender(\"{0}\", fontdir=\"{1}\")", FileName, Program.AttachmentDirectory);
+                    return string.Format(@"textsub(""{0}"")", FileName);
                 case SubtitleType.VobSub:
-                    return string.Format("vobsub(\"{0}\")", FileName);
+                    return string.Format(@"vobsub(""{0}"")", FileName);
                 default:
                     throw new NotImplementedException();
             }
