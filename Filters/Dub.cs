@@ -27,6 +27,7 @@ namespace WebMConverter
         public DubForm(DubFilter dubFilter) : this()
         {
             SetFile(dubFilter.AudioFileName);
+            boxTrimAudio.Checked = dubFilter.TrimAudio;
         }
 
         private void DubForm_DragEnter(object sender, DragEventArgs e)
@@ -92,7 +93,7 @@ namespace WebMConverter
                         if (index.BelongsToFile(audioFile))
                         {
                             DialogResult = DialogResult.OK;
-                            GeneratedFilter = new DubFilter(audioFile, indexFile);
+                            GeneratedFilter = new DubFilter(audioFile, indexFile, boxTrimAudio.Checked);
                             Close();
                             return;
                         }
@@ -174,7 +175,7 @@ namespace WebMConverter
                     else
                     {
                         DialogResult = DialogResult.OK;
-                        GeneratedFilter = new DubFilter(audioFile, indexFile);   
+                        GeneratedFilter = new DubFilter(audioFile, indexFile, boxTrimAudio.Checked);   
                     }
                     
                     this.InvokeIfRequired(Close);
@@ -199,18 +200,22 @@ namespace WebMConverter
     {
         public readonly string AudioFileName;
         public readonly string IndexFileName;
+        public readonly bool TrimAudio;
 
-        public DubFilter(string audioFileName, string indexFileName)
+        public DubFilter(string audioFileName, string indexFileName, bool trimAudio)
         {
             AudioFileName = audioFileName;
             IndexFileName = indexFileName;
+            TrimAudio = trimAudio;
         }
 
         public override string ToString()
         {
             // Left alone, AudioDub will potentially stretch the video out to fit the audio stream.
-            // This is a pretty bad idea in every scenario, so we stop that by trimming any audio after the last's (AviSynth magic word) last frame.
-            return string.Format(@"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)",
+            // This is unwanted in most scenarios, but we can stop that by trimming any audio after the last's (AviSynth magic word) last frame.
+            return string.Format(
+                TrimAudio ? @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)" :
+                            @"AudioDub(FFAudioSource(""{0}"",cachefile=""{1}""))",
                 AudioFileName, IndexFileName);
         }
     }
