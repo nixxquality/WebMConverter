@@ -1440,9 +1440,6 @@ namespace WebMConverter
                 if (SarCompensate)
                     avscript.WriteLine(new ResizeFilter(SarWidth, SarHeight));
 
-                if (Filters.Dub != null)
-                    avscript.WriteLine(Filters.Dub.ToString());
-
                 avscript.Write(textBoxProcessingScript.Text);
             }
         }
@@ -1771,6 +1768,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Resize.ToString());
             if (Filters.Reverse != null)
                 script.AppendLine(Filters.Reverse.ToString());
+            if (Filters.Dub != null)
+                script.AppendLine(Filters.Dub.ToString());
 
             textBoxProcessingScript.Text = script.ToString();
         }
