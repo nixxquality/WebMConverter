@@ -546,6 +546,7 @@ namespace WebMConverter
             GenerateAvisynthScript();
             textBoxProcessingScript.Show();
             toolStripFilterButtonsEnabled(true);
+            boxAudio.Enabled = true;
 
             (sender as ToolStripButton).Enabled = false;
             clearToolTip(sender, e);
