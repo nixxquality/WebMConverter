@@ -30,19 +30,20 @@
         {
             System.Windows.Forms.Label labelAudioFile;
             System.Windows.Forms.TableLayoutPanel tableLayout;
-            System.Windows.Forms.Label labelTrimAudioHint;
+            System.Windows.Forms.Label labelDubMode;
+            this.labelDubModeHint = new System.Windows.Forms.Label();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.boxAudioFile = new System.Windows.Forms.TextBox();
             this.buttonBrowse = new System.Windows.Forms.Button();
+            this.comboDubMode = new System.Windows.Forms.ComboBox();
+            this.boxAudioFile = new System.Windows.Forms.TextBox();
             this.panelIndexingProgress = new System.Windows.Forms.Panel();
             this.progressIndexingProgress = new System.Windows.Forms.ProgressBar();
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.openAudioFile = new System.Windows.Forms.OpenFileDialog();
-            this.boxTrimAudio = new System.Windows.Forms.CheckBox();
             labelAudioFile = new System.Windows.Forms.Label();
             tableLayout = new System.Windows.Forms.TableLayoutPanel();
-            labelTrimAudioHint = new System.Windows.Forms.Label();
+            labelDubMode = new System.Windows.Forms.Label();
             tableLayout.SuspendLayout();
             this.panelIndexingProgress.SuspendLayout();
             this.SuspendLayout();
@@ -60,18 +61,20 @@
             // 
             // tableLayout
             // 
-            tableLayout.ColumnCount = 4;
+            tableLayout.ColumnCount = 5;
             tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            tableLayout.Controls.Add(labelTrimAudioHint, 1, 1);
-            tableLayout.Controls.Add(this.buttonConfirm, 3, 2);
-            tableLayout.Controls.Add(this.buttonCancel, 2, 2);
+            tableLayout.Controls.Add(this.labelDubModeHint, 2, 1);
+            tableLayout.Controls.Add(labelDubMode, 0, 1);
+            tableLayout.Controls.Add(this.buttonConfirm, 4, 2);
+            tableLayout.Controls.Add(this.buttonCancel, 3, 2);
             tableLayout.Controls.Add(labelAudioFile, 0, 0);
+            tableLayout.Controls.Add(this.buttonBrowse, 4, 0);
+            tableLayout.Controls.Add(this.comboDubMode, 1, 1);
             tableLayout.Controls.Add(this.boxAudioFile, 1, 0);
-            tableLayout.Controls.Add(this.buttonBrowse, 3, 0);
-            tableLayout.Controls.Add(this.boxTrimAudio, 0, 1);
             tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayout.Location = new System.Drawing.Point(0, 0);
             tableLayout.Name = "tableLayout";
@@ -82,13 +85,35 @@
             tableLayout.Size = new System.Drawing.Size(401, 85);
             tableLayout.TabIndex = 1;
             // 
+            // labelDubModeHint
+            // 
+            this.labelDubModeHint.AutoSize = true;
+            tableLayout.SetColumnSpan(this.labelDubModeHint, 3);
+            this.labelDubModeHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelDubModeHint.Location = new System.Drawing.Point(193, 28);
+            this.labelDubModeHint.Name = "labelDubModeHint";
+            this.labelDubModeHint.Size = new System.Drawing.Size(205, 28);
+            this.labelDubModeHint.TabIndex = 0;
+            this.labelDubModeHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelDubMode
+            // 
+            labelDubMode.AutoSize = true;
+            labelDubMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            labelDubMode.Location = new System.Drawing.Point(3, 28);
+            labelDubMode.Name = "labelDubMode";
+            labelDubMode.Size = new System.Drawing.Size(94, 28);
+            labelDubMode.TabIndex = 0;
+            labelDubMode.Text = "Dubbing mode:";
+            labelDubMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // buttonConfirm
             // 
             this.buttonConfirm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonConfirm.Location = new System.Drawing.Point(328, 59);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(70, 23);
-            this.buttonConfirm.TabIndex = 3;
+            this.buttonConfirm.TabIndex = 4;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
             this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
@@ -100,21 +125,10 @@
             this.buttonCancel.Location = new System.Drawing.Point(253, 59);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(69, 23);
-            this.buttonCancel.TabIndex = 2;
+            this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // boxAudioFile
-            // 
-            this.boxAudioFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxAudioFile.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            tableLayout.SetColumnSpan(this.boxAudioFile, 2);
-            this.boxAudioFile.Location = new System.Drawing.Point(103, 4);
-            this.boxAudioFile.Name = "boxAudioFile";
-            this.boxAudioFile.Size = new System.Drawing.Size(219, 20);
-            this.boxAudioFile.TabIndex = 0;
-            this.boxAudioFile.TabStop = false;
             // 
             // buttonBrowse
             // 
@@ -126,6 +140,31 @@
             this.buttonBrowse.Text = "Browse...";
             this.buttonBrowse.UseVisualStyleBackColor = true;
             this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // comboDubMode
+            // 
+            this.comboDubMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboDubMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboDubMode.FormattingEnabled = true;
+            this.comboDubMode.Items.AddRange(new object[] {
+            "Trim audio",
+            "Loop video"});
+            this.comboDubMode.Location = new System.Drawing.Point(103, 31);
+            this.comboDubMode.Name = "comboDubMode";
+            this.comboDubMode.Size = new System.Drawing.Size(84, 21);
+            this.comboDubMode.TabIndex = 2;
+            this.comboDubMode.SelectedIndexChanged += new System.EventHandler(this.comboDubMode_SelectedIndexChanged);
+            // 
+            // boxAudioFile
+            // 
+            this.boxAudioFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxAudioFile.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            tableLayout.SetColumnSpan(this.boxAudioFile, 3);
+            this.boxAudioFile.Location = new System.Drawing.Point(103, 4);
+            this.boxAudioFile.Name = "boxAudioFile";
+            this.boxAudioFile.Size = new System.Drawing.Size(219, 20);
+            this.boxAudioFile.TabIndex = 0;
+            this.boxAudioFile.TabStop = false;
             // 
             // panelIndexingProgress
             // 
@@ -158,34 +197,6 @@
             // 
             this.openAudioFile.Title = "Select Audio file";
             this.openAudioFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openAudioFile_FileOk);
-            // 
-            // boxTrimAudio
-            // 
-            this.boxTrimAudio.AutoSize = true;
-            this.boxTrimAudio.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxTrimAudio.Checked = true;
-            this.boxTrimAudio.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxTrimAudio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxTrimAudio.Location = new System.Drawing.Point(3, 31);
-            this.boxTrimAudio.Name = "boxTrimAudio";
-            this.boxTrimAudio.Size = new System.Drawing.Size(94, 22);
-            this.boxTrimAudio.TabIndex = 4;
-            this.boxTrimAudio.Text = "Trim audio:";
-            this.boxTrimAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxTrimAudio.UseVisualStyleBackColor = true;
-            // 
-            // labelTrimAudioHint
-            // 
-            labelTrimAudioHint.AutoSize = true;
-            tableLayout.SetColumnSpan(labelTrimAudioHint, 3);
-            labelTrimAudioHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelTrimAudioHint.Location = new System.Drawing.Point(103, 28);
-            labelTrimAudioHint.Name = "labelTrimAudioHint";
-            labelTrimAudioHint.Size = new System.Drawing.Size(295, 28);
-            labelTrimAudioHint.TabIndex = 5;
-            labelTrimAudioHint.Text = "Uncheck this if you want the audio to continue past your video boundaries, or if " +
-    "you\'re dubbing an image file.";
-            labelTrimAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DubForm
             // 
@@ -222,6 +233,7 @@
         private System.Windows.Forms.OpenFileDialog openAudioFile;
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.CheckBox boxTrimAudio;
+        private System.Windows.Forms.ComboBox comboDubMode;
+        private System.Windows.Forms.Label labelDubModeHint;
     }
 }

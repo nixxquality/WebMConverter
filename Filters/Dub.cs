@@ -22,12 +22,14 @@ namespace WebMConverter
         public DubForm()
         {
             InitializeComponent();
+            comboDubMode.SelectedIndex = 0;
         }
 
         public DubForm(DubFilter dubFilter) : this()
         {
             SetFile(dubFilter.AudioFileName);
-            boxTrimAudio.Checked = dubFilter.TrimAudio;
+            if (!dubFilter.TrimAudio)
+                comboDubMode.SelectedIndex = 1;
         }
 
         private void DubForm_DragEnter(object sender, DragEventArgs e)
@@ -38,7 +40,7 @@ namespace WebMConverter
 
         private void DubForm_DragDrop(object sender, DragEventArgs e)
         {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
             SetFile(files[0]);
         }
 
@@ -49,7 +51,7 @@ namespace WebMConverter
 
         private void openAudioFile_FileOk(object sender, CancelEventArgs e)
         {
-            SetFile(((OpenFileDialog)sender).FileName);
+            SetFile(((OpenFileDialog) sender).FileName);
         }
 
         private void SetFile(string audioFileName)
@@ -93,7 +95,7 @@ namespace WebMConverter
                         if (index.BelongsToFile(audioFile))
                         {
                             DialogResult = DialogResult.OK;
-                            GeneratedFilter = new DubFilter(audioFile, indexFile, boxTrimAudio.Checked);
+                            GeneratedFilter = new DubFilter(audioFile, indexFile, comboDubMode.SelectedIndex == 0);
                             Close();
                             return;
                         }
@@ -124,7 +126,7 @@ namespace WebMConverter
 
                     indexer.UpdateIndexProgress += (ind, updateArgs) =>
                     {
-                        _worker.ReportProgress((int)(((double)updateArgs.Current / updateArgs.Total) * 100));
+                        _worker.ReportProgress((int) (((double) updateArgs.Current/updateArgs.Total)*100));
                         indexer.CancelIndexing = _worker.CancellationPending;
                     };
 
@@ -162,7 +164,9 @@ namespace WebMConverter
                         {
                             SetFile(string.Empty);
 
-                            if (MessageBox.Show(args.Error.Message, "ERROR", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+                            if (
+                                MessageBox.Show(args.Error.Message, "ERROR", MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Error) == DialogResult.Cancel)
                                 Close();
                         });
                         return;
@@ -175,16 +179,17 @@ namespace WebMConverter
                     else
                     {
                         DialogResult = DialogResult.OK;
-                        GeneratedFilter = new DubFilter(audioFile, indexFile, boxTrimAudio.Checked);   
+                        GeneratedFilter = new DubFilter(audioFile, indexFile, comboDubMode.SelectedIndex == 0);
                     }
-                    
+
                     this.InvokeIfRequired(Close);
                 };
                 _worker.RunWorkerAsync();
             }
             catch (Exception err)
             {
-                if (MessageBox.Show(err.Message, "ERROR", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+                if (MessageBox.Show(err.Message, "ERROR", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) ==
+                    DialogResult.Cancel)
                     Close();
             }
         }
@@ -193,6 +198,19 @@ namespace WebMConverter
         {
             if (_worker != null && _worker.IsBusy)
                 _worker.CancelAsync();
+        }
+
+        private void comboDubMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboDubMode.SelectedIndex)
+            {
+                case 0: // Trim audio
+                    labelDubModeHint.Text = "When you want to dub a video.";
+                    break;
+                case 1: // Loop video
+                    labelDubModeHint.Text = "When you want to dub a picture.";
+                    break;
+            }
         }
     }
 
@@ -214,9 +232,10 @@ namespace WebMConverter
             // Left alone, AudioDub will potentially stretch the video out to fit the audio stream.
             // This is unwanted in most scenarios, but we can stop that by trimming any audio after the last's (AviSynth magic word) last frame.
             return string.Format(
-                TrimAudio ? @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)" :
-                            @"AudioDub(FFAudioSource(""{0}"",cachefile=""{1}""))",
-                AudioFileName, IndexFileName);
+                TrimAudio
+                    ? @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)"
+                    : @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,dub.FrameCount)",
+                AudioFileName, IndexFileName, Environment.NewLine);
         }
     }
 }
