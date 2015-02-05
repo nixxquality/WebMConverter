@@ -85,14 +85,21 @@ namespace WebMConverter
 
                 if (File.Exists(indexFile))
                 {
-                    var index = new Index(indexFile);
-
-                    if (index.BelongsToFile(audioFile))
+                    try
                     {
-                        DialogResult = DialogResult.OK;
-                        GeneratedFilter = new DubFilter(audioFile, indexFile);
-                        Close();
-                        return;
+                        var index = new Index(indexFile);
+
+                        if (index.BelongsToFile(audioFile))
+                        {
+                            DialogResult = DialogResult.OK;
+                            GeneratedFilter = new DubFilter(audioFile, indexFile);
+                            Close();
+                            return;
+                        }
+                    }
+                    catch
+                    {
+                        // ignored
                     }
 
                     File.Delete(indexFile);
