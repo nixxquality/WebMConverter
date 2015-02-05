@@ -63,6 +63,7 @@ namespace WebMConverter
         public static bool VideoInterlaced;
         public static string InputFile;
         public static FileType InputType;
+        public static bool InputHasAudio;
         public static string FileMd5;
         public static string AttachmentDirectory;
         public static Dictionary<int, Tuple<string, SubtitleType>> SubtitleTracks; // stream id, <tag:title OR codec_name, textsub/vobsub>

@@ -397,7 +397,7 @@ namespace WebMConverter
                     listViewProcessingScript.Items.Add("Dub", "dub");
                     ((ToolStripItem)sender).Enabled = false;
                 }
-                boxAudio.Checked = true;
+                boxAudio.Checked = boxAudio.Enabled = true;
             }
         }
 
@@ -584,6 +584,8 @@ namespace WebMConverter
                         case @"Dub":
                             Filters.Dub = null;
                             buttonDub.Enabled = true;
+                            if (!Program.InputHasAudio)
+                                boxAudio.Checked = boxAudio.Enabled = false;
                             break;
                         case "Multiple Trim":
                             Filters.MultipleTrim = null;
@@ -1274,12 +1276,13 @@ namespace WebMConverter
                     const string caption = "ERROR";
                     MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                boxAudio.Enabled = Program.InputHasAudio = true;
                 if (audioDisabled)
                 {
                     const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
                     const string caption = "FYI";
                     MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    boxAudio.Enabled = false;
+                    boxAudio.Enabled = Program.InputHasAudio = false;
                 }
 
                 buttonGo.Enabled = true;
@@ -1414,7 +1417,7 @@ namespace WebMConverter
                 avscript.WriteLine(@"FFIndex(""{0}"", cachefile=""{1}"", utf8=True)", avsInputFile, _indexFile);
                 // this won't actually index file file (we already did), but it will call FFMS_Init with utf8 = true properly, unlike FFVideoSource
 
-                if (boxAudio.Checked)
+                if (Program.InputHasAudio)
                     avscript.WriteLine(@"AudioDub(FFVideoSource(""{0}"",cachefile=""{1}"",track={2}), FFAudioSource(""{0}"",cachefile=""{1}"",track={3}))", avsInputFile, _indexFile, videotrack, audiotrack);
                 else
                     avscript.WriteLine(@"FFVideoSource(""{0}"",cachefile=""{1}"",track={2})", avsInputFile, _indexFile, videotrack);
