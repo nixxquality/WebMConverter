@@ -23,16 +23,16 @@ namespace WebMConverter
 
         /// <summary>
         /// {0} is output file
-        /// {1} is templateArguments
-        /// {2} is '-pass X -passlogfile X' if HQ mode enabled, otherwise blank
+        /// {1} is TemplateArguments
+        /// {2} is PassArgument if HQ mode enabled, otherwise blank
         /// </summary>
-        const string template = " {1}{2} -f webm -y \"{0}\"";
+        private const string Template = " {1}{2} -f webm -y \"{0}\"";
 
         /// <summary>
         /// {0} is pass number (1 or 2)
         /// {1} is the prefix for the pass .log file
         /// </summary>
-        const string passArgument = " -pass {0} -passlogfile \"{1}\"";
+        private const string PassArgument = " -pass {0} -passlogfile \"{1}\"";
 
         /// <summary>
         /// {0} is '-an' if no audio, otherwise blank
@@ -45,7 +45,7 @@ namespace WebMConverter
         /// {7} is ' -r XX' if frame rate is modified, otherwise blank
         /// {8} is encoding mode-dependent arguments
         /// </summary>
-        const string templateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}{8}";
+        private const string TemplateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}{8}";
 
         /// <summary>
         /// {0} is video bitrate
@@ -53,22 +53,22 @@ namespace WebMConverter
         /// {2} is bufsize
         /// {3} is rc_init_occupancy
         /// </summary>
-        const string constantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K -rc_init_occupancy {3}K -qcomp 1{1}";
+        private const string ConstantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K -rc_init_occupancy {3}K -qcomp 1{1}";
         /// <summary>
         /// {0} is audio bitrate
         /// </summary>
-        const string constantAudioArguments = " -b:a {0}K";
+        private const string ConstantAudioArguments = " -b:a {0}K";
 
         /// <summary>
         /// {0} is qmin
         /// {1} is crf
         /// {2} is qmax
         /// </summary>
-        const string variableVideoArguments = " -qmin {0} -crf {1} -qmax {2} -qcomp 0";
+        private const string VariableVideoArguments = " -qmin {0} -crf {1} -qmax {2} -qcomp 0";
         /// <summary>
         /// {0} is audio quality scale
         /// </summary>
-        const string variableAudioArguments = " -qscale:a {0}";
+        private const string VariableAudioArguments = " -qscale:a {0}";
 
         #endregion
 
@@ -1524,12 +1524,12 @@ namespace WebMConverter
 
             string[] arguments;
             if (!boxHQ.Checked)
-                arguments = new[] { string.Format(template, output, options, "", "") };
+                arguments = new[] { string.Format(Template, output, options, "", "") };
             else
             {
                 arguments = new string[2]; //           vvv is Windows only
-                arguments[0] = string.Format(template, "NUL", options, string.Format(passArgument, 1, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
-                arguments[1] = string.Format(template, output, options, string.Format(passArgument, 2, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
+                arguments[0] = string.Format(Template, "NUL", options, string.Format(PassArgument, 1, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
+                arguments[1] = string.Format(Template, output, options, string.Format(PassArgument, 2, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
 
                 if (!arguments[0].Contains("-an")) // skip audio encoding on the first pass
                     arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
@@ -1545,15 +1545,16 @@ namespace WebMConverter
             {
                 case EncodingMode.Constant:
                     float limit = 0;
-                    string limitTo = string.Empty;
+                    var limitTo = string.Empty;
                     if (!string.IsNullOrWhiteSpace(boxLimit.Text))
                     {
                         if (!float.TryParse(boxLimit.Text, out limit))
                             throw new ArgumentException("Invalid size limit!");
-                        limitTo = string.Format(" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
+
+                        limitTo = string.Format(@" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
                     }
 
-                    int audiobitrate = -1;
+                    var audiobitrate = -1;
                     if (boxAudio.Checked)
                         audiobitrate = 64;
 
@@ -1569,10 +1570,10 @@ namespace WebMConverter
                             throw new ArgumentException("Audio bitrate is too high! It can not be higher than 500Kb/s");
                     }
 
-                    int videobitrate = 900;
+                    var videobitrate = 900;
                     if (limitTo != string.Empty)
                     {
-                        double duration = GetDuration();
+                        var duration = GetDuration();
 
                         if (duration > 0)
                             videobitrate = (int)(8192 * limit / duration) - audiobitrate;
@@ -1607,67 +1608,58 @@ namespace WebMConverter
                      * However, because ffmpeg is really weird or something, init_occupancy doesn't seem to work properly
                      *  unless we divide bufsize by 10. Don't ask me why! I don't know!
                      */
-                    int bufsize = videobitrate * 6 / 10;
-                    int initoccupancy = videobitrate * 4;
+                    var bufsize = videobitrate * 6 / 10;
+                    var initoccupancy = videobitrate * 4;
 
-                    qualityarguments = string.Format(constantVideoArguments, videobitrate, limitTo, bufsize, initoccupancy);
+                    qualityarguments = string.Format(ConstantVideoArguments, videobitrate, limitTo, bufsize, initoccupancy);
                     if (audiobitrate != -1)
-                        qualityarguments += string.Format(constantAudioArguments, audiobitrate);
+                        qualityarguments += string.Format(ConstantAudioArguments, audiobitrate);
 
                     break;
                 case EncodingMode.Variable:
-                    int qmin = Math.Max(0, (int)(numericCrf.Value - numericCrfTolerance.Value));
-                    int qmax = Math.Min(63, (int)(numericCrf.Value + numericCrfTolerance.Value));
+                    var qmin = Math.Max(0, (int)(numericCrf.Value - numericCrfTolerance.Value));
+                    var qmax = Math.Min(63, (int)(numericCrf.Value + numericCrfTolerance.Value));
 
-                    qualityarguments = string.Format(variableVideoArguments, qmin, numericCrf.Value, qmax);
+                    qualityarguments = string.Format(VariableVideoArguments, qmin, numericCrf.Value, qmax);
                     if (boxAudio.Checked &! boxNGOV.Checked) // only for vorbis
-                        qualityarguments += string.Format(variableAudioArguments, numericAudioQuality.Value);
+                        qualityarguments += string.Format(VariableAudioArguments, numericAudioQuality.Value);
 
                     break;
             }
 
-            int threads = trackThreads.Value;
-            int slices = GetSlices();
+            var threads = trackThreads.Value;
+            var slices = GetSlices();
 
-            string metadataTitle = "";
+            var metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxTitle.Text))
-                metadataTitle = string.Format(" -metadata title=\"{0}\"", boxTitle.Text.Replace("\"", "\\\""));
+                metadataTitle = string.Format(@" -metadata title=""{0}""", boxTitle.Text.Replace("\"", "\\\""));
 
-            string HQ = "";
+            var hq = "";
             if (boxHQ.Checked)
-                HQ = " -quality best -lag-in-frames 16 -auto-alt-ref 1";
+                hq = @" -quality best -lag-in-frames 16 -auto-alt-ref 1";
 
-            string vcodec;
-            string acodec;
-            if (boxNGOV.Checked)
-            {
-                vcodec = "libvpx-vp9";
-                acodec = "libopus";
-            }
-            else
-            {
-                vcodec = "libvpx";
-                acodec = "libvorbis";
-            }
+            var vcodec = boxNGOV.Checked ? @"libvpx-vp9" : @"libvpx";
+            var acodec = boxNGOV.Checked ? @"libopus" : @"libvorbis";
 
-            string audioEnabled;
+            string audio;
             if (boxAudio.Checked)
             {
-                audioEnabled = "";
+                audio = "";
                 acodec = " -ac 2 -c:a " + acodec;
             }
             else
             {
-                audioEnabled = acodec = "";
+                audio = " -an";
+                acodec = "";
             }
 
-            string framerate = "";
+            var framerate = "";
             if (!string.IsNullOrWhiteSpace(boxFrameRate.Text))
             {
-                framerate = " -r " + boxFrameRate.Text;
+                framerate = @" -r " + boxFrameRate.Text;
             }
 
-            return string.Format(templateArguments, audioEnabled, threads, slices, metadataTitle, HQ, vcodec, acodec, framerate, qualityarguments);
+            return string.Format(TemplateArguments, audio, threads, slices, metadataTitle, hq, vcodec, acodec, framerate, qualityarguments);
         }
 
         /// <summary>
