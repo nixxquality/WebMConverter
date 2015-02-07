@@ -148,7 +148,8 @@
             this.comboDubMode.FormattingEnabled = true;
             this.comboDubMode.Items.AddRange(new object[] {
             "Trim audio",
-            "Loop video"});
+            "Loop video",
+            "Just dub"});
             this.comboDubMode.Location = new System.Drawing.Point(103, 31);
             this.comboDubMode.Name = "comboDubMode";
             this.comboDubMode.Size = new System.Drawing.Size(84, 21);

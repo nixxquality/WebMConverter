@@ -209,6 +209,11 @@ namespace WebMConverter
                 case DubMode.LoopVideo:
                     labelDubModeHint.Text = "When you want to dub a picture.";
                     break;
+                case DubMode.JustDub:
+                    labelDubModeHint.Text = "Just dub it without additional processing.";
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
     }
@@ -237,6 +242,9 @@ namespace WebMConverter
                 case DubMode.LoopVideo:
                     command = @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,dub.FrameCount)";
                     break;
+                case DubMode.JustDub:
+                    command = @"AudioDub(FFAudioSource(""{0}"",cachefile=""{1}""))";
+                    break;
                 default:
                     throw new NotImplementedException();
             }
@@ -247,6 +255,7 @@ namespace WebMConverter
     public enum DubMode
     {
         TrimAudio,
-        LoopVideo
+        LoopVideo,
+        JustDub
     }
 }
