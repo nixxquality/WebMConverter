@@ -28,8 +28,7 @@ namespace WebMConverter
         public DubForm(DubFilter dubFilter) : this()
         {
             SetFile(dubFilter.AudioFileName);
-            if (!dubFilter.TrimAudio)
-                comboDubMode.SelectedIndex = 1;
+            comboDubMode.SelectedIndex = (int)dubFilter.Mode;
         }
 
         private void DubForm_DragEnter(object sender, DragEventArgs e)
@@ -95,7 +94,7 @@ namespace WebMConverter
                         if (index.BelongsToFile(audioFile))
                         {
                             DialogResult = DialogResult.OK;
-                            GeneratedFilter = new DubFilter(audioFile, indexFile, comboDubMode.SelectedIndex == 0);
+                            GeneratedFilter = new DubFilter(audioFile, indexFile, (DubMode)comboDubMode.SelectedIndex);
                             Close();
                             return;
                         }
@@ -179,7 +178,7 @@ namespace WebMConverter
                     else
                     {
                         DialogResult = DialogResult.OK;
-                        GeneratedFilter = new DubFilter(audioFile, indexFile, comboDubMode.SelectedIndex == 0);
+                        GeneratedFilter = new DubFilter(audioFile, indexFile, (DubMode)comboDubMode.SelectedIndex);
                     }
 
                     this.InvokeIfRequired(Close);
@@ -202,12 +201,12 @@ namespace WebMConverter
 
         private void comboDubMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboDubMode.SelectedIndex)
+            switch ((DubMode)comboDubMode.SelectedIndex)
             {
-                case 0: // Trim audio
+                case DubMode.TrimAudio:
                     labelDubModeHint.Text = "When you want to dub a video.";
                     break;
-                case 1: // Loop video
+                case DubMode.LoopVideo:
                     labelDubModeHint.Text = "When you want to dub a picture.";
                     break;
             }
@@ -218,24 +217,36 @@ namespace WebMConverter
     {
         public readonly string AudioFileName;
         public readonly string IndexFileName;
-        public readonly bool TrimAudio;
+        public readonly DubMode Mode;
 
-        public DubFilter(string audioFileName, string indexFileName, bool trimAudio)
+        public DubFilter(string audioFileName, string indexFileName, DubMode mode)
         {
             AudioFileName = audioFileName;
             IndexFileName = indexFileName;
-            TrimAudio = trimAudio;
+            Mode = mode;
         }
 
         public override string ToString()
         {
-            // Left alone, AudioDub will potentially stretch the video out to fit the audio stream.
-            // This is unwanted in most scenarios, but we can stop that by trimming any audio after the last's (AviSynth magic word) last frame.
-            return string.Format(
-                TrimAudio
-                    ? @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)"
-                    : @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,dub.FrameCount)",
-                AudioFileName, IndexFileName, Environment.NewLine);
+            string command;
+            switch (Mode)
+            {
+                case DubMode.TrimAudio:
+                    command = @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)";
+                    break;
+                case DubMode.LoopVideo:
+                    command = @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,dub.FrameCount)";
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            return string.Format(command, AudioFileName, IndexFileName, Environment.NewLine);
         }
+    }
+
+    public enum DubMode
+    {
+        TrimAudio,
+        LoopVideo
     }
 }
