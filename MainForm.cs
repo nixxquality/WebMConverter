@@ -395,6 +395,10 @@ namespace WebMConverter
                 {
                     Filters.Dub = form.GeneratedFilter;
                     listViewProcessingScript.Items.Add("Dub", "dub");
+
+                    if (Filters.Dub.Mode != DubMode.TrimAudio) // the video duration may have changed
+                        UpdateArguments(sender, e);
+
                     ((ToolStripItem)sender).Enabled = false;
                 }
                 boxAudio.Checked = boxAudio.Enabled = true;
@@ -583,8 +587,11 @@ namespace WebMConverter
                             SetSlices();
                             break;
                         case @"Dub":
+                            var oldfilter = Filters.Dub;
                             Filters.Dub = null;
                             buttonDub.Enabled = true;
+                            if (oldfilter.Mode != DubMode.TrimAudio) // the video duration may have changed
+                                UpdateArguments(sender, e);
                             if (!Program.InputHasAudio)
                                 boxAudio.Checked = boxAudio.Enabled = false;
                             break;
@@ -649,7 +656,10 @@ namespace WebMConverter
                     {
                         if (form.ShowDialog(this) == DialogResult.OK)
                         {
+                            var oldfilter = Filters.Dub;
                             Filters.Dub = form.GeneratedFilter;
+                            if (oldfilter.Mode != DubMode.TrimAudio || Filters.Dub.Mode != DubMode.TrimAudio) // the video duration may have changed
+                                UpdateArguments(sender, e);
                         }
                     }
                     break;
