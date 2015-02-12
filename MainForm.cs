@@ -1471,7 +1471,7 @@ namespace WebMConverter
             WriteAvisynthScript(avsFileName, input);
 
             // Run ffplay
-            var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth -v error \"{0}\"", avsFileName));
+            var ffplay = new FFplay(string.Format("-window_title Preview -loop 0 -f avisynth -v error {1} \"{0}\"", avsFileName, boxAudio.Checked ? "" : "-an"));
             ffplay.Exited += delegate
             {
                 string error = null;
