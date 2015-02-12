@@ -45,7 +45,7 @@ namespace WebMConverter
         /// {7} is ' -r XX' if frame rate is modified, otherwise blank
         /// {8} is encoding mode-dependent arguments
         /// </summary>
-        private const string TemplateArguments = "{0} -c:v {5} -threads {1} -slices {2}{3}{4}{6}{7}{8}";
+        private const string TemplateArguments = "{0} -c:v {5} -pix_fmt yuv420p -threads {1} -slices {2}{3}{4}{6}{7}{8}";
 
         /// <summary>
         /// {0} is video bitrate
