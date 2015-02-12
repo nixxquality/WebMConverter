@@ -240,7 +240,7 @@ namespace WebMConverter
                     command = @"Trim(AudioDub(FFAudioSource(""{0}"",cachefile=""{1}"")), 0, last.FrameCount)";
                     break;
                 case DubMode.LoopVideo:
-                    command = @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,dub.FrameCount)";
+                    command = @"dub = FFAudioSource(""{0}"",cachefile=""{1}""){2}Loop(-1).AudioDub(dub).Trim(0,int(dub.AudioLength / dub.AudioRate * last.FrameRate))";
                     break;
                 case DubMode.JustDub:
                     command = @"AudioDub(FFAudioSource(""{0}"",cachefile=""{1}""))";
