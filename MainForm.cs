@@ -863,6 +863,39 @@ namespace WebMConverter
 
         #region Functions
 
+        private void DefaultSettings()
+        {
+            boxTitle.Text =
+            boxLimit.Text =
+            boxBitrate.Text =
+            boxAudioBitrate.Text = 
+            boxFrameRate.Text =
+            boxArguments.Text =
+                string.Empty;
+
+            boxHQ.Checked =
+            boxAudio.Checked =
+            boxDeinterlace.Checked =
+            boxDenoise.Checked =
+            boxNGOV.Checked =
+                false;
+
+            numericCrf.Value = 10;
+            numericCrfTolerance.Value = 20;
+            numericAudioQuality.Value = 3;
+
+            comboLevels.SelectedIndex = 0;
+
+            var threads = Environment.ProcessorCount;
+            trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+            // trackSlices is set during probing.
+
+            if (Properties.Settings.Default.EncodingMode != EncodingMode.Constant)
+            {
+                boxVariable.Checked = true;
+            }
+        }
+
         char[] invalidChars = Path.GetInvalidPathChars();
 
         void SetFile(string path)
@@ -903,6 +936,7 @@ namespace WebMConverter
 
             // Reset filters
             Filters.ResetFilters();
+            DefaultSettings();
             listViewProcessingScript.Clear();
             boxAdvancedScripting.Checked = false; // STUB: this part is weak
             boxAdvancedScripting.Enabled = true;
@@ -942,7 +976,6 @@ namespace WebMConverter
                 Program.FileMd5 = null;
                 listViewProcessingScript.Enabled = true;
                 comboLevels.Enabled = boxDeinterlace.Enabled = boxDenoise.Enabled = true;
-                comboLevels.SelectedIndex = 0;
             }
 
             GenerateAvisynthScript();
