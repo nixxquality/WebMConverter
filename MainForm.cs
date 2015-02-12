@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -173,6 +174,43 @@ namespace WebMConverter
 
         async void CheckUpdate()
         {
+            if (!Properties.Settings.Default.SeenNotice)
+            {
+                try
+                {
+                    using (var noticeChecker = new WebClient())
+                    {
+                        const string caption = "Notice";
+                        var result = await noticeChecker.DownloadStringTaskAsync(@"https://raw.githubusercontent.com/nixxquality/WebMConverter/master/NOTICE");
+                        var urlAndMessage = result.Split(new[] { '\n' }, 2);
+                        switch (MessageBox.Show(urlAndMessage[1], caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                        {
+                            case DialogResult.Yes:
+                                if (urlAndMessage[0].StartsWith("http")) // just in case someone hacks my anus, let's not give him any ways to execute arbitrary code on all my users
+                                    System.Diagnostics.Process.Start(urlAndMessage[0]);
+
+                                Application.Exit();
+                                break;
+                            case DialogResult.No:
+                                Properties.Settings.Default.SeenNotice = true;
+                                Properties.Settings.Default.Save();
+                                break;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (!e.Message.Contains("404"))
+                    {
+                        this.InvokeIfRequired(() =>
+                        {
+                            showToolTip("Update checking failed! " + e.Message, 2000);
+                        });
+                        return;
+                    }
+                }
+            }
+
             try
             {
                 var checker = new UpdateChecker("nixxquality", "WebMConverter");
