@@ -334,6 +334,7 @@ namespace WebMConverter
                 dialog.ValidateNames = true;
                 dialog.Filter = "WebM files|*.webm";
                 dialog.InitialDirectory = Properties.Settings.Default.RememberedFolderOut;
+                dialog.FileName = Path.ChangeExtension(Path.GetFileName(Program.InputFile), ".webm");
 
                 if (dialog.ShowDialog(this) != DialogResult.OK || string.IsNullOrWhiteSpace(dialog.FileName))
                     return;
