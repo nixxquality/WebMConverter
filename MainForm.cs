@@ -107,6 +107,7 @@ namespace WebMConverter
             {
                 boxVariable.Checked = true;
             }
+            boxAudio.Checked = Properties.Settings.Default.AudioEnabled;
         }
 
         void MainForm_Load(object sender, EventArgs e)
@@ -842,9 +843,20 @@ namespace WebMConverter
             if (boxNGOV.Checked)
                 numericAudioQuality.Enabled = false;
 
+            buttonAudioEnabledDefault.Visible = boxAudio.Checked != Properties.Settings.Default.AudioEnabled;
+
             UpdateArguments(sender, e);
 
             opusQualityScalingTooltip();
+        }
+
+        private void buttonAudioEnabledDefault_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.AudioEnabled = boxAudio.Checked;
+            Properties.Settings.Default.Save();
+            buttonAudioEnabledDefault.Visible = false;
+
+            showToolTip("Saved!", 1000);
         }
 
         #endregion

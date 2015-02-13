@@ -82,5 +82,17 @@ namespace WebMConverter.Properties {
                 this["SeenNotice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AudioEnabled {
+            get {
+                return ((bool)(this["AudioEnabled"]));
+            }
+            set {
+                this["AudioEnabled"] = value;
+            }
+        }
     }
 }

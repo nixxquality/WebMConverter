@@ -146,6 +146,7 @@ namespace WebMConverter
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
+            this.buttonAudioEnabledDefault = new System.Windows.Forms.Button();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -1132,13 +1133,15 @@ namespace WebMConverter
             // 
             // tableEncodingAudio
             // 
-            tableEncodingAudio.ColumnCount = 4;
+            tableEncodingAudio.ColumnCount = 5;
             tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
+            tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             tableEncodingAudio.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableEncodingAudio.Controls.Add(this.buttonAudioEnabledDefault, 2, 0);
             tableEncodingAudio.Controls.Add(this.boxAudio, 0, 0);
-            tableEncodingAudio.Controls.Add(labelAudioHint, 3, 0);
+            tableEncodingAudio.Controls.Add(labelAudioHint, 4, 0);
             tableEncodingAudio.Controls.Add(panelEncodingModeSwapperTwo, 0, 1);
             tableEncodingAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             tableEncodingAudio.Location = new System.Drawing.Point(3, 16);
@@ -1147,7 +1150,6 @@ namespace WebMConverter
             tableEncodingAudio.RowCount = 2;
             tableEncodingAudio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             tableEncodingAudio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            tableEncodingAudio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableEncodingAudio.Size = new System.Drawing.Size(1035, 54);
             tableEncodingAudio.TabIndex = 0;
             // 
@@ -1155,12 +1157,12 @@ namespace WebMConverter
             // 
             this.boxAudio.AutoSize = true;
             this.boxAudio.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            tableEncodingAudio.SetColumnSpan(this.boxAudio, 3);
+            tableEncodingAudio.SetColumnSpan(this.boxAudio, 2);
             this.boxAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxAudio.Location = new System.Drawing.Point(6, 3);
             this.boxAudio.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this.boxAudio.Name = "boxAudio";
-            this.boxAudio.Size = new System.Drawing.Size(215, 22);
+            this.boxAudio.Size = new System.Drawing.Size(155, 22);
             this.boxAudio.TabIndex = 1;
             this.boxAudio.Text = "Enable audio:";
             this.boxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1180,7 +1182,7 @@ namespace WebMConverter
             // 
             // panelEncodingModeSwapperTwo
             // 
-            tableEncodingAudio.SetColumnSpan(panelEncodingModeSwapperTwo, 4);
+            tableEncodingAudio.SetColumnSpan(panelEncodingModeSwapperTwo, 5);
             panelEncodingModeSwapperTwo.Controls.Add(this.tableAudioConstantOptions);
             panelEncodingModeSwapperTwo.Controls.Add(this.tableAudioVariableOptions);
             panelEncodingModeSwapperTwo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1799,6 +1801,19 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
+            // buttonAudioEnabledDefault
+            // 
+            tableEncodingAudio.SetColumnSpan(this.buttonAudioEnabledDefault, 2);
+            this.buttonAudioEnabledDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAudioEnabledDefault.Location = new System.Drawing.Point(170, 3);
+            this.buttonAudioEnabledDefault.Name = "buttonAudioEnabledDefault";
+            this.buttonAudioEnabledDefault.Size = new System.Drawing.Size(54, 22);
+            this.buttonAudioEnabledDefault.TabIndex = 6;
+            this.buttonAudioEnabledDefault.Text = "Default";
+            this.buttonAudioEnabledDefault.UseVisualStyleBackColor = true;
+            this.buttonAudioEnabledDefault.Visible = false;
+            this.buttonAudioEnabledDefault.Click += new System.EventHandler(this.buttonAudioEnabledDefault_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.buttonGo;
@@ -1935,6 +1950,7 @@ namespace WebMConverter
         private System.Windows.Forms.CheckBox boxIndexingProgressDetails;
         private System.Windows.Forms.Panel panelContainTheProgressBar;
         private System.Windows.Forms.ToolStripButton buttonDub;
+        private System.Windows.Forms.Button buttonAudioEnabledDefault;
     }
 }
 
