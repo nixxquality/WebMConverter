@@ -1490,7 +1490,7 @@ namespace WebMConverter
                 // the \\?\ is added because GetShortPathName will fail if pluginPath is longer than 256 characters otherwise.
 
                 avscript.WriteLine(@"PluginPath = ""{0}\""", shortPluginPath);
-                avscript.WriteLine(@"LoadPlugin(PluginPath+""ffms2.dll"")");
+                avscript.WriteLine(@"try { LoadPlugin(PluginPath+""ffms2.dll"") } catch (_) { LoadCPlugin(PluginPath+""ffms2.dll"") }");
                 if (Filters.Subtitle != null)
                     avscript.WriteLine(@"LoadPlugin(PluginPath+""VSFilter.dll"")");
 
