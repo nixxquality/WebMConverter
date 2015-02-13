@@ -1175,7 +1175,7 @@ namespace WebMConverter
             labelAudioHint.Name = "labelAudioHint";
             labelAudioHint.Size = new System.Drawing.Size(802, 28);
             labelAudioHint.TabIndex = 0;
-            labelAudioHint.Text = "Keep this disabled until Moot allows audio.";
+            labelAudioHint.Text = "Do you want a WebM with sound? You found the setting for it.";
             labelAudioHint.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelEncodingModeSwapperTwo
