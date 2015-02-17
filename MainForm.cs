@@ -925,11 +925,12 @@ namespace WebMConverter
                 string.Empty;
 
             boxHQ.Checked =
-            boxAudio.Checked =
             boxDeinterlace.Checked =
             boxDenoise.Checked =
             boxNGOV.Checked =
                 false;
+
+            boxAudio.Checked = Properties.Settings.Default.AudioEnabled;
 
             numericCrf.Value = 10;
             numericCrfTolerance.Value = 20;
