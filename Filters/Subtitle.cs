@@ -50,8 +50,20 @@ namespace WebMConverter
         {
             if (checkBoxInternalSubs.Checked)
             {
-                string filename = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", (int)comboBoxVideoTracks.SelectedValue));
                 SubtitleType type = Program.SubtitleTracks[(int)comboBoxVideoTracks.SelectedValue].Item2;
+                string extension;
+                switch (type)
+                {
+                    case SubtitleType.TextSub:
+                        extension = ".ass";
+                        break;
+                    case SubtitleType.VobSub:
+                        extension = ".idx";
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+                string filename = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}{1}", (int)comboBoxVideoTracks.SelectedValue, extension));
                 GeneratedFilter = new SubtitleFilter(filename, type, (int)comboBoxVideoTracks.SelectedValue);
             }
             else

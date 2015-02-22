@@ -1244,27 +1244,30 @@ namespace WebMConverter
                                 case "subtitle": // Extract the subtitle file
                                     // Get a title
                                     streamtitle = nav.GetAttribute("codec_name", "");
-                                    SubtitleType type = SubtitleType.TextSub;
+                                    SubtitleType type;
+                                    string extension;
 
                                     if (streamtitle == "dvdsub") // Hold on a moment, this is a vobsub!
                                     {
                                         type = SubtitleType.VobSub;
-                                        // Not supported, see https://github.com/nixxquality/WebMConverter/issues/60
-                                        break;
+                                        extension = ".idx";
+                                    }
+                                    else
+                                    {
+                                        type = SubtitleType.TextSub;
+                                        extension = ".ass";
                                     }
                                     
-                                    file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}.ass", streamindex));
+                                    file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}{1}", streamindex, extension));
                                     logIndexingProgress(string.Format("Found subtitle track #{0}", streamindex));
 
                                     if (!File.Exists(file)) // If we didn't extract it already
                                     {
-                                        string arg = string.Format("-i \"{0}\" -map 0:{1} \"{2}\" -y", Program.InputFile, streamindex, file);
-
                                         logIndexingProgress("Extracting...");
-                                        using (var ffmpeg = new FFmpeg(arg))
+                                        using (var mkvextract = new MkvExtract(string.Format(@"tracks ""{0}"" ""{1}:{2}""", Program.InputFile, streamindex, file)))
                                         {
-                                            ffmpeg.Start();
-                                            ffmpeg.WaitForExit();
+                                            mkvextract.Start();
+                                            mkvextract.WaitForExit();
                                         }
                                     }
                                     else
