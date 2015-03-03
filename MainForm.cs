@@ -1659,7 +1659,12 @@ namespace WebMConverter
                     }
 
                     var videobitrate = 900;
-                    if (limitTo != string.Empty)
+                    if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
+                    {
+                        if (!int.TryParse(boxBitrate.Text, out videobitrate))
+                            throw new ArgumentException("Invalid video bitrate!");
+                    }
+                    else if (limitTo != string.Empty)
                     {
                         var duration = GetDuration();
 
@@ -1668,11 +1673,6 @@ namespace WebMConverter
 
                         if (videobitrate < 0)
                             throw new ArgumentException("Audio bitrate is too high! With that size limit, you won't be able to fit any video!");
-                    }
-                    if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
-                    {
-                        if (!int.TryParse(boxBitrate.Text, out videobitrate))
-                            throw new ArgumentException("Invalid video bitrate!");
                     }
 
                     /*
