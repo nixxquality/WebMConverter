@@ -1385,7 +1385,7 @@ namespace WebMConverter
                     const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
                     const string caption = "FYI";
                     MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    boxAudio.Enabled = Program.InputHasAudio = false;
+                    boxAudio.Checked = boxAudio.Enabled = Program.InputHasAudio = false;
                 }
 
                 buttonGo.Enabled = true;
