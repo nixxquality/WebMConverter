@@ -775,7 +775,7 @@ namespace WebMConverter
 
         void textBoxNumbersOnly(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != ',')
             {
                 e.Handled = true;
             }
@@ -1636,10 +1636,16 @@ namespace WebMConverter
                     var limitTo = string.Empty;
                     if (!string.IsNullOrWhiteSpace(boxLimit.Text))
                     {
-                        if (!float.TryParse(boxLimit.Text, out limit))
+                        if (!float.TryParse(boxLimit.Text.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out limit))
                             throw new ArgumentException("Invalid size limit!");
 
-                        limitTo = string.Format(@" -fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
+                        // known issue for 2 years: https://trac.ffmpeg.org/ticket/1771
+                        limit -= 0.01f;
+                        // also, ffmpeg's filesize interpreter is unreliable, so we expand the filesize ourselves.
+                        // see https://github.com/nixxquality/WebMConverter/issues/120
+                        limit = limit * 1024 * 1024;
+
+                        limitTo = string.Format(@" -fs {0}", (int)limit);
                     }
 
                     var audiobitrate = -1;
@@ -1669,7 +1675,7 @@ namespace WebMConverter
                         var duration = GetDuration();
 
                         if (duration > 0)
-                            videobitrate = (int)(8192 * limit / duration) - audiobitrate;
+                            videobitrate = (int)(limit / duration / 100) - audiobitrate;
 
                         if (videobitrate < 0)
                             throw new ArgumentException("Audio bitrate is too high! With that size limit, you won't be able to fit any video!");

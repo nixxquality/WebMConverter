@@ -921,7 +921,7 @@ namespace WebMConverter
             labelVideoSizeLimitUnit.Name = "labelVideoSizeLimitUnit";
             labelVideoSizeLimitUnit.Size = new System.Drawing.Size(30, 28);
             labelVideoSizeLimitUnit.TabIndex = 0;
-            labelVideoSizeLimitUnit.Text = "MB";
+            labelVideoSizeLimitUnit.Text = "MiB";
             labelVideoSizeLimitUnit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVideoSizeLimitHint
