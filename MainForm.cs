@@ -790,6 +790,8 @@ namespace WebMConverter
             tableVideoConstantOptions.BringToFront();
             tableAudioConstantOptions.BringToFront();
             encodingMode = EncodingMode.Constant;
+            boxLimit.TabStop = boxBitrate.TabStop = boxAudioBitrate.TabStop = true;
+            numericCrf.TabStop = numericCrfTolerance.TabStop = numericAudioQuality.TabStop = false;
 
             buttonVariableDefault.Visible = false;
             if (encodingMode != Properties.Settings.Default.EncodingMode)
@@ -816,6 +818,8 @@ namespace WebMConverter
             tableVideoVariableOptions.BringToFront();
             tableAudioVariableOptions.BringToFront();
             encodingMode = EncodingMode.Variable;
+            numericCrf.TabStop = numericCrfTolerance.TabStop = numericAudioQuality.TabStop = true;
+            boxLimit.TabStop = boxBitrate.TabStop = boxAudioBitrate.TabStop = false;
 
             buttonConstantDefault.Visible = false;
             if (encodingMode != Properties.Settings.Default.EncodingMode)

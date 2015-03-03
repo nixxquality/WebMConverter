@@ -862,7 +862,7 @@ namespace WebMConverter
             panelEncodingModeSwapper.Name = "panelEncodingModeSwapper";
             this.tableLayoutPanelEncodingVideo.SetRowSpan(panelEncodingModeSwapper, 2);
             panelEncodingModeSwapper.Size = new System.Drawing.Size(1035, 56);
-            panelEncodingModeSwapper.TabIndex = 0;
+            panelEncodingModeSwapper.TabIndex = 2;
             // 
             // tableVideoConstantOptions
             // 
@@ -1030,6 +1030,7 @@ namespace WebMConverter
             this.numericCrf.Name = "numericCrf";
             this.numericCrf.Size = new System.Drawing.Size(142, 20);
             this.numericCrf.TabIndex = 1;
+            this.numericCrf.TabStop = false;
             this.numericCrf.Value = new decimal(new int[] {
             10,
             0,
@@ -1073,6 +1074,7 @@ namespace WebMConverter
             this.numericCrfTolerance.Name = "numericCrfTolerance";
             this.numericCrfTolerance.Size = new System.Drawing.Size(142, 20);
             this.numericCrfTolerance.TabIndex = 2;
+            this.numericCrfTolerance.TabStop = false;
             this.numericCrfTolerance.Value = new decimal(new int[] {
             20,
             0,
@@ -1102,7 +1104,7 @@ namespace WebMConverter
             this.boxHQ.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
             this.boxHQ.Name = "boxHQ";
             this.boxHQ.Size = new System.Drawing.Size(215, 22);
-            this.boxHQ.TabIndex = 2;
+            this.boxHQ.TabIndex = 1;
             this.boxHQ.Text = "Enable high quality mode:";
             this.boxHQ.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.boxHQ.UseVisualStyleBackColor = true;
@@ -1190,7 +1192,7 @@ namespace WebMConverter
             panelEncodingModeSwapperTwo.Margin = new System.Windows.Forms.Padding(0);
             panelEncodingModeSwapperTwo.Name = "panelEncodingModeSwapperTwo";
             panelEncodingModeSwapperTwo.Size = new System.Drawing.Size(1035, 28);
-            panelEncodingModeSwapperTwo.TabIndex = 0;
+            panelEncodingModeSwapperTwo.TabIndex = 2;
             // 
             // tableAudioConstantOptions
             // 
@@ -1302,6 +1304,7 @@ namespace WebMConverter
             this.numericAudioQuality.Name = "numericAudioQuality";
             this.numericAudioQuality.Size = new System.Drawing.Size(142, 20);
             this.numericAudioQuality.TabIndex = 1;
+            this.numericAudioQuality.TabStop = false;
             this.numericAudioQuality.Value = new decimal(new int[] {
             3,
             0,
