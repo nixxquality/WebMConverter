@@ -1268,11 +1268,28 @@ namespace WebMConverter
                                     if (!File.Exists(file)) // If we didn't extract it already
                                     {
                                         logIndexingProgress("Extracting...");
-                                        using (var mkvextract = new MkvExtract(string.Format(@"tracks ""{0}"" ""{1}:{2}""", Program.InputFile, streamindex, file)))
+                                        System.Diagnostics.Process extractionProcess;
+                                        string extractionArguments;
+
+                                        switch (type)
                                         {
-                                            mkvextract.Start();
-                                            mkvextract.WaitForExit();
+                                            case SubtitleType.TextSub:
+                                                extractionArguments = string.Format(@"-i ""{0}"" -map 0:{1} ""{2}"" -y",
+                                                    Program.InputFile, streamindex, file);
+                                                extractionProcess = new FFmpeg(extractionArguments);
+                                                break;
+                                            case SubtitleType.VobSub:
+                                                extractionArguments = string.Format(@"tracks ""{0}"" ""{1}:{2}""",
+                                                    Program.InputFile, streamindex, file);
+                                                extractionProcess = new MkvExtract(extractionArguments);
+                                                break;
+                                            default:
+                                                throw new NotImplementedException();
                                         }
+
+                                        extractionProcess.Start();
+                                        extractionProcess.WaitForExit();
+                                        extractionProcess.Close();
                                     }
                                     else
                                     {
