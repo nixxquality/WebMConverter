@@ -1634,12 +1634,13 @@ namespace WebMConverter
 
             string[] arguments;
             if (!boxHQ.Checked)
-                arguments = new[] { string.Format(Template, output, options, "", "") };
+                arguments = new[] { string.Format(Template, output, options, "") };
             else
             {
+                var passlogfile = Path.GetTempFileName();
                 arguments = new string[2]; //           vvv is Windows only
-                arguments[0] = string.Format(Template, "NUL", options, string.Format(PassArgument, 1, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
-                arguments[1] = string.Format(Template, output, options, string.Format(PassArgument, 2, Path.Combine(Path.GetTempPath(), "ffmpeg2pass")));
+                arguments[0] = string.Format(Template, "NUL", options, string.Format(PassArgument, 1, passlogfile));
+                arguments[1] = string.Format(Template, output, options, string.Format(PassArgument, 2, passlogfile));
 
                 if (!arguments[0].Contains("-an")) // skip audio encoding on the first pass
                     arguments[0] = arguments[0].Replace("-c:v libvpx", "-an -c:v libvpx"); // ugly as hell
