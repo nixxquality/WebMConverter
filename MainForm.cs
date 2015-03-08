@@ -1194,7 +1194,7 @@ namespace WebMConverter
                 using (var prober = new FFprobe(Program.InputFile, format: "", argument: "-show_streams -show_format"))
                 {
                     string streamInfo = prober.Probe();
-                    Program.SubtitleTracks = new Dictionary<int, Tuple<string, SubtitleType>>();
+                    Program.SubtitleTracks = new Dictionary<int, Tuple<string, SubtitleType, string>>();
                     Program.AttachmentList = new List<string>();
 
                     using (var s = new StringReader(streamInfo))
@@ -1301,7 +1301,7 @@ namespace WebMConverter
                                     }
 
                                     // Save it
-                                    Program.SubtitleTracks.Add(streamindex, new Tuple<string, SubtitleType>(streamtitle, type));
+                                    Program.SubtitleTracks.Add(streamindex, new Tuple<string, SubtitleType, string>(streamtitle, type, extension));
                                     break;
                                 case @"attachment": // Extract the attachment using mkvmerge
                                     nav.MoveTo(nav.SelectSingleNode(".//tag[@key='filename']"));

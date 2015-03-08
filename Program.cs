@@ -66,7 +66,7 @@ namespace WebMConverter
         public static bool InputHasAudio;
         public static string FileMd5;
         public static string AttachmentDirectory;
-        public static Dictionary<int, Tuple<string, SubtitleType>> SubtitleTracks; // stream id, <tag:title OR codec_name, textsub/vobsub>
+        public static Dictionary<int, Tuple<string, SubtitleType, string>> SubtitleTracks; // stream id, <tag:title OR codec_name, textsub/vobsub, extension>
         public static List<string> AttachmentList;
 
         const double closeenough = 0.1;

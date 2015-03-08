@@ -21,9 +21,9 @@ namespace WebMConverter
             else
             {
                 Dictionary<int, string> subtitleTracks = new Dictionary<int, string>();
-                foreach (KeyValuePair<int, Tuple<string, SubtitleType>> Track in Program.SubtitleTracks)
+                foreach (var track in Program.SubtitleTracks)
                 {
-                    subtitleTracks.Add(Track.Key, string.Format("#{0}: {1}", Track.Key, Track.Value.Item1));
+                    subtitleTracks.Add(track.Key, string.Format("#{0}: {1}", track.Key, track.Value.Item1));
                 }
                 comboBoxVideoTracks.DataSource = new BindingSource(subtitleTracks, null);
                 comboBoxVideoTracks.ValueMember = "Key";
@@ -55,7 +55,7 @@ namespace WebMConverter
                 switch (type)
                 {
                     case SubtitleType.TextSub:
-                        extension = "." + Program.SubtitleTracks[(int)comboBoxVideoTracks.SelectedValue].Item1;
+                        extension = Program.SubtitleTracks[(int)comboBoxVideoTracks.SelectedValue].Item3;
                         break;
                     case SubtitleType.VobSub:
                         extension = ".idx";
