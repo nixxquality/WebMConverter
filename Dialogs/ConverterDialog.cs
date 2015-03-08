@@ -1,40 +1,38 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
-namespace WebMConverter
+namespace WebMConverter.Dialogs
 {
     public partial class ConverterDialog : Form
     {
-        private string[] _arguments;
-        //private Process _process;
+        private readonly string _infile;
+        private readonly string[] _arguments;
         private FFmpeg _ffmpegProcess;
 
         private Timer _timer;
         private bool _ended;
         private bool _panic;
 
-        int currentPass = 0;
-        private bool twopass;
-        private bool cancelTwopass;
+        private int _currentPass;
+        private bool _twopass;
+        private bool _cancelTwopass;
 
-        string infile;
-        bool needToPipe;
-        FFmpeg pipeFFmpeg;
+        private readonly bool _needToPipe;
+        private FFmpeg _pipeFFmpeg;
 
-        public ConverterDialog(MainForm mainForm, string input, string[] args)
+        public ConverterDialog(string input, string[] args)
         {
             InitializeComponent();
             pictureStatus.BackgroundImage = StatusImages.Images["Happening"];
 
-            infile = input;
+            _infile = input;
             _arguments = args;
-            needToPipe = Environment.Is64BitOperatingSystem;
+            _needToPipe = Environment.Is64BitOperatingSystem;
 
-            for (int i = 0; i < args.Length; i++)
+            for (var i = 0; i < args.Length; i++)
             {
                 AddInputFileToArguments(ref args[i]);
             }
@@ -43,26 +41,26 @@ namespace WebMConverter
         private void ProcessOnErrorDataReceived(object sender, DataReceivedEventArgs args)
         {
             if (args.Data != null)
-                boxOutput.Invoke((Action)(() => boxOutput.AppendText("\n" + args.Data)));
+                boxOutput.Invoke((Action)(() => boxOutput.AppendText('\n' + args.Data)));
         }
 
         private void ProcessOnOutputDataReceived(object sender, DataReceivedEventArgs args)
         {
             if (args.Data != null)
-                boxOutput.Invoke((Action)(() => boxOutput.AppendText("\n" + args.Data)));
+                boxOutput.Invoke((Action)(() => boxOutput.AppendText('\n' + args.Data)));
         }
 
         private void ConverterForm_Load(object sender, EventArgs e)
         {
             string argument = null;
-            twopass = true;
+            _twopass = true;
             if (_arguments.Length == 1)
             {
-                twopass = false;
+                _twopass = false;
                 argument = _arguments[0];
             }
 
-            if (twopass)
+            if (_twopass)
             {
                 boxOutput.AppendText(string.Format("{0}Arguments for pass 1: {1}", Environment.NewLine, _arguments[0]));
                 boxOutput.AppendText(string.Format("{0}Arguments for pass 2: {1}", Environment.NewLine, _arguments[1]));
@@ -70,7 +68,7 @@ namespace WebMConverter
             else
                 boxOutput.AppendText("\nArguments: " + argument);
 
-            if (twopass)
+            if (_twopass)
                 MultiPass(_arguments);
             else
                 SinglePass(argument);
@@ -78,51 +76,51 @@ namespace WebMConverter
 
         void AddInputFileToArguments(ref string argument)
         {
-            if (needToPipe)
+            if (_needToPipe)
             {
-                argument = string.Format("-f nut -i pipe:0 {0}", argument);
+                argument = string.Format(@"-f nut -i pipe:0 {0}", argument);
             }
             else
             {
-                argument = string.Format("-f avisynth -i \"{0}\" {1}", infile, argument);
+                argument = string.Format(@"-f avisynth -i ""{0}"" {1}", _infile, argument);
             }
         }
 
         void StartPipe(FFmpeg ffmpeg)
         {
-            if (!needToPipe)
+            if (!_needToPipe)
                 return;
 
-            string proxyargs = string.Format("-f avisynth -i \"{0}\" -f nut -c copy -v error pipe:1", infile);
+            string proxyargs = string.Format(@"-f avisynth -i ""{0}"" -f nut -c copy -v error pipe:1", _infile);
             boxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
 
-            pipeFFmpeg = new FFmpeg(proxyargs, true);
-            pipeFFmpeg.ErrorDataReceived += (o, args) => boxOutput.Invoke((Action)(() =>
+            _pipeFFmpeg = new FFmpeg(proxyargs, true);
+            _pipeFFmpeg.ErrorDataReceived += (o, args) => boxOutput.Invoke((Action)(() =>
             {
                 boxOutput.AppendText("\n" + args.Data);
             }));
-            pipeFFmpeg.Start(false);
+            _pipeFFmpeg.Start(false);
             var bw = new BackgroundWorker();
-            bw.DoWork += delegate(object o, DoWorkEventArgs args)
+            bw.DoWork += delegate
             {
                 try
                 {
-                    pipeFFmpeg.StandardOutput.BaseStream.CopyTo(ffmpeg.StandardInput.BaseStream);
+                    _pipeFFmpeg.StandardOutput.BaseStream.CopyTo(ffmpeg.StandardInput.BaseStream);
                 }
                 catch
                 {
-                    return;
+                    // ignored
                 }
             };
-            pipeFFmpeg.Exited += delegate(object o, EventArgs args)
+            _pipeFFmpeg.Exited += delegate
             {
                 try
                 {
-                    ffmpeg.StandardInput.Close();
+                    _ffmpegProcess.StandardInput.Close();
                 }
                 catch
                 {
-                    return;
+                    // ignored
                 }
             };
             bw.RunWorkerAsync();
@@ -154,7 +152,7 @@ namespace WebMConverter
         {
             int passes = arguments.Length;
 
-            _ffmpegProcess = new FFmpeg(arguments[currentPass]);
+            _ffmpegProcess = new FFmpeg(arguments[_currentPass]);
 
             _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
             _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
@@ -163,10 +161,10 @@ namespace WebMConverter
                 if (_panic) return; //This should stop that one exception when closing the converter
                 boxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
 
-                currentPass++;
-                if (currentPass < passes && !cancelTwopass)
+                _currentPass++;
+                if (_currentPass < passes && !_cancelTwopass)
                 {
-                    boxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
+                    boxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", _currentPass + 1));
 
                     MultiPass(arguments); //Sort of recursion going on here, be careful with stack overflows and shit
                     return;
@@ -192,7 +190,7 @@ namespace WebMConverter
 
             if (process.ExitCode != 0)
             {
-                if (cancelTwopass)
+                if (_cancelTwopass)
                     boxOutput.AppendText("\n\nConversion cancelled.");
                 else
                 {
@@ -219,15 +217,18 @@ namespace WebMConverter
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            cancelTwopass = true;
+            _cancelTwopass = true;
 
             if (!_ended || _panic) //Prevent stack overflow
             {
                 if (!_ffmpegProcess.HasExited)
                     _ffmpegProcess.Kill();
-                if (needToPipe)
-                    if (!pipeFFmpeg.HasExited)
-                        pipeFFmpeg.Kill();
+
+                if (!_needToPipe)
+                    return;
+
+                if (!_pipeFFmpeg.HasExited)
+                    _pipeFFmpeg.Kill();
             }
             else
                 Close();
@@ -246,7 +247,7 @@ namespace WebMConverter
 
         private void buttonPlay_Click(object sender, EventArgs e)
         {
-            Process.Start((Owner as MainForm).textBoxOut.Text); //Play result video
+            Process.Start(((MainForm) Owner).textBoxOut.Text); //Play result video
         }
     }
 }
