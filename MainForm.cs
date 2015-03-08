@@ -92,6 +92,8 @@ namespace WebMConverter
         int audiotrack = -1;
         bool audioDisabled;
 
+        private List<string> _temporaryFilesList;
+
         public bool SarCompensate = false;
         public int SarWidth;
         public int SarHeight;
@@ -101,6 +103,7 @@ namespace WebMConverter
         public MainForm()
         {
             FFMSSharp.FFMS2.Initialize(Path.Combine(Environment.CurrentDirectory, "Binaries", "Win32"));
+            _temporaryFilesList = new List<string>();
 
             InitializeComponent();
 
@@ -146,7 +149,13 @@ namespace WebMConverter
         {
             if (inputFile != null)
                 inputFile.Close();
+
             UnloadFonts();
+
+            foreach (var temporaryFile in _temporaryFilesList)
+            {
+                File.Delete(temporaryFile);
+            }
         }
 
         void boxIndexingProgressDetails_CheckedChanged(object sender, EventArgs e)
@@ -1577,7 +1586,7 @@ namespace WebMConverter
                 GenerateAvisynthScript();
 
             // Make our temporary file for the AviSynth script
-            string avsFileName = Path.GetTempFileName();
+            string avsFileName = GetTemporaryFile();
             WriteAvisynthScript(avsFileName, input);
 
             // Run ffplay
@@ -1624,7 +1633,7 @@ namespace WebMConverter
                         GenerateAvisynthScript();
 
                     // Make our temporary file for the AviSynth script
-                    avsFileName = Path.GetTempFileName();
+                    avsFileName = GetTemporaryFile();
                     WriteAvisynthScript(avsFileName, input);
                     break;
                 case FileType.Avisynth:
@@ -1637,7 +1646,7 @@ namespace WebMConverter
                 arguments = new[] { string.Format(Template, output, options, "") };
             else
             {
-                var passlogfile = Path.GetTempFileName();
+                var passlogfile = GetTemporaryFile();
                 arguments = new string[2]; //           vvv is Windows only
                 arguments[0] = string.Format(Template, "NUL", options, string.Format(PassArgument, 1, passlogfile));
                 arguments[1] = string.Format(Template, output, options, string.Format(PassArgument, 2, passlogfile));
@@ -1902,7 +1911,7 @@ namespace WebMConverter
             {
                 case FileType.Video:
                     // Make our temporary file for the AviSynth script
-                    avsFileName = Path.GetTempFileName();
+                    avsFileName = GetTemporaryFile();
                     WriteAvisynthScript(avsFileName, textBoxIn.Text);
                     break;
                 case FileType.Avisynth:
@@ -1974,6 +1983,13 @@ namespace WebMConverter
                 NativeMethods.RemoveFontResourceEx(Path.Combine(Program.AttachmentDirectory, filename), 0, IntPtr.Zero);
             });
             Program.AttachmentList = null;
+        }
+
+        private string GetTemporaryFile()
+        {
+            var temporaryFile = Path.GetTempFileName();
+            _temporaryFilesList.Add(temporaryFile);
+            return temporaryFile;
         }
 
         #endregion
