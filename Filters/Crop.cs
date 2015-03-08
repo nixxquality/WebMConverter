@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using WebMConverter.Dialogs;
 
 namespace WebMConverter
 {

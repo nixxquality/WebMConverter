@@ -1,4 +1,4 @@
-﻿namespace WebMConverter
+﻿namespace WebMConverter.Dialogs
 {
     partial class InputDialog<T>
     {

@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WebMConverter
+namespace WebMConverter.Dialogs
 {
     public partial class InputDialog<T> : Form
     {
         public T Value;
 
-        dynamic inputField;
+        dynamic _inputField;
 
         public InputDialog(string label, T defaultValue)
         {
             InitializeComponent();
-            addInputField(defaultValue);
+            AddInputField(defaultValue);
 
-            label1.Text = label + ":";
+            label1.Text = label + ':';
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
@@ -22,30 +22,30 @@ namespace WebMConverter
             switch (typeof(T).ToString())
             {
                 case "System.String":
-                    Value = inputField.Text;
+                    Value = _inputField.Text;
                     break;
                 case "System.Int32":
-                    Value = int.Parse(inputField.Text);
+                    Value = int.Parse(_inputField.Text);
                     break;
                 case "System.TimeSpan":
-                    Value = inputField.Value;
+                    Value = _inputField.Value;
                     break;
             }
             Close();
         }
 
-        void addInputField(T value)
+        void AddInputField(T value)
         {
             switch (typeof(T).ToString())
             {
                 case "System.String":
-                    inputField = new TextBox();
-                    inputField.Text = value;
+                    _inputField = new TextBox();
+                    _inputField.Text = value;
                     break;
                 case "System.Int32":
-                    inputField = new TextBox();
-                    inputField.Text = value.ToString();
-                    (inputField as TextBox).KeyPress += delegate(object sender, KeyPressEventArgs e)
+                    _inputField = new TextBox();
+                    _inputField.Text = value.ToString();
+                    (_inputField as TextBox).KeyPress += delegate(object sender, KeyPressEventArgs e)
                     {
                         if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
                         {
@@ -54,21 +54,21 @@ namespace WebMConverter
                     };
                     break;
                 case "System.TimeSpan":
-                    inputField = new TimeSpanBox();
-                    inputField.Value = value;
+                    _inputField = new TimeSpanBox();
+                    _inputField.Value = value;
                     break;
                 default:
                     throw new ArgumentException("GoToDialog only works with <string>, <int> or <TimeSpan>");
             }
 
-            inputField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            inputField.Location = new System.Drawing.Point(71, 3);
-            inputField.Name = "inputField";
-            inputField.Size = new System.Drawing.Size(123, 20);
-            inputField.TabIndex = 3;
+            _inputField.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            _inputField.Location = new System.Drawing.Point(71, 3);
+            _inputField.Name = "inputField";
+            _inputField.Size = new System.Drawing.Size(123, 20);
+            _inputField.TabIndex = 3;
 
-            tableLayoutPanel.Controls.Add(inputField, 1, 0);
-            tableLayoutPanel.SetColumnSpan(inputField, 2);
+            tableLayoutPanel.Controls.Add(_inputField, 1, 0);
+            tableLayoutPanel.SetColumnSpan(_inputField, 2);
         }
     }
 }
