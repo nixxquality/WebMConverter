@@ -55,7 +55,7 @@ namespace WebMConverter
                 switch (type)
                 {
                     case SubtitleType.TextSub:
-                        extension = ".ass";
+                        extension = "." + Program.SubtitleTracks[(int)comboBoxVideoTracks.SelectedValue].Item1;
                         break;
                     case SubtitleType.VobSub:
                         extension = ".idx";

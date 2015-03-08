@@ -1269,7 +1269,7 @@ namespace WebMConverter
                                     else
                                     {
                                         type = SubtitleType.TextSub;
-                                        extension = ".ass";
+                                        extension = "." + streamtitle; // YOLO
                                     }
                                     
                                     file = Path.Combine(Program.AttachmentDirectory, string.Format("sub{0}{1}", streamindex, extension));
