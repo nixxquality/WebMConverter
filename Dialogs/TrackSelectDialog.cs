@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
-namespace WebMConverter
+namespace WebMConverter.Dialogs
 {
     public partial class TrackSelectDialog : Form
     {
@@ -14,11 +15,7 @@ namespace WebMConverter
 
             labelSelect.Text = string.Format("{0} track:", tracktype);
 
-            Dictionary<int, string> dropdownTracks = new Dictionary<int,string>();
-            foreach (int Track in tracks)
-            {
-                dropdownTracks.Add(Track, string.Format("Track #{0}", Track));
-            }
+            var dropdownTracks = tracks.ToDictionary(track => track, track => string.Format("Track #{0}", track));
             comboBoxTracks.DataSource = new BindingSource(dropdownTracks, null);
             comboBoxTracks.ValueMember = "Key";
             comboBoxTracks.DisplayMember = "Value";
