@@ -95,10 +95,20 @@ namespace WebMConverter.Dialogs
             boxOutput.AppendText("\n--- CREATING AVISYNTH PROXY --- ");
 
             _pipeFFmpeg = new FFmpeg(proxyargs, true);
-            _pipeFFmpeg.ErrorDataReceived += (o, args) => boxOutput.Invoke((Action)(() =>
+            _pipeFFmpeg.ErrorDataReceived += (o, args) =>
             {
-                boxOutput.AppendText("\n" + args.Data);
-            }));
+                try
+                {
+                    boxOutput.Invoke((Action) (() =>
+                    {
+                        boxOutput.AppendText(Environment.NewLine + args.Data);
+                    }));
+                }
+                catch
+                {
+                    // ignored
+                }
+            };
             _pipeFFmpeg.Start(false);
             var bw = new BackgroundWorker();
             bw.DoWork += delegate
