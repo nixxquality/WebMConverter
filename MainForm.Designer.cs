@@ -124,6 +124,7 @@ namespace WebMConverter
             this.numericCrf = new System.Windows.Forms.NumericUpDown();
             this.numericCrfTolerance = new System.Windows.Forms.NumericUpDown();
             this.boxHQ = new System.Windows.Forms.CheckBox();
+            this.buttonAudioEnabledDefault = new System.Windows.Forms.Button();
             this.boxAudio = new System.Windows.Forms.CheckBox();
             this.tableAudioConstantOptions = new System.Windows.Forms.TableLayoutPanel();
             this.boxAudioBitrate = new System.Windows.Forms.TextBox();
@@ -146,7 +147,7 @@ namespace WebMConverter
             this.labelIndexingProgress = new System.Windows.Forms.Label();
             this.progressBarIndexing = new System.Windows.Forms.ProgressBar();
             this.panelHideTheOptions = new System.Windows.Forms.Panel();
-            this.buttonAudioEnabledDefault = new System.Windows.Forms.Button();
+            this.buttonRate = new System.Windows.Forms.ToolStripButton();
             tableMainForm = new System.Windows.Forms.TableLayoutPanel();
             groupMain = new System.Windows.Forms.GroupBox();
             tableMain = new System.Windows.Forms.TableLayoutPanel();
@@ -421,7 +422,8 @@ namespace WebMConverter
             this.boxAdvancedScripting,
             this.buttonExportProcessing,
             this.buttonPreview,
-            this.buttonDub});
+            this.buttonDub,
+            this.buttonRate});
             toolStripProcessing.Location = new System.Drawing.Point(0, 0);
             toolStripProcessing.Name = "toolStripProcessing";
             toolStripProcessing.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -448,7 +450,7 @@ namespace WebMConverter
             // 
             this.buttonMultipleTrim.AccessibleDescription = "Select many clips from your video, and sort them on a timeline.";
             this.buttonMultipleTrim.Name = "buttonMultipleTrim";
-            this.buttonMultipleTrim.Size = new System.Drawing.Size(146, 22);
+            this.buttonMultipleTrim.Size = new System.Drawing.Size(152, 22);
             this.buttonMultipleTrim.Text = "Multiple Trim";
             this.buttonMultipleTrim.Click += new System.EventHandler(this.buttonMultipleTrim_Click);
             this.buttonMultipleTrim.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
@@ -1155,6 +1157,19 @@ namespace WebMConverter
             tableEncodingAudio.Size = new System.Drawing.Size(1035, 54);
             tableEncodingAudio.TabIndex = 0;
             // 
+            // buttonAudioEnabledDefault
+            // 
+            tableEncodingAudio.SetColumnSpan(this.buttonAudioEnabledDefault, 2);
+            this.buttonAudioEnabledDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAudioEnabledDefault.Location = new System.Drawing.Point(170, 3);
+            this.buttonAudioEnabledDefault.Name = "buttonAudioEnabledDefault";
+            this.buttonAudioEnabledDefault.Size = new System.Drawing.Size(54, 22);
+            this.buttonAudioEnabledDefault.TabIndex = 6;
+            this.buttonAudioEnabledDefault.Text = "Default";
+            this.buttonAudioEnabledDefault.UseVisualStyleBackColor = true;
+            this.buttonAudioEnabledDefault.Visible = false;
+            this.buttonAudioEnabledDefault.Click += new System.EventHandler(this.buttonAudioEnabledDefault_Click);
+            // 
             // boxAudio
             // 
             this.boxAudio.AutoSize = true;
@@ -1804,18 +1819,17 @@ namespace WebMConverter
             this.panelHideTheOptions.Size = new System.Drawing.Size(1067, 356);
             this.panelHideTheOptions.TabIndex = 3;
             // 
-            // buttonAudioEnabledDefault
+            // buttonRate
             // 
-            tableEncodingAudio.SetColumnSpan(this.buttonAudioEnabledDefault, 2);
-            this.buttonAudioEnabledDefault.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAudioEnabledDefault.Location = new System.Drawing.Point(170, 3);
-            this.buttonAudioEnabledDefault.Name = "buttonAudioEnabledDefault";
-            this.buttonAudioEnabledDefault.Size = new System.Drawing.Size(54, 22);
-            this.buttonAudioEnabledDefault.TabIndex = 6;
-            this.buttonAudioEnabledDefault.Text = "Default";
-            this.buttonAudioEnabledDefault.UseVisualStyleBackColor = true;
-            this.buttonAudioEnabledDefault.Visible = false;
-            this.buttonAudioEnabledDefault.Click += new System.EventHandler(this.buttonAudioEnabledDefault_Click);
+            this.buttonRate.AccessibleDescription = "Speed up or slow down your video.";
+            this.buttonRate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonRate.Enabled = false;
+            this.buttonRate.Name = "buttonRate";
+            this.buttonRate.Size = new System.Drawing.Size(78, 22);
+            this.buttonRate.Text = "Change Rate";
+            this.buttonRate.Click += new System.EventHandler(this.buttonRate_Click);
+            this.buttonRate.MouseEnter += new System.EventHandler(this.ToolStripItemTooltip);
+            this.buttonRate.MouseLeave += new System.EventHandler(this.clearToolTip);
             // 
             // MainForm
             // 
@@ -1954,6 +1968,7 @@ namespace WebMConverter
         private System.Windows.Forms.Panel panelContainTheProgressBar;
         private System.Windows.Forms.ToolStripButton buttonDub;
         private System.Windows.Forms.Button buttonAudioEnabledDefault;
+        private System.Windows.Forms.ToolStripButton buttonRate;
     }
 }
 

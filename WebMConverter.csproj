@@ -127,6 +127,12 @@
     <Compile Include="Filters\MultipleTrim.Designer.cs">
       <DependentUpon>MultipleTrim.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filters\Rate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filters\Rate.Designer.cs">
+      <DependentUpon>Rate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Filters\Reverse.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -189,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Filters\MultipleTrim.resx">
       <DependentUpon>MultipleTrim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filters\Rate.resx">
+      <DependentUpon>Rate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -499,6 +499,27 @@ namespace WebMConverter
             }
         }
 
+        private void buttonRate_Click(object sender, EventArgs e)
+        {
+            using (var form = new RateForm())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (boxAdvancedScripting.Checked)
+                    {
+                        textBoxProcessingScript.AppendText(Environment.NewLine + form.GeneratedFilter.ToString());
+                    }
+                    else
+                    {
+                        Filters.Rate = form.GeneratedFilter;
+                        listViewProcessingScript.Items.Add("Rate", "rate");
+                        UpdateArguments(sender, e);
+                        ((ToolStripItem) sender).Enabled = false;
+                    }
+                }
+            }
+        }
+
         void buttonResize_Click(object sender, EventArgs e)
         {
             using (var form = new ResizeForm())
@@ -612,6 +633,7 @@ namespace WebMConverter
             buttonCrop.Enabled = enabled;
             buttonDub.Enabled = enabled;
             buttonOverlay.Enabled = enabled;
+            buttonRate.Enabled = enabled;
             buttonResize.Enabled = enabled;
             buttonReverse.Enabled = enabled;
             buttonSubtitle.Enabled = enabled;
@@ -648,11 +670,16 @@ namespace WebMConverter
                         case "Multiple Trim":
                             Filters.MultipleTrim = null;
                             buttonTrim.Enabled = true;
-                            GenerateArguments();
+                            UpdateArguments(sender, e);
                             break;
                         case "Overlay":
                             Filters.Overlay = null;
                             buttonOverlay.Enabled = true;
+                            break;
+                        case "Rate":
+                            Filters.Rate = null;
+                            buttonRate.Enabled = true;
+                            UpdateArguments(sender, e);
                             break;
                         case "Resize":
                             Filters.Resize = null;
@@ -729,6 +756,16 @@ namespace WebMConverter
                         if (form.ShowDialog(this) == DialogResult.OK)
                         {
                             Filters.Overlay = form.GeneratedFilter;
+                        }
+                    }
+                    break;
+                case "Rate":
+                    using (var form = new RateForm(Filters.Rate))
+                    {
+                        if (form.ShowDialog(this) == DialogResult.OK)
+                        {
+                            Filters.Rate = form.GeneratedFilter;
+                            UpdateArguments(sender, e);
                         }
                     }
                     break;
@@ -1799,13 +1836,21 @@ namespace WebMConverter
             else
             {
                 // The easy way.
+                double duration;
 
                 if (Filters.Trim != null)
-                    return Filters.Trim.GetDuration();
-                if (Filters.MultipleTrim != null)
-                    return Filters.MultipleTrim.GetDuration();
+                    duration = Filters.Trim.GetDuration();
+                else if (Filters.MultipleTrim != null)
+                    duration = Filters.MultipleTrim.GetDuration();
+                else 
+                    duration = Program.FrameToTimeSpan(Program.VideoSource.NumberOfFrames - 1).TotalSeconds;
 
-                return Program.FrameToTimeSpan(Program.VideoSource.NumberOfFrames - 1).TotalSeconds;
+                if (Filters.Rate != null)
+                {
+                    duration = duration * Filters.Rate.Multiplier / 100;
+                }
+
+                return duration;
             }
         }
 
@@ -1874,6 +1919,8 @@ namespace WebMConverter
                 script.AppendLine(Filters.Trim.ToString());
             if (Filters.MultipleTrim != null)
                 script.AppendLine(Filters.MultipleTrim.ToString());
+            if (Filters.Rate != null)
+                script.AppendLine(Filters.Rate.ToString());
             if (Filters.Crop != null)
                 script.AppendLine(Filters.Crop.ToString());
             if (Filters.Resize != null)

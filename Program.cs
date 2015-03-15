@@ -20,6 +20,7 @@ namespace WebMConverter
         internal static LevelsFilter Levels = null;
         internal static MultipleTrimFilter MultipleTrim = null;
         internal static OverlayFilter Overlay = null;
+        internal static RateFilter Rate = null;
         internal static ResizeFilter Resize = null;
         internal static ReverseFilter Reverse = null;
         internal static SubtitleFilter Subtitle = null;
