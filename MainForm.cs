@@ -1430,9 +1430,24 @@ namespace WebMConverter
                 boxAudio.Enabled = Program.InputHasAudio = true;
                 if (audioDisabled)
                 {
-                    const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
-                    const string caption = "FYI";
-                    MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    switch (Path.GetExtension(path).ToLower())
+                    {
+                        case ".png":
+                            break;
+                        case ".gif":
+                            break;
+                        case ".jpg":
+                            break;
+                        case ".jpeg":
+                            break;
+                        case ".bmp":
+                            break;
+                        default:
+                            const string text = "We couldn't find any audio tracks.\nIf you want sound, please use another input file.\nIf you don't want audio in your output webm, there's nothing to worry about.";
+                            const string caption = "FYI";
+                            MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            break;
+                    }
                     boxAudio.Checked = boxAudio.Enabled = Program.InputHasAudio = false;
                 }
 
