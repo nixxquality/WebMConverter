@@ -808,6 +808,7 @@ namespace WebMConverter
         {
             ProbeScript();
             SetSlices();
+            UpdateArguments(sender, e);
         }
 
         [System.Diagnostics.DebuggerStepThrough]
