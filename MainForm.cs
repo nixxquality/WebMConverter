@@ -1730,6 +1730,8 @@ namespace WebMConverter
                         if (duration > 0)
                             videobitrate = (int)(limit / duration / 100) - audiobitrate;
 
+                        videobitrate = (int)(videobitrate * 0.90); // VP8 a shit
+
                         if (videobitrate < 0)
                             throw new ArgumentException("Audio bitrate is too high! With that size limit, you won't be able to fit any video!");
                     }
