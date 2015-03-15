@@ -25,7 +25,7 @@ namespace WebMConverter
 
         private void RateForm_Load(object sender, EventArgs e)
         {
-            _originalDuration = new TimeSpan((long)(((MainForm) Owner).GetDuration() / (_filterToEdit != null ? (double)_filterToEdit.Multiplier / 100 : 1) * 10000000));
+            _originalDuration = new TimeSpan((long)(((MainForm) Owner).GetDuration() * (_filterToEdit != null ? (float)_filterToEdit.Multiplier / 100 : 1) * 10000000));
             boxPreviewOriginal.Text = _originalDuration.ToString(PreviewBoxFormat);
 
             if (_filterToEdit != null)

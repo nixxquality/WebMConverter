@@ -1847,7 +1847,7 @@ namespace WebMConverter
 
                 if (Filters.Rate != null)
                 {
-                    duration = duration * Filters.Rate.Multiplier / 100;
+                    duration = duration / ((float)Filters.Rate.Multiplier / 100);
                 }
 
                 return duration;
