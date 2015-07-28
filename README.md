@@ -14,8 +14,4 @@ Important to know:
 * Already includes ffmpeg
 * Only works on Windows (I assume Linux users don't need GUIs)
 
-Screenshot:
-
-![Screenshot](http://a.loveisover.me/vjrztf.png)
-
 This software is released under the MIT license. See [LICENSE.md](https://github.com/WebMBro/WebMConverter/blob/master/LICENSE.md).
