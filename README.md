@@ -1,10 +1,10 @@
-WebM for Retards [![Build status](https://ci.appveyor.com/api/projects/status/2pekcy840jr7atft)](https://ci.appveyor.com/project/nixxquality/webmconverter)
+WebM for Gits [![Build status](https://ci.appveyor.com/api/projects/status/2pekcy840jr7atft)](https://ci.appveyor.com/project/nixxquality/webmconverter)
 =============
 A wrapper around ffmpeg and Avisynth made for converting videos to WebM without having to use the command line.
 
 Download it [here](https://github.com/nixxquality/WebMConverter/releases).
 Download the latest Converter.zip.
-Don't run ffmpeg.exe you retard, run WebMConverter.exe.
+Don't run ffmpeg.exe you git, run WebMConverter.exe.
 And I shouldn't have to tell you to extract the zip file first.
 Also, don't click "Download ZIP" on the right side of the page, that'll only download the source. (unless you want to compile it yourself, obviously)
 
