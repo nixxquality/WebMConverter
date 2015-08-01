@@ -55,7 +55,7 @@ namespace WebMConverter
         /// {2} is bufsize
         /// {3} is rc_init_occupancy
         /// </summary>
-        private const string ConstantVideoArguments = " -minrate:v {0}K -b:v {0}K -maxrate:v {0}K -bufsize {2}K -rc_init_occupancy {3}K -qcomp 1{1}";
+        private const string ConstantVideoArguments = " -b:v {0}K -bufsize {2}K -rc_init_occupancy {3}K -qcomp 1{1}";
         /// <summary>
         /// {0} is audio bitrate
         /// </summary>
@@ -1711,7 +1711,7 @@ namespace WebMConverter
                         limit -= 0.01f;
                         // also, ffmpeg's filesize interpreter is unreliable, so we expand the filesize ourselves.
                         // see https://github.com/nixxquality/WebMConverter/issues/120
-                        limit = limit * 1024 * 1024;
+                        limit = limit * 1024 * 1024 * 8;
 
                         limitTo = string.Format(@" -fs {0}", (int)limit);
                     }
@@ -1743,9 +1743,9 @@ namespace WebMConverter
                         var duration = GetDuration();
 
                         if (duration > 0)
-                            videobitrate = (int)(limit / duration / 100) - audiobitrate;
+                            videobitrate = (int)(limit / duration / 1024) - audiobitrate;
 
-                        videobitrate = (int)(videobitrate * 0.90); // VP8 a shit
+                        //videobitrate = (int)(videobitrate * 0.90); // VP8 a shit
 
                         if (videobitrate < 0)
                             throw new ArgumentException("Audio bitrate is too high! With that size limit, you won't be able to fit any video!");
